@@ -241,6 +241,9 @@ local Settings = {
     NameColor = Color3.fromRGB(255, 255, 255),
     DistanceColor = Color3.fromRGB(255, 255, 255),
     ESPMaxDistance = 2000,
+    VisibleCheck = false,
+    VisibleCheckActive = false,
+    VisibleColor = Color3.fromRGB(0, 255, 0),
     Aimbot = false,
     AimbotActive = false, -- Actual activation state controlled by keybind
     AimbotFOV = 100,
@@ -287,6 +290,7 @@ local Settings = {
         TeamCheck = {Key = Enum.KeyCode.T, Mode = "Toggle", Enabled = false},
         FilledBox = {Key = Enum.KeyCode.F, Mode = "Toggle", Enabled = false},
         BoxCorner = {Key = Enum.KeyCode.C, Mode = "Toggle", Enabled = false},
+        VisibleCheck = {Key = Enum.KeyCode.V, Mode = "Toggle", Enabled = false},
         Fullbright = {Key = Enum.KeyCode.B, Mode = "Toggle", Enabled = false},
         DebugPanel = {Key = Enum.KeyCode.O, Mode = "Toggle", Enabled = false},
         ShowKeylist = {Key = Enum.KeyCode.K, Mode = "Toggle", Enabled = false},
@@ -810,18 +814,18 @@ local function UpdateAimbot()
                     -- Calculate distance to target on screen
                     local distanceToTarget = math.sqrt(deltaX * deltaX + deltaY * deltaY)
                     
-                    -- AimLock: smooth approach, then instant lock
-                    if distanceToTarget > 15 then
-                        -- Far - smooth movement to bring cursor to head
-                        local smoothness = 2
+                    -- AimLock: only works if target is within FOV
+                    if distanceToTarget <= Settings.AimbotFOV then
+                        -- Target in FOV - use minimal smoothness to keep lock stable
+                        local smoothness = 1.3
                         deltaX = deltaX / smoothness
                         deltaY = deltaY / smoothness
+                        
+                        if mousemoverel then
+                            mousemoverel(deltaX, deltaY)
+                        end
                     end
-                    -- Close (<=15px) - instant lock on center, always track target
-                    
-                    if mousemoverel and (deltaX ~= 0 or deltaY ~= 0) then
-                        mousemoverel(deltaX, deltaY)
-                    end
+                    -- Outside FOV - do nothing
                 else
                     -- Target not visible, reset lock
                     lockedTarget = nil
@@ -1336,6 +1340,7 @@ end
 
 -- ESP
 local ESPBoxes = {}
+local ESPBoxLines = {}
 local ESPCorners = {}
 local ESPNames = {}
 local ESPDistances = {}
@@ -1612,6 +1617,27 @@ local function UpdateESP()
                     ESPBoxes[player].Thickness = 2
                     ESPBoxes[player].Visible = false
                     
+                    -- Create multiple lines for precise visibility coloring (left and right sides)
+                    ESPBoxLines[player] = {left = {}, right = {}}
+                    for i = 1, 4 do
+                        ESPBoxLines[player].left[i] = Drawing.new("Line")
+                        ESPBoxLines[player].left[i].Thickness = 2
+                        ESPBoxLines[player].left[i].Visible = false
+                        
+                        ESPBoxLines[player].right[i] = Drawing.new("Line")
+                        ESPBoxLines[player].right[i].Thickness = 2
+                        ESPBoxLines[player].right[i].Visible = false
+                    end
+                    
+                    -- Top and bottom lines
+                    ESPBoxLines[player].top = Drawing.new("Line")
+                    ESPBoxLines[player].top.Thickness = 2
+                    ESPBoxLines[player].top.Visible = false
+                    
+                    ESPBoxLines[player].bottom = Drawing.new("Line")
+                    ESPBoxLines[player].bottom.Thickness = 2
+                    ESPBoxLines[player].bottom.Visible = false
+                    
                     -- Create 8 corner lines (2 per corner)
                     ESPCorners[player] = {}
                     for i = 1, 8 do
@@ -1658,11 +1684,21 @@ local function UpdateESP()
                 ESPNames[player].Color = Settings.NameColor
                 ESPDistances[player].Color = Settings.DistanceColor
                 
-                -- Update corner colors
+                -- Update corner colors based on visibility
                 if ESPCorners[player] then
-                    for i = 1, 8 do
-                        ESPCorners[player][i].Color = Settings.BoxColor
-                    end
+                    -- Top corners (1-4) - use top segment visibility
+                    local topColor = (Settings.VisibleCheck and Settings.VisibleCheckActive and visibilitySegments[1] == 1) and Settings.VisibleColor or Settings.BoxColor
+                    ESPCorners[player][1].Color = topColor
+                    ESPCorners[player][2].Color = topColor
+                    ESPCorners[player][3].Color = topColor
+                    ESPCorners[player][4].Color = topColor
+                    
+                    -- Bottom corners (5-8) - use bottom segment visibility
+                    local bottomColor = (Settings.VisibleCheck and Settings.VisibleCheckActive and visibilitySegments[4] == 1) and Settings.VisibleColor or Settings.BoxColor
+                    ESPCorners[player][5].Color = bottomColor
+                    ESPCorners[player][6].Color = bottomColor
+                    ESPCorners[player][7].Color = bottomColor
+                    ESPCorners[player][8].Color = bottomColor
                 end
                 
                 -- Calculate screen position with 4 corners
@@ -1676,6 +1712,23 @@ local function UpdateESP()
                 local trPos, trVis = Camera:WorldToViewportPoint(tr.Position)
                 local blPos, blVis = Camera:WorldToViewportPoint(bl.Position)
                 local brPos, brVis = Camera:WorldToViewportPoint(br.Position)
+                
+                -- Check visibility of body parts for precise coloring
+                local visibilityMap = {} -- Store Y positions and their visibility
+                if Settings.VisibleCheck and Settings.VisibleCheckActive and localHRP then
+                    -- Check 4 points along the body height (reduced for performance)
+                    local numChecks = 3
+                    for i = 0, numChecks do
+                        local t = i / numChecks -- 0 to 1
+                        local checkY = hrp.Position.Y + (size.Y/2) - (size.Y * t) -- Top to bottom
+                        local checkPos = Vector3.new(hrp.Position.X, checkY, hrp.Position.Z)
+                        
+                        local ray = Ray.new(localHRP.Position, (checkPos - localHRP.Position).Unit * (checkPos - localHRP.Position).Magnitude)
+                        local hit = workspace:FindPartOnRayWithIgnoreList(ray, {LocalPlayer.Character, Camera})
+                        
+                        visibilityMap[i] = (hit and hit:IsDescendantOf(character)) and 1 or 0
+                    end
+                end
                 
                 if tlVis and trVis and blVis and brVis then
                     local minX = math.min(tlPos.X, trPos.X, blPos.X, brPos.X)
@@ -1728,10 +1781,64 @@ local function UpdateESP()
                         ESPCorners[player][8].To = Vector2.new(maxX, maxY - cornerLength)
                         ESPCorners[player][8].Visible = true
                     else
-                        -- Show full box, hide corners
-                        ESPBoxes[player].Position = Vector2.new(minX, minY)
-                        ESPBoxes[player].Size = Vector2.new(width, height)
-                        ESPBoxes[player].Visible = true
+                        -- Use segmented lines for box with precise visibility coloring
+                        if Settings.VisibleCheck and Settings.VisibleCheckActive and ESPBoxLines[player] and next(visibilityMap) then
+                            -- Hide square, show segmented lines
+                            ESPBoxes[player].Visible = false
+                            
+                            local segmentHeight = height / 4
+                            
+                            -- Draw left and right vertical segments (4 segments)
+                            for i = 0, 3 do
+                                local y1 = minY + (i * segmentHeight)
+                                local y2 = minY + ((i + 1) * segmentHeight)
+                                
+                                local isVisible = visibilityMap[i] == 1
+                                local color = isVisible and Settings.VisibleColor or Settings.BoxColor
+                                
+                                -- Left segment
+                                ESPBoxLines[player].left[i + 1].From = Vector2.new(minX, y1)
+                                ESPBoxLines[player].left[i + 1].To = Vector2.new(minX, y2)
+                                ESPBoxLines[player].left[i + 1].Color = color
+                                ESPBoxLines[player].left[i + 1].Visible = true
+                                
+                                -- Right segment
+                                ESPBoxLines[player].right[i + 1].From = Vector2.new(maxX, y1)
+                                ESPBoxLines[player].right[i + 1].To = Vector2.new(maxX, y2)
+                                ESPBoxLines[player].right[i + 1].Color = color
+                                ESPBoxLines[player].right[i + 1].Visible = true
+                            end
+                            
+                            -- Top line
+                            ESPBoxLines[player].top.From = Vector2.new(minX, minY)
+                            ESPBoxLines[player].top.To = Vector2.new(maxX, minY)
+                            ESPBoxLines[player].top.Color = visibilityMap[0] == 1 and Settings.VisibleColor or Settings.BoxColor
+                            ESPBoxLines[player].top.Visible = true
+                            
+                            -- Bottom line
+                            ESPBoxLines[player].bottom.From = Vector2.new(minX, maxY)
+                            ESPBoxLines[player].bottom.To = Vector2.new(maxX, maxY)
+                            ESPBoxLines[player].bottom.Color = visibilityMap[3] == 1 and Settings.VisibleColor or Settings.BoxColor
+                            ESPBoxLines[player].bottom.Visible = true
+                        else
+                            -- Show full box, hide segmented lines
+                            ESPBoxes[player].Position = Vector2.new(minX, minY)
+                            ESPBoxes[player].Size = Vector2.new(width, height)
+                            ESPBoxes[player].Visible = true
+                            
+                            if ESPBoxLines[player] then
+                                if ESPBoxLines[player].left then
+                                    for i = 1, 4 do
+                                        ESPBoxLines[player].left[i].Visible = false
+                                        ESPBoxLines[player].right[i].Visible = false
+                                    end
+                                end
+                                if ESPBoxLines[player].top then
+                                    ESPBoxLines[player].top.Visible = false
+                                    ESPBoxLines[player].bottom.Visible = false
+                                end
+                            end
+                        end
                         
                         if ESPCorners[player] then
                             for i = 1, 8 do
@@ -4549,8 +4656,8 @@ UIElements.Aimbot = CreateToggle(CombatTab.Content, "Aimbot", false, function(en
     end
 end, "Aimbot")
 
-UIElements.AimbotSmooth = CreateSlider(CombatTab.Content, "Smoothness", 1, 10, 1, function(value)
-    Settings.AimbotSmooth = value
+UIElements.AimbotSmooth = CreateSlider(CombatTab.Content, "Smoothness", 0.1, 10, 1, function(value)
+    Settings.AimbotSmooth = math.floor(value * 10) / 10 -- Round to 1 decimal place
 end)
 
 UIElements.AimLock = CreateToggle(CombatTab.Content, "AimLock", false, function(enabled)
@@ -4698,6 +4805,26 @@ end, "FilledBox")
 UIElements.BoxCorner = CreateToggle(VisualsTab.Content, "Box Corner", false, function(enabled)
     Settings.BoxCorner = enabled
 end, "BoxCorner")
+
+UIElements.VisibleCheck = CreateToggleWithColor(VisualsTab.Content, "Visible Check", false, Color3.fromRGB(0, 255, 0), function(enabled)
+    Settings.VisibleCheck = enabled
+    -- Sync Active state based on keybind status and mode
+    if enabled then
+        if not Settings.Keybinds.VisibleCheck.Enabled then
+            Settings.VisibleCheckActive = true
+        elseif Settings.Keybinds.VisibleCheck.Mode == "Always On" then
+            Settings.VisibleCheckActive = true
+        elseif Settings.Keybinds.VisibleCheck.Mode == "Toggle" then
+            Settings.VisibleCheckActive = true
+        else
+            Settings.VisibleCheckActive = false
+        end
+    else
+        Settings.VisibleCheckActive = false
+    end
+end, function(color)
+    Settings.VisibleColor = color
+end, "VisibleCheck")
 
 UIElements.Skeleton = CreateToggleWithColor(VisualsTab.Content, "Skeleton", false, Color3.fromRGB(255, 255, 255), function(enabled)
     Settings.Skeleton = enabled
@@ -6994,7 +7121,7 @@ UserInputService.InputBegan:Connect(function(input, gameProcessed)
     -- Generic keybind handler for all other functions
     local keybindFunctions = {
         "AimLock", "Prediction", "NoRecoil", "HealthBar", "TeamCheck", 
-        "FilledBox", "BoxCorner", "Fullbright", "DebugPanel", "ShowKeylist",
+        "FilledBox", "BoxCorner", "VisibleCheck", "Fullbright", "DebugPanel", "ShowKeylist",
         "LocalSkeleton", "LocalHighlight"
     }
     
@@ -7066,7 +7193,7 @@ UserInputService.InputEnded:Connect(function(input, gameProcessed)
     -- Generic Hold mode release for all other functions
     local keybindFunctions = {
         "AimLock", "Prediction", "NoRecoil", "HealthBar", "TeamCheck", 
-        "FilledBox", "BoxCorner", "Fullbright", "DebugPanel", "ShowKeylist",
+        "FilledBox", "BoxCorner", "VisibleCheck", "Fullbright", "DebugPanel", "ShowKeylist",
         "LocalSkeleton", "LocalHighlight"
     }
     
