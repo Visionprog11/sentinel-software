@@ -1,3 +1,173 @@
+-- ███████╗███████╗███╗   ██╗████████╗██╗███╗   ██╗███████╗██╗     
+-- ██╔════╝██╔════╝████╗  ██║╚══██╔══╝██║████╗  ██║██╔════╝██║     
+-- ███████╗█████╗  ██╔██╗ ██║   ██║   ██║██╔██╗ ██║█████╗  ██║     
+-- ╚════██║██╔══╝  ██║╚██╗██║   ██║   ██║██║╚██╗██║██╔══╝  ██║     
+-- ███████║███████╗██║ ╚████║   ██║   ██║██║ ╚████║███████╗███████╗
+-- ╚══════╝╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚═╝╚═╝  ╚═══╝╚══════╝╚══════╝
+--
+-- Advanced Roblox Enhancement Suite
+-- Version: 1.0.0 | Build: #1024
+-- Press INSERT to open menu
+
+-- Loading Screen
+local LoaderGui = Instance.new("ScreenGui")
+LoaderGui.Name = "SentinelLoader"
+LoaderGui.ResetOnSpawn = false
+LoaderGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+LoaderGui.Parent = game:GetService("CoreGui")
+
+local LoaderFrame = Instance.new("Frame")
+LoaderFrame.Size = UDim2.new(0, 400, 0, 250)
+LoaderFrame.Position = UDim2.new(0.5, -200, 0.5, -125)
+LoaderFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
+LoaderFrame.BorderSizePixel = 0
+LoaderFrame.Parent = LoaderGui
+
+local LoaderCorner = Instance.new("UICorner")
+LoaderCorner.CornerRadius = UDim.new(0, 15)
+LoaderCorner.Parent = LoaderFrame
+
+-- Gradient
+local Gradient = Instance.new("UIGradient")
+Gradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(20, 20, 30)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(15, 15, 20))
+}
+Gradient.Rotation = 90
+Gradient.Parent = LoaderFrame
+
+-- Logo
+local Logo = Instance.new("TextLabel")
+Logo.Size = UDim2.new(1, 0, 0, 60)
+Logo.Position = UDim2.new(0, 0, 0, 30)
+Logo.BackgroundTransparency = 1
+Logo.Text = "SENTINEL"
+Logo.TextColor3 = Color3.fromRGB(0, 200, 255)
+Logo.TextSize = 36
+Logo.Font = Enum.Font.GothamBold
+Logo.Parent = LoaderFrame
+
+-- Subtitle
+local Subtitle = Instance.new("TextLabel")
+Subtitle.Size = UDim2.new(1, 0, 0, 20)
+Subtitle.Position = UDim2.new(0, 0, 0, 95)
+Subtitle.BackgroundTransparency = 1
+Subtitle.Text = "Advanced Roblox Enhancement Suite"
+Subtitle.TextColor3 = Color3.fromRGB(150, 150, 200)
+Subtitle.TextSize = 12
+Subtitle.Font = Enum.Font.Gotham
+Subtitle.Parent = LoaderFrame
+
+-- Version
+local Version = Instance.new("TextLabel")
+Version.Size = UDim2.new(1, 0, 0, 18)
+Version.Position = UDim2.new(0, 0, 0, 120)
+Version.BackgroundTransparency = 1
+Version.Text = "Version 1.0.0 | Build #1024"
+Version.TextColor3 = Color3.fromRGB(100, 100, 150)
+Version.TextSize = 10
+Version.Font = Enum.Font.Gotham
+Version.Parent = LoaderFrame
+
+-- Status
+local Status = Instance.new("TextLabel")
+Status.Size = UDim2.new(1, 0, 0, 20)
+Status.Position = UDim2.new(0, 0, 0, 155)
+Status.BackgroundTransparency = 1
+Status.Text = "Initializing..."
+Status.TextColor3 = Color3.fromRGB(200, 200, 200)
+Status.TextSize = 11
+Status.Font = Enum.Font.Gotham
+Status.Parent = LoaderFrame
+
+-- Progress Bar Background
+local ProgressBG = Instance.new("Frame")
+ProgressBG.Size = UDim2.new(0, 300, 0, 6)
+ProgressBG.Position = UDim2.new(0.5, -150, 0, 190)
+ProgressBG.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
+ProgressBG.BorderSizePixel = 0
+ProgressBG.Parent = LoaderFrame
+
+local ProgressBGCorner = Instance.new("UICorner")
+ProgressBGCorner.CornerRadius = UDim.new(0, 3)
+ProgressBGCorner.Parent = ProgressBG
+
+-- Progress Bar
+local ProgressBar = Instance.new("Frame")
+ProgressBar.Size = UDim2.new(0, 0, 1, 0)
+ProgressBar.BackgroundColor3 = Color3.fromRGB(0, 200, 255)
+ProgressBar.BorderSizePixel = 0
+ProgressBar.Parent = ProgressBG
+
+local ProgressBarCorner = Instance.new("UICorner")
+ProgressBarCorner.CornerRadius = UDim.new(0, 3)
+ProgressBarCorner.Parent = ProgressBar
+
+-- Progress Gradient
+local ProgressGradient = Instance.new("UIGradient")
+ProgressGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 150, 255)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 200, 255))
+}
+ProgressGradient.Parent = ProgressBar
+
+-- Loading Animation
+local function UpdateProgress(progress, text)
+    Status.Text = text
+    game:GetService("TweenService"):Create(ProgressBar, TweenInfo.new(0.3), {Size = UDim2.new(progress, 0, 1, 0)}):Play()
+    wait(0.3)
+end
+
+-- Loading Steps
+task.spawn(function()
+    wait(0.5)
+    UpdateProgress(0.2, "Loading services...")
+    wait(0.3)
+    UpdateProgress(0.4, "Initializing ESP...")
+    wait(0.3)
+    UpdateProgress(0.6, "Loading aimbot...")
+    wait(0.3)
+    UpdateProgress(0.8, "Setting up GUI...")
+    wait(0.3)
+    UpdateProgress(1, "Ready!")
+    wait(0.5)
+    
+    -- Fade out
+    game:GetService("TweenService"):Create(LoaderFrame, TweenInfo.new(0.5), {
+        BackgroundTransparency = 1
+    }):Play()
+    
+    for _, child in ipairs(LoaderFrame:GetDescendants()) do
+        if child:IsA("TextLabel") then
+            game:GetService("TweenService"):Create(child, TweenInfo.new(0.5), {
+                TextTransparency = 1
+            }):Play()
+        elseif child:IsA("Frame") and child ~= LoaderFrame then
+            game:GetService("TweenService"):Create(child, TweenInfo.new(0.5), {
+                BackgroundTransparency = 1
+            }):Play()
+        end
+    end
+    
+    wait(0.6)
+    LoaderGui:Destroy()
+    
+    -- Активируем GUI после завершения загрузки
+    wait(0.2)
+    local sentinelGui = game:GetService("CoreGui"):FindFirstChild("SentinelGui")
+    if sentinelGui then
+        sentinelGui.Enabled = true
+    end
+    _G.SentinelLoaded = true
+    
+    -- Show notification
+    game:GetService("StarterGui"):SetCore("SendNotification", {
+        Title = "Sentinel",
+        Text = "Loaded successfully! Press INSERT to open menu",
+        Duration = 5
+    })
+end)
+
 -- Roblox Sentinel
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
@@ -7,31 +177,35 @@ local Camera = workspace.CurrentCamera
 local LocalPlayer = Players.LocalPlayer
 
 -- Check and create Sentinel folder
-local sentinelFolder = "C:/Sentinel/"
-local configFolder = sentinelFolder .. "Configs/"
+local sentinelFolder = "Sentinel"
+local configFolder = sentinelFolder .. "/Configs"
 
--- Create folders using exploit functions or os
-if makefolder and isfolder then
-    if not isfolder(sentinelFolder) then
-        makefolder(sentinelFolder)
+-- Create folders using exploit functions
+local function EnsureFolders()
+    if makefolder and isfolder then
+        if not isfolder(sentinelFolder) then
+            makefolder(sentinelFolder)
+            print("[Sentinel] Created folder: " .. sentinelFolder)
+        end
+        if not isfolder(configFolder) then
+            makefolder(configFolder)
+            print("[Sentinel] Created folder: " .. configFolder)
+        end
+        print("[Sentinel] Config folder: workspace/" .. configFolder)
+        return true
+    else
+        warn("[Sentinel] File system functions not available")
+        return false
     end
-    if not isfolder(configFolder) then
-        makefolder(configFolder)
-    end
-    print("Sentinel folder: " .. sentinelFolder)
-elseif os and os.execute then
-    pcall(function()
-        os.execute('mkdir "' .. sentinelFolder:gsub("/", "\\") .. '" 2>nul')
-        os.execute('mkdir "' .. configFolder:gsub("/", "\\") .. '" 2>nul')
-    end)
-    print("Sentinel folder: " .. sentinelFolder)
-else
-    warn("No file system functions available")
 end
+
+-- Initialize folders
+local fileSystemAvailable = EnsureFolders()
 
 -- Settings
 local Settings = {
-    ESP = false,
+    ESP = true,
+    ESPActive = true, -- Actual activation state controlled by keybind
     Fullbright = false,
     HealthBar = false,
     Name = false,
@@ -44,6 +218,7 @@ local Settings = {
     DistanceColor = Color3.fromRGB(255, 255, 255),
     ESPMaxDistance = 2000,
     Aimbot = false,
+    AimbotActive = false, -- Actual activation state controlled by keybind
     AimbotFOV = 100,
     ShowFOV = false,
     FOVColor = Color3.fromRGB(255, 255, 255),
@@ -56,9 +231,363 @@ local Settings = {
     Prediction = false,
     PredictionStrength = 10,
     InfiniteJump = false,
+    InfiniteJumpActive = false, -- Actual activation state controlled by keybind
     DebugPanel = false,
-    DebugPanelPos = {X = -360, Y = 10} -- Позиция дебаг панели
+    DebugPanelPos = {X = -360, Y = 10},
+    MenuBind = Enum.KeyCode.Insert,
+    Skeleton = false,
+    SkeletonColor = Color3.fromRGB(255, 255, 255),
+    LocalSkeleton = false,
+    LocalSkeletonColor = Color3.fromRGB(0, 255, 0),
+    LocalHighlight = false,
+    LocalHighlightColor = Color3.fromRGB(255, 255, 0),
+    MenuColor = Color3.fromRGB(255, 20, 147),
+    
+    -- Keybinds
+    Keybinds = {
+        ESP = {Key = Enum.KeyCode.E, Mode = "Always On", Enabled = true},
+        Aimbot = {Key = Enum.UserInputType.MouseButton2, Mode = "Hold", Enabled = true},
+        InfiniteJump = {Key = Enum.KeyCode.J, Mode = "Toggle", Enabled = true}
+    }
 }
+
+-- UI Elements storage for updating
+local UIElements = {}
+
+-- Store all elements that use accent color (pink)
+local AccentColorElements = {
+    StatusBarBottom = nil,
+    Title = {},
+    TabIndicatorStroke = nil,
+    ScrollBars = {},
+    CheckboxBackgrounds = {},
+    CheckboxStrokes = {},
+    SliderFills = {},
+    SliderHandles = {},
+    DropdownStrokes = {},
+    ColorButtonStrokes = {},
+    ConfigLoadButtons = {},
+    ConfigActionButtons = {},
+    KeylistGradient = nil,
+    KeylistStroke = nil,
+    SentinelTitleGradient = nil
+}
+
+-- Function to update all accent colors
+local function UpdateAccentColor(newColor)
+    Settings.MenuColor = newColor
+    
+    -- Update StatusBarBottom
+    if AccentColorElements.StatusBarBottom then
+        AccentColorElements.StatusBarBottom.BackgroundColor3 = newColor
+    end
+    
+    -- Update Title elements
+    if AccentColorElements.Title then
+        for _, title in pairs(AccentColorElements.Title) do
+            if title and title.Parent then
+                title.TextColor3 = newColor
+            end
+        end
+    end
+    
+    -- Update TabIndicator stroke
+    if AccentColorElements.TabIndicatorStroke then
+        AccentColorElements.TabIndicatorStroke.Color = newColor
+    end
+    
+    -- Update ScrollBars
+    for _, sb in pairs(AccentColorElements.ScrollBars) do
+        if sb and sb.Parent then
+            sb.ScrollBarImageColor3 = newColor
+        end
+    end
+    
+    -- Update Checkbox backgrounds
+    for _, cb in pairs(AccentColorElements.CheckboxBackgrounds) do
+        if cb and cb.Parent then
+            cb.BackgroundColor3 = newColor
+        end
+    end
+    
+    -- Update Checkbox strokes
+    for _, stroke in pairs(AccentColorElements.CheckboxStrokes) do
+        if stroke and stroke.Parent then
+            stroke.Color = newColor
+        end
+    end
+    
+    -- Update Slider fills
+    for _, fill in pairs(AccentColorElements.SliderFills) do
+        if fill and fill.Parent then
+            fill.BackgroundColor3 = newColor
+        end
+    end
+    
+    -- Update Slider handles
+    for _, handle in pairs(AccentColorElements.SliderHandles) do
+        if handle and handle.Parent then
+            handle.BackgroundColor3 = newColor
+        end
+    end
+    
+    -- Update Dropdown strokes
+    for _, stroke in pairs(AccentColorElements.DropdownStrokes) do
+        if stroke and stroke.Parent then
+            stroke.Color = newColor
+        end
+        if stroke and stroke.Parent then
+            stroke.Color = newColor
+        end
+    end
+    
+    -- Update Config Load buttons
+    for _, btn in pairs(AccentColorElements.ConfigLoadButtons) do
+        if btn and btn.Parent then
+            btn.BackgroundColor3 = newColor
+        end
+    end
+    
+    -- Update Config Action buttons (Refresh, Save, Load)
+    for _, btn in pairs(AccentColorElements.ConfigActionButtons) do
+        if btn and btn.Parent then
+            btn.BackgroundColor3 = newColor
+        end
+    end
+    
+    -- Update Keylist gradient
+    if AccentColorElements.KeylistGradient then
+        AccentColorElements.KeylistGradient.Color = ColorSequence.new({
+            ColorSequenceKeypoint.new(0, newColor),
+            ColorSequenceKeypoint.new(0.25, Color3.fromRGB(255, 255, 255)),
+            ColorSequenceKeypoint.new(0.5, newColor),
+            ColorSequenceKeypoint.new(0.75, Color3.fromRGB(255, 255, 255)),
+            ColorSequenceKeypoint.new(1, newColor)
+        })
+    end
+    
+    -- Update Keylist glow
+    if AccentColorElements.KeylistGlow then
+        AccentColorElements.KeylistGlow.ImageColor3 = newColor
+    end
+    
+    -- Update SENTINEL title gradient
+    if AccentColorElements.SentinelTitleGradient then
+        AccentColorElements.SentinelTitleGradient.Color = ColorSequence.new({
+            ColorSequenceKeypoint.new(0, newColor),
+            ColorSequenceKeypoint.new(0.5, Color3.fromRGB(255, 255, 255)),
+            ColorSequenceKeypoint.new(1, newColor)
+        })
+    end
+    
+    -- Update Keylist item key labels
+    if KeylistItems then
+        for _, item in pairs(KeylistItems) do
+            if item and item.Parent then
+                for _, child in ipairs(item:GetChildren()) do
+                    if child:IsA("TextLabel") and child.TextXAlignment == Enum.TextXAlignment.Right then
+                        child.TextColor3 = newColor
+                    end
+                end
+            end
+        end
+    end
+end
+
+-- Notification system
+local NotificationQueue = {}
+local MaxNotifications = 5
+
+local function ShowNotification(text, duration)
+    duration = duration or 2
+    
+    -- Remove oldest notification if queue is full
+    if #NotificationQueue >= MaxNotifications then
+        local oldest = NotificationQueue[1]
+        if oldest and oldest.Parent then
+            TweenService:Create(oldest, TweenInfo.new(0.2), {
+                Position = UDim2.new(0.5, -150, 1, 100)
+            }):Play()
+            task.wait(0.2)
+            oldest.Parent:Destroy()
+        end
+        table.remove(NotificationQueue, 1)
+    end
+    
+    -- Create notification
+    local notif = Instance.new("ScreenGui")
+    notif.Name = "SentinelNotification"
+    notif.ResetOnSpawn = false
+    notif.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    notif.Parent = game:GetService("CoreGui")
+    
+    local frame = Instance.new("Frame")
+    frame.Size = UDim2.new(0, 300, 0, 50)
+    frame.Position = UDim2.new(0.5, -150, 1, 100)
+    frame.BackgroundColor3 = Color3.fromRGB(35, 35, 40)
+    frame.BorderSizePixel = 0
+    frame.Parent = notif
+    
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = UDim.new(0, 10)
+    corner.Parent = frame
+    
+    local stroke = Instance.new("UIStroke")
+    stroke.Color = Color3.fromRGB(100, 50, 200)
+    stroke.Thickness = 2
+    stroke.Parent = frame
+    
+    local textLabel = Instance.new("TextLabel")
+    textLabel.Size = UDim2.new(1, -20, 1, 0)
+    textLabel.Position = UDim2.new(0, 10, 0, 0)
+    textLabel.BackgroundTransparency = 1
+    textLabel.Text = text
+    textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    textLabel.TextSize = 14
+    textLabel.Font = Enum.Font.GothamBold
+    textLabel.TextXAlignment = Enum.TextXAlignment.Center
+    textLabel.TextWrapped = true
+    textLabel.Parent = frame
+    
+    -- Add to queue
+    table.insert(NotificationQueue, frame)
+    
+    -- Update positions of all notifications
+    for i, notifFrame in ipairs(NotificationQueue) do
+        local targetY = -70 - ((i - 1) * 60)
+        TweenService:Create(notifFrame, TweenInfo.new(0.3, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+            Position = UDim2.new(0.5, -150, 1, targetY)
+        }):Play()
+    end
+    
+    -- Remove after duration
+    task.spawn(function()
+        task.wait(duration)
+        
+        -- Find index
+        local index = table.find(NotificationQueue, frame)
+        if index then
+            table.remove(NotificationQueue, index)
+        end
+        
+        -- Animate out
+        TweenService:Create(frame, TweenInfo.new(0.3, Enum.EasingStyle.Back, Enum.EasingDirection.In), {
+            Position = UDim2.new(0.5, -150, 1, 100)
+        }):Play()
+        
+        task.wait(0.3)
+        if notif and notif.Parent then
+            notif:Destroy()
+        end
+        
+        -- Update positions of remaining notifications
+        for i, notifFrame in ipairs(NotificationQueue) do
+            local targetY = -70 - ((i - 1) * 60)
+            TweenService:Create(notifFrame, TweenInfo.new(0.3, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+                Position = UDim2.new(0.5, -150, 1, targetY)
+            }):Play()
+        end
+    end)
+end
+
+-- Function to get full workspace path
+local function GetWorkspacePath()
+    -- Try to detect workspace path by creating a test file and checking common locations
+    local testFileName = "sentinel_path_detection.txt"
+    
+    if writefile and readfile and isfile then
+        writefile(testFileName, "test")
+        
+        -- Common executor workspace paths
+        local username = game:GetService("Players").LocalPlayer.Name -- Not actual Windows username but we'll try
+        local possiblePaths = {
+            os.getenv("LOCALAPPDATA") .. "\\Solara\\workspace",
+            os.getenv("LOCALAPPDATA") .. "\\Synapse\\workspace", 
+            os.getenv("LOCALAPPDATA") .. "\\SynapseX\\workspace",
+            os.getenv("LOCALAPPDATA") .. "\\Fluxus\\workspace",
+            os.getenv("LOCALAPPDATA") .. "\\Electron\\workspace",
+            os.getenv("APPDATA") .. "\\Krnl\\workspace",
+            os.getenv("LOCALAPPDATA") .. "\\Arceus\\workspace",
+            os.getenv("LOCALAPPDATA") .. "\\Oxygen\\workspace"
+        }
+        
+        -- Try each path
+        for _, basePath in ipairs(possiblePaths) do
+            local fullPath = basePath .. "\\" .. sentinelFolder .. "\\Configs"
+            local success = pcall(function()
+                -- Check if path exists by trying to access it
+                local handle = io.popen('dir "' .. fullPath .. '" 2>nul')
+                if handle then
+                    local result = handle:read("*a")
+                    handle:close()
+                    if result and result ~= "" then
+                        return fullPath
+                    end
+                end
+            end)
+            
+            if success then
+                delfile(testFileName)
+                return fullPath
+            end
+        end
+        
+        delfile(testFileName)
+    end
+    
+    -- Fallback to relative path
+    return "workspace\\" .. sentinelFolder .. "\\Configs"
+end
+
+-- Function to set autoload config
+local function SetAutoloadConfig(configName)
+    if not fileSystemAvailable then
+        ShowNotification("File system not available!", 2)
+        return false
+    end
+    
+    local success, err = pcall(function()
+        local lastConfigPath = sentinelFolder .. "/last_config.txt"
+        if writefile then
+            writefile(lastConfigPath, configName)
+            ShowNotification("Autoload set: " .. configName, 2)
+            print("[Sentinel] Autoload config set: " .. configName)
+            return true
+        else
+            warn("[Sentinel] writefile function not available")
+            return false
+        end
+    end)
+    
+    if not success then
+        warn("[Sentinel] Failed to set autoload config: " .. tostring(err))
+        ShowNotification("Failed to set autoload!", 2)
+        return false
+    end
+    
+    return true
+end
+
+-- Function to get current autoload config
+local function GetAutoloadConfig()
+    if not fileSystemAvailable or not isfile then
+        return nil
+    end
+    
+    local lastConfigPath = sentinelFolder .. "/last_config.txt"
+    if isfile(lastConfigPath) then
+        local success, lastConfig = pcall(function()
+            return readfile(lastConfigPath)
+        end)
+        if success and lastConfig and lastConfig ~= "" then
+            return lastConfig
+        end
+    end
+    
+    return nil
+end
+
+-- Try to auto-load last config (moved to end of file after UI is created)
 
 -- Aimbot
 local FOVCircle = Drawing.new("Circle")
@@ -173,6 +702,15 @@ local function GetPredictedPosition(hitbox, distance)
 end
 
 local function UpdateAimbot()
+    -- Early exit if aimbot not enabled or not active
+    if not Settings.Aimbot or not Settings.AimbotActive then
+        -- Reset locked target
+        lockedTarget = nil
+        lockedHitbox = nil
+        lastCameraRotation = nil
+        return
+    end
+    
     local isAiming = UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton2)
     local isShooting = UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton1)
     
@@ -200,14 +738,23 @@ local function UpdateAimbot()
         lastCameraRotation = nil
     end
     
-    -- Only aim when right mouse button is pressed
-    if isAiming then
+    -- Only aim when right mouse button is pressed AND aimbot is enabled and active
+    if isAiming and Settings.Aimbot and Settings.AimbotActive then
         local localHRP = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
         
         -- AimLock - instant lock
         if Settings.AimLock then
             if not lockedTarget or not lockedTarget.Character then
                 lockedTarget, lockedHitbox = GetClosestPlayer()
+            end
+            
+            -- Check if locked target is still alive
+            if lockedTarget and lockedTarget.Character then
+                local humanoid = lockedTarget.Character:FindFirstChild("Humanoid")
+                if not humanoid or humanoid.Health <= 0 then
+                    lockedTarget = nil
+                    lockedHitbox = nil
+                end
             end
             
             if lockedTarget and lockedTarget.Character and lockedHitbox and localHRP then
@@ -228,7 +775,7 @@ local function UpdateAimbot()
         end
         
         -- Smooth Aimbot (works independently)
-        if Settings.Aimbot and not Settings.AimLock then
+        if not Settings.AimLock then
             local target, hitbox = GetClosestPlayer()
             if target and target.Character and hitbox and localHRP then
                 local distance = (hitbox.Position - localHRP.Position).Magnitude
@@ -256,8 +803,10 @@ local function UpdateAimbot()
         lockedTarget = nil
         lockedHitbox = nil
     end
-    
-    -- Update FOV circle
+end
+
+-- Update FOV Circle (independent from aimbot)
+local function UpdateFOVCircle()
     FOVCircle.Visible = Settings.ShowFOV
     FOVCircle.Radius = Settings.AimbotFOV
     FOVCircle.Color = Settings.FOVColor
@@ -305,7 +854,7 @@ local function SetupHooks()
 end
 
 local function UpdateInfiniteJump()
-    if not Settings.InfiniteJump then
+    if not Settings.InfiniteJump or not Settings.InfiniteJumpActive then
         return
     end
     
@@ -330,6 +879,126 @@ end
 
 -- Setup hooks
 SetupHooks()
+
+-- Skeleton ESP Functions
+local function CreateSkeletonLine()
+    local line = Drawing.new("Line")
+    line.Thickness = 2
+    line.Transparency = 1
+    line.Visible = false
+    return line
+end
+
+local function GetSkeletonConnections()
+    return {
+        {"Head", "UpperTorso"},
+        {"UpperTorso", "LowerTorso"},
+        {"UpperTorso", "LeftUpperArm"},
+        {"LeftUpperArm", "LeftLowerArm"},
+        {"LeftLowerArm", "LeftHand"},
+        {"UpperTorso", "RightUpperArm"},
+        {"RightUpperArm", "RightLowerArm"},
+        {"RightLowerArm", "RightHand"},
+        {"LowerTorso", "LeftUpperLeg"},
+        {"LeftUpperLeg", "LeftLowerLeg"},
+        {"LeftLowerLeg", "LeftFoot"},
+        {"LowerTorso", "RightUpperLeg"},
+        {"RightUpperLeg", "RightLowerLeg"},
+        {"RightLowerLeg", "RightFoot"}
+    }
+end
+
+local function UpdateSkeleton(player, skeletonLines, color)
+    if not player.Character then
+        for _, line in pairs(skeletonLines) do
+            line.Visible = false
+        end
+        return
+    end
+    
+    local connections = GetSkeletonConnections()
+    local lineIndex = 1
+    
+    for _, connection in ipairs(connections) do
+        local part1 = player.Character:FindFirstChild(connection[1])
+        local part2 = player.Character:FindFirstChild(connection[2])
+        
+        if not skeletonLines[lineIndex] then
+            skeletonLines[lineIndex] = CreateSkeletonLine()
+        end
+        
+        local line = skeletonLines[lineIndex]
+        
+        if part1 and part2 then
+            local pos1, onScreen1 = Camera:WorldToViewportPoint(part1.Position)
+            local pos2, onScreen2 = Camera:WorldToViewportPoint(part2.Position)
+            
+            if onScreen1 and onScreen2 then
+                line.From = Vector2.new(pos1.X, pos1.Y)
+                line.To = Vector2.new(pos2.X, pos2.Y)
+                line.Color = color
+                line.Visible = true
+            else
+                line.Visible = false
+            end
+        else
+            line.Visible = false
+        end
+        
+        lineIndex = lineIndex + 1
+    end
+end
+-- Local ESP Functions
+local function UpdateLocalHighlight()
+    if not Settings.LocalHighlight then
+        if LocalHighlight then
+            pcall(function()
+                LocalHighlight:Destroy()
+            end)
+            LocalHighlight = nil
+        end
+        return
+    end
+    
+    if not LocalPlayer.Character or not LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+        if LocalHighlight then
+            pcall(function()
+                LocalHighlight.Enabled = false
+            end)
+        end
+        return
+    end
+    
+    -- Create or update highlight
+    if not LocalHighlight or not LocalHighlight.Parent then
+        pcall(function()
+            if LocalHighlight then
+                LocalHighlight:Destroy()
+            end
+            LocalHighlight = Instance.new("Highlight")
+            LocalHighlight.Name = "SentinelLocalHighlight"
+            LocalHighlight.FillTransparency = 0.5
+            LocalHighlight.OutlineTransparency = 0
+            LocalHighlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+            LocalHighlight.Adornee = LocalPlayer.Character
+            LocalHighlight.Parent = game:GetService("CoreGui")
+        end)
+    end
+    
+    -- Update colors and adornee
+    if LocalHighlight then
+        pcall(function()
+            LocalHighlight.FillColor = Settings.LocalHighlightColor
+            LocalHighlight.OutlineColor = Settings.LocalHighlightColor
+            LocalHighlight.Enabled = true
+            
+            -- Update adornee if character changed
+            if LocalHighlight.Adornee ~= LocalPlayer.Character then
+                LocalHighlight.Adornee = LocalPlayer.Character
+            end
+        end)
+    end
+end
 
 -- Debug Panel
 local DebugGui = Instance.new("ScreenGui")
@@ -594,83 +1263,86 @@ local ESPCorners = {}
 local ESPNames = {}
 local ESPDistances = {}
 local ESPHealthBars = {}
+local ESPSkeletons = {}
+local LocalSkeletonLines = {}
+local LocalHighlight = nil
+local ESPDistances = {}
+local ESPHealthBars = {}
 
 -- Model Dumper - automatically detect custom character models
-local ModelCache = {}
-
-local function DumpCharacterModel(character)
-    if ModelCache[character] then
-        return ModelCache[character]
-    end
-    
-    local model = {
-        RootPart = nil,
-        Head = nil,
-        Torso = nil,
-        Humanoid = nil,
-        AllParts = {}
-    }
-    
-    -- Find Humanoid
-    model.Humanoid = character:FindFirstChildOfClass("Humanoid")
-    
-    -- Find Root Part (priority order)
-    model.RootPart = character:FindFirstChild("HumanoidRootPart") 
-        or character:FindFirstChild("Torso") 
-        or character:FindFirstChild("UpperTorso")
-        or character.PrimaryPart
-    
-    -- If still no root, find largest BasePart
-    if not model.RootPart then
-        local largestSize = 0
-        for _, child in ipairs(character:GetDescendants()) do
-            if child:IsA("BasePart") then
-                local size = child.Size.Magnitude
-                if size > largestSize then
-                    largestSize = size
-                    model.RootPart = child
-                end
-            end
-        end
-    end
-    
-    -- Find Head (look for "Head" or part at highest Y position)
-    model.Head = character:FindFirstChild("Head")
-    if not model.Head and model.RootPart then
-        local highestY = -math.huge
-        for _, child in ipairs(character:GetDescendants()) do
-            if child:IsA("BasePart") then
-                if child.Position.Y > highestY then
-                    highestY = child.Position.Y
-                    model.Head = child
-                end
-            end
-        end
-    end
-    
-    -- Find Torso
-    model.Torso = character:FindFirstChild("Torso") 
-        or character:FindFirstChild("UpperTorso")
-        or character:FindFirstChild("LowerTorso")
-        or model.RootPart
-    
-    -- Collect all BaseParts for hitbox detection
-    for _, child in ipairs(character:GetDescendants()) do
-        if child:IsA("BasePart") and child.Name ~= "HumanoidRootPart" then
-            table.insert(model.AllParts, child)
-        end
-    end
-    
-    ModelCache[character] = model
-    return model
-end
-
 -- Clear cache when character is removed
 Players.PlayerRemoving:Connect(function(player)
-    if player.Character then
-        ModelCache[player.Character] = nil
+    -- Clean up ESP objects when player leaves
+    if ESPBoxes[player] then
+        ESPBoxes[player]:Remove()
+        ESPBoxes[player] = nil
+    end
+    if ESPCorners[player] then
+        for i = 1, 8 do
+            ESPCorners[player][i]:Remove()
+        end
+        ESPCorners[player] = nil
+    end
+    if ESPSkeletons[player] then
+        for _, line in pairs(ESPSkeletons[player]) do
+            line:Remove()
+        end
+        ESPSkeletons[player] = nil
+    end
+    if ESPNames[player] then
+        ESPNames[player]:Remove()
+        ESPNames[player] = nil
+    end
+    if ESPDistances[player] then
+        ESPDistances[player]:Remove()
+        ESPDistances[player] = nil
+    end
+    if ESPHealthBars[player] then
+        if ESPHealthBars[player].bg then
+            ESPHealthBars[player].bg:Remove()
+        end
+        if ESPHealthBars[player].outline then
+            ESPHealthBars[player].outline:Remove()
+        end
+        if ESPHealthBars[player].bar then
+            ESPHealthBars[player].bar:Remove()
+        end
+        ESPHealthBars[player] = nil
     end
 end)
+
+-- Track local player alive state
+local isLocalPlayerAlive = true
+
+-- Handle local player respawn for Local Highlight
+LocalPlayer.CharacterAdded:Connect(function(character)
+    -- Reset Local Highlight on respawn
+    if LocalHighlight then
+        LocalHighlight.Adornee = character
+    end
+    
+    -- Set alive state to true on respawn
+    isLocalPlayerAlive = true
+    
+    -- Setup death detection for local player
+    local humanoid = character:WaitForChild("Humanoid", 5)
+    if humanoid then
+        humanoid.Died:Connect(function()
+            isLocalPlayerAlive = false
+        end)
+    end
+end)
+
+-- Setup death detection for existing character
+if LocalPlayer.Character then
+    local humanoid = LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        isLocalPlayerAlive = humanoid.Health > 0
+        humanoid.Died:Connect(function()
+            isLocalPlayerAlive = false
+        end)
+    end
+end
 
 -- Function to hide player ESP
 local function HidePlayerESP(player)
@@ -693,61 +1365,65 @@ local function HidePlayerESP(player)
         ESPHealthBars[player].outline.Visible = false
         ESPHealthBars[player].bar.Visible = false
     end
-end
-
--- Clear cache on character added/respawn and detect death
-for _, player in ipairs(Players:GetPlayers()) do
-    player.CharacterAdded:Connect(function(character)
-        ModelCache[character] = nil
-        
-        -- Detect death
-        local humanoid = character:WaitForChild("Humanoid", 5)
-        if humanoid then
-            humanoid.Died:Connect(function()
-                HidePlayerESP(player)
-                ModelCache[character] = nil
-            end)
-        end
-    end)
-    player.CharacterRemoving:Connect(function(character)
-        ModelCache[character] = nil
-        HidePlayerESP(player)
-    end)
-    
-    -- Setup death detection for existing characters
-    if player.Character then
-        local humanoid = player.Character:FindFirstChildOfClass("Humanoid")
-        if humanoid then
-            humanoid.Died:Connect(function()
-                HidePlayerESP(player)
-                ModelCache[player.Character] = nil
-            end)
+    if ESPSkeletons[player] then
+        for _, line in pairs(ESPSkeletons[player]) do
+            if line then
+                line.Visible = false
+            end
         end
     end
 end
 
-Players.PlayerAdded:Connect(function(player)
+-- Setup death detection for all players
+for _, player in ipairs(Players:GetPlayers()) do
+    if player.Character then
+        local humanoid = player.Character:FindFirstChildOfClass("Humanoid")
+        if humanoid then
+            humanoid.Died:Connect(function()
+                -- Just hide ESP, don't delete it
+                HidePlayerESP(player)
+            end)
+        end
+    end
+    
     player.CharacterAdded:Connect(function(character)
-        ModelCache[character] = nil
-        
-        -- Detect death
+        -- Setup death detection for new character
         local humanoid = character:WaitForChild("Humanoid", 5)
         if humanoid then
             humanoid.Died:Connect(function()
+                -- Just hide ESP, don't delete it
                 HidePlayerESP(player)
-                ModelCache[character] = nil
             end)
         end
     end)
+    
     player.CharacterRemoving:Connect(function(character)
-        ModelCache[character] = nil
+        -- Just hide ESP when character is removed
+        HidePlayerESP(player)
+    end)
+end
+
+Players.PlayerAdded:Connect(function(player)
+    player.CharacterAdded:Connect(function(character)
+        -- Setup death detection for new character
+        local humanoid = character:WaitForChild("Humanoid", 5)
+        if humanoid then
+            humanoid.Died:Connect(function()
+                -- Just hide ESP, don't delete it
+                HidePlayerESP(player)
+            end)
+        end
+    end)
+    
+    player.CharacterRemoving:Connect(function(character)
+        -- Just hide ESP when character is removed
         HidePlayerESP(player)
     end)
 end)
 
 local function UpdateESP()
-    -- Hide all ESP boxes first if ESP is disabled
-    if not Settings.ESP then
+    -- Hide all ESP boxes first if ESP is disabled or not active
+    if not Settings.ESP or not Settings.ESPActive then
         for _, box in pairs(ESPBoxes) do
             if box then box.Visible = false end
         end
@@ -764,11 +1440,22 @@ local function UpdateESP()
                 healthBar.bar.Visible = false
             end
         end
+        for _, skeleton in pairs(ESPSkeletons) do
+            if skeleton then
+                for _, line in pairs(skeleton) do
+                    if line then line.Visible = false end
+                end
+            end
+        end
         return
     end
     
     local localChar = LocalPlayer.Character
     local localHRP = localChar and localChar:FindFirstChild("HumanoidRootPart")
+    
+    -- Cache camera for performance
+    local cam = workspace.CurrentCamera
+    if not cam then return end
     
     for _, player in ipairs(Players:GetPlayers()) do
         -- Skip local player completely
@@ -782,25 +1469,24 @@ local function UpdateESP()
                     ESPHealthBars[player].outline.Visible = false
                     ESPHealthBars[player].bar.Visible = false
                 end
+                if ESPSkeletons[player] then
+                    for _, line in pairs(ESPSkeletons[player]) do
+                        if line then
+                            line.Visible = false
+                        end
+                    end
+                end
             end
         elseif player.Character then
             local character = player.Character
-            local model = DumpCharacterModel(character)
-            local humanoid = model.Humanoid
-            local hrp = model.RootPart
+            local humanoid = character:FindFirstChildOfClass("Humanoid")
+            local hrp = character:FindFirstChild("HumanoidRootPart") or character:FindFirstChild("Torso") or character:FindFirstChild("UpperTorso")
             
-            -- Quick validation
-            local isValid = humanoid and humanoid.Health > 0 and hrp
-            local passTeamCheck = not Settings.TeamCheck or player.Team ~= LocalPlayer.Team
+            -- Simple validation - just check if parts exist and player is alive
+            local isValid = hrp and humanoid and humanoid.Health > 0
             
-            -- Check distance limit
-            local withinDistance = true
-            if isValid and localHRP then
-                local distanceToPlayer = (hrp.Position - localHRP.Position).Magnitude
-                withinDistance = distanceToPlayer <= Settings.ESPMaxDistance
-            end
-            
-            if not isValid or not passTeamCheck or not withinDistance then
+            -- Early exit if not valid
+            if not isValid then
                 if ESPBoxes[player] then
                     ESPBoxes[player].Visible = false
                     ESPNames[player].Visible = false
@@ -810,12 +1496,44 @@ local function UpdateESP()
                         ESPHealthBars[player].outline.Visible = false
                         ESPHealthBars[player].bar.Visible = false
                     end
+                    if ESPSkeletons[player] then
+                        for _, line in pairs(ESPSkeletons[player]) do
+                            if line then line.Visible = false end
+                        end
+                    end
                 end
             else
-                -- Create ESP elements only once
-                if not ESPBoxes[player] then
+                local passTeamCheck = not Settings.TeamCheck or player.Team ~= LocalPlayer.Team
+                
+                -- Check distance limit
+                local withinDistance = true
+                if localHRP then
+                    local distanceToPlayer = (hrp.Position - localHRP.Position).Magnitude
+                    withinDistance = distanceToPlayer <= Settings.ESPMaxDistance
+                end
+                
+                if not passTeamCheck or not withinDistance then
+                    if ESPBoxes[player] then
+                        ESPBoxes[player].Visible = false
+                        ESPNames[player].Visible = false
+                        ESPDistances[player].Visible = false
+                        if ESPHealthBars[player] then
+                            ESPHealthBars[player].bg.Visible = false
+                            ESPHealthBars[player].outline.Visible = false
+                            ESPHealthBars[player].bar.Visible = false
+                        end
+                        if ESPSkeletons[player] then
+                            for _, line in pairs(ESPSkeletons[player]) do
+                                if line then line.Visible = false end
+                            end
+                        end
+                    end
+                else
+                    -- Create ESP elements only once
+                    if not ESPBoxes[player] then
                     ESPBoxes[player] = Drawing.new("Square")
                     ESPBoxes[player].Thickness = 2
+                    ESPBoxes[player].Visible = false
                     
                     -- Create 8 corner lines (2 per corner)
                     ESPCorners[player] = {}
@@ -823,6 +1541,7 @@ local function UpdateESP()
                         ESPCorners[player][i] = Drawing.new("Line")
                         ESPCorners[player][i].Thickness = 2
                         ESPCorners[player][i].Color = Settings.BoxColor
+                        ESPCorners[player][i].Visible = false
                     end
                     
                     ESPNames[player] = Drawing.new("Text")
@@ -830,11 +1549,13 @@ local function UpdateESP()
                     ESPNames[player].Center = true
                     ESPNames[player].Outline = true
                     ESPNames[player].Text = player.Name
+                    ESPNames[player].Visible = false
                     
                     ESPDistances[player] = Drawing.new("Text")
                     ESPDistances[player].Size = 13
                     ESPDistances[player].Center = true
                     ESPDistances[player].Outline = true
+                    ESPDistances[player].Visible = false
                     
                     ESPHealthBars[player] = {
                         bg = Drawing.new("Square"),
@@ -844,11 +1565,14 @@ local function UpdateESP()
                     ESPHealthBars[player].bg.Color = Color3.fromRGB(50, 50, 50)
                     ESPHealthBars[player].bg.Thickness = 1
                     ESPHealthBars[player].bg.Filled = true
+                    ESPHealthBars[player].bg.Visible = false
                     ESPHealthBars[player].outline.Color = Color3.fromRGB(0, 0, 0)
                     ESPHealthBars[player].outline.Thickness = 1
                     ESPHealthBars[player].outline.Filled = false
+                    ESPHealthBars[player].outline.Visible = false
                     ESPHealthBars[player].bar.Thickness = 1
                     ESPHealthBars[player].bar.Filled = true
+                    ESPHealthBars[player].bar.Visible = false
                 end
                 
                 -- Update colors
@@ -976,6 +1700,20 @@ local function UpdateESP()
                         ESPHealthBars[player].outline.Visible = false
                         ESPHealthBars[player].bar.Visible = false
                     end
+                    
+                    -- Update skeleton
+                    if Settings.Skeleton then
+                        if not ESPSkeletons[player] then
+                            ESPSkeletons[player] = {}
+                        end
+                        UpdateSkeleton(player, ESPSkeletons[player], Settings.SkeletonColor)
+                    else
+                        if ESPSkeletons[player] then
+                            for _, line in pairs(ESPSkeletons[player]) do
+                                line.Visible = false
+                            end
+                        end
+                    end
                 else
                     ESPBoxes[player].Visible = false
                     ESPNames[player].Visible = false
@@ -983,217 +1721,263 @@ local function UpdateESP()
                     ESPHealthBars[player].bg.Visible = false
                     ESPHealthBars[player].outline.Visible = false
                     ESPHealthBars[player].bar.Visible = false
+                    if ESPSkeletons[player] then
+                        for _, line in pairs(ESPSkeletons[player]) do
+                            line.Visible = false
+                        end
+                    end
                 end
+                end -- Close passTeamCheck else block
+            end -- Close isValid else block
+        end -- Close player.Character if
+    end -- Close for loop
+end -- Close function
+
+-- Local ESP Update Function (independent from regular ESP)
+local function UpdateLocalESP()
+    -- Local Skeleton
+    if Settings.LocalSkeleton and LocalPlayer.Character then
+        UpdateSkeleton(LocalPlayer, LocalSkeletonLines, Settings.LocalSkeletonColor)
+    else
+        if LocalSkeletonLines and #LocalSkeletonLines > 0 then
+            for _, line in pairs(LocalSkeletonLines) do
+                if line then line.Visible = false end
             end
         end
     end
+    
+    -- Local Highlight
+    UpdateLocalHighlight()
 end
 
-Players.PlayerRemoving:Connect(function(player)
-    if ESPBoxes[player] then
-        ESPBoxes[player]:Remove()
-        ESPBoxes[player] = nil
-    end
-    if ESPCorners[player] then
-        for i = 1, 8 do
-            ESPCorners[player][i]:Remove()
-        end
-        ESPCorners[player] = nil
-    end
-    if ESPNames[player] then
-        ESPNames[player]:Remove()
-        ESPNames[player] = nil
-    end
-    if ESPDistances[player] then
-        ESPDistances[player]:Remove()
-        ESPDistances[player] = nil
-    end
-    if ESPHealthBars[player] then
-        if ESPHealthBars[player].bg then
-            ESPHealthBars[player].bg:Remove()
-        end
-        if ESPHealthBars[player].outline then
-            ESPHealthBars[player].outline:Remove()
-        end
-        if ESPHealthBars[player].bar then
-            ESPHealthBars[player].bar:Remove()
-        end
-        ESPHealthBars[player] = nil
-    end
-end)
+
+
+-- Loading flag (global)
+_G.SentinelLoaded = false
 
 -- GUI
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "SentinelGui"
 ScreenGui.ResetOnSpawn = false
+
+-- Loading flag to prevent ESP from showing during initialization
+local isMenuLoaded = false
+ScreenGui.Enabled = false
 ScreenGui.Parent = game:GetService("CoreGui")
 
 local function Tween(obj, props, time)
     TweenService:Create(obj, TweenInfo.new(time, Enum.EasingStyle.Quad), props):Play()
 end
 
--- Main Frame
+-- Main Frame - Modern Dark Theme
 local Main = Instance.new("Frame")
-Main.Size = UDim2.new(0, 500, 0, 400)
+Main.Size = UDim2.new(0, 940, 0, 500)
 Main.Position = UDim2.new(0.5, 0, 0.5, 0)
 Main.AnchorPoint = Vector2.new(0.5, 0.5)
-Main.BackgroundColor3 = Color3.fromRGB(25, 25, 30)
+Main.BackgroundColor3 = Color3.fromRGB(10, 10, 15)
 Main.BorderSizePixel = 0
 Main.ClipsDescendants = true
 Main.Parent = ScreenGui
 
--- Save menu size
 local savedMenuSize = Main.Size
 
 local MainCorner = Instance.new("UICorner")
-MainCorner.CornerRadius = UDim.new(0, 15)
+MainCorner.CornerRadius = UDim.new(0, 10)
 MainCorner.Parent = Main
 
--- Mini Frame
-local MiniFrame = Instance.new("Frame")
-MiniFrame.Size = UDim2.new(0, 0, 0, 0)
-MiniFrame.Position = UDim2.new(0, 70, 1, -30)
-MiniFrame.AnchorPoint = Vector2.new(0.5, 0.5)
-MiniFrame.BackgroundColor3 = Color3.fromRGB(35, 35, 40)
-MiniFrame.BorderSizePixel = 0
-MiniFrame.ClipsDescendants = true
-MiniFrame.Visible = false
-MiniFrame.Parent = ScreenGui
+-- Hint Frame (shows only once on first load)
+local HintFrame = Instance.new("Frame")
+HintFrame.Size = UDim2.new(0, 280, 0, 50)
+HintFrame.Position = UDim2.new(0.5, -140, 1, -70)
+HintFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
+HintFrame.BorderSizePixel = 0
+HintFrame.Visible = false
+HintFrame.Parent = ScreenGui
 
-local MiniCorner = Instance.new("UICorner")
-MiniCorner.CornerRadius = UDim.new(0, 10)
-MiniCorner.Parent = MiniFrame
+local HintCorner = Instance.new("UICorner")
+HintCorner.CornerRadius = UDim.new(0, 10)
+HintCorner.Parent = HintFrame
 
-local MiniButton = Instance.new("TextButton")
-MiniButton.Size = UDim2.new(1, 0, 1, 0)
-MiniButton.BackgroundTransparency = 1
-MiniButton.Text = "Open Menu"
-MiniButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-MiniButton.TextSize = 14
-MiniButton.Font = Enum.Font.GothamBold
-MiniButton.Parent = MiniFrame
+local HintText = Instance.new("TextLabel")
+HintText.Size = UDim2.new(1, -20, 1, 0)
+HintText.Position = UDim2.new(0, 10, 0, 0)
+HintText.BackgroundTransparency = 1
+HintText.Text = "Press INSERT to open menu"
+HintText.TextColor3 = Color3.fromRGB(255, 255, 255)
+HintText.TextSize = 13
+HintText.Font = Enum.Font.Gotham
+HintText.Parent = HintFrame
 
-MiniButton.MouseButton1Click:Connect(function()
-    Tween(MiniFrame, {Size = UDim2.new(0, 0, 0, 0)}, 0.2)
-    task.wait(0.2)
-    MiniFrame.Visible = false
-    Main.Visible = true
-    Main.Size = UDim2.new(0, 0, 0, 0)
-    Tween(Main, {Size = savedMenuSize}, 0.5)
+local hintShown = false
+
+task.spawn(function()
+    task.wait(2.5)
+    if _G.SentinelLoaded and not hintShown then
+        hintShown = true
+        HintFrame.Visible = true
+        Tween(HintFrame, {Position = UDim2.new(0.5, -140, 1, -80)}, 0.3)
+    end
 end)
+
+-- Top Status Bar
+local StatusBar = Instance.new("Frame")
+StatusBar.Size = UDim2.new(1, 0, 0, 35)
+StatusBar.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
+StatusBar.BorderSizePixel = 0
+StatusBar.Parent = Main
+
+local StatusBarCorner = Instance.new("UICorner")
+StatusBarCorner.CornerRadius = UDim.new(0, 10)
+StatusBarCorner.Parent = StatusBar
+
+-- Cover for bottom corners of StatusBar
+local StatusBarCover = Instance.new("Frame")
+StatusBarCover.Size = UDim2.new(1, 0, 0, 10)
+StatusBarCover.Position = UDim2.new(0, 0, 1, -10)
+StatusBarCover.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
+StatusBarCover.BorderSizePixel = 0
+StatusBarCover.Parent = StatusBar
+
+local StatusBarBottom = Instance.new("Frame")
+StatusBarBottom.Size = UDim2.new(1, 0, 0, 1)
+StatusBarBottom.Position = UDim2.new(0, 0, 1, 0)
+StatusBarBottom.BackgroundColor3 = Color3.fromRGB(255, 20, 147)
+StatusBarBottom.BackgroundTransparency = 0.7
+StatusBarBottom.BorderSizePixel = 0
+StatusBarBottom.ZIndex = 2
+StatusBarBottom.Parent = StatusBar
+AccentColorElements.StatusBarBottom = StatusBarBottom
 
 -- Title
 local Title = Instance.new("TextLabel")
-Title.Size = UDim2.new(1, -50, 0, 50)
-Title.BackgroundColor3 = Color3.fromRGB(35, 35, 40)
-Title.Text = "  Sentinel"
+Title.Size = UDim2.new(0, 150, 1, 0)
+Title.Position = UDim2.new(0, 15, 0, 0)
+Title.BackgroundTransparency = 1
+Title.Text = "SENTINEL"
 Title.TextColor3 = Color3.fromRGB(255, 255, 255)
-Title.TextSize = 18
+Title.TextSize = 16
 Title.Font = Enum.Font.GothamBold
 Title.TextXAlignment = Enum.TextXAlignment.Left
-Title.BorderSizePixel = 0
-Title.Parent = Main
+Title.Parent = StatusBar
 
-local TitleCorner = Instance.new("UICorner")
-TitleCorner.CornerRadius = UDim.new(0, 15)
-TitleCorner.Parent = Title
+-- Add gradient to SENTINEL title
+local TitleGradient = Instance.new("UIGradient")
+TitleGradient.Color = ColorSequence.new({
+    ColorSequenceKeypoint.new(0, Settings.MenuColor),
+    ColorSequenceKeypoint.new(0.5, Color3.fromRGB(255, 255, 255)),
+    ColorSequenceKeypoint.new(1, Settings.MenuColor)
+})
+TitleGradient.Parent = Title
 
--- Close
+-- Store gradient for updates
+AccentColorElements.SentinelTitleGradient = TitleGradient
+
+-- Animate SENTINEL title gradient
+task.spawn(function()
+    local offset = -2
+    while true do
+        offset = offset + 0.01
+        if offset > 2 then offset = -2 end
+        if TitleGradient and TitleGradient.Parent then
+            TitleGradient.Offset = Vector2.new(offset, 0)
+        end
+        task.wait(0.05) -- Increased from 0.03 to 0.05 for better performance
+    end
+end)
+
+-- Initialize Title as array
+AccentColorElements.Title = {}
+
+-- FPS Counter
+local FPSLabel = Instance.new("TextLabel")
+FPSLabel.Size = UDim2.new(0, 80, 1, 0)
+FPSLabel.Position = UDim2.new(1, -250, 0, 0)
+FPSLabel.BackgroundTransparency = 1
+FPSLabel.Text = "FPS: 60"
+FPSLabel.TextColor3 = Color3.fromRGB(150, 150, 150)
+FPSLabel.TextSize = 11
+FPSLabel.Font = Enum.Font.Gotham
+FPSLabel.TextXAlignment = Enum.TextXAlignment.Right
+FPSLabel.Parent = StatusBar
+
+-- Ping Counter
+local PingLabel = Instance.new("TextLabel")
+PingLabel.Size = UDim2.new(0, 80, 1, 0)
+PingLabel.Position = UDim2.new(1, -160, 0, 0)
+PingLabel.BackgroundTransparency = 1
+PingLabel.Text = "PING: 0ms"
+PingLabel.TextColor3 = Color3.fromRGB(150, 150, 150)
+PingLabel.TextSize = 11
+PingLabel.Font = Enum.Font.Gotham
+PingLabel.TextXAlignment = Enum.TextXAlignment.Right
+PingLabel.Parent = StatusBar
+
+-- Update FPS and Ping
+local lastUpdate = tick()
+local frameCount = 0
+RunService.RenderStepped:Connect(function()
+    frameCount = frameCount + 1
+    local now = tick()
+    if now - lastUpdate >= 1 then
+        local fps = frameCount / (now - lastUpdate)
+        FPSLabel.Text = string.format("FPS: %d", math.floor(fps))
+        frameCount = 0
+        lastUpdate = now
+        
+        local ping = game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValue()
+        PingLabel.Text = string.format("PING: %dms", math.floor(ping))
+    end
+end)
+
+-- Close Button
 local Close = Instance.new("TextButton")
-Close.Size = UDim2.new(0, 40, 0, 40)
-Close.Position = UDim2.new(1, -45, 0, 5)
-Close.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
-Close.Text = "X"
+Close.Size = UDim2.new(0, 30, 0, 25)
+Close.Position = UDim2.new(1, -40, 0, 5)
+Close.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
+Close.Text = "×"
 Close.TextColor3 = Color3.fromRGB(255, 255, 255)
-Close.TextSize = 16
+Close.TextSize = 18
 Close.Font = Enum.Font.GothamBold
 Close.BorderSizePixel = 0
-Close.Parent = Main
+Close.Parent = StatusBar
 
 local CloseCorner = Instance.new("UICorner")
-CloseCorner.CornerRadius = UDim.new(0, 8)
+CloseCorner.CornerRadius = UDim.new(0, 6)
 CloseCorner.Parent = Close
 
+Close.MouseEnter:Connect(function()
+    Tween(Close, {BackgroundColor3 = Color3.fromRGB(255, 20, 147)}, 0.2)
+end)
+
+Close.MouseLeave:Connect(function()
+    Tween(Close, {BackgroundColor3 = Color3.fromRGB(20, 20, 25)}, 0.2)
+end)
+
 Close.MouseButton1Click:Connect(function()
-    -- Save current size before closing
     savedMenuSize = Main.Size
     Tween(Main, {Size = UDim2.new(0, 0, 0, 0)}, 0.3)
     task.wait(0.3)
     Main.Visible = false
-    MiniFrame.Visible = true
-    Tween(MiniFrame, {Size = UDim2.new(0, 120, 0, 40)}, 0.3)
 end)
 
--- Tabs
+-- Horizontal Tab Bar
 local TabBar = Instance.new("Frame")
 TabBar.Size = UDim2.new(1, -20, 0, 40)
-TabBar.Position = UDim2.new(0, 10, 0, 55)
-TabBar.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
+TabBar.Position = UDim2.new(0, 10, 0, 45)
+TabBar.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
 TabBar.BorderSizePixel = 0
 TabBar.ClipsDescendants = true
 TabBar.Parent = Main
 
 local TabBarCorner = Instance.new("UICorner")
-TabBarCorner.CornerRadius = UDim.new(0, 10)
+TabBarCorner.CornerRadius = UDim.new(1, 0)
 TabBarCorner.Parent = TabBar
 
--- Container for tabs that can scroll
-local TabContainer = Instance.new("Frame")
-TabContainer.Size = UDim2.new(1, 0, 1, 0)
-TabContainer.Position = UDim2.new(0, 0, 0, 0)
-TabContainer.BackgroundTransparency = 1
-TabContainer.Parent = TabBar
-
-local TabLayout = Instance.new("UIListLayout")
-TabLayout.FillDirection = Enum.FillDirection.Horizontal
-TabLayout.Padding = UDim.new(0, 8)
-TabLayout.Parent = TabContainer
-
--- Dragging for TabBar (works on buttons too)
-local tabDragging = false
-local tabDragStart = 0
-local tabStartPos = 0
-
-local function startTabDrag(input)
-    tabDragging = true
-    tabDragStart = input.Position.X
-    tabStartPos = TabContainer.Position.X.Offset
-end
-
-TabBar.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-        startTabDrag(input)
-    end
-end)
-
-TabContainer.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-        startTabDrag(input)
-    end
-end)
-
-UserInputService.InputEnded:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-        tabDragging = false
-    end
-end)
-
-UserInputService.InputChanged:Connect(function(input)
-    if tabDragging and input.UserInputType == Enum.UserInputType.MouseMovement then
-        local delta = input.Position.X - tabDragStart
-        local newPos = tabStartPos + delta
-        -- Limit scrolling
-        local maxScroll = math.max(0, TabLayout.AbsoluteContentSize.X - TabBar.AbsoluteSize.X)
-        newPos = math.clamp(newPos, -maxScroll, 0)
-        TabContainer.Position = UDim2.new(0, newPos, 0, 0)
-    end
-end)
-
--- Content
+-- Content Area
 local Content = Instance.new("Frame")
-Content.Size = UDim2.new(1, -20, 1, -115)
-Content.Position = UDim2.new(0, 10, 0, 100)
-Content.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
+Content.Size = UDim2.new(1, -20, 1, -105)
+Content.Position = UDim2.new(0, 10, 0, 95)
+Content.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
 Content.BorderSizePixel = 0
 Content.Parent = Main
 
@@ -1201,257 +1985,593 @@ local ContentCorner = Instance.new("UICorner")
 ContentCorner.CornerRadius = UDim.new(0, 10)
 ContentCorner.Parent = Content
 
-local ContentScroll = Instance.new("ScrollingFrame")
-ContentScroll.Size = UDim2.new(1, -20, 1, -20)
-ContentScroll.Position = UDim2.new(0, 10, 0, 10)
-ContentScroll.BackgroundTransparency = 1
-ContentScroll.BorderSizePixel = 0
-ContentScroll.ScrollBarThickness = 4
-ContentScroll.ScrollBarImageColor3 = Color3.fromRGB(100, 100, 100)
-ContentScroll.Parent = Content
-
-local ContentLayout = Instance.new("UIListLayout")
-ContentLayout.Padding = UDim.new(0, 10)
-ContentLayout.Parent = ContentScroll
-
 -- Tab System
 local Tabs = {}
 local CurrentTab = nil
+local TabCount = 0
+
+-- Calculate centered starting position
+-- 5 tabs * 100px + 4 gaps * 10px = 540px total
+-- TabBar width = 580px (600 - 20)
+-- Start offset = (580 - 540) / 2 = 20px
+
+-- Sliding indicator for active tab
+local TabIndicator = Instance.new("Frame")
+TabIndicator.Size = UDim2.new(0, 100, 0, 30)
+TabIndicator.Position = UDim2.new(0, 20, 0, 5)
+TabIndicator.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TabIndicator.BackgroundTransparency = 0.92
+TabIndicator.BorderSizePixel = 0
+TabIndicator.ZIndex = 5
+TabIndicator.Parent = TabBar
+
+local indicatorCorner = Instance.new("UICorner")
+indicatorCorner.CornerRadius = UDim.new(1, 0)
+indicatorCorner.Parent = TabIndicator
+
+local indicatorStroke = Instance.new("UIStroke")
+indicatorStroke.Color = Color3.fromRGB(255, 255, 255)
+indicatorStroke.Thickness = 1
+indicatorStroke.Transparency = 0.3
+indicatorStroke.Parent = TabIndicator
+AccentColorElements.TabIndicatorStroke = indicatorStroke
+
+-- Function to recalculate tab positions based on TabBar width
+local function RecalculateTabPositions()
+    local tabBarWidth = TabBar.AbsoluteSize.X
+    local totalTabsWidth = 600 -- 6 tabs * 100px
+    local totalGaps = 50 -- 5 gaps * 10px
+    local startOffset = (tabBarWidth - totalTabsWidth - totalGaps) / 2
+    
+    for i, tab in ipairs(Tabs) do
+        local xPos = startOffset + ((i - 1) * 110)
+        tab.Button.Position = UDim2.new(0, xPos, 0, 5)
+    end
+    
+    -- Update indicator position if there's a current tab
+    if CurrentTab then
+        for i, tab in ipairs(Tabs) do
+            if tab == CurrentTab then
+                local xPos = startOffset + ((i - 1) * 110)
+                TabIndicator.Position = UDim2.new(0, xPos, 0, 5)
+                break
+            end
+        end
+    else
+        -- Set initial position
+        TabIndicator.Position = UDim2.new(0, startOffset, 0, 5)
+    end
+end
+
+-- Update positions when TabBar size changes
+TabBar:GetPropertyChangedSignal("AbsoluteSize"):Connect(function()
+    RecalculateTabPositions()
+end)
 
 local function CreateTab(name)
     local tab = {}
     
+    local tabBarWidth = TabBar.AbsoluteSize.X
+    local totalTabsWidth = 540
+    local startOffset = (tabBarWidth - totalTabsWidth) / 2
+    local xPos = startOffset + (TabCount * 110)
+    
     local btn = Instance.new("TextButton")
-    btn.Size = UDim2.new(0, 100, 1, 0)
-    btn.BackgroundColor3 = Color3.fromRGB(40, 40, 45)
+    btn.Size = UDim2.new(0, 100, 0, 30)
+    btn.Position = UDim2.new(0, xPos, 0, 5)
+    btn.BackgroundTransparency = 1
     btn.Text = name
-    btn.TextColor3 = Color3.fromRGB(200, 200, 200)
-    btn.TextSize = 13
-    btn.Font = Enum.Font.Gotham
+    btn.TextColor3 = Color3.fromRGB(150, 150, 150)
+    btn.TextSize = 12
+    btn.Font = Enum.Font.GothamBold
     btn.BorderSizePixel = 0
-    btn.Parent = TabContainer
-    
-    local btnCorner = Instance.new("UICorner")
-    btnCorner.CornerRadius = UDim.new(0, 8)
-    btnCorner.Parent = btn
-    
-    -- Allow dragging on button
-    btn.InputBegan:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseButton1 then
-            startTabDrag(input)
-        end
-    end)
-    
-    local content = Instance.new("Frame")
-    content.Size = UDim2.new(1, 0, 0, 0)
-    content.BackgroundTransparency = 1
-    content.Visible = false
-    content.Parent = ContentScroll
-    
-    local layout = Instance.new("UIListLayout")
-    layout.Padding = UDim.new(0, 10)
-    layout.Parent = content
-    
-    tab.Button = btn
-    tab.Content = content
-    
-    local clickStartPos = nil
-    
-    btn.MouseButton1Down:Connect(function()
-        clickStartPos = UserInputService:GetMouseLocation()
-    end)
-    
-    btn.MouseButton1Click:Connect(function()
-        -- Only switch tab if not dragging (mouse didn't move much)
-        local currentPos = UserInputService:GetMouseLocation()
-        if clickStartPos and (currentPos - clickStartPos).Magnitude < 5 then
-            for _, t in pairs(Tabs) do
-                t.Content.Visible = false
-                Tween(t.Button, {BackgroundColor3 = Color3.fromRGB(40, 40, 45), TextColor3 = Color3.fromRGB(200, 200, 200)}, 0.2)
-            end
-            content.Visible = true
-            Tween(btn, {BackgroundColor3 = Color3.fromRGB(100, 50, 200), TextColor3 = Color3.fromRGB(255, 255, 255)}, 0.2)
-            CurrentTab = tab
-        end
-    end)
-    
-    table.insert(Tabs, tab)
-    return tab
-end
-
--- Function to switch tabs
-local function SwitchToTab(index)
-    if Tabs[index] then
-        for _, t in pairs(Tabs) do
-            t.Content.Visible = false
-            Tween(t.Button, {BackgroundColor3 = Color3.fromRGB(40, 40, 45), TextColor3 = Color3.fromRGB(200, 200, 200)}, 0.2)
-        end
-        Tabs[index].Content.Visible = true
-        Tween(Tabs[index].Button, {BackgroundColor3 = Color3.fromRGB(100, 50, 200), TextColor3 = Color3.fromRGB(255, 255, 255)}, 0.2)
-        CurrentTab = Tabs[index]
-        
-        -- Auto scroll to selected tab if not visible
-        task.spawn(function()
-            task.wait(0.05) -- Wait for layout to update
-            local button = Tabs[index].Button
-            local buttonPos = button.AbsolutePosition.X
-            local buttonSize = button.AbsoluteSize.X
-            local tabBarPos = TabBar.AbsolutePosition.X
-            local tabBarSize = TabBar.AbsoluteSize.X
-            local containerOffset = TabContainer.Position.X.Offset
-            
-            -- Check if button is outside visible area
-            local relativePos = buttonPos - tabBarPos
-            
-            if relativePos < 0 then
-                -- Button is to the left, scroll left
-                local newOffset = containerOffset - relativePos + 10
-                local maxScroll = math.max(0, TabLayout.AbsoluteContentSize.X - TabBar.AbsoluteSize.X)
-                newOffset = math.clamp(newOffset, -maxScroll, 0)
-                Tween(TabContainer, {Position = UDim2.new(0, newOffset, 0, 0)}, 0.3)
-            elseif relativePos + buttonSize > tabBarSize then
-                -- Button is to the right, scroll right
-                local overflow = (relativePos + buttonSize) - tabBarSize
-                local newOffset = containerOffset - overflow - 10
-                local maxScroll = math.max(0, TabLayout.AbsoluteContentSize.X - TabBar.AbsoluteSize.X)
-                newOffset = math.clamp(newOffset, -maxScroll, 0)
-                Tween(TabContainer, {Position = UDim2.new(0, newOffset, 0, 0)}, 0.3)
-            end
-        end)
-    end
-end
-
--- Mouse wheel scrolling for tabs (only in TabBar area)
-UserInputService.InputChanged:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseWheel then
-        local mousePos = UserInputService:GetMouseLocation()
-        local tabBarPos = TabBar.AbsolutePosition
-        local tabBarSize = TabBar.AbsoluteSize
-        
-        -- Check if mouse is over TabBar area
-        if mousePos.X >= tabBarPos.X and mousePos.X <= tabBarPos.X + tabBarSize.X and
-           mousePos.Y >= tabBarPos.Y and mousePos.Y <= tabBarPos.Y + tabBarSize.Y then
-            
-            -- Find current tab index
-            local currentIndex = 1
-            for i, tab in ipairs(Tabs) do
-                if tab == CurrentTab then
-                    currentIndex = i
-                    break
-                end
-            end
-            
-            -- Switch tab based on scroll direction
-            if input.Position.Z > 0 then
-                -- Scroll up - previous tab
-                local newIndex = currentIndex - 1
-                if newIndex < 1 then newIndex = #Tabs end
-                SwitchToTab(newIndex)
-            else
-                -- Scroll down - next tab
-                local newIndex = currentIndex + 1
-                if newIndex > #Tabs then newIndex = 1 end
-                SwitchToTab(newIndex)
-            end
-        end
-        -- If mouse is over Content area, let the ScrollingFrame handle it naturally
-    end
-end)
-
-local function CreateToggle(parent, text, default, callback)
-    local frame = Instance.new("Frame")
-    frame.Size = UDim2.new(1, 0, 0, 35)
-    frame.BackgroundColor3 = Color3.fromRGB(40, 40, 45)
-    frame.BorderSizePixel = 0
-    frame.Parent = parent
-    
-    local corner = Instance.new("UICorner")
-    corner.CornerRadius = UDim.new(0, 8)
-    corner.Parent = frame
-    
-    local label = Instance.new("TextLabel")
-    label.Size = UDim2.new(1, -50, 1, 0)
-    label.Position = UDim2.new(0, 10, 0, 0)
-    label.BackgroundTransparency = 1
-    label.Text = text
-    label.TextColor3 = Color3.fromRGB(255, 255, 255)
-    label.TextSize = 13
-    label.Font = Enum.Font.Gotham
-    label.TextXAlignment = Enum.TextXAlignment.Left
-    label.Parent = frame
-    
-    local btn = Instance.new("TextButton")
-    btn.Size = UDim2.new(0, 35, 0, 18)
-    btn.Position = UDim2.new(1, -45, 0.5, -9)
-    btn.BackgroundColor3 = default and Color3.fromRGB(100, 200, 100) or Color3.fromRGB(200, 100, 100)
-    btn.Text = ""
-    btn.BorderSizePixel = 0
-    btn.Parent = frame
+    btn.ZIndex = 10
+    btn.Parent = TabBar
     
     local btnCorner = Instance.new("UICorner")
     btnCorner.CornerRadius = UDim.new(1, 0)
     btnCorner.Parent = btn
     
-    local ind = Instance.new("Frame")
-    ind.Size = UDim2.new(0, 14, 0, 14)
-    ind.Position = default and UDim2.new(1, -16, 0.5, -7) or UDim2.new(0, 2, 0.5, -7)
-    ind.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    ind.BorderSizePixel = 0
-    ind.Parent = btn
+    -- Individual ScrollingFrame for this tab with two-column layout
+    local tabScroll = Instance.new("ScrollingFrame")
+    tabScroll.Size = UDim2.new(1, -20, 1, -20)
+    tabScroll.Position = UDim2.new(0, 10, 0, 10)
+    tabScroll.BackgroundTransparency = 1
+    tabScroll.BorderSizePixel = 0
+    tabScroll.ScrollBarThickness = 3
+    tabScroll.ScrollBarImageColor3 = Settings.MenuColor
+    tabScroll.Visible = false
+    tabScroll.Parent = Content
+    table.insert(AccentColorElements.ScrollBars, tabScroll)
     
-    local indCorner = Instance.new("UICorner")
-    indCorner.CornerRadius = UDim.new(1, 0)
-    indCorner.Parent = ind
+    local content = Instance.new("Frame")
+    content.Size = UDim2.new(1, 0, 0, 0)
+    content.BackgroundTransparency = 1
+    content.Parent = tabScroll
+    
+    local layout = Instance.new("UIListLayout")
+    layout.Padding = UDim.new(0, 8)
+    layout.Parent = content
+    
+    layout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+        tabScroll.CanvasSize = UDim2.new(0, 0, 0, layout.AbsoluteContentSize.Y + 10)
+    end)
+    
+    tab.Button = btn
+    tab.Content = content
+    tab.Scroll = tabScroll
+    tab.XPos = xPos
+    
+    btn.MouseButton1Click:Connect(function()
+        for _, t in pairs(Tabs) do
+            t.Scroll.Visible = false
+            Tween(t.Button, {TextColor3 = Color3.fromRGB(150, 150, 150)}, 0.2)
+        end
+        tabScroll.Visible = true
+        Tween(btn, {TextColor3 = Color3.fromRGB(255, 255, 255)}, 0.2)
+        
+        -- Animate indicator with squeeze effect
+        local currentPos = TabIndicator.Position.X.Offset
+        local targetPos = btn.Position.X.Offset
+        local distance = math.abs(targetPos - currentPos)
+        
+        if distance > 0 then
+            -- Squeeze and move simultaneously
+            Tween(TabIndicator, {Size = UDim2.new(0, 70, 0, 30), Position = UDim2.new(0, targetPos, 0, 5)}, 0.25)
+            task.wait(0.18)
+            -- Expand back when almost at destination
+            Tween(TabIndicator, {Size = UDim2.new(0, 100, 0, 30)}, 0.15)
+        end
+        
+        CurrentTab = tab
+    end)
+    
+    TabCount = TabCount + 1
+    table.insert(Tabs, tab)
+    return tab
+end
+
+-- Modern UI Element Creation Functions
+
+local function CreateToggle(parent, text, default, callback)
+    local frame = Instance.new("Frame")
+    frame.Size = UDim2.new(1, 0, 0, 30)
+    frame.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
+    frame.BorderSizePixel = 0
+    frame.Parent = parent
+    
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = UDim.new(0, 4)
+    corner.Parent = frame
+    
+    local label = Instance.new("TextLabel")
+    label.Size = UDim2.new(1, -60, 1, 0)
+    label.Position = UDim2.new(0, 10, 0, 0)
+    label.BackgroundTransparency = 1
+    label.Text = text
+    label.TextColor3 = Color3.fromRGB(200, 200, 200)
+    label.TextSize = 12
+    label.Font = Enum.Font.Gotham
+    label.TextXAlignment = Enum.TextXAlignment.Left
+    label.Parent = frame
+    
+    -- Square checkbox
+    local checkbox = Instance.new("Frame")
+    checkbox.Size = UDim2.new(0, 16, 0, 16)
+    checkbox.Position = UDim2.new(1, -26, 0.5, -8)
+    checkbox.BackgroundColor3 = default and Settings.MenuColor or Color3.fromRGB(30, 30, 35)
+    checkbox.BorderSizePixel = 0
+    checkbox.Parent = frame
+    
+    local checkCorner = Instance.new("UICorner")
+    checkCorner.CornerRadius = UDim.new(0, 2)
+    checkCorner.Parent = checkbox
+    
+    local checkStroke = Instance.new("UIStroke")
+    checkStroke.Color = Color3.fromRGB(255, 20, 147)
+    checkStroke.Thickness = 1
+    checkStroke.Transparency = 0.5
+    checkStroke.Parent = checkbox
+    table.insert(AccentColorElements.CheckboxStrokes, checkStroke)
+    if default then table.insert(AccentColorElements.CheckboxBackgrounds, checkbox) end
+    
+    local btn = Instance.new("TextButton")
+    btn.Size = UDim2.new(1, 0, 1, 0)
+    btn.BackgroundTransparency = 1
+    btn.Text = ""
+    btn.Parent = frame
     
     local enabled = default
     
     btn.MouseButton1Click:Connect(function()
         enabled = not enabled
-        Tween(btn, {BackgroundColor3 = enabled and Color3.fromRGB(100, 200, 100) or Color3.fromRGB(200, 100, 100)}, 0.2)
-        Tween(ind, {Position = enabled and UDim2.new(1, -16, 0.5, -7) or UDim2.new(0, 2, 0.5, -7)}, 0.2)
+        if enabled then
+            Tween(checkbox, {BackgroundColor3 = Settings.MenuColor}, 0.3)
+            table.insert(AccentColorElements.CheckboxBackgrounds, checkbox)
+        else
+            Tween(checkbox, {BackgroundColor3 = Color3.fromRGB(30, 30, 35)}, 0.3)
+            -- Remove from array when unchecked
+            for i, cb in ipairs(AccentColorElements.CheckboxBackgrounds) do
+                if cb == checkbox then
+                    table.remove(AccentColorElements.CheckboxBackgrounds, i)
+                    break
+                end
+            end
+        end
         callback(enabled)
     end)
     
-    return frame
+    return {
+        Frame = frame,
+        SetValue = function(value)
+            enabled = value
+            if value then
+                checkbox.BackgroundColor3 = Settings.MenuColor
+                -- Add to accent color elements if not already there
+                local found = false
+                for _, cb in ipairs(AccentColorElements.CheckboxBackgrounds) do
+                    if cb == checkbox then
+                        found = true
+                        break
+                    end
+                end
+                if not found then
+                    table.insert(AccentColorElements.CheckboxBackgrounds, checkbox)
+                end
+            else
+                checkbox.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
+                -- Remove from accent color elements
+                for i, cb in ipairs(AccentColorElements.CheckboxBackgrounds) do
+                    if cb == checkbox then
+                        table.remove(AccentColorElements.CheckboxBackgrounds, i)
+                        break
+                    end
+                end
+            end
+        end
+    }
 end
 
-local function CreateSlider(parent, text, min, max, default, callback)
+local function CreateToggleWithKeybind(parent, text, default, keybindName, callback)
     local frame = Instance.new("Frame")
-    frame.Size = UDim2.new(1, 0, 0, 45)
-    frame.BackgroundColor3 = Color3.fromRGB(40, 40, 45)
+    frame.Size = UDim2.new(1, 0, 0, 30)
+    frame.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
     frame.BorderSizePixel = 0
     frame.Parent = parent
     
     local corner = Instance.new("UICorner")
-    corner.CornerRadius = UDim.new(0, 8)
+    corner.CornerRadius = UDim.new(0, 4)
     corner.Parent = frame
     
     local label = Instance.new("TextLabel")
-    label.Size = UDim2.new(1, -60, 0, 20)
-    label.Position = UDim2.new(0, 10, 0, 5)
+    label.Size = UDim2.new(1, -130, 1, 0)
+    label.Position = UDim2.new(0, 10, 0, 0)
     label.BackgroundTransparency = 1
     label.Text = text
-    label.TextColor3 = Color3.fromRGB(255, 255, 255)
-    label.TextSize = 13
+    label.TextColor3 = Color3.fromRGB(200, 200, 200)
+    label.TextSize = 12
+    label.Font = Enum.Font.Gotham
+    label.TextXAlignment = Enum.TextXAlignment.Left
+    label.Parent = frame
+    
+    -- Keybind button
+    local keybindBtn = Instance.new("TextButton")
+    keybindBtn.Size = UDim2.new(0, 60, 0, 20)
+    keybindBtn.Position = UDim2.new(1, -90, 0.5, -10)
+    keybindBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
+    keybindBtn.Text = "[" .. (typeof(Settings.Keybinds[keybindName].Key) == "EnumItem" and Settings.Keybinds[keybindName].Key.Name or "M2") .. "]"
+    keybindBtn.TextColor3 = Color3.fromRGB(200, 200, 200)
+    keybindBtn.TextSize = 10
+    keybindBtn.Font = Enum.Font.Gotham
+    keybindBtn.BorderSizePixel = 0
+    keybindBtn.Parent = frame
+    
+    local keybindCorner = Instance.new("UICorner")
+    keybindCorner.CornerRadius = UDim.new(0, 3)
+    keybindCorner.Parent = keybindBtn
+    
+    -- Mode dropdown menu
+    local modeDropdown = Instance.new("Frame")
+    modeDropdown.Size = UDim2.new(0, 90, 0, 90)
+    modeDropdown.Position = UDim2.new(1, -90, 1, 5)
+    modeDropdown.BackgroundColor3 = Color3.fromRGB(25, 25, 30)
+    modeDropdown.BorderSizePixel = 0
+    modeDropdown.Visible = false
+    modeDropdown.ZIndex = 100
+    modeDropdown.Parent = frame
+    
+    local dropdownCorner = Instance.new("UICorner")
+    dropdownCorner.CornerRadius = UDim.new(0, 4)
+    dropdownCorner.Parent = modeDropdown
+    
+    local dropdownStroke = Instance.new("UIStroke")
+    dropdownStroke.Color = Settings.MenuColor
+    dropdownStroke.Thickness = 1
+    dropdownStroke.Transparency = 0.5
+    dropdownStroke.Parent = modeDropdown
+    table.insert(AccentColorElements.DropdownStrokes, dropdownStroke)
+    
+    local modes = {"Toggle", "Hold", "Always On"}
+    for i, mode in ipairs(modes) do
+        local modeBtn = Instance.new("TextButton")
+        modeBtn.Size = UDim2.new(1, -4, 0, 28)
+        modeBtn.Position = UDim2.new(0, 2, 0, (i-1) * 30 + 2)
+        modeBtn.BackgroundColor3 = Settings.Keybinds[keybindName].Mode == mode and Color3.fromRGB(40, 40, 45) or Color3.fromRGB(30, 30, 35)
+        modeBtn.Text = mode
+        modeBtn.TextColor3 = Settings.Keybinds[keybindName].Mode == mode and Settings.MenuColor or Color3.fromRGB(200, 200, 200)
+        modeBtn.TextSize = 11
+        modeBtn.Font = Enum.Font.Gotham
+        modeBtn.BorderSizePixel = 0
+        modeBtn.ZIndex = 101
+        modeBtn.Parent = modeDropdown
+        
+        local modeBtnCorner = Instance.new("UICorner")
+        modeBtnCorner.CornerRadius = UDim.new(0, 3)
+        modeBtnCorner.Parent = modeBtn
+        
+        modeBtn.MouseButton1Click:Connect(function()
+            Settings.Keybinds[keybindName].Mode = mode
+            modeDropdown.Visible = false
+            
+            -- Update Active state based on new mode
+            if keybindName == "ESP" and Settings.ESP then
+                if mode == "Always On" then
+                    Settings.ESPActive = true
+                elseif mode == "Toggle" then
+                    Settings.ESPActive = true
+                else -- Hold mode
+                    Settings.ESPActive = false
+                end
+            elseif keybindName == "Aimbot" and Settings.Aimbot then
+                if mode == "Always On" then
+                    Settings.AimbotActive = true
+                elseif mode == "Toggle" then
+                    Settings.AimbotActive = true
+                else -- Hold mode
+                    Settings.AimbotActive = false
+                end
+            elseif keybindName == "InfiniteJump" and Settings.InfiniteJump then
+                if mode == "Always On" then
+                    Settings.InfiniteJumpActive = true
+                elseif mode == "Toggle" then
+                    Settings.InfiniteJumpActive = true
+                else -- Hold mode
+                    Settings.InfiniteJumpActive = false
+                end
+            end
+            
+            -- Update all mode buttons
+            for _, child in ipairs(modeDropdown:GetChildren()) do
+                if child:IsA("TextButton") then
+                    if child.Text == mode then
+                        child.BackgroundColor3 = Color3.fromRGB(40, 40, 45)
+                        child.TextColor3 = Settings.MenuColor
+                    else
+                        child.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
+                        child.TextColor3 = Color3.fromRGB(200, 200, 200)
+                    end
+                end
+            end
+            
+            ShowNotification(text .. " mode: " .. mode, 1.5)
+        end)
+        
+        modeBtn.MouseEnter:Connect(function()
+            if Settings.Keybinds[keybindName].Mode ~= mode then
+                Tween(modeBtn, {BackgroundColor3 = Color3.fromRGB(35, 35, 40)}, 0.2)
+            end
+        end)
+        
+        modeBtn.MouseLeave:Connect(function()
+            if Settings.Keybinds[keybindName].Mode ~= mode then
+                Tween(modeBtn, {BackgroundColor3 = Color3.fromRGB(30, 30, 35)}, 0.2)
+            end
+        end)
+    end
+    
+    -- Checkbox
+    local checkbox = Instance.new("Frame")
+    checkbox.Size = UDim2.new(0, 16, 0, 16)
+    checkbox.Position = UDim2.new(1, -26, 0.5, -8)
+    checkbox.BackgroundColor3 = default and Settings.MenuColor or Color3.fromRGB(30, 30, 35)
+    checkbox.BorderSizePixel = 0
+    checkbox.ZIndex = 5
+    checkbox.Parent = frame
+    if default then table.insert(AccentColorElements.CheckboxBackgrounds, checkbox) end
+    
+    local checkCorner = Instance.new("UICorner")
+    checkCorner.CornerRadius = UDim.new(0, 2)
+    checkCorner.Parent = checkbox
+    
+    local checkStroke = Instance.new("UIStroke")
+    checkStroke.Color = Settings.MenuColor
+    checkStroke.Thickness = 1
+    checkStroke.Transparency = 0.5
+    checkStroke.Parent = checkbox
+    table.insert(AccentColorElements.CheckboxStrokes, checkStroke)
+    
+    -- Checkbox click area
+    local checkboxBtn = Instance.new("TextButton")
+    checkboxBtn.Size = UDim2.new(0, 20, 0, 20)
+    checkboxBtn.Position = UDim2.new(1, -30, 0.5, -10)
+    checkboxBtn.BackgroundTransparency = 1
+    checkboxBtn.Text = ""
+    checkboxBtn.ZIndex = 11
+    checkboxBtn.Parent = frame
+    
+    local enabled = default
+    
+    checkboxBtn.MouseButton1Click:Connect(function()
+        enabled = not enabled
+        if enabled then
+            Tween(checkbox, {BackgroundColor3 = Settings.MenuColor}, 0.3)
+            table.insert(AccentColorElements.CheckboxBackgrounds, checkbox)
+        else
+            Tween(checkbox, {BackgroundColor3 = Color3.fromRGB(30, 30, 35)}, 0.3)
+            for i, cb in ipairs(AccentColorElements.CheckboxBackgrounds) do
+                if cb == checkbox then
+                    table.remove(AccentColorElements.CheckboxBackgrounds, i)
+                    break
+                end
+            end
+        end
+        callback(enabled)
+    end)
+    
+    -- Keybind binding
+    local binding = false
+    
+    keybindBtn.MouseButton1Click:Connect(function()
+        if binding then return end
+        binding = true
+        keybindBtn.Text = "[...]"
+        keybindBtn.BackgroundColor3 = Settings.MenuColor
+        
+        local connection
+        connection = UserInputService.InputBegan:Connect(function(input, gameProcessed)
+            if input.UserInputType == Enum.UserInputType.Keyboard then
+                if input.KeyCode == Enum.KeyCode.Escape then
+                    -- Remove keybind on ESC
+                    Settings.Keybinds[keybindName].Enabled = false
+                    keybindBtn.Text = "[NONE]"
+                    keybindBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
+                    binding = false
+                    connection:Disconnect()
+                    
+                    -- Set function to always active when no keybind
+                    if keybindName == "ESP" then
+                        Settings.ESPActive = Settings.ESP
+                    elseif keybindName == "Aimbot" then
+                        Settings.AimbotActive = Settings.Aimbot
+                    elseif keybindName == "InfiniteJump" then
+                        Settings.InfiniteJumpActive = Settings.InfiniteJump
+                    end
+                else
+                    Settings.Keybinds[keybindName].Enabled = true
+                    Settings.Keybinds[keybindName].Key = input.KeyCode
+                    keybindBtn.Text = "[" .. input.KeyCode.Name .. "]"
+                    keybindBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
+                    binding = false
+                    connection:Disconnect()
+                    
+                    -- Deactivate function when rebinding
+                    if keybindName == "ESP" then
+                        Settings.ESPActive = false
+                    elseif keybindName == "Aimbot" then
+                        Settings.AimbotActive = false
+                    elseif keybindName == "InfiniteJump" then
+                        Settings.InfiniteJumpActive = false
+                    end
+                end
+            elseif input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.MouseButton2 then
+                Settings.Keybinds[keybindName].Enabled = true
+                Settings.Keybinds[keybindName].Key = input.UserInputType
+                keybindBtn.Text = input.UserInputType == Enum.UserInputType.MouseButton1 and "[M1]" or "[M2]"
+                keybindBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
+                binding = false
+                connection:Disconnect()
+                
+                -- Deactivate function when rebinding
+                if keybindName == "ESP" then
+                    Settings.ESPActive = false
+                elseif keybindName == "Aimbot" then
+                    Settings.AimbotActive = false
+                elseif keybindName == "InfiniteJump" then
+                    Settings.InfiniteJumpActive = false
+                end
+                connection:Disconnect()
+            end
+        end)
+    end)
+    
+    -- Right click for mode dropdown
+    keybindBtn.MouseButton2Click:Connect(function()
+        modeDropdown.Visible = not modeDropdown.Visible
+    end)
+    
+    return {
+        Frame = frame,
+        SetValue = function(value)
+            enabled = value
+            if value then
+                Tween(checkbox, {BackgroundColor3 = Settings.MenuColor}, 0.3)
+                -- Add to accent color elements if not already there
+                local found = false
+                for _, cb in ipairs(AccentColorElements.CheckboxBackgrounds) do
+                    if cb == checkbox then
+                        found = true
+                        break
+                    end
+                end
+                if not found then
+                    table.insert(AccentColorElements.CheckboxBackgrounds, checkbox)
+                end
+            else
+                Tween(checkbox, {BackgroundColor3 = Color3.fromRGB(30, 30, 35)}, 0.3)
+                -- Remove from accent color elements
+                for i, cb in ipairs(AccentColorElements.CheckboxBackgrounds) do
+                    if cb == checkbox then
+                        table.remove(AccentColorElements.CheckboxBackgrounds, i)
+                        break
+                    end
+                end
+            end
+        end,
+        UpdateKeybind = function()
+            local keyText
+            if typeof(Settings.Keybinds[keybindName].Key) == "EnumItem" then
+                if Settings.Keybinds[keybindName].Key == Enum.UserInputType.MouseButton1 then
+                    keyText = "[M1]"
+                elseif Settings.Keybinds[keybindName].Key == Enum.UserInputType.MouseButton2 then
+                    keyText = "[M2]"
+                else
+                    keyText = "[" .. Settings.Keybinds[keybindName].Key.Name .. "]"
+                end
+            else
+                keyText = "[?]"
+            end
+            keybindBtn.Text = keyText
+        end
+    }
+end
+
+local function CreateSlider(parent, text, min, max, default, callback)
+    local frame = Instance.new("Frame")
+    frame.Size = UDim2.new(1, 0, 0, 40)
+    frame.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
+    frame.BorderSizePixel = 0
+    frame.Parent = parent
+    
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = UDim.new(0, 4)
+    corner.Parent = frame
+    
+    local label = Instance.new("TextLabel")
+    label.Size = UDim2.new(1, -70, 0, 18)
+    label.Position = UDim2.new(0, 10, 0, 4)
+    label.BackgroundTransparency = 1
+    label.Text = text
+    label.TextColor3 = Color3.fromRGB(200, 200, 200)
+    label.TextSize = 12
     label.Font = Enum.Font.Gotham
     label.TextXAlignment = Enum.TextXAlignment.Left
     label.Parent = frame
     
     local valueLabel = Instance.new("TextLabel")
-    valueLabel.Size = UDim2.new(0, 50, 0, 20)
-    valueLabel.Position = UDim2.new(1, -55, 0, 5)
+    valueLabel.Size = UDim2.new(0, 50, 0, 18)
+    valueLabel.Position = UDim2.new(1, -55, 0, 4)
     valueLabel.BackgroundTransparency = 1
     valueLabel.Text = tostring(default)
-    valueLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
-    valueLabel.TextSize = 12
-    valueLabel.Font = Enum.Font.Gotham
+    valueLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    valueLabel.TextSize = 11
+    valueLabel.Font = Enum.Font.GothamBold
     valueLabel.TextXAlignment = Enum.TextXAlignment.Right
     valueLabel.Parent = frame
     
     local sliderBG = Instance.new("Frame")
-    sliderBG.Size = UDim2.new(1, -20, 0, 6)
-    sliderBG.Position = UDim2.new(0, 10, 1, -15)
-    sliderBG.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+    sliderBG.Size = UDim2.new(1, -20, 0, 3)
+    sliderBG.Position = UDim2.new(0, 10, 1, -12)
+    sliderBG.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
     sliderBG.BorderSizePixel = 0
     sliderBG.Parent = frame
     
@@ -1461,13 +2581,27 @@ local function CreateSlider(parent, text, min, max, default, callback)
     
     local sliderFill = Instance.new("Frame")
     sliderFill.Size = UDim2.new((default - min) / (max - min), 0, 1, 0)
-    sliderFill.BackgroundColor3 = Color3.fromRGB(100, 50, 200)
+    sliderFill.BackgroundColor3 = Color3.fromRGB(255, 20, 147)
     sliderFill.BorderSizePixel = 0
     sliderFill.Parent = sliderBG
+    table.insert(AccentColorElements.SliderFills, sliderFill)
     
     local sliderFillCorner = Instance.new("UICorner")
     sliderFillCorner.CornerRadius = UDim.new(1, 0)
     sliderFillCorner.Parent = sliderFill
+    
+    -- Slider handle
+    local handle = Instance.new("Frame")
+    handle.Size = UDim2.new(0, 8, 0, 8)
+    handle.Position = UDim2.new((default - min) / (max - min), -4, 0.5, -4)
+    handle.BackgroundColor3 = Color3.fromRGB(255, 20, 147)
+    handle.BorderSizePixel = 0
+    handle.Parent = sliderBG
+    table.insert(AccentColorElements.SliderHandles, handle)
+    
+    local handleCorner = Instance.new("UICorner")
+    handleCorner.CornerRadius = UDim.new(1, 0)
+    handleCorner.Parent = handle
     
     local dragging = false
     local value = default
@@ -1479,6 +2613,7 @@ local function CreateSlider(parent, text, min, max, default, callback)
         local pos = math.clamp(relativeX / sliderBG.AbsoluteSize.X, 0, 1)
         value = math.floor(min + (max - min) * pos)
         sliderFill.Size = UDim2.new(pos, 0, 1, 0)
+        handle.Position = UDim2.new(pos, -4, 0.5, -4)
         valueLabel.Text = tostring(value)
         
         pcall(function()
@@ -1514,7 +2649,6 @@ local function CreateSlider(parent, text, min, max, default, callback)
         end
     end))
     
-    -- Cleanup connections when frame is destroyed
     frame.AncestryChanged:Connect(function()
         if not frame.Parent then
             for _, conn in ipairs(connections) do
@@ -1523,18 +2657,27 @@ local function CreateSlider(parent, text, min, max, default, callback)
         end
     end)
     
-    return frame
+    return {
+        Frame = frame,
+        SetValue = function(newValue)
+            value = math.clamp(newValue, min, max)
+            local pos = (value - min) / (max - min)
+            sliderFill.Size = UDim2.new(pos, 0, 1, 0)
+            handle.Position = UDim2.new(pos, -4, 0.5, -4)
+            valueLabel.Text = tostring(value)
+        end
+    }
 end
 
 local function CreateDropdown(parent, text, options, default, callback)
     local frame = Instance.new("Frame")
-    frame.Size = UDim2.new(1, 0, 0, 35)
-    frame.BackgroundColor3 = Color3.fromRGB(40, 40, 45)
+    frame.Size = UDim2.new(1, 0, 0, 30)
+    frame.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
     frame.BorderSizePixel = 0
     frame.Parent = parent
     
     local corner = Instance.new("UICorner")
-    corner.CornerRadius = UDim.new(0, 8)
+    corner.CornerRadius = UDim.new(0, 4)
     corner.Parent = frame
     
     local label = Instance.new("TextLabel")
@@ -1542,26 +2685,33 @@ local function CreateDropdown(parent, text, options, default, callback)
     label.Position = UDim2.new(0, 10, 0, 0)
     label.BackgroundTransparency = 1
     label.Text = text
-    label.TextColor3 = Color3.fromRGB(255, 255, 255)
-    label.TextSize = 13
+    label.TextColor3 = Color3.fromRGB(200, 200, 200)
+    label.TextSize = 12
     label.Font = Enum.Font.Gotham
     label.TextXAlignment = Enum.TextXAlignment.Left
     label.Parent = frame
     
     local dropBtn = Instance.new("TextButton")
-    dropBtn.Size = UDim2.new(0, 100, 0, 25)
-    dropBtn.Position = UDim2.new(1, -110, 0.5, -12.5)
-    dropBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 55)
+    dropBtn.Size = UDim2.new(0, 90, 0, 22)
+    dropBtn.Position = UDim2.new(1, -100, 0.5, -11)
+    dropBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
     dropBtn.Text = default
-    dropBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-    dropBtn.TextSize = 12
+    dropBtn.TextColor3 = Color3.fromRGB(200, 200, 200)
+    dropBtn.TextSize = 11
     dropBtn.Font = Enum.Font.Gotham
     dropBtn.BorderSizePixel = 0
     dropBtn.Parent = frame
     
     local dropCorner = Instance.new("UICorner")
-    dropCorner.CornerRadius = UDim.new(0, 6)
+    dropCorner.CornerRadius = UDim.new(0, 3)
     dropCorner.Parent = dropBtn
+    
+    local dropStroke = Instance.new("UIStroke")
+    dropStroke.Color = Color3.fromRGB(255, 20, 147)
+    dropStroke.Thickness = 1
+    dropStroke.Transparency = 0.7
+    dropStroke.Parent = dropBtn
+    table.insert(AccentColorElements.DropdownStrokes, dropStroke)
     
     local currentOption = default
     local currentIndex = 1
@@ -1587,74 +2737,90 @@ end
 
 local function CreateToggleWithColor(parent, text, default, defaultColor, callback, colorCallback)
     local frame = Instance.new("Frame")
-    frame.Size = UDim2.new(1, 0, 0, 35)
-    frame.BackgroundColor3 = Color3.fromRGB(40, 40, 45)
+    frame.Size = UDim2.new(1, 0, 0, 30)
+    frame.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
     frame.BorderSizePixel = 0
     frame.Parent = parent
     
     local corner = Instance.new("UICorner")
-    corner.CornerRadius = UDim.new(0, 8)
+    corner.CornerRadius = UDim.new(0, 4)
     corner.Parent = frame
     
     local label = Instance.new("TextLabel")
-    label.Size = UDim2.new(1, -110, 1, 0)
+    label.Size = UDim2.new(1, -100, 1, 0)
     label.Position = UDim2.new(0, 10, 0, 0)
     label.BackgroundTransparency = 1
     label.Text = text
-    label.TextColor3 = Color3.fromRGB(255, 255, 255)
-    label.TextSize = 13
+    label.TextColor3 = Color3.fromRGB(200, 200, 200)
+    label.TextSize = 12
     label.Font = Enum.Font.Gotham
     label.TextXAlignment = Enum.TextXAlignment.Left
     label.Parent = frame
     
     -- Color button
     local colorBtn = Instance.new("TextButton")
-    colorBtn.Size = UDim2.new(0, 30, 0, 25)
-    colorBtn.Position = UDim2.new(1, -80, 0.5, -12.5)
+    colorBtn.Size = UDim2.new(0, 24, 0, 20)
+    colorBtn.Position = UDim2.new(1, -60, 0.5, -10)
     colorBtn.BackgroundColor3 = defaultColor
     colorBtn.Text = ""
     colorBtn.BorderSizePixel = 0
     colorBtn.Parent = frame
     
     local colorCorner = Instance.new("UICorner")
-    colorCorner.CornerRadius = UDim.new(0, 6)
+    colorCorner.CornerRadius = UDim.new(0, 3)
     colorCorner.Parent = colorBtn
     
     local colorStroke = Instance.new("UIStroke")
-    colorStroke.Color = Color3.fromRGB(100, 100, 100)
+    colorStroke.Color = Settings.MenuColor
     colorStroke.Thickness = 1
+    colorStroke.Transparency = 0.5
     colorStroke.Parent = colorBtn
+    table.insert(AccentColorElements.ColorButtonStrokes, colorStroke)
     
-    -- Toggle button
+    -- Square checkbox
+    local checkbox = Instance.new("Frame")
+    checkbox.Size = UDim2.new(0, 16, 0, 16)
+    checkbox.Position = UDim2.new(1, -26, 0.5, -8)
+    checkbox.BackgroundColor3 = default and Settings.MenuColor or Color3.fromRGB(30, 30, 35)
+    checkbox.BorderSizePixel = 0
+    checkbox.Parent = frame
+    if default then table.insert(AccentColorElements.CheckboxBackgrounds, checkbox) end
+    
+    local checkCorner = Instance.new("UICorner")
+    checkCorner.CornerRadius = UDim.new(0, 2)
+    checkCorner.Parent = checkbox
+    
+    local checkStroke = Instance.new("UIStroke")
+    checkStroke.Color = Settings.MenuColor
+    checkStroke.Thickness = 1
+    checkStroke.Transparency = 0.5
+    checkStroke.Parent = checkbox
+    table.insert(AccentColorElements.CheckboxStrokes, checkStroke)
+    
     local btn = Instance.new("TextButton")
-    btn.Size = UDim2.new(0, 35, 0, 18)
-    btn.Position = UDim2.new(1, -45, 0.5, -9)
-    btn.BackgroundColor3 = default and Color3.fromRGB(100, 200, 100) or Color3.fromRGB(200, 100, 100)
+    btn.Size = UDim2.new(0, 30, 1, 0)
+    btn.Position = UDim2.new(1, -30, 0, 0)
+    btn.BackgroundTransparency = 1
     btn.Text = ""
-    btn.BorderSizePixel = 0
+    btn.ZIndex = 2
     btn.Parent = frame
-    
-    local btnCorner = Instance.new("UICorner")
-    btnCorner.CornerRadius = UDim.new(1, 0)
-    btnCorner.Parent = btn
-    
-    local ind = Instance.new("Frame")
-    ind.Size = UDim2.new(0, 14, 0, 14)
-    ind.Position = default and UDim2.new(1, -16, 0.5, -7) or UDim2.new(0, 2, 0.5, -7)
-    ind.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    ind.BorderSizePixel = 0
-    ind.Parent = btn
-    
-    local indCorner = Instance.new("UICorner")
-    indCorner.CornerRadius = UDim.new(1, 0)
-    indCorner.Parent = ind
     
     local enabled = default
     
     btn.MouseButton1Click:Connect(function()
         enabled = not enabled
-        Tween(btn, {BackgroundColor3 = enabled and Color3.fromRGB(100, 200, 100) or Color3.fromRGB(200, 100, 100)}, 0.2)
-        Tween(ind, {Position = enabled and UDim2.new(1, -16, 0.5, -7) or UDim2.new(0, 2, 0.5, -7)}, 0.2)
+        if enabled then
+            Tween(checkbox, {BackgroundColor3 = Settings.MenuColor}, 0.3)
+            table.insert(AccentColorElements.CheckboxBackgrounds, checkbox)
+        else
+            Tween(checkbox, {BackgroundColor3 = Color3.fromRGB(30, 30, 35)}, 0.3)
+            for i, cb in ipairs(AccentColorElements.CheckboxBackgrounds) do
+                if cb == checkbox then
+                    table.remove(AccentColorElements.CheckboxBackgrounds, i)
+                    break
+                end
+            end
+        end
         callback(enabled)
     end)
     
@@ -1671,7 +2837,7 @@ local function CreateToggleWithColor(parent, text, default, defaultColor, callba
         local picker = Instance.new("Frame")
         picker.Size = UDim2.new(0, 250, 0, 280)
         picker.Position = UDim2.new(0.5, -125, 0.5, -140)
-        picker.BackgroundColor3 = Color3.fromRGB(35, 35, 40)
+        picker.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
         picker.BorderSizePixel = 0
         picker.ZIndex = 200
         picker.Parent = ScreenGui
@@ -1873,44 +3039,160 @@ local function CreateToggleWithColor(parent, text, default, defaultColor, callba
         end)
     end)
     
-    return frame
+    -- Return object with SetValue and SetColor methods
+    return {
+        Frame = frame,
+        SetValue = function(value)
+            enabled = value
+            if value then
+                checkbox.BackgroundColor3 = Settings.MenuColor
+                -- Add to accent color elements if not already there
+                local found = false
+                for _, cb in ipairs(AccentColorElements.CheckboxBackgrounds) do
+                    if cb == checkbox then
+                        found = true
+                        break
+                    end
+                end
+                if not found then
+                    table.insert(AccentColorElements.CheckboxBackgrounds, checkbox)
+                end
+            else
+                checkbox.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
+                -- Remove from accent color elements
+                for i, cb in ipairs(AccentColorElements.CheckboxBackgrounds) do
+                    if cb == checkbox then
+                        table.remove(AccentColorElements.CheckboxBackgrounds, i)
+                        break
+                    end
+                end
+            end
+        end,
+        SetColor = function(color)
+            colorBtn.BackgroundColor3 = color
+            -- Update internal HSV values from the color
+            local h, s, v = color:ToHSV()
+            currentHue = h
+            currentSat = s
+            currentVal = v
+        end
+    }
 end
 
 -- Create Tabs
-local ESPTab = CreateTab("ESP")
-local AimbotTab = CreateTab("Aimbot")
+local CombatTab = CreateTab("Combat")
 local VisualsTab = CreateTab("Visuals")
+local LocalTab = CreateTab("Local")
 local MiscTab = CreateTab("Misc")
+local UITab = CreateTab("UI")
 local ConfigTab = CreateTab("Config")
 
--- ESP Tab
-CreateToggleWithColor(ESPTab.Content, "Box ESP", false, Color3.fromRGB(255, 0, 0), function(enabled)
-    Settings.ESP = enabled
-end, function(color)
-    Settings.BoxColor = color
+-- Recalculate tab positions after all tabs are created
+RecalculateTabPositions()
+
+-- Combat Tab (Aimbot functions)
+UIElements.Aimbot = CreateToggleWithKeybind(CombatTab.Content, "Aimbot", false, "Aimbot", function(enabled)
+    Settings.Aimbot = enabled
+    -- Sync Active state based on keybind status and mode
+    if enabled then
+        if not Settings.Keybinds.Aimbot.Enabled then
+            -- No keybind: function works as simple on/off
+            Settings.AimbotActive = true
+        elseif Settings.Keybinds.Aimbot.Mode == "Always On" then
+            Settings.AimbotActive = true
+        elseif Settings.Keybinds.Aimbot.Mode == "Toggle" then
+            Settings.AimbotActive = true -- Default to active when enabled
+        else -- Hold mode
+            Settings.AimbotActive = false -- Wait for key press
+        end
+    else
+        Settings.AimbotActive = false
+    end
 end)
 
-CreateToggle(ESPTab.Content, "Health Bar", false, function(enabled)
+UIElements.AimbotSmooth = CreateSlider(CombatTab.Content, "Smoothness", 1, 10, 1, function(value)
+    Settings.AimbotSmooth = value
+end)
+
+UIElements.AimLock = CreateToggle(CombatTab.Content, "AimLock", false, function(enabled)
+    Settings.AimLock = enabled
+end)
+
+CreateDropdown(CombatTab.Content, "Hitbox", {"Auto", "Head", "Torso"}, "Head", function(value)
+    Settings.AimbotHitbox = value
+end)
+
+UIElements.ShowFOV = CreateToggleWithColor(CombatTab.Content, "Show FOV", false, Color3.fromRGB(255, 255, 255), function(enabled)
+    Settings.ShowFOV = enabled
+end, function(color)
+    Settings.FOVColor = color
+end)
+
+UIElements.AimbotFOV = CreateSlider(CombatTab.Content, "FOV Size", 50, 500, 100, function(value)
+    Settings.AimbotFOV = value
+end)
+
+UIElements.AimbotMaxDistance = CreateSlider(CombatTab.Content, "Max Distance", 100, 1000, 500, function(value)
+    Settings.AimbotMaxDistance = value
+end)
+
+UIElements.Prediction = CreateToggle(CombatTab.Content, "Prediction", false, function(enabled)
+    Settings.Prediction = enabled
+end)
+
+UIElements.PredictionStrength = CreateSlider(CombatTab.Content, "Prediction Strength", 1, 20, 10, function(value)
+    Settings.PredictionStrength = value
+end)
+
+UIElements.NoRecoil = CreateToggle(CombatTab.Content, "No Recoil", false, function(enabled)
+    Settings.NoRecoil = enabled
+end)
+
+UIElements.RecoilStrength = CreateSlider(CombatTab.Content, "Recoil Strength", 1, 100, 50, function(value)
+    Settings.RecoilStrength = value
+end)
+
+-- Visuals Tab (ESP functions)
+UIElements.BoxESP = CreateToggleWithKeybind(VisualsTab.Content, "Box ESP", true, "ESP", function(enabled)
+    Settings.ESP = enabled
+    -- Sync Active state based on keybind status and mode
+    if enabled then
+        if not Settings.Keybinds.ESP.Enabled then
+            -- No keybind: function works as simple on/off
+            Settings.ESPActive = true
+        elseif Settings.Keybinds.ESP.Mode == "Always On" then
+            Settings.ESPActive = true
+        elseif Settings.Keybinds.ESP.Mode == "Toggle" then
+            Settings.ESPActive = true -- Default to active when enabled
+        else -- Hold mode
+            Settings.ESPActive = false -- Wait for key press
+        end
+    else
+        Settings.ESPActive = false
+    end
+end)
+
+UIElements.HealthBar = CreateToggle(VisualsTab.Content, "Health Bar", false, function(enabled)
     Settings.HealthBar = enabled
 end)
 
-CreateToggleWithColor(ESPTab.Content, "Name", false, Color3.fromRGB(255, 255, 255), function(enabled)
+UIElements.Name = CreateToggleWithColor(VisualsTab.Content, "Name", false, Color3.fromRGB(255, 255, 255), function(enabled)
     Settings.Name = enabled
 end, function(color)
     Settings.NameColor = color
 end)
 
-CreateToggleWithColor(ESPTab.Content, "Distance", false, Color3.fromRGB(255, 255, 255), function(enabled)
+UIElements.Distance = CreateToggleWithColor(VisualsTab.Content, "Distance", false, Color3.fromRGB(255, 255, 255), function(enabled)
     Settings.Distance = enabled
 end, function(color)
     Settings.DistanceColor = color
 end)
 
-CreateToggle(ESPTab.Content, "Team Check", false, function(enabled)
+UIElements.TeamCheck = CreateToggle(VisualsTab.Content, "Team Check", false, function(enabled)
     Settings.TeamCheck = enabled
 end)
 
-CreateToggle(ESPTab.Content, "Filled Box", false, function(enabled)
+UIElements.FilledBox = CreateToggle(VisualsTab.Content, "Filled Box", false, function(enabled)
     Settings.FilledBox = enabled
     for _, box in pairs(ESPBoxes) do
         if box then
@@ -1919,63 +3201,21 @@ CreateToggle(ESPTab.Content, "Filled Box", false, function(enabled)
     end
 end)
 
-CreateToggle(ESPTab.Content, "Box Corner", false, function(enabled)
+UIElements.BoxCorner = CreateToggle(VisualsTab.Content, "Box Corner", false, function(enabled)
     Settings.BoxCorner = enabled
 end)
 
-CreateSlider(ESPTab.Content, "Max Distance", 100, 5000, 2000, function(value)
+UIElements.Skeleton = CreateToggleWithColor(VisualsTab.Content, "Skeleton", false, Color3.fromRGB(255, 255, 255), function(enabled)
+    Settings.Skeleton = enabled
+end, function(color)
+    Settings.SkeletonColor = color
+end)
+
+UIElements.ESPMaxDistance = CreateSlider(VisualsTab.Content, "Max Distance", 100, 5000, 2000, function(value)
     Settings.ESPMaxDistance = value
 end)
 
--- Aimbot Tab
-CreateToggle(AimbotTab.Content, "Aimbot", false, function(enabled)
-    Settings.Aimbot = enabled
-end)
-
-CreateSlider(AimbotTab.Content, "Smoothness", 1, 10, 1, function(value)
-    Settings.AimbotSmooth = value
-end)
-
-CreateToggle(AimbotTab.Content, "AimLock", false, function(enabled)
-    Settings.AimLock = enabled
-end)
-
-CreateDropdown(AimbotTab.Content, "Hitbox", {"Auto", "Head", "Torso"}, "Head", function(value)
-    Settings.AimbotHitbox = value
-end)
-
-CreateToggleWithColor(AimbotTab.Content, "Show FOV", false, Color3.fromRGB(255, 255, 255), function(enabled)
-    Settings.ShowFOV = enabled
-end, function(color)
-    Settings.FOVColor = color
-end)
-
-CreateSlider(AimbotTab.Content, "FOV Size", 50, 500, 100, function(value)
-    Settings.AimbotFOV = value
-end)
-
-CreateSlider(AimbotTab.Content, "Max Distance", 100, 1000, 500, function(value)
-    Settings.AimbotMaxDistance = value
-end)
-
-CreateToggle(AimbotTab.Content, "Prediction", false, function(enabled)
-    Settings.Prediction = enabled
-end)
-
-CreateSlider(AimbotTab.Content, "Prediction Strength", 1, 20, 10, function(value)
-    Settings.PredictionStrength = value
-end)
-
-CreateToggle(AimbotTab.Content, "No Recoil", false, function(enabled)
-    Settings.NoRecoil = enabled
-end)
-
-CreateSlider(AimbotTab.Content, "Recoil Strength", 1, 100, 50, function(value)
-    Settings.RecoilStrength = value
-end)
-
--- Visuals Tab
-CreateToggle(VisualsTab.Content, "Fullbright", false, function(enabled)
+UIElements.Fullbright = CreateToggle(VisualsTab.Content, "Fullbright", false, function(enabled)
     Settings.Fullbright = enabled
     local lighting = game:GetService("Lighting")
     lighting.Brightness = enabled and 2 or 1
@@ -1983,20 +3223,628 @@ CreateToggle(VisualsTab.Content, "Fullbright", false, function(enabled)
     lighting.FogEnd = 100000
 end)
 
--- Misc Tab
-CreateToggle(MiscTab.Content, "Infinite Jump", false, function(enabled)
-    Settings.InfiniteJump = enabled
+-- Local Tab (Local ESP functions)
+UIElements.LocalSkeleton = CreateToggleWithColor(LocalTab.Content, "Local Skeleton", false, Color3.fromRGB(0, 255, 0), function(enabled)
+    Settings.LocalSkeleton = enabled
+end, function(color)
+    Settings.LocalSkeletonColor = color
 end)
 
-CreateToggle(MiscTab.Content, "Debug Panel", false, function(enabled)
+UIElements.LocalHighlight = CreateToggleWithColor(LocalTab.Content, "Local Highlight", false, Color3.fromRGB(255, 255, 0), function(enabled)
+    Settings.LocalHighlight = enabled
+end, function(color)
+    Settings.LocalHighlightColor = color
+end)
+
+-- Misc Tab
+-- Menu Color
+local menuColorFrame = Instance.new("Frame")
+menuColorFrame.Size = UDim2.new(1, 0, 0, 30)
+menuColorFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
+menuColorFrame.BorderSizePixel = 0
+menuColorFrame.Parent = MiscTab.Content
+
+local menuColorCorner = Instance.new("UICorner")
+menuColorCorner.CornerRadius = UDim.new(0, 4)
+menuColorCorner.Parent = menuColorFrame
+
+local menuColorLabel = Instance.new("TextLabel")
+menuColorLabel.Size = UDim2.new(1, -40, 1, 0)
+menuColorLabel.Position = UDim2.new(0, 10, 0, 0)
+menuColorLabel.BackgroundTransparency = 1
+menuColorLabel.Text = "Menu Color"
+menuColorLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+menuColorLabel.TextSize = 12
+menuColorLabel.Font = Enum.Font.Gotham
+menuColorLabel.TextXAlignment = Enum.TextXAlignment.Left
+menuColorLabel.Parent = menuColorFrame
+
+local menuColorBtn = Instance.new("TextButton")
+menuColorBtn.Size = UDim2.new(0, 24, 0, 20)
+menuColorBtn.Position = UDim2.new(1, -30, 0.5, -10)
+menuColorBtn.BackgroundColor3 = Settings.MenuColor
+menuColorBtn.Text = ""
+menuColorBtn.BorderSizePixel = 0
+menuColorBtn.Parent = menuColorFrame
+
+local menuColorBtnCorner = Instance.new("UICorner")
+menuColorBtnCorner.CornerRadius = UDim.new(0, 3)
+menuColorBtnCorner.Parent = menuColorBtn
+
+local menuColorStroke = Instance.new("UIStroke")
+menuColorStroke.Color = Color3.fromRGB(255, 20, 147)
+menuColorStroke.Thickness = 1
+menuColorStroke.Transparency = 0.5
+menuColorStroke.Parent = menuColorBtn
+
+-- Color picker for menu color (same as CreateToggleWithColor)
+local menuColorPickerOpen = false
+local currentHue = 0
+local currentSat = 1
+local currentVal = 1
+
+menuColorBtn.MouseButton1Click:Connect(function()
+    if menuColorPickerOpen then return end
+    menuColorPickerOpen = true
+    
+    local picker = Instance.new("Frame")
+    picker.Size = UDim2.new(0, 250, 0, 280)
+    picker.Position = UDim2.new(0.5, -125, 0.5, -140)
+    picker.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
+    picker.BorderSizePixel = 0
+    picker.ZIndex = 200
+    picker.Parent = ScreenGui
+    
+    local pickerCorner = Instance.new("UICorner")
+    pickerCorner.CornerRadius = UDim.new(0, 10)
+    pickerCorner.Parent = picker
+    
+    local pickerStroke = Instance.new("UIStroke")
+    pickerStroke.Color = Color3.fromRGB(100, 50, 200)
+    pickerStroke.Thickness = 2
+    pickerStroke.Parent = picker
+    
+    local title = Instance.new("TextLabel")
+    title.Size = UDim2.new(1, 0, 0, 30)
+    title.BackgroundTransparency = 1
+    title.Text = "Menu Color Picker"
+    title.TextColor3 = Color3.fromRGB(255, 255, 255)
+    title.TextSize = 14
+    title.Font = Enum.Font.GothamBold
+    title.ZIndex = 201
+    title.Parent = picker
+    
+    -- Main SV palette
+    local palette = Instance.new("ImageButton")
+    palette.Size = UDim2.new(0, 220, 0, 150)
+    palette.Position = UDim2.new(0, 15, 0, 40)
+    palette.BackgroundColor3 = Color3.fromHSV(currentHue, 1, 1)
+    palette.BorderSizePixel = 0
+    palette.ZIndex = 201
+    palette.Parent = picker
+    
+    local paletteCorner = Instance.new("UICorner")
+    paletteCorner.CornerRadius = UDim.new(0, 6)
+    paletteCorner.Parent = palette
+    
+    -- White to transparent gradient
+    local whiteGrad = Instance.new("Frame")
+    whiteGrad.Size = UDim2.new(1, 0, 1, 0)
+    whiteGrad.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    whiteGrad.BorderSizePixel = 0
+    whiteGrad.ZIndex = 202
+    whiteGrad.Parent = palette
+    
+    local whiteGradCorner = Instance.new("UICorner")
+    whiteGradCorner.CornerRadius = UDim.new(0, 6)
+    whiteGradCorner.Parent = whiteGrad
+    
+    local whiteGradient = Instance.new("UIGradient")
+    whiteGradient.Transparency = NumberSequence.new({
+        NumberSequenceKeypoint.new(0, 0),
+        NumberSequenceKeypoint.new(1, 1)
+    })
+    whiteGradient.Parent = whiteGrad
+    
+    -- Black gradient
+    local blackGrad = Instance.new("Frame")
+    blackGrad.Size = UDim2.new(1, 0, 1, 0)
+    blackGrad.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    blackGrad.BorderSizePixel = 0
+    blackGrad.ZIndex = 203
+    blackGrad.Parent = palette
+    
+    local blackGradCorner = Instance.new("UICorner")
+    blackGradCorner.CornerRadius = UDim.new(0, 6)
+    blackGradCorner.Parent = blackGrad
+    
+    local blackGradient = Instance.new("UIGradient")
+    blackGradient.Rotation = 90
+    blackGradient.Transparency = NumberSequence.new({
+        NumberSequenceKeypoint.new(0, 1),
+        NumberSequenceKeypoint.new(1, 0)
+    })
+    blackGradient.Parent = blackGrad
+    
+    -- Palette cursor
+    local paletteCursor = Instance.new("Frame")
+    paletteCursor.Size = UDim2.new(0, 12, 0, 12)
+    paletteCursor.Position = UDim2.new(currentSat, -6, 1 - currentVal, -6)
+    paletteCursor.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    paletteCursor.BorderSizePixel = 0
+    paletteCursor.ZIndex = 204
+    paletteCursor.Parent = palette
+    
+    local paletteCursorCorner = Instance.new("UICorner")
+    paletteCursorCorner.CornerRadius = UDim.new(1, 0)
+    paletteCursorCorner.Parent = paletteCursor
+    
+    local paletteCursorStroke = Instance.new("UIStroke")
+    paletteCursorStroke.Color = Color3.fromRGB(0, 0, 0)
+    paletteCursorStroke.Thickness = 2
+    paletteCursorStroke.Parent = paletteCursor
+    
+    -- Hue slider
+    local hueSlider = Instance.new("ImageButton")
+    hueSlider.Size = UDim2.new(0, 220, 0, 15)
+    hueSlider.Position = UDim2.new(0, 15, 0, 200)
+    hueSlider.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    hueSlider.BorderSizePixel = 0
+    hueSlider.ZIndex = 201
+    hueSlider.Parent = picker
+    
+    local hueCorner = Instance.new("UICorner")
+    hueCorner.CornerRadius = UDim.new(0, 8)
+    hueCorner.Parent = hueSlider
+    
+    local hueGradient = Instance.new("UIGradient")
+    hueGradient.Color = ColorSequence.new({
+        ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 0, 0)),
+        ColorSequenceKeypoint.new(0.17, Color3.fromRGB(255, 255, 0)),
+        ColorSequenceKeypoint.new(0.33, Color3.fromRGB(0, 255, 0)),
+        ColorSequenceKeypoint.new(0.5, Color3.fromRGB(0, 255, 255)),
+        ColorSequenceKeypoint.new(0.67, Color3.fromRGB(0, 0, 255)),
+        ColorSequenceKeypoint.new(0.83, Color3.fromRGB(255, 0, 255)),
+        ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 0, 0))
+    })
+    hueGradient.Parent = hueSlider
+    
+    -- Hue cursor
+    local hueCursor = Instance.new("Frame")
+    hueCursor.Size = UDim2.new(0, 4, 1, 4)
+    hueCursor.Position = UDim2.new(currentHue, -2, 0, -2)
+    hueCursor.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    hueCursor.BorderSizePixel = 0
+    hueCursor.ZIndex = 202
+    hueCursor.Parent = hueSlider
+    
+    local hueCursorStroke = Instance.new("UIStroke")
+    hueCursorStroke.Color = Color3.fromRGB(0, 0, 0)
+    hueCursorStroke.Thickness = 2
+    hueCursorStroke.Parent = hueCursor
+    
+    -- Apply button
+    local applyBtn = Instance.new("TextButton")
+    applyBtn.Size = UDim2.new(0, 100, 0, 35)
+    applyBtn.Position = UDim2.new(0.5, -50, 0, 230)
+    applyBtn.BackgroundColor3 = Color3.fromRGB(100, 50, 200)
+    applyBtn.Text = "Apply"
+    applyBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    applyBtn.TextSize = 14
+    applyBtn.Font = Enum.Font.GothamBold
+    applyBtn.BorderSizePixel = 0
+    applyBtn.ZIndex = 201
+    applyBtn.Parent = picker
+    
+    local applyCorner = Instance.new("UICorner")
+    applyCorner.CornerRadius = UDim.new(0, 8)
+    applyCorner.Parent = applyBtn
+    
+    -- Palette interaction
+    local paletteDragging = false
+    palette.MouseButton1Down:Connect(function()
+        paletteDragging = true
+    end)
+    
+    UserInputService.InputEnded:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+            paletteDragging = false
+        end
+    end)
+    
+    UserInputService.InputChanged:Connect(function(input)
+        if paletteDragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+            local relX = (input.Position.X - palette.AbsolutePosition.X) / palette.AbsoluteSize.X
+            local relY = (input.Position.Y - palette.AbsolutePosition.Y) / palette.AbsoluteSize.Y
+            currentSat = math.clamp(relX, 0, 1)
+            currentVal = 1 - math.clamp(relY, 0, 1)
+            paletteCursor.Position = UDim2.new(currentSat, -6, 1 - currentVal, -6)
+        end
+    end)
+    
+    -- Hue slider interaction
+    local hueDragging = false
+    hueSlider.MouseButton1Down:Connect(function()
+        hueDragging = true
+    end)
+    
+    UserInputService.InputEnded:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+            hueDragging = false
+        end
+    end)
+    
+    UserInputService.InputChanged:Connect(function(input)
+        if hueDragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+            local relX = (input.Position.X - hueSlider.AbsolutePosition.X) / hueSlider.AbsoluteSize.X
+            currentHue = math.clamp(relX, 0, 1)
+            palette.BackgroundColor3 = Color3.fromHSV(currentHue, 1, 1)
+            hueCursor.Position = UDim2.new(currentHue, -2, 0, -2)
+        end
+    end)
+    
+    applyBtn.MouseButton1Click:Connect(function()
+        local finalColor = Color3.fromHSV(currentHue, currentSat, currentVal)
+        menuColorBtn.BackgroundColor3 = finalColor
+        UpdateAccentColor(finalColor)
+        picker:Destroy()
+        menuColorPickerOpen = false
+    end)
+end)
+
+-- Menu Bind Button
+local menuBindButton = Instance.new("TextButton")
+menuBindButton.Size = UDim2.new(1, -10, 0, 30)
+menuBindButton.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
+menuBindButton.Text = "Menu Bind: " .. Settings.MenuBind.Name
+menuBindButton.TextColor3 = Color3.fromRGB(200, 200, 200)
+menuBindButton.TextSize = 12
+menuBindButton.Font = Enum.Font.Gotham
+menuBindButton.Parent = MiscTab.Content
+
+local menuBindCorner = Instance.new("UICorner")
+menuBindCorner.CornerRadius = UDim.new(0, 4)
+menuBindCorner.Parent = menuBindButton
+
+local bindingKey = false
+menuBindButton.MouseButton1Click:Connect(function()
+    if bindingKey then return end
+    bindingKey = true
+    menuBindButton.Text = "Press any key..."
+    menuBindButton.BackgroundColor3 = Color3.fromRGB(0, 150, 255)
+    
+    local connection
+    connection = UserInputService.InputBegan:Connect(function(input, gameProcessed)
+        if input.UserInputType == Enum.UserInputType.Keyboard then
+            Settings.MenuBind = input.KeyCode
+            menuBindButton.Text = "Menu Bind: " .. input.KeyCode.Name
+            menuBindButton.BackgroundColor3 = Color3.fromRGB(45, 45, 50)
+            bindingKey = false
+            connection:Disconnect()
+        end
+    end)
+end)
+
+UIElements.InfiniteJump = CreateToggleWithKeybind(MiscTab.Content, "Infinite Jump", false, "InfiniteJump", function(enabled)
+    Settings.InfiniteJump = enabled
+    -- Sync Active state based on keybind status and mode
+    if enabled then
+        if not Settings.Keybinds.InfiniteJump.Enabled then
+            -- No keybind: function works as simple on/off
+            Settings.InfiniteJumpActive = true
+        elseif Settings.Keybinds.InfiniteJump.Mode == "Always On" then
+            Settings.InfiniteJumpActive = true
+        elseif Settings.Keybinds.InfiniteJump.Mode == "Toggle" then
+            Settings.InfiniteJumpActive = true -- Default to active when enabled
+        else -- Hold mode
+            Settings.InfiniteJumpActive = false -- Wait for key press
+        end
+    else
+        Settings.InfiniteJumpActive = false
+    end
+end)
+
+UIElements.DebugPanel = CreateToggle(MiscTab.Content, "Debug Panel", false, function(enabled)
     Settings.DebugPanel = enabled
+end)
+
+-- UI Tab
+-- Keylist Frame
+local KeylistFrame = Instance.new("Frame")
+KeylistFrame.Size = UDim2.new(0, 200, 0, 0)
+KeylistFrame.Position = UDim2.new(1, -210, 0, 50)
+KeylistFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
+KeylistFrame.BorderSizePixel = 0
+KeylistFrame.Visible = false
+KeylistFrame.Parent = ScreenGui
+
+local KeylistCorner = Instance.new("UICorner")
+KeylistCorner.CornerRadius = UDim.new(0, 8)
+KeylistCorner.Parent = KeylistFrame
+
+local KeylistTitle = Instance.new("TextLabel")
+KeylistTitle.Size = UDim2.new(1, 0, 0, 30)
+KeylistTitle.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
+KeylistTitle.Text = "Keybinds"
+KeylistTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+KeylistTitle.TextSize = 14
+KeylistTitle.Font = Enum.Font.GothamBold
+KeylistTitle.BorderSizePixel = 0
+KeylistTitle.Parent = KeylistFrame
+
+-- Add gradient to title
+local KeylistTitleGradient = Instance.new("UIGradient")
+KeylistTitleGradient.Color = ColorSequence.new({
+    ColorSequenceKeypoint.new(0, Settings.MenuColor),
+    ColorSequenceKeypoint.new(0.25, Color3.fromRGB(255, 255, 255)),
+    ColorSequenceKeypoint.new(0.5, Settings.MenuColor),
+    ColorSequenceKeypoint.new(0.75, Color3.fromRGB(255, 255, 255)),
+    ColorSequenceKeypoint.new(1, Settings.MenuColor)
+})
+KeylistTitleGradient.Parent = KeylistTitle
+AccentColorElements.KeylistGradient = KeylistTitleGradient
+
+-- Add glow effect using shadow image
+local KeylistGlow = Instance.new("ImageLabel")
+KeylistGlow.Size = UDim2.new(1, 20, 1, 20)
+KeylistGlow.Position = UDim2.new(0.5, 0, 0.5, 0)
+KeylistGlow.AnchorPoint = Vector2.new(0.5, 0.5)
+KeylistGlow.BackgroundTransparency = 1
+KeylistGlow.Image = "rbxassetid://5554236805" -- Glow/shadow image
+KeylistGlow.ImageColor3 = Settings.MenuColor
+KeylistGlow.ImageTransparency = 0.5
+KeylistGlow.ScaleType = Enum.ScaleType.Slice
+KeylistGlow.SliceCenter = Rect.new(23, 23, 277, 277)
+KeylistGlow.ZIndex = 0
+KeylistGlow.Parent = KeylistTitle
+AccentColorElements.KeylistGlow = KeylistGlow
+
+KeylistTitle.ZIndex = 1
+
+local KeylistTitleCorner = Instance.new("UICorner")
+KeylistTitleCorner.CornerRadius = UDim.new(0, 8)
+KeylistTitleCorner.Parent = KeylistTitle
+
+-- Animate gradient
+task.spawn(function()
+    local offset = -2
+    while true do
+        offset = offset + 0.01
+        if offset > 2 then offset = -2 end
+        if KeylistTitleGradient and KeylistTitleGradient.Parent then
+            KeylistTitleGradient.Offset = Vector2.new(offset, 0)
+        end
+        task.wait(0.05) -- Increased from 0.03 to 0.05 for better performance
+    end
+end)
+
+-- Make Keylist draggable
+local draggingKeylist = false
+local dragInputKeylist = nil
+local dragStartKeylist = nil
+local startPosKeylist = nil
+
+KeylistTitle.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        draggingKeylist = true
+        dragStartKeylist = input.Position
+        startPosKeylist = KeylistFrame.Position
+        
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                draggingKeylist = false
+            end
+        end)
+    end
+end)
+
+KeylistTitle.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement then
+        dragInputKeylist = input
+    end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+    if input == dragInputKeylist and draggingKeylist then
+        local delta = input.Position - dragStartKeylist
+        KeylistFrame.Position = UDim2.new(
+            startPosKeylist.X.Scale,
+            startPosKeylist.X.Offset + delta.X,
+            startPosKeylist.Y.Scale,
+            startPosKeylist.Y.Offset + delta.Y
+        )
+    end
+end)
+
+local KeylistContainer = Instance.new("Frame")
+KeylistContainer.Size = UDim2.new(1, -10, 1, -40)
+KeylistContainer.Position = UDim2.new(0, 5, 0, 35)
+KeylistContainer.BackgroundTransparency = 1
+KeylistContainer.Parent = KeylistFrame
+
+local KeylistLayout = Instance.new("UIListLayout")
+KeylistLayout.Padding = UDim.new(0, 5)
+KeylistLayout.SortOrder = Enum.SortOrder.LayoutOrder
+KeylistLayout.Parent = KeylistContainer
+
+-- Keylist items storage
+local KeylistItems = {}
+local lastKeylistState = {} -- Track last state to avoid recreating
+
+local function UpdateKeylist()
+    local activeCount = 0
+    local currentState = {}
+    
+    -- Check each keybind and build current state
+    for name, bind in pairs(Settings.Keybinds) do
+        local isEnabled = Settings[name]
+        local isActive = false
+        
+        -- Check if the feature is actually active (not just enabled)
+        if name == "ESP" then
+            isActive = Settings.ESPActive
+        elseif name == "Aimbot" then
+            isActive = Settings.AimbotActive
+        elseif name == "InfiniteJump" then
+            isActive = Settings.InfiniteJumpActive
+        end
+        
+        -- Only show if: feature enabled, keybind enabled, AND currently active
+        if isEnabled and bind.Enabled and isActive then
+            local keyText = ""
+            if typeof(bind.Key) == "EnumItem" then
+                if bind.Key == Enum.UserInputType.MouseButton1 then
+                    keyText = "[M1]"
+                elseif bind.Key == Enum.UserInputType.MouseButton2 then
+                    keyText = "[M2]"
+                else
+                    keyText = "[" .. bind.Key.Name .. "]"
+                end
+            end
+            currentState[name] = keyText
+            activeCount = activeCount + 1
+        end
+    end
+    
+    -- Compare with last state - only recreate if changed
+    local stateChanged = false
+    
+    -- Count items in both states
+    local currentCount = 0
+    local lastCount = 0
+    for _ in pairs(currentState) do currentCount = currentCount + 1 end
+    for _ in pairs(lastKeylistState) do lastCount = lastCount + 1 end
+    
+    if currentCount ~= lastCount then
+        stateChanged = true
+    else
+        for name, keyText in pairs(currentState) do
+            if lastKeylistState[name] ~= keyText then
+                stateChanged = true
+                break
+            end
+        end
+        -- Also check if any items were removed
+        if not stateChanged then
+            for name in pairs(lastKeylistState) do
+                if currentState[name] == nil then
+                    stateChanged = true
+                    break
+                end
+            end
+        end
+    end
+    
+    -- Only recreate items if state changed
+    if stateChanged then
+        -- Determine which items are new (not in lastKeylistState)
+        local newItems = {}
+        for name in pairs(currentState) do
+            if lastKeylistState[name] == nil then
+                newItems[name] = true
+            end
+        end
+        
+        -- Clear existing items
+        for _, item in pairs(KeylistItems) do
+            if item then item:Destroy() end
+        end
+        KeylistItems = {}
+        
+        local index = 0
+        for name, keyText in pairs(currentState) do
+            index = index + 1
+            
+            local isNewItem = newItems[name] == true
+            
+            local item = Instance.new("Frame")
+            item.Size = UDim2.new(1, 0, 0, 25)
+            item.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
+            item.BorderSizePixel = 0
+            item.BackgroundTransparency = isNewItem and 1 or 0
+            item.Parent = KeylistContainer
+            
+            local itemCorner = Instance.new("UICorner")
+            itemCorner.CornerRadius = UDim.new(1, 0)
+            itemCorner.Parent = item
+            
+            local itemLabel = Instance.new("TextLabel")
+            itemLabel.Size = UDim2.new(1, -10, 1, 0)
+            itemLabel.Position = UDim2.new(0, 5, 0, 0)
+            itemLabel.BackgroundTransparency = 1
+            itemLabel.Text = name
+            itemLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+            itemLabel.TextSize = 12
+            itemLabel.Font = Enum.Font.Gotham
+            itemLabel.TextXAlignment = Enum.TextXAlignment.Left
+            itemLabel.TextTransparency = isNewItem and 1 or 0
+            itemLabel.Parent = item
+            
+            local keyLabel = Instance.new("TextLabel")
+            keyLabel.Size = UDim2.new(0, 60, 1, 0)
+            keyLabel.Position = UDim2.new(1, -65, 0, 0)
+            keyLabel.BackgroundTransparency = 1
+            keyLabel.Text = keyText
+            keyLabel.TextColor3 = Settings.MenuColor
+            keyLabel.TextSize = 11
+            keyLabel.Font = Enum.Font.GothamBold
+            keyLabel.TextXAlignment = Enum.TextXAlignment.Right
+            keyLabel.TextTransparency = isNewItem and 1 or 0
+            keyLabel.Parent = item
+            
+            -- Animate appearance only for new items
+            if isNewItem then
+                task.spawn(function()
+                    Tween(item, {BackgroundTransparency = 0}, 0.2)
+                    Tween(itemLabel, {TextTransparency = 0}, 0.2)
+                    Tween(keyLabel, {TextTransparency = 0}, 0.2)
+                end)
+            end
+            
+            table.insert(KeylistItems, item)
+        end
+        
+        lastKeylistState = currentState
+    end
+    
+    -- Update frame size and visibility
+    KeylistFrame.Size = UDim2.new(0, 200, 0, 35 + (activeCount * 30))
+    KeylistFrame.Visible = activeCount > 0 and Settings.ShowKeylist or false
+end
+
+-- Add Keylist toggle
+Settings.ShowKeylist = false
+UIElements.ShowKeylist = CreateToggle(UITab.Content, "Show Keylist", false, function(enabled)
+    Settings.ShowKeylist = enabled
+    UpdateKeylist()
+end)
+
+-- Update keylist periodically (not every frame)
+task.spawn(function()
+    while true do
+        task.wait(0.2) -- Increased from 0.1 to 0.2 for better performance
+        UpdateKeylist()
+    end
 end)
 
 -- Config System
 local HttpService = game:GetService("HttpService")
 
 local function SaveConfig(configName)
+    if not fileSystemAvailable then
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+            Title = "Sentinel Config",
+            Text = "File system not available!",
+            Duration = 3
+        })
+        return false
+    end
+    
+    -- Ensure folders exist
+    EnsureFolders()
+    
     local configData = {
+        -- ESP Settings
         ESP = Settings.ESP,
         HealthBar = Settings.HealthBar,
         Name = Settings.Name,
@@ -2004,10 +3852,14 @@ local function SaveConfig(configName)
         TeamCheck = Settings.TeamCheck,
         FilledBox = Settings.FilledBox,
         BoxCorner = Settings.BoxCorner,
+        Skeleton = Settings.Skeleton,
         BoxColor = {Settings.BoxColor.R, Settings.BoxColor.G, Settings.BoxColor.B},
         NameColor = {Settings.NameColor.R, Settings.NameColor.G, Settings.NameColor.B},
         DistanceColor = {Settings.DistanceColor.R, Settings.DistanceColor.G, Settings.DistanceColor.B},
+        SkeletonColor = {Settings.SkeletonColor.R, Settings.SkeletonColor.G, Settings.SkeletonColor.B},
         ESPMaxDistance = Settings.ESPMaxDistance,
+        
+        -- Aimbot Settings
         Aimbot = Settings.Aimbot,
         AimbotFOV = Settings.AimbotFOV,
         ShowFOV = Settings.ShowFOV,
@@ -2020,79 +3872,124 @@ local function SaveConfig(configName)
         RecoilStrength = Settings.RecoilStrength,
         Prediction = Settings.Prediction,
         PredictionStrength = Settings.PredictionStrength,
+        
+        -- Visual Settings
         Fullbright = Settings.Fullbright,
+        
+        -- Local ESP Settings
+        LocalSkeleton = Settings.LocalSkeleton,
+        LocalSkeletonColor = {Settings.LocalSkeletonColor.R, Settings.LocalSkeletonColor.G, Settings.LocalSkeletonColor.B},
+        LocalHighlight = Settings.LocalHighlight,
+        LocalHighlightColor = {Settings.LocalHighlightColor.R, Settings.LocalHighlightColor.G, Settings.LocalHighlightColor.B},
+        
+        -- Misc Settings
         InfiniteJump = Settings.InfiniteJump,
-        DebugPanel = Settings.DebugPanel
+        DebugPanel = Settings.DebugPanel,
+        DebugPanelPos = Settings.DebugPanelPos,
+        MenuBind = Settings.MenuBind.Name,
+        MenuColor = {Settings.MenuColor.R, Settings.MenuColor.G, Settings.MenuColor.B},
+        
+        -- Keybinds
+        Keybinds = {
+            ESP = {
+                Key = typeof(Settings.Keybinds.ESP.Key) == "EnumItem" and Settings.Keybinds.ESP.Key.Name or "E",
+                KeyType = typeof(Settings.Keybinds.ESP.Key) == "EnumItem" and (Settings.Keybinds.ESP.Key == Enum.UserInputType.MouseButton1 and "Mouse" or Settings.Keybinds.ESP.Key == Enum.UserInputType.MouseButton2 and "Mouse" or "Keyboard") or "Keyboard",
+                Mode = Settings.Keybinds.ESP.Mode,
+                Enabled = Settings.Keybinds.ESP.Enabled
+            },
+            Aimbot = {
+                Key = typeof(Settings.Keybinds.Aimbot.Key) == "EnumItem" and Settings.Keybinds.Aimbot.Key.Name or "Q",
+                KeyType = typeof(Settings.Keybinds.Aimbot.Key) == "EnumItem" and (Settings.Keybinds.Aimbot.Key == Enum.UserInputType.MouseButton1 and "Mouse" or Settings.Keybinds.Aimbot.Key == Enum.UserInputType.MouseButton2 and "Mouse" or "Keyboard") or "Keyboard",
+                Mode = Settings.Keybinds.Aimbot.Mode,
+                Enabled = Settings.Keybinds.Aimbot.Enabled
+            },
+            InfiniteJump = {
+                Key = typeof(Settings.Keybinds.InfiniteJump.Key) == "EnumItem" and Settings.Keybinds.InfiniteJump.Key.Name or "J",
+                KeyType = typeof(Settings.Keybinds.InfiniteJump.Key) == "EnumItem" and (Settings.Keybinds.InfiniteJump.Key == Enum.UserInputType.MouseButton1 and "Mouse" or Settings.Keybinds.InfiniteJump.Key == Enum.UserInputType.MouseButton2 and "Mouse" or "Keyboard") or "Keyboard",
+                Mode = Settings.Keybinds.InfiniteJump.Mode,
+                Enabled = Settings.Keybinds.InfiniteJump.Enabled
+            }
+        },
+        
+        -- UI Settings
+        MenuSize = {
+            Width = savedMenuSize.X.Offset,
+            Height = savedMenuSize.Y.Offset
+        }
     }
     
     local success, err = pcall(function()
         local jsonData = HttpService:JSONEncode(configData)
-        local filePath = configFolder .. configName .. ".json"
+        local filePath = configFolder .. "/" .. configName .. ".json"
         
-        -- Try exploit functions first
         if writefile then
-            if makefolder and isfolder and not isfolder(configFolder) then
-                makefolder(configFolder)
-            end
             writefile(filePath, jsonData)
-            print("Config saved: " .. configName)
-        -- Try io functions
-        elseif io and io.open then
-            if os and os.execute then
-                os.execute('mkdir "' .. configFolder:gsub("/", "\\") .. '" 2>nul')
-            end
-            local file = io.open(filePath, "w")
-            if file then
-                file:write(jsonData)
-                file:close()
-                print("Config saved: " .. configName)
-            else
-                warn("Failed to open file for writing")
-            end
+            game:GetService("StarterGui"):SetCore("SendNotification", {
+                Title = "Sentinel Config",
+                Text = "Config '" .. configName .. "' saved!",
+                Duration = 3
+            })
+            print("[Sentinel] Config saved: " .. configName)
+            return true
         else
-            warn("No file writing functions available")
+            warn("[Sentinel] writefile function not available")
+            return false
         end
     end)
     
     if not success then
-        warn("Failed to save config: " .. err)
+        warn("[Sentinel] Failed to save config: " .. tostring(err))
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+            Title = "Sentinel Config",
+            Text = "Failed to save config!",
+            Duration = 3
+        })
+        return false
     end
+    
+    return true
 end
 
 local function LoadConfig(configName)
-    local filePath = configFolder .. configName .. ".json"
+    if not fileSystemAvailable then
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+            Title = "Sentinel Config",
+            Text = "File system not available!",
+            Duration = 3
+        })
+        return false
+    end
+    
+    local filePath = configFolder .. "/" .. configName .. ".json"
+    
+    -- Check if file exists
+    if not isfile or not isfile(filePath) then
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+            Title = "Sentinel Config",
+            Text = "Config '" .. configName .. "' not found!",
+            Duration = 3
+        })
+        warn("[Sentinel] Config not found: " .. configName)
+        return false
+    end
     
     local success, result = pcall(function()
-        local content = nil
-        
-        -- Try exploit functions first
-        if readfile and isfile then
-            if not isfile(filePath) then
-                warn("Config not found: " .. configName)
-                return nil
-            end
-            content = readfile(filePath)
-        -- Try io functions
-        elseif io and io.open then
-            local file = io.open(filePath, "r")
-            if not file then
-                warn("Config not found: " .. configName)
-                return nil
-            end
-            content = file:read("*all")
-            file:close()
-        else
-            warn("No file reading functions available")
+        if not readfile then
+            warn("[Sentinel] readfile function not available")
             return nil
         end
         
-        if content then
-            return HttpService:JSONDecode(content)
+        local content = readfile(filePath)
+        if not content or content == "" then
+            warn("[Sentinel] Config file is empty")
+            return nil
         end
-        return nil
+        
+        return HttpService:JSONDecode(content)
     end)
     
     if success and result then
+        -- ESP Settings
         Settings.ESP = result.ESP or false
         Settings.HealthBar = result.HealthBar or false
         Settings.Name = result.Name or false
@@ -2100,6 +3997,7 @@ local function LoadConfig(configName)
         Settings.TeamCheck = result.TeamCheck or false
         Settings.FilledBox = result.FilledBox or false
         Settings.BoxCorner = result.BoxCorner or false
+        Settings.Skeleton = result.Skeleton or false
         
         if result.BoxColor then
             Settings.BoxColor = Color3.new(result.BoxColor[1], result.BoxColor[2], result.BoxColor[3])
@@ -2110,8 +4008,13 @@ local function LoadConfig(configName)
         if result.DistanceColor then
             Settings.DistanceColor = Color3.new(result.DistanceColor[1], result.DistanceColor[2], result.DistanceColor[3])
         end
+        if result.SkeletonColor then
+            Settings.SkeletonColor = Color3.new(result.SkeletonColor[1], result.SkeletonColor[2], result.SkeletonColor[3])
+        end
         
         Settings.ESPMaxDistance = result.ESPMaxDistance or 2000
+        
+        -- Aimbot Settings
         Settings.Aimbot = result.Aimbot or false
         Settings.AimbotFOV = result.AimbotFOV or 100
         Settings.ShowFOV = result.ShowFOV or false
@@ -2128,65 +4031,644 @@ local function LoadConfig(configName)
         Settings.RecoilStrength = result.RecoilStrength or 50
         Settings.Prediction = result.Prediction or false
         Settings.PredictionStrength = result.PredictionStrength or 10
+        
+        -- Visual Settings
         Settings.Fullbright = result.Fullbright or false
+        if Settings.Fullbright then
+            local lighting = game:GetService("Lighting")
+            lighting.Brightness = 2
+            lighting.ClockTime = 14
+            lighting.FogEnd = 100000
+        end
+        
+        -- Local ESP Settings
+        Settings.LocalSkeleton = result.LocalSkeleton or false
+        if result.LocalSkeletonColor then
+            Settings.LocalSkeletonColor = Color3.new(result.LocalSkeletonColor[1], result.LocalSkeletonColor[2], result.LocalSkeletonColor[3])
+        end
+        Settings.LocalHighlight = result.LocalHighlight or false
+        if result.LocalHighlightColor then
+            Settings.LocalHighlightColor = Color3.new(result.LocalHighlightColor[1], result.LocalHighlightColor[2], result.LocalHighlightColor[3])
+        end
+        
+        -- Misc Settings
         Settings.InfiniteJump = result.InfiniteJump or false
         Settings.DebugPanel = result.DebugPanel or false
+        if result.DebugPanelPos then
+            Settings.DebugPanelPos = result.DebugPanelPos
+            DebugFrame.Position = UDim2.new(1, Settings.DebugPanelPos.X, 0, Settings.DebugPanelPos.Y)
+        end
+        if result.MenuBind then
+            -- Convert string back to KeyCode
+            for _, keyCode in pairs(Enum.KeyCode:GetEnumItems()) do
+                if keyCode.Name == result.MenuBind then
+                    Settings.MenuBind = keyCode
+                    if menuBindButton then
+                        menuBindButton.Text = "Menu Bind: " .. keyCode.Name
+                    end
+                    break
+                end
+            end
+        end
+        if result.MenuColor then
+            Settings.MenuColor = Color3.new(result.MenuColor[1], result.MenuColor[2], result.MenuColor[3])
+            UpdateAccentColor(Settings.MenuColor)
+        end
         
-        print("Config loaded: " .. configName)
+        -- UI Settings
+        if result.MenuSize then
+            savedMenuSize = UDim2.new(0, result.MenuSize.Width, 0, result.MenuSize.Height)
+            if Main.Visible then
+                Main.Size = savedMenuSize
+            end
+        end
+        
+        -- Keybinds
+        if result.Keybinds then
+            for name, bind in pairs(result.Keybinds) do
+                if Settings.Keybinds[name] then
+                    -- Check if it's a mouse button or keyboard key
+                    if bind.KeyType == "Mouse" then
+                        if bind.Key == "MouseButton1" then
+                            Settings.Keybinds[name].Key = Enum.UserInputType.MouseButton1
+                        elseif bind.Key == "MouseButton2" then
+                            Settings.Keybinds[name].Key = Enum.UserInputType.MouseButton2
+                        end
+                    else
+                        -- Convert string back to KeyCode
+                        for _, keyCode in pairs(Enum.KeyCode:GetEnumItems()) do
+                            if keyCode.Name == bind.Key then
+                                Settings.Keybinds[name].Key = keyCode
+                                break
+                            end
+                        end
+                    end
+                    Settings.Keybinds[name].Mode = bind.Mode or "Toggle"
+                    Settings.Keybinds[name].Enabled = bind.Enabled ~= nil and bind.Enabled or true
+                    
+                    -- Update UI
+                    if name == "ESP" and UIElements.BoxESP then
+                        UIElements.BoxESP.UpdateKeybind()
+                    elseif name == "Aimbot" and UIElements.Aimbot then
+                        UIElements.Aimbot.UpdateKeybind()
+                    elseif name == "InfiniteJump" and UIElements.InfiniteJump then
+                        UIElements.InfiniteJump.UpdateKeybind()
+                    end
+                end
+            end
+        end
+        
+        -- Update UI elements
+        if UIElements.BoxESP then UIElements.BoxESP.SetValue(Settings.ESP) end
+
+        if UIElements.HealthBar then UIElements.HealthBar.SetValue(Settings.HealthBar) end
+        if UIElements.Name then UIElements.Name.SetValue(Settings.Name) end
+        if UIElements.Name then UIElements.Name.SetColor(Settings.NameColor) end
+        if UIElements.Distance then UIElements.Distance.SetValue(Settings.Distance) end
+        if UIElements.Distance then UIElements.Distance.SetColor(Settings.DistanceColor) end
+        if UIElements.TeamCheck then UIElements.TeamCheck.SetValue(Settings.TeamCheck) end
+        if UIElements.FilledBox then UIElements.FilledBox.SetValue(Settings.FilledBox) end
+        if UIElements.BoxCorner then UIElements.BoxCorner.SetValue(Settings.BoxCorner) end
+        if UIElements.Skeleton then UIElements.Skeleton.SetValue(Settings.Skeleton) end
+        if UIElements.Skeleton then UIElements.Skeleton.SetColor(Settings.SkeletonColor) end
+        if UIElements.ESPMaxDistance then UIElements.ESPMaxDistance.SetValue(Settings.ESPMaxDistance) end
+        
+        if UIElements.Aimbot then UIElements.Aimbot.SetValue(Settings.Aimbot) end
+        if UIElements.AimbotSmooth then UIElements.AimbotSmooth.SetValue(Settings.AimbotSmooth) end
+        if UIElements.AimLock then UIElements.AimLock.SetValue(Settings.AimLock) end
+        if UIElements.ShowFOV then UIElements.ShowFOV.SetValue(Settings.ShowFOV) end
+        if UIElements.ShowFOV then UIElements.ShowFOV.SetColor(Settings.FOVColor) end
+        if UIElements.AimbotFOV then UIElements.AimbotFOV.SetValue(Settings.AimbotFOV) end
+        if UIElements.AimbotMaxDistance then UIElements.AimbotMaxDistance.SetValue(Settings.AimbotMaxDistance) end
+        if UIElements.Prediction then UIElements.Prediction.SetValue(Settings.Prediction) end
+        if UIElements.PredictionStrength then UIElements.PredictionStrength.SetValue(Settings.PredictionStrength) end
+        if UIElements.NoRecoil then UIElements.NoRecoil.SetValue(Settings.NoRecoil) end
+        if UIElements.RecoilStrength then UIElements.RecoilStrength.SetValue(Settings.RecoilStrength) end
+        
+        if UIElements.Fullbright then UIElements.Fullbright.SetValue(Settings.Fullbright) end
+        
+        if UIElements.LocalSkeleton then UIElements.LocalSkeleton.SetValue(Settings.LocalSkeleton) end
+        if UIElements.LocalSkeleton then UIElements.LocalSkeleton.SetColor(Settings.LocalSkeletonColor) end
+        if UIElements.LocalHighlight then UIElements.LocalHighlight.SetValue(Settings.LocalHighlight) end
+        if UIElements.LocalHighlight then UIElements.LocalHighlight.SetColor(Settings.LocalHighlightColor) end
+        
+        if UIElements.InfiniteJump then UIElements.InfiniteJump.SetValue(Settings.InfiniteJump) end
+        if UIElements.DebugPanel then UIElements.DebugPanel.SetValue(Settings.DebugPanel) end
+        
+        -- Sync Active states after loading config
+        if Settings.ESP then
+            if not Settings.Keybinds.ESP.Enabled then
+                Settings.ESPActive = true
+            elseif Settings.Keybinds.ESP.Mode == "Always On" then
+                Settings.ESPActive = true
+            elseif Settings.Keybinds.ESP.Mode == "Toggle" then
+                Settings.ESPActive = true
+            else
+                Settings.ESPActive = false
+            end
+        else
+            Settings.ESPActive = false
+        end
+        
+        if Settings.Aimbot then
+            if not Settings.Keybinds.Aimbot.Enabled then
+                Settings.AimbotActive = true
+            elseif Settings.Keybinds.Aimbot.Mode == "Always On" then
+                Settings.AimbotActive = true
+            elseif Settings.Keybinds.Aimbot.Mode == "Toggle" then
+                Settings.AimbotActive = true
+            else
+                Settings.AimbotActive = false
+            end
+        else
+            Settings.AimbotActive = false
+        end
+        
+        if Settings.InfiniteJump then
+            if not Settings.Keybinds.InfiniteJump.Enabled then
+                Settings.InfiniteJumpActive = true
+            elseif Settings.Keybinds.InfiniteJump.Mode == "Always On" then
+                Settings.InfiniteJumpActive = true
+            elseif Settings.Keybinds.InfiniteJump.Mode == "Toggle" then
+                Settings.InfiniteJumpActive = true
+            else
+                Settings.InfiniteJumpActive = false
+            end
+        else
+            Settings.InfiniteJumpActive = false
+        end
+        
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+            Title = "Sentinel Config",
+            Text = "Config '" .. configName .. "' loaded!",
+            Duration = 3
+        })
+        print("[Sentinel] Config loaded: " .. configName)
+        
+        return true
     else
-        warn("Failed to load config: " .. tostring(result))
+        warn("[Sentinel] Failed to load config: " .. tostring(result))
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+            Title = "Sentinel Config",
+            Text = "Failed to load config!",
+            Duration = 3
+        })
+        return false
     end
 end
 
 local function DeleteConfig(configName)
-    local filePath = configFolder .. configName .. ".json"
+    if not fileSystemAvailable then
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+            Title = "Sentinel Config",
+            Text = "File system not available!",
+            Duration = 3
+        })
+        return false
+    end
+    
+    local filePath = configFolder .. "/" .. configName .. ".json"
+    
+    -- Check if file exists
+    if not isfile or not isfile(filePath) then
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+            Title = "Sentinel Config",
+            Text = "Config '" .. configName .. "' not found!",
+            Duration = 3
+        })
+        warn("[Sentinel] Config not found: " .. configName)
+        return false
+    end
+    
     local success, err = pcall(function()
-        -- Try exploit functions first
-        if delfile and isfile then
-            if isfile(filePath) then
-                delfile(filePath)
-                print("Config deleted: " .. configName)
-            else
-                warn("Config not found: " .. configName)
-            end
-        -- Try os.remove
-        elseif os and os.remove then
-            os.remove(filePath)
-            print("Config deleted: " .. configName)
+        if delfile then
+            delfile(filePath)
+            game:GetService("StarterGui"):SetCore("SendNotification", {
+                Title = "Sentinel Config",
+                Text = "Config '" .. configName .. "' deleted!",
+                Duration = 3
+            })
+            print("[Sentinel] Config deleted: " .. configName)
+            return true
         else
-            warn("No file deletion functions available")
+            warn("[Sentinel] delfile function not available")
+            return false
         end
     end)
     
     if not success then
-        warn("Failed to delete config: " .. err)
+        warn("[Sentinel] Failed to delete config: " .. tostring(err))
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+            Title = "Sentinel Config",
+            Text = "Failed to delete config!",
+            Duration = 3
+        })
+        return false
     end
+    
+    return true
+end
+
+local function ExportConfigToClipboard()
+    -- Check if clipboard functions are available
+    if not setclipboard then
+        ShowNotification("Clipboard not supported!", 2)
+        warn("[Sentinel] setclipboard function not available")
+        return false
+    end
+    
+    local configData = {
+        -- ESP Settings
+        ESP = Settings.ESP,
+        HealthBar = Settings.HealthBar,
+        Name = Settings.Name,
+        Distance = Settings.Distance,
+        TeamCheck = Settings.TeamCheck,
+        FilledBox = Settings.FilledBox,
+        BoxCorner = Settings.BoxCorner,
+        Skeleton = Settings.Skeleton,
+        BoxColor = {Settings.BoxColor.R, Settings.BoxColor.G, Settings.BoxColor.B},
+        NameColor = {Settings.NameColor.R, Settings.NameColor.G, Settings.NameColor.B},
+        DistanceColor = {Settings.DistanceColor.R, Settings.DistanceColor.G, Settings.DistanceColor.B},
+        SkeletonColor = {Settings.SkeletonColor.R, Settings.SkeletonColor.G, Settings.SkeletonColor.B},
+        ESPMaxDistance = Settings.ESPMaxDistance,
+        
+        -- Aimbot Settings
+        Aimbot = Settings.Aimbot,
+        AimbotFOV = Settings.AimbotFOV,
+        ShowFOV = Settings.ShowFOV,
+        FOVColor = {Settings.FOVColor.R, Settings.FOVColor.G, Settings.FOVColor.B},
+        AimbotSmooth = Settings.AimbotSmooth,
+        AimbotHitbox = Settings.AimbotHitbox,
+        AimLock = Settings.AimLock,
+        AimbotMaxDistance = Settings.AimbotMaxDistance,
+        NoRecoil = Settings.NoRecoil,
+        RecoilStrength = Settings.RecoilStrength,
+        Prediction = Settings.Prediction,
+        PredictionStrength = Settings.PredictionStrength,
+        
+        -- Visual Settings
+        Fullbright = Settings.Fullbright,
+        
+        -- Local ESP Settings
+        LocalSkeleton = Settings.LocalSkeleton,
+        LocalSkeletonColor = {Settings.LocalSkeletonColor.R, Settings.LocalSkeletonColor.G, Settings.LocalSkeletonColor.B},
+        LocalHighlight = Settings.LocalHighlight,
+        LocalHighlightColor = {Settings.LocalHighlightColor.R, Settings.LocalHighlightColor.G, Settings.LocalHighlightColor.B},
+        
+        -- Misc Settings
+        InfiniteJump = Settings.InfiniteJump,
+        DebugPanel = Settings.DebugPanel,
+        DebugPanelPos = Settings.DebugPanelPos,
+        MenuBind = Settings.MenuBind.Name,
+        
+        -- Keybinds
+        Keybinds = {
+            ESP = {
+                Key = typeof(Settings.Keybinds.ESP.Key) == "EnumItem" and Settings.Keybinds.ESP.Key.Name or "E",
+                KeyType = typeof(Settings.Keybinds.ESP.Key) == "EnumItem" and (Settings.Keybinds.ESP.Key == Enum.UserInputType.MouseButton1 and "Mouse" or Settings.Keybinds.ESP.Key == Enum.UserInputType.MouseButton2 and "Mouse" or "Keyboard") or "Keyboard",
+                Mode = Settings.Keybinds.ESP.Mode,
+                Enabled = Settings.Keybinds.ESP.Enabled
+            },
+            Aimbot = {
+                Key = typeof(Settings.Keybinds.Aimbot.Key) == "EnumItem" and Settings.Keybinds.Aimbot.Key.Name or "Q",
+                KeyType = typeof(Settings.Keybinds.Aimbot.Key) == "EnumItem" and (Settings.Keybinds.Aimbot.Key == Enum.UserInputType.MouseButton1 and "Mouse" or Settings.Keybinds.Aimbot.Key == Enum.UserInputType.MouseButton2 and "Mouse" or "Keyboard") or "Keyboard",
+                Mode = Settings.Keybinds.Aimbot.Mode,
+                Enabled = Settings.Keybinds.Aimbot.Enabled
+            },
+            InfiniteJump = {
+                Key = typeof(Settings.Keybinds.InfiniteJump.Key) == "EnumItem" and Settings.Keybinds.InfiniteJump.Key.Name or "J",
+                KeyType = typeof(Settings.Keybinds.InfiniteJump.Key) == "EnumItem" and (Settings.Keybinds.InfiniteJump.Key == Enum.UserInputType.MouseButton1 and "Mouse" or Settings.Keybinds.InfiniteJump.Key == Enum.UserInputType.MouseButton2 and "Mouse" or "Keyboard") or "Keyboard",
+                Mode = Settings.Keybinds.InfiniteJump.Mode,
+                Enabled = Settings.Keybinds.InfiniteJump.Enabled
+            }
+        },
+        
+        -- UI Settings
+        MenuSize = {
+            Width = savedMenuSize.X.Offset,
+            Height = savedMenuSize.Y.Offset
+        }
+    }
+    
+    local success, result = pcall(function()
+        local jsonData = HttpService:JSONEncode(configData)
+        setclipboard(jsonData)
+        ShowNotification("Config exported to clipboard!", 2)
+        print("[Sentinel] Config exported to clipboard")
+        return true
+    end)
+    
+    if not success then
+        warn("[Sentinel] Failed to export config: " .. tostring(result))
+        ShowNotification("Failed to export config!", 2)
+        return false
+    end
+    
+    return true
+end
+
+local function ImportConfigFromClipboard()
+    -- Check if clipboard functions are available
+    if not getclipboard then
+        ShowNotification("Clipboard not supported!", 2)
+        warn("[Sentinel] getclipboard function not available")
+        return false
+    end
+    
+    local success, result = pcall(function()
+        local clipboardContent = getclipboard()
+        
+        if not clipboardContent or clipboardContent == "" then
+            ShowNotification("Clipboard is empty!", 2)
+            return false
+        end
+        
+        -- Try to decode JSON
+        local configData = HttpService:JSONDecode(clipboardContent)
+        
+        if not configData then
+            ShowNotification("Invalid config data!", 2)
+            return false
+        end
+        
+        -- Apply settings (same as LoadConfig)
+        -- ESP Settings
+        Settings.ESP = configData.ESP or false
+        Settings.HealthBar = configData.HealthBar or false
+        Settings.Name = configData.Name or false
+        Settings.Distance = configData.Distance or false
+        Settings.TeamCheck = configData.TeamCheck or false
+        Settings.FilledBox = configData.FilledBox or false
+        Settings.BoxCorner = configData.BoxCorner or false
+        Settings.Skeleton = configData.Skeleton or false
+        
+        if configData.BoxColor then
+            Settings.BoxColor = Color3.new(configData.BoxColor[1], configData.BoxColor[2], configData.BoxColor[3])
+        end
+        if configData.NameColor then
+            Settings.NameColor = Color3.new(configData.NameColor[1], configData.NameColor[2], configData.NameColor[3])
+        end
+        if configData.DistanceColor then
+            Settings.DistanceColor = Color3.new(configData.DistanceColor[1], configData.DistanceColor[2], configData.DistanceColor[3])
+        end
+        if configData.SkeletonColor then
+            Settings.SkeletonColor = Color3.new(configData.SkeletonColor[1], configData.SkeletonColor[2], configData.SkeletonColor[3])
+        end
+        
+        Settings.ESPMaxDistance = configData.ESPMaxDistance or 2000
+        
+        -- Aimbot Settings
+        Settings.Aimbot = configData.Aimbot or false
+        Settings.AimbotFOV = configData.AimbotFOV or 100
+        Settings.ShowFOV = configData.ShowFOV or false
+        
+        if configData.FOVColor then
+            Settings.FOVColor = Color3.new(configData.FOVColor[1], configData.FOVColor[2], configData.FOVColor[3])
+        end
+        
+        Settings.AimbotSmooth = configData.AimbotSmooth or 1
+        Settings.AimbotHitbox = configData.AimbotHitbox or "Head"
+        Settings.AimLock = configData.AimLock or false
+        Settings.AimbotMaxDistance = configData.AimbotMaxDistance or 500
+        Settings.NoRecoil = configData.NoRecoil or false
+        Settings.RecoilStrength = configData.RecoilStrength or 50
+        Settings.Prediction = configData.Prediction or false
+        Settings.PredictionStrength = configData.PredictionStrength or 10
+        
+        -- Visual Settings
+        Settings.Fullbright = configData.Fullbright or false
+        if Settings.Fullbright then
+            local lighting = game:GetService("Lighting")
+            lighting.Brightness = 2
+            lighting.ClockTime = 14
+            lighting.FogEnd = 100000
+        end
+        
+        -- Local ESP Settings
+        Settings.LocalSkeleton = configData.LocalSkeleton or false
+        if configData.LocalSkeletonColor then
+            Settings.LocalSkeletonColor = Color3.new(configData.LocalSkeletonColor[1], configData.LocalSkeletonColor[2], configData.LocalSkeletonColor[3])
+        end
+        Settings.LocalHighlight = configData.LocalHighlight or false
+        if configData.LocalHighlightColor then
+            Settings.LocalHighlightColor = Color3.new(configData.LocalHighlightColor[1], configData.LocalHighlightColor[2], configData.LocalHighlightColor[3])
+        end
+        
+        -- Misc Settings
+        Settings.InfiniteJump = configData.InfiniteJump or false
+        Settings.DebugPanel = configData.DebugPanel or false
+        if configData.DebugPanelPos then
+            Settings.DebugPanelPos = configData.DebugPanelPos
+            DebugFrame.Position = UDim2.new(1, Settings.DebugPanelPos.X, 0, Settings.DebugPanelPos.Y)
+        end
+        if configData.MenuBind then
+            -- Convert string back to KeyCode
+            for _, keyCode in pairs(Enum.KeyCode:GetEnumItems()) do
+                if keyCode.Name == configData.MenuBind then
+                    Settings.MenuBind = keyCode
+                    if menuBindButton then
+                        menuBindButton.Text = "Menu Bind: " .. keyCode.Name
+                    end
+                    break
+                end
+            end
+        end
+        if configData.MenuColor then
+            Settings.MenuColor = Color3.new(configData.MenuColor[1], configData.MenuColor[2], configData.MenuColor[3])
+            UpdateAccentColor(Settings.MenuColor)
+        end
+        
+        -- UI Settings
+        if configData.MenuSize then
+            savedMenuSize = UDim2.new(0, configData.MenuSize.Width, 0, configData.MenuSize.Height)
+            if Main.Visible then
+                Main.Size = savedMenuSize
+            end
+        end
+        
+        -- Keybinds
+        if configData.Keybinds then
+            for name, bind in pairs(configData.Keybinds) do
+                if Settings.Keybinds[name] then
+                    -- Check if it's a mouse button or keyboard key
+                    if bind.KeyType == "Mouse" then
+                        if bind.Key == "MouseButton1" then
+                            Settings.Keybinds[name].Key = Enum.UserInputType.MouseButton1
+                        elseif bind.Key == "MouseButton2" then
+                            Settings.Keybinds[name].Key = Enum.UserInputType.MouseButton2
+                        end
+                    else
+                        -- Convert string back to KeyCode
+                        for _, keyCode in pairs(Enum.KeyCode:GetEnumItems()) do
+                            if keyCode.Name == bind.Key then
+                                Settings.Keybinds[name].Key = keyCode
+                                break
+                            end
+                        end
+                    end
+                    Settings.Keybinds[name].Mode = bind.Mode or "Toggle"
+                    Settings.Keybinds[name].Enabled = bind.Enabled ~= nil and bind.Enabled or true
+                    
+                    -- Update UI
+                    if name == "ESP" and UIElements.BoxESP then
+                        UIElements.BoxESP.UpdateKeybind()
+                    elseif name == "Aimbot" and UIElements.Aimbot then
+                        UIElements.Aimbot.UpdateKeybind()
+                    elseif name == "InfiniteJump" and UIElements.InfiniteJump then
+                        UIElements.InfiniteJump.UpdateKeybind()
+                    end
+                end
+            end
+        end
+        
+        -- Update UI elements
+        if UIElements.BoxESP then UIElements.BoxESP.SetValue(Settings.ESP) end
+
+        if UIElements.HealthBar then UIElements.HealthBar.SetValue(Settings.HealthBar) end
+        if UIElements.Name then UIElements.Name.SetValue(Settings.Name) end
+        if UIElements.Name then UIElements.Name.SetColor(Settings.NameColor) end
+        if UIElements.Distance then UIElements.Distance.SetValue(Settings.Distance) end
+        if UIElements.Distance then UIElements.Distance.SetColor(Settings.DistanceColor) end
+        if UIElements.TeamCheck then UIElements.TeamCheck.SetValue(Settings.TeamCheck) end
+        if UIElements.FilledBox then UIElements.FilledBox.SetValue(Settings.FilledBox) end
+        if UIElements.BoxCorner then UIElements.BoxCorner.SetValue(Settings.BoxCorner) end
+        if UIElements.Skeleton then UIElements.Skeleton.SetValue(Settings.Skeleton) end
+        if UIElements.Skeleton then UIElements.Skeleton.SetColor(Settings.SkeletonColor) end
+        if UIElements.ESPMaxDistance then UIElements.ESPMaxDistance.SetValue(Settings.ESPMaxDistance) end
+        
+        if UIElements.Aimbot then UIElements.Aimbot.SetValue(Settings.Aimbot) end
+        if UIElements.AimbotSmooth then UIElements.AimbotSmooth.SetValue(Settings.AimbotSmooth) end
+        if UIElements.AimLock then UIElements.AimLock.SetValue(Settings.AimLock) end
+        if UIElements.ShowFOV then UIElements.ShowFOV.SetValue(Settings.ShowFOV) end
+        if UIElements.ShowFOV then UIElements.ShowFOV.SetColor(Settings.FOVColor) end
+        if UIElements.AimbotFOV then UIElements.AimbotFOV.SetValue(Settings.AimbotFOV) end
+        if UIElements.AimbotMaxDistance then UIElements.AimbotMaxDistance.SetValue(Settings.AimbotMaxDistance) end
+        if UIElements.Prediction then UIElements.Prediction.SetValue(Settings.Prediction) end
+        if UIElements.PredictionStrength then UIElements.PredictionStrength.SetValue(Settings.PredictionStrength) end
+        if UIElements.NoRecoil then UIElements.NoRecoil.SetValue(Settings.NoRecoil) end
+        if UIElements.RecoilStrength then UIElements.RecoilStrength.SetValue(Settings.RecoilStrength) end
+        
+        if UIElements.Fullbright then UIElements.Fullbright.SetValue(Settings.Fullbright) end
+        
+        if UIElements.LocalSkeleton then UIElements.LocalSkeleton.SetValue(Settings.LocalSkeleton) end
+        if UIElements.LocalSkeleton then UIElements.LocalSkeleton.SetColor(Settings.LocalSkeletonColor) end
+        if UIElements.LocalHighlight then UIElements.LocalHighlight.SetValue(Settings.LocalHighlight) end
+        if UIElements.LocalHighlight then UIElements.LocalHighlight.SetColor(Settings.LocalHighlightColor) end
+        
+        if UIElements.InfiniteJump then UIElements.InfiniteJump.SetValue(Settings.InfiniteJump) end
+        if UIElements.DebugPanel then UIElements.DebugPanel.SetValue(Settings.DebugPanel) end
+        
+        -- Sync Active states after importing config
+        if Settings.ESP then
+            if not Settings.Keybinds.ESP.Enabled then
+                Settings.ESPActive = true
+            elseif Settings.Keybinds.ESP.Mode == "Always On" then
+                Settings.ESPActive = true
+            elseif Settings.Keybinds.ESP.Mode == "Toggle" then
+                Settings.ESPActive = true
+            else
+                Settings.ESPActive = false
+            end
+        else
+            Settings.ESPActive = false
+        end
+        
+        if Settings.Aimbot then
+            if not Settings.Keybinds.Aimbot.Enabled then
+                Settings.AimbotActive = true
+            elseif Settings.Keybinds.Aimbot.Mode == "Always On" then
+                Settings.AimbotActive = true
+            elseif Settings.Keybinds.Aimbot.Mode == "Toggle" then
+                Settings.AimbotActive = true
+            else
+                Settings.AimbotActive = false
+            end
+        else
+            Settings.AimbotActive = false
+        end
+        
+        if Settings.InfiniteJump then
+            if not Settings.Keybinds.InfiniteJump.Enabled then
+                Settings.InfiniteJumpActive = true
+            elseif Settings.Keybinds.InfiniteJump.Mode == "Always On" then
+                Settings.InfiniteJumpActive = true
+            elseif Settings.Keybinds.InfiniteJump.Mode == "Toggle" then
+                Settings.InfiniteJumpActive = true
+            else
+                Settings.InfiniteJumpActive = false
+            end
+        else
+            Settings.InfiniteJumpActive = false
+        end
+        
+        ShowNotification("Config imported from clipboard!", 2)
+        print("[Sentinel] Config imported from clipboard")
+        
+        return true
+    end)
+    
+    if not success then
+        warn("[Sentinel] Failed to import config: " .. tostring(result))
+        ShowNotification("Failed to import config!", 2)
+        return false
+    end
+    
+    return true
+end
+
+local function ListConfigs()
+    if not fileSystemAvailable then
+        return {}
+    end
+    
+    local configs = {}
+    
+    local success, result = pcall(function()
+        if listfiles then
+            local files = listfiles(configFolder)
+            for _, file in ipairs(files) do
+                -- Extract filename without path and extension
+                local name = file:match("([^/\\]+)%.json$")
+                if name then
+                    table.insert(configs, name)
+                end
+            end
+        end
+    end)
+    
+    if not success then
+        warn("[Sentinel] Failed to list configs: " .. tostring(result))
+    end
+    
+    return configs
 end
 
 local function CreateButton(parent, text, callback)
     local frame = Instance.new("Frame")
     frame.Size = UDim2.new(1, 0, 0, 40)
-    frame.BackgroundColor3 = Color3.fromRGB(40, 40, 45)
+    frame.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
     frame.BorderSizePixel = 0
     frame.Parent = parent
     
     local corner = Instance.new("UICorner")
-    corner.CornerRadius = UDim.new(0, 8)
+    corner.CornerRadius = UDim.new(0, 4)
     corner.Parent = frame
     
     local btn = Instance.new("TextButton")
     btn.Size = UDim2.new(1, -20, 1, -10)
     btn.Position = UDim2.new(0, 10, 0, 5)
-    btn.BackgroundColor3 = Color3.fromRGB(100, 50, 200)
+    btn.BackgroundColor3 = Settings.MenuColor
     btn.Text = text
     btn.TextColor3 = Color3.fromRGB(255, 255, 255)
-    btn.TextSize = 14
+    btn.TextSize = 13
     btn.Font = Enum.Font.GothamBold
     btn.BorderSizePixel = 0
     btn.Parent = frame
+    table.insert(AccentColorElements.ConfigActionButtons, btn)
     
     local btnCorner = Instance.new("UICorner")
-    btnCorner.CornerRadius = UDim.new(0, 6)
+    btnCorner.CornerRadius = UDim.new(0, 4)
     btnCorner.Parent = btn
     
     btn.MouseButton1Click:Connect(callback)
@@ -2197,30 +4679,30 @@ end
 local function CreateTextBox(parent, placeholder, callback)
     local frame = Instance.new("Frame")
     frame.Size = UDim2.new(1, 0, 0, 40)
-    frame.BackgroundColor3 = Color3.fromRGB(40, 40, 45)
+    frame.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
     frame.BorderSizePixel = 0
     frame.Parent = parent
     
     local corner = Instance.new("UICorner")
-    corner.CornerRadius = UDim.new(0, 8)
+    corner.CornerRadius = UDim.new(0, 4)
     corner.Parent = frame
     
     local textbox = Instance.new("TextBox")
     textbox.Size = UDim2.new(1, -20, 1, -10)
     textbox.Position = UDim2.new(0, 10, 0, 5)
-    textbox.BackgroundColor3 = Color3.fromRGB(50, 50, 55)
+    textbox.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
     textbox.Text = ""
     textbox.PlaceholderText = placeholder
-    textbox.TextColor3 = Color3.fromRGB(255, 255, 255)
-    textbox.PlaceholderColor3 = Color3.fromRGB(150, 150, 150)
-    textbox.TextSize = 13
+    textbox.TextColor3 = Color3.fromRGB(200, 200, 200)
+    textbox.PlaceholderColor3 = Color3.fromRGB(100, 100, 100)
+    textbox.TextSize = 12
     textbox.Font = Enum.Font.Gotham
     textbox.BorderSizePixel = 0
     textbox.ClearTextOnFocus = false
     textbox.Parent = frame
     
     local textboxCorner = Instance.new("UICorner")
-    textboxCorner.CornerRadius = UDim.new(0, 6)
+    textboxCorner.CornerRadius = UDim.new(0, 4)
     textboxCorner.Parent = textbox
     
     textbox.FocusLost:Connect(function(enterPressed)
@@ -2234,8 +4716,188 @@ end
 
 -- Config Tab
 local configNameBox
-CreateTextBox(ConfigTab.Content, "Enter config name...", function(text)
-    -- Callback handled by buttons
+local configListFrame
+
+-- Config list display
+local configListContainer = Instance.new("Frame")
+configListContainer.Size = UDim2.new(1, 0, 0, 150)
+configListContainer.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
+configListContainer.BorderSizePixel = 0
+configListContainer.Parent = ConfigTab.Content
+
+local configListCorner = Instance.new("UICorner")
+configListCorner.CornerRadius = UDim.new(0, 8)
+configListCorner.Parent = configListContainer
+
+local configListTitle = Instance.new("TextLabel")
+configListTitle.Size = UDim2.new(1, 0, 0, 25)
+configListTitle.BackgroundColor3 = Color3.fromRGB(50, 50, 55)
+configListTitle.Text = "Saved Configs"
+configListTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+configListTitle.TextSize = 13
+configListTitle.Font = Enum.Font.GothamBold
+configListTitle.BorderSizePixel = 0
+configListTitle.Parent = configListContainer
+
+local configListTitleCorner = Instance.new("UICorner")
+configListTitleCorner.CornerRadius = UDim.new(0, 8)
+configListTitleCorner.Parent = configListTitle
+
+local configListScroll = Instance.new("ScrollingFrame")
+configListScroll.Size = UDim2.new(1, -10, 1, -35)
+configListScroll.Position = UDim2.new(0, 5, 0, 30)
+configListScroll.BackgroundTransparency = 1
+configListScroll.BorderSizePixel = 0
+configListScroll.ScrollBarThickness = 4
+configListScroll.ScrollBarImageColor3 = Color3.fromRGB(100, 100, 100)
+configListScroll.Parent = configListContainer
+
+local configListLayout = Instance.new("UIListLayout")
+configListLayout.Padding = UDim.new(0, 5)
+configListLayout.Parent = configListScroll
+
+-- Function to refresh config list
+local function RefreshConfigList()
+    -- Clear existing items
+    for _, child in ipairs(configListScroll:GetChildren()) do
+        if child:IsA("Frame") then
+            child:Destroy()
+        end
+    end
+    
+    local configs = ListConfigs()
+    
+    if #configs == 0 then
+        local noConfigLabel = Instance.new("TextLabel")
+        noConfigLabel.Size = UDim2.new(1, -10, 0, 30)
+        noConfigLabel.BackgroundTransparency = 1
+        noConfigLabel.Text = "No configs found"
+        noConfigLabel.TextColor3 = Color3.fromRGB(150, 150, 150)
+        noConfigLabel.TextSize = 12
+        noConfigLabel.Font = Enum.Font.Gotham
+        noConfigLabel.Parent = configListScroll
+    else
+        for _, configName in ipairs(configs) do
+            local configItem = Instance.new("Frame")
+            configItem.Size = UDim2.new(1, -10, 0, 30)
+            configItem.BackgroundColor3 = Color3.fromRGB(50, 50, 55)
+            configItem.BorderSizePixel = 0
+            configItem.Parent = configListScroll
+            
+            local configItemCorner = Instance.new("UICorner")
+            configItemCorner.CornerRadius = UDim.new(0, 6)
+            configItemCorner.Parent = configItem
+            
+            -- Check if this is the autoload config
+            local isAutoload = GetAutoloadConfig() == configName
+            
+            local configNameLabel = Instance.new("TextLabel")
+            configNameLabel.Size = UDim2.new(1, -205, 1, 0)
+            configNameLabel.Position = UDim2.new(0, 10, 0, 0)
+            configNameLabel.BackgroundTransparency = 1
+            configNameLabel.Text = configName .. (isAutoload and " [AUTO]" or "")
+            configNameLabel.TextColor3 = isAutoload and Color3.fromRGB(0, 255, 100) or Color3.fromRGB(255, 255, 255)
+            configNameLabel.TextSize = 12
+            configNameLabel.Font = Enum.Font.Gotham
+            configNameLabel.TextXAlignment = Enum.TextXAlignment.Left
+            configNameLabel.Parent = configItem
+            
+            -- Make name clickable
+            local nameButton = Instance.new("TextButton")
+            nameButton.Size = UDim2.new(1, -205, 1, 0)
+            nameButton.Position = UDim2.new(0, 0, 0, 0)
+            nameButton.BackgroundTransparency = 1
+            nameButton.Text = ""
+            nameButton.ZIndex = 2
+            nameButton.Parent = configItem
+            
+            nameButton.MouseButton1Click:Connect(function()
+                configNameBox.Text = configName
+            end)
+            
+            -- Hover effect
+            nameButton.MouseEnter:Connect(function()
+                configNameLabel.TextColor3 = Color3.fromRGB(0, 200, 255)
+            end)
+            
+            nameButton.MouseLeave:Connect(function()
+                configNameLabel.TextColor3 = isAutoload and Color3.fromRGB(0, 255, 100) or Color3.fromRGB(255, 255, 255)
+            end)
+            
+            -- Autoload button
+            local autoloadBtn = Instance.new("TextButton")
+            autoloadBtn.Size = UDim2.new(0, 60, 0, 22)
+            autoloadBtn.Position = UDim2.new(1, -195, 0.5, -11)
+            autoloadBtn.BackgroundColor3 = isAutoload and Color3.fromRGB(0, 200, 100) or Color3.fromRGB(50, 50, 55)
+            autoloadBtn.Text = "Auto"
+            autoloadBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+            autoloadBtn.TextSize = 11
+            autoloadBtn.Font = Enum.Font.GothamBold
+            autoloadBtn.BorderSizePixel = 0
+            autoloadBtn.Parent = configItem
+            
+            local autoloadBtnCorner = Instance.new("UICorner")
+            autoloadBtnCorner.CornerRadius = UDim.new(0, 4)
+            autoloadBtnCorner.Parent = autoloadBtn
+            
+            autoloadBtn.MouseButton1Click:Connect(function()
+                SetAutoloadConfig(configName)
+                task.wait(0.1)
+                RefreshConfigList()
+            end)
+            
+            -- Load button
+            local loadBtn = Instance.new("TextButton")
+            loadBtn.Size = UDim2.new(0, 60, 0, 22)
+            loadBtn.Position = UDim2.new(1, -130, 0.5, -11)
+            loadBtn.BackgroundColor3 = Settings.MenuColor
+            loadBtn.Text = "Load"
+            loadBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+            loadBtn.TextSize = 11
+            loadBtn.Font = Enum.Font.GothamBold
+            loadBtn.BorderSizePixel = 0
+            loadBtn.Parent = configItem
+            table.insert(AccentColorElements.ConfigLoadButtons, loadBtn)
+            
+            local loadBtnCorner = Instance.new("UICorner")
+            loadBtnCorner.CornerRadius = UDim.new(0, 4)
+            loadBtnCorner.Parent = loadBtn
+            
+            loadBtn.MouseButton1Click:Connect(function()
+                LoadConfig(configName)
+            end)
+            
+            -- Delete button
+            local delBtn = Instance.new("TextButton")
+            delBtn.Size = UDim2.new(0, 60, 0, 22)
+            delBtn.Position = UDim2.new(1, -65, 0.5, -11)
+            delBtn.BackgroundColor3 = Color3.fromRGB(220, 60, 60)
+            delBtn.Text = "Delete"
+            delBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+            delBtn.TextSize = 11
+            delBtn.Font = Enum.Font.GothamBold
+            delBtn.BorderSizePixel = 0
+            delBtn.Parent = configItem
+            
+            local delBtnCorner = Instance.new("UICorner")
+            delBtnCorner.CornerRadius = UDim.new(0, 4)
+            delBtnCorner.Parent = delBtn
+            
+            delBtn.MouseButton1Click:Connect(function()
+                DeleteConfig(configName)
+                task.wait(0.1)
+                RefreshConfigList()
+            end)
+        end
+    end
+    
+    -- Update scroll canvas
+    configListScroll.CanvasSize = UDim2.new(0, 0, 0, configListLayout.AbsoluteContentSize.Y + 10)
+end
+
+-- Refresh button
+CreateButton(ConfigTab.Content, "Refresh List", function()
+    RefreshConfigList()
 end)
 
 local _, textboxRef = CreateTextBox(ConfigTab.Content, "Enter config name...", function() end)
@@ -2244,31 +4906,41 @@ configNameBox = textboxRef
 CreateButton(ConfigTab.Content, "Save Config", function()
     if configNameBox.Text ~= "" then
         SaveConfig(configNameBox.Text)
+        task.wait(0.1)
+        RefreshConfigList()
+        configNameBox.Text = ""
     else
-        warn("Please enter a config name")
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+            Title = "Sentinel Config",
+            Text = "Please enter a config name!",
+            Duration = 2
+        })
     end
 end)
 
 CreateButton(ConfigTab.Content, "Load Config", function()
     if configNameBox.Text ~= "" then
         LoadConfig(configNameBox.Text)
+        configNameBox.Text = ""
     else
-        warn("Please enter a config name")
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+            Title = "Sentinel Config",
+            Text = "Please enter a config name!",
+            Duration = 2
+        })
     end
 end)
 
-CreateButton(ConfigTab.Content, "Delete Config", function()
-    if configNameBox.Text ~= "" then
-        DeleteConfig(configNameBox.Text)
-    else
-        warn("Please enter a config name")
-    end
+-- Initial refresh
+task.spawn(function()
+    task.wait(0.5)
+    RefreshConfigList()
 end)
 
 -- Select first tab
 if #Tabs > 0 then
     task.wait(0.1)
-    Tabs[1].Content.Visible = true
+    Tabs[1].Scroll.Visible = true
     Tween(Tabs[1].Button, {BackgroundColor3 = Color3.fromRGB(100, 50, 200), TextColor3 = Color3.fromRGB(255, 255, 255)}, 0.2)
     CurrentTab = Tabs[1]
 end
@@ -2279,7 +4951,7 @@ local resizeDirection = nil
 local resizeStart = nil
 local startSize = nil
 local startPosition = nil
-local minSize = Vector2.new(400, 350)
+local minSize = Vector2.new(940, 350)
 local maxSize = Vector2.new(99999, 99999) -- Unlimited size (full screen)
 
 -- Resizing indicators (visual edges)
@@ -2404,7 +5076,7 @@ end
 
 -- Dragging
 local dragging, dragStart, startPos
-Title.InputBegan:Connect(function(input)
+StatusBar.InputBegan:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseButton1 and not resizing then
         dragging = true
         dragStart = input.Position
@@ -2477,10 +5149,181 @@ UserInputService.InputChanged:Connect(function(input)
     end
 end)
 
+-- Menu key handler
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+    if gameProcessed then return end
+    
+    if input.KeyCode == Settings.MenuBind then
+        -- Проверка что загрузка завершена
+        if not _G.SentinelLoaded then
+            game:GetService("StarterGui"):SetCore("SendNotification", {
+                Title = "Sentinel",
+                Text = "Please wait, loading...",
+                Duration = 2
+            })
+            return
+        end
+        
+        -- Переключаем видимость меню
+        if Main.Visible then
+            -- Закрываем меню
+            savedMenuSize = Main.Size
+            Tween(Main, {Size = UDim2.new(0, 0, 0, 0)}, 0.15)
+            task.wait(0.15)
+            Main.Visible = false
+            -- Don't show hint again
+        else
+            -- Reset scroll position for all tabs
+            for _, tab in pairs(Tabs) do
+                if tab.Scroll then
+                    tab.Scroll.CanvasPosition = Vector2.new(0, 0)
+                end
+            end
+            
+            -- Открываем меню
+            HintFrame.Visible = false -- Hide hint when opening menu
+            Main.Visible = true
+            Main.Size = UDim2.new(0, 0, 0, 0)
+            Tween(Main, {Size = savedMenuSize}, 0.2)
+        end
+    end
+end)
+
 -- Main Loop
-RunService.RenderStepped:Connect(UpdateESP)
-RunService.RenderStepped:Connect(UpdateAimbot)
+-- Initialize Active states based on current settings
+if Settings.ESP and Settings.Keybinds.ESP.Mode == "Always On" then
+    Settings.ESPActive = true
+end
+if Settings.Aimbot and Settings.Keybinds.Aimbot.Mode == "Always On" then
+    Settings.AimbotActive = true
+end
+if Settings.InfiniteJump and Settings.Keybinds.InfiniteJump.Mode == "Always On" then
+    Settings.InfiniteJumpActive = true
+end
+
+RunService.Heartbeat:Connect(UpdateESP)
+RunService.Heartbeat:Connect(UpdateLocalESP)
+RunService.Heartbeat:Connect(UpdateAimbot)
+RunService.Heartbeat:Connect(UpdateFOVCircle)
 RunService.RenderStepped:Connect(UpdateDebugPanel)
 RunService.Heartbeat:Connect(UpdateInfiniteJump)
 
+-- Menu initialization complete
+isMenuLoaded = true
+
+-- Keybind Handler
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+    if gameProcessed then return end
+    
+    -- ESP Keybind
+    if Settings.Keybinds.ESP and Settings.Keybinds.ESP.Enabled and Settings.ESP then -- Only work if ESP is enabled and keybind is set
+        local keyMatch = false
+        if input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == Settings.Keybinds.ESP.Key then
+            keyMatch = true
+        elseif (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.MouseButton2) and input.UserInputType == Settings.Keybinds.ESP.Key then
+            keyMatch = true
+        end
+        
+        if keyMatch then
+            if Settings.Keybinds.ESP.Mode == "Toggle" then
+                Settings.ESPActive = not Settings.ESPActive
+            elseif Settings.Keybinds.ESP.Mode == "Hold" then
+                Settings.ESPActive = true
+            end
+            -- Always On mode: ESPActive is always true when ESP is enabled
+        end
+    end
+    
+    -- Aimbot Keybind
+    if Settings.Keybinds.Aimbot and Settings.Keybinds.Aimbot.Enabled and Settings.Aimbot then -- Only work if Aimbot is enabled and keybind is set
+        local keyMatch = false
+        if input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == Settings.Keybinds.Aimbot.Key then
+            keyMatch = true
+        elseif (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.MouseButton2) and input.UserInputType == Settings.Keybinds.Aimbot.Key then
+            keyMatch = true
+        end
+        
+        if keyMatch then
+            if Settings.Keybinds.Aimbot.Mode == "Toggle" then
+                Settings.AimbotActive = not Settings.AimbotActive
+            elseif Settings.Keybinds.Aimbot.Mode == "Hold" then
+                Settings.AimbotActive = true
+            end
+        end
+    end
+    
+    -- Infinite Jump Keybind
+    if Settings.Keybinds.InfiniteJump and Settings.Keybinds.InfiniteJump.Enabled and Settings.InfiniteJump then -- Only work if InfiniteJump is enabled and keybind is set
+        local keyMatch = false
+        if input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == Settings.Keybinds.InfiniteJump.Key then
+            keyMatch = true
+        elseif (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.MouseButton2) and input.UserInputType == Settings.Keybinds.InfiniteJump.Key then
+            keyMatch = true
+        end
+        
+        if keyMatch then
+            if Settings.Keybinds.InfiniteJump.Mode == "Toggle" then
+                Settings.InfiniteJumpActive = not Settings.InfiniteJumpActive
+            elseif Settings.Keybinds.InfiniteJump.Mode == "Hold" then
+                Settings.InfiniteJumpActive = true
+            end
+        end
+    end
+end)
+
+UserInputService.InputEnded:Connect(function(input, gameProcessed)
+    -- ESP Hold mode release
+    if Settings.Keybinds.ESP and Settings.Keybinds.ESP.Enabled and Settings.Keybinds.ESP.Mode == "Hold" and Settings.ESP then
+        local keyMatch = false
+        if input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == Settings.Keybinds.ESP.Key then
+            keyMatch = true
+        elseif (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.MouseButton2) and input.UserInputType == Settings.Keybinds.ESP.Key then
+            keyMatch = true
+        end
+        
+        if keyMatch then
+            Settings.ESPActive = false
+        end
+    end
+    
+    -- Aimbot Hold mode release
+    if Settings.Keybinds.Aimbot and Settings.Keybinds.Aimbot.Enabled and Settings.Keybinds.Aimbot.Mode == "Hold" and Settings.Aimbot then
+        local keyMatch = false
+        if input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == Settings.Keybinds.Aimbot.Key then
+            keyMatch = true
+        elseif (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.MouseButton2) and input.UserInputType == Settings.Keybinds.Aimbot.Key then
+            keyMatch = true
+        end
+        
+        if keyMatch then
+            Settings.AimbotActive = false
+        end
+    end
+    
+    -- Infinite Jump Hold mode release
+    if Settings.Keybinds.InfiniteJump and Settings.Keybinds.InfiniteJump.Enabled and Settings.Keybinds.InfiniteJump.Mode == "Hold" and Settings.InfiniteJump then
+        local keyMatch = false
+        if input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == Settings.Keybinds.InfiniteJump.Key then
+            keyMatch = true
+        elseif (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.MouseButton2) and input.UserInputType == Settings.Keybinds.InfiniteJump.Key then
+            keyMatch = true
+        end
+        
+        if keyMatch then
+            Settings.InfiniteJumpActive = false
+        end
+    end
+end)
+
 print("Sentinel loaded!")
+
+-- Auto-load config after everything is initialized
+task.spawn(function()
+    task.wait(3) -- Wait for UI to fully load
+    local autoloadConfig = GetAutoloadConfig()
+    if autoloadConfig then
+        print("[Sentinel] Auto-loading config: " .. autoloadConfig)
+        task.wait(0.5) -- Extra delay to ensure UI elements are ready
+        LoadConfig(autoloadConfig)
+    end
+end)
