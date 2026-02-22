@@ -160,6 +160,25 @@ task.spawn(function()
     end
     _G.SentinelLoaded = true
     
+    -- Show TopPanel with animation after load
+    task.wait(0.5)
+    TopPanel.Visible = true
+    Tween(TopPanel, {BackgroundTransparency = 0}, 0.15)
+    Tween(TopPanelStroke, {Transparency = 0.7}, 0.15)
+    -- Animate buttons with delay
+    for i, child in ipairs(TopPanel:GetChildren()) do
+        if child:IsA("TextButton") then
+            task.spawn(function()
+                task.wait(0.03 * i)
+                Tween(child, {BackgroundTransparency = 0}, 0.15)
+                local stroke = child:FindFirstChildOfClass("UIStroke")
+                if stroke then
+                    Tween(stroke, {Transparency = 0.5}, 0.15)
+                end
+            end)
+        end
+    end
+    
     -- Show notification
     game:GetService("StarterGui"):SetCore("SendNotification", {
         Title = "Sentinel",
@@ -207,12 +226,17 @@ local Settings = {
     ESP = true,
     ESPActive = true, -- Actual activation state controlled by keybind
     Fullbright = false,
+    FullbrightActive = false,
     HealthBar = false,
+    HealthBarActive = false,
     Name = false,
     Distance = false,
     TeamCheck = false,
+    TeamCheckActive = false,
     FilledBox = false,
+    FilledBoxActive = false,
     BoxCorner = false,
+    BoxCornerActive = false,
     BoxColor = Color3.fromRGB(255, 0, 0),
     NameColor = Color3.fromRGB(255, 255, 255),
     DistanceColor = Color3.fromRGB(255, 255, 255),
@@ -225,34 +249,57 @@ local Settings = {
     AimbotSmooth = 1,
     AimbotHitbox = "Head",
     AimLock = false,
+    AimLockActive = false,
     AimbotMaxDistance = 500,
     NoRecoil = false,
+    NoRecoilActive = false,
     RecoilStrength = 50,
     Prediction = false,
+    PredictionActive = false,
     PredictionStrength = 10,
     InfiniteJump = false,
     InfiniteJumpActive = false, -- Actual activation state controlled by keybind
     DebugPanel = false,
+    DebugPanelActive = false,
     DebugPanelPos = {X = -360, Y = 10},
     MenuBind = Enum.KeyCode.Insert,
     Skeleton = false,
     SkeletonColor = Color3.fromRGB(255, 255, 255),
     LocalSkeleton = false,
+    LocalSkeletonActive = false,
     LocalSkeletonColor = Color3.fromRGB(0, 255, 0),
     LocalHighlight = false,
+    LocalHighlightActive = false,
     LocalHighlightColor = Color3.fromRGB(255, 255, 0),
+    ShowKeylist = true,
+    ShowKeylistActive = true,
     MenuColor = Color3.fromRGB(255, 20, 147),
     
     -- Keybinds
     Keybinds = {
         ESP = {Key = Enum.KeyCode.E, Mode = "Always On", Enabled = true},
         Aimbot = {Key = Enum.UserInputType.MouseButton2, Mode = "Hold", Enabled = true},
-        InfiniteJump = {Key = Enum.KeyCode.J, Mode = "Toggle", Enabled = true}
+        InfiniteJump = {Key = Enum.KeyCode.J, Mode = "Toggle", Enabled = true},
+        AimLock = {Key = Enum.KeyCode.L, Mode = "Toggle", Enabled = false},
+        Prediction = {Key = Enum.KeyCode.P, Mode = "Toggle", Enabled = false},
+        NoRecoil = {Key = Enum.KeyCode.R, Mode = "Toggle", Enabled = false},
+        HealthBar = {Key = Enum.KeyCode.H, Mode = "Toggle", Enabled = false},
+        TeamCheck = {Key = Enum.KeyCode.T, Mode = "Toggle", Enabled = false},
+        FilledBox = {Key = Enum.KeyCode.F, Mode = "Toggle", Enabled = false},
+        BoxCorner = {Key = Enum.KeyCode.C, Mode = "Toggle", Enabled = false},
+        Fullbright = {Key = Enum.KeyCode.B, Mode = "Toggle", Enabled = false},
+        DebugPanel = {Key = Enum.KeyCode.O, Mode = "Toggle", Enabled = false},
+        ShowKeylist = {Key = Enum.KeyCode.K, Mode = "Toggle", Enabled = false},
+        LocalSkeleton = {Key = Enum.KeyCode.N, Mode = "Toggle", Enabled = false},
+        LocalHighlight = {Key = Enum.KeyCode.M, Mode = "Toggle", Enabled = false}
     }
 }
 
 -- UI Elements storage for updating
 local UIElements = {}
+
+-- Global keybind menu reference
+local currentKeybindMenu = nil
 
 -- Store all elements that use accent color (pink)
 local AccentColorElements = {
@@ -683,7 +730,7 @@ local lastCameraRotation = nil
 
 -- Function to calculate predicted position
 local function GetPredictedPosition(hitbox, distance)
-    if not Settings.Prediction then
+    if not Settings.Prediction or not Settings.PredictionActive then
         return hitbox.Position
     end
     
@@ -702,20 +749,11 @@ local function GetPredictedPosition(hitbox, distance)
 end
 
 local function UpdateAimbot()
-    -- Early exit if aimbot not enabled or not active
-    if not Settings.Aimbot or not Settings.AimbotActive then
-        -- Reset locked target
-        lockedTarget = nil
-        lockedHitbox = nil
-        lastCameraRotation = nil
-        return
-    end
-    
     local isAiming = UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton2)
     local isShooting = UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton1)
     
-    -- No Recoil - compensate recoil only when shooting
-    if Settings.NoRecoil and isShooting then
+    -- No Recoil - works independently, only when shooting
+    if Settings.NoRecoil and Settings.NoRecoilActive and isShooting then
         local currentRotation = Camera.CFrame.LookVector
         
         if lastCameraRotation then
@@ -738,44 +776,73 @@ local function UpdateAimbot()
         lastCameraRotation = nil
     end
     
-    -- Only aim when right mouse button is pressed AND aimbot is enabled and active
-    if isAiming and Settings.Aimbot and Settings.AimbotActive then
-        local localHRP = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    local localHRP = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    
+    -- AimLock - works independently when aiming
+    if Settings.AimLock and Settings.AimLockActive and isAiming then
+        if not lockedTarget or not lockedTarget.Character then
+            lockedTarget, lockedHitbox = GetClosestPlayer()
+        end
         
-        -- AimLock - instant lock
-        if Settings.AimLock then
-            if not lockedTarget or not lockedTarget.Character then
-                lockedTarget, lockedHitbox = GetClosestPlayer()
+        -- Check if locked target is still alive
+        if lockedTarget and lockedTarget.Character then
+            local humanoid = lockedTarget.Character:FindFirstChild("Humanoid")
+            if not humanoid or humanoid.Health <= 0 then
+                lockedTarget = nil
+                lockedHitbox = nil
             end
+        end
+        
+        if lockedTarget and lockedTarget.Character and lockedHitbox and localHRP then
+            local distance = (lockedHitbox.Position - localHRP.Position).Magnitude
             
-            -- Check if locked target is still alive
-            if lockedTarget and lockedTarget.Character then
-                local humanoid = lockedTarget.Character:FindFirstChild("Humanoid")
-                if not humanoid or humanoid.Health <= 0 then
-                    lockedTarget = nil
-                    lockedHitbox = nil
-                end
-            end
-            
-            if lockedTarget and lockedTarget.Character and lockedHitbox and localHRP then
-                local distance = (lockedHitbox.Position - localHRP.Position).Magnitude
+            -- Check if target is within max distance
+            if distance <= Settings.AimbotMaxDistance then
                 local predictedPos = GetPredictedPosition(lockedHitbox, distance)
                 local targetPos, onScreen = Camera:WorldToViewportPoint(predictedPos)
                 
-                if onScreen then
+                -- Only aim if target is on screen and in front of camera
+                if onScreen and targetPos.Z > 0 then
                     local mousePos = UserInputService:GetMouseLocation()
                     local deltaX = targetPos.X - mousePos.X
                     local deltaY = targetPos.Y - mousePos.Y
                     
-                    if mousemoverel then
+                    -- Calculate distance to target on screen
+                    local distanceToTarget = math.sqrt(deltaX * deltaX + deltaY * deltaY)
+                    
+                    -- AimLock: smooth approach, then instant lock
+                    if distanceToTarget > 15 then
+                        -- Far - smooth movement to bring cursor to head
+                        local smoothness = 2
+                        deltaX = deltaX / smoothness
+                        deltaY = deltaY / smoothness
+                    end
+                    -- Close (<=15px) - instant lock on center, always track target
+                    
+                    if mousemoverel and (deltaX ~= 0 or deltaY ~= 0) then
                         mousemoverel(deltaX, deltaY)
                     end
+                else
+                    -- Target not visible, reset lock
+                    lockedTarget = nil
+                    lockedHitbox = nil
                 end
+            else
+                -- Target too far, reset lock
+                lockedTarget = nil
+                lockedHitbox = nil
             end
         end
-        
-        -- Smooth Aimbot (works independently)
-        if not Settings.AimLock then
+    elseif not isAiming then
+        -- Reset locked target when not aiming
+        lockedTarget = nil
+        lockedHitbox = nil
+    end
+    
+    -- Smooth Aimbot - requires Aimbot to be enabled
+    if Settings.Aimbot and Settings.AimbotActive and isAiming then
+        -- Only run smooth aimbot if AimLock is not active
+        if not (Settings.AimLock and Settings.AimLockActive) then
             local target, hitbox = GetClosestPlayer()
             if target and target.Character and hitbox and localHRP then
                 local distance = (hitbox.Position - localHRP.Position).Magnitude
@@ -798,10 +865,6 @@ local function UpdateAimbot()
                 end
             end
         end
-    else
-        -- Reset locked target when not aiming
-        lockedTarget = nil
-        lockedHitbox = nil
     end
 end
 
@@ -950,7 +1013,7 @@ local function UpdateSkeleton(player, skeletonLines, color)
 end
 -- Local ESP Functions
 local function UpdateLocalHighlight()
-    if not Settings.LocalHighlight then
+    if not (Settings.LocalHighlight and Settings.LocalHighlightActive) then
         if LocalHighlight then
             pcall(function()
                 LocalHighlight:Destroy()
@@ -1577,7 +1640,7 @@ local function UpdateESP()
                 
                 -- Update colors
                 ESPBoxes[player].Color = Settings.BoxColor
-                ESPBoxes[player].Filled = Settings.FilledBox
+                ESPBoxes[player].Filled = Settings.FilledBox and Settings.FilledBoxActive
                 ESPNames[player].Color = Settings.NameColor
                 ESPDistances[player].Color = Settings.DistanceColor
                 
@@ -1611,7 +1674,7 @@ local function UpdateESP()
                     local cornerLength = math.min(width, height) * 0.25 -- 25% of smallest dimension
                     
                     -- Update box or corners
-                    if Settings.BoxCorner then
+                    if Settings.BoxCorner and Settings.BoxCornerActive then
                         -- Hide full box, show corners
                         ESPBoxes[player].Visible = false
                         
@@ -1678,7 +1741,7 @@ local function UpdateESP()
                     end
                     
                     -- Update health bar
-                    if Settings.HealthBar then
+                    if Settings.HealthBar and Settings.HealthBarActive then
                         local healthPercent = humanoid.Health / humanoid.MaxHealth
                         local barHeight = height
                         local barWidth = 4
@@ -1736,7 +1799,7 @@ end -- Close function
 -- Local ESP Update Function (independent from regular ESP)
 local function UpdateLocalESP()
     -- Local Skeleton
-    if Settings.LocalSkeleton and LocalPlayer.Character then
+    if Settings.LocalSkeleton and Settings.LocalSkeletonActive and LocalPlayer.Character then
         UpdateSkeleton(LocalPlayer, LocalSkeletonLines, Settings.LocalSkeletonColor)
     else
         if LocalSkeletonLines and #LocalSkeletonLines > 0 then
@@ -1771,12 +1834,13 @@ end
 
 -- Main Frame - Modern Dark Theme
 local Main = Instance.new("Frame")
-Main.Size = UDim2.new(0, 940, 0, 500)
+Main.Size = UDim2.new(0, 680, 0, 500)
 Main.Position = UDim2.new(0.5, 0, 0.5, 0)
 Main.AnchorPoint = Vector2.new(0.5, 0.5)
 Main.BackgroundColor3 = Color3.fromRGB(10, 10, 15)
 Main.BorderSizePixel = 0
 Main.ClipsDescendants = true
+Main.Visible = false
 Main.Parent = ScreenGui
 
 local savedMenuSize = Main.Size
@@ -1803,6 +1867,584 @@ HintText.Size = UDim2.new(1, -20, 1, 0)
 HintText.Position = UDim2.new(0, 10, 0, 0)
 HintText.BackgroundTransparency = 1
 HintText.Text = "Press INSERT to open menu"
+HintText.TextColor3 = Color3.fromRGB(200, 200, 200)
+HintText.TextSize = 14
+HintText.Font = Enum.Font.Gotham
+HintText.Parent = HintFrame
+
+-- Top Button Panel
+local TopPanel = Instance.new("Frame")
+TopPanel.Size = UDim2.new(0, 360, 0, 50)
+TopPanel.Position = UDim2.new(0.5, 0, 0, -20)
+TopPanel.AnchorPoint = Vector2.new(0.5, 0)
+TopPanel.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
+TopPanel.BorderSizePixel = 0
+TopPanel.BackgroundTransparency = 1
+TopPanel.Visible = false
+TopPanel.Parent = ScreenGui
+
+local TopPanelCorner = Instance.new("UICorner")
+TopPanelCorner.CornerRadius = UDim.new(0, 8)
+TopPanelCorner.Parent = TopPanel
+
+local TopPanelStroke = Instance.new("UIStroke")
+TopPanelStroke.Color = Settings.MenuColor
+TopPanelStroke.Thickness = 2
+TopPanelStroke.Transparency = 1
+TopPanelStroke.Parent = TopPanel
+table.insert(AccentColorElements.DropdownStrokes, TopPanelStroke)
+
+-- Create 6 buttons
+local buttonSize = 40
+local buttonSpacing = 10
+local totalWidth = (buttonSize * 6) + (buttonSpacing * 5)
+local startX = (360 - totalWidth) / 2
+
+for i = 1, 6 do
+    local btn = Instance.new("TextButton")
+    btn.Size = UDim2.new(0, buttonSize, 0, buttonSize)
+    btn.Position = UDim2.new(0, startX + (i-1) * (buttonSize + buttonSpacing), 0, 5)
+    btn.BackgroundColor3 = Color3.fromRGB(25, 25, 30)
+    btn.Text = ""
+    btn.BorderSizePixel = 0
+    btn.BackgroundTransparency = 1
+    btn.Parent = TopPanel
+    
+    local btnCorner = Instance.new("UICorner")
+    btnCorner.CornerRadius = UDim.new(0, 6)
+    btnCorner.Parent = btn
+    
+    local btnStroke = Instance.new("UIStroke")
+    btnStroke.Color = Settings.MenuColor
+    btnStroke.Thickness = 1
+    btnStroke.Transparency = 1
+    btnStroke.Parent = btn
+    table.insert(AccentColorElements.CheckboxStrokes, btnStroke)
+    
+    -- Add keyboard icon to first button
+    if i == 1 then
+        -- Store button reference for updating background color
+        _G.KeybindManagerButton = btn
+        
+        local icon = Instance.new("TextLabel")
+        icon.Size = UDim2.new(1, 0, 1, 0)
+        icon.Position = UDim2.new(0, 0, 0, 0)
+        icon.BackgroundTransparency = 1
+        icon.Text = "⌨"
+        icon.TextColor3 = Settings.MenuColor
+        icon.TextSize = 24
+        icon.Font = Enum.Font.GothamBold
+        icon.TextTransparency = 1
+        icon.Parent = btn
+        
+        -- Animate icon with button
+        task.spawn(function()
+            while true do
+                task.wait()
+                if btn.BackgroundTransparency < 1 then
+                    icon.TextTransparency = btn.BackgroundTransparency
+                end
+            end
+        end)
+    end
+    
+    -- Hover effect
+    btn.MouseEnter:Connect(function()
+        if i == 1 and _G.KeybindManagerOpen then
+            -- Don't change color on hover if keybind manager is open
+            return
+        end
+        Tween(btn, {BackgroundColor3 = Color3.fromRGB(35, 35, 40)}, 0.2)
+    end)
+    
+    btn.MouseLeave:Connect(function()
+        if i == 1 and _G.KeybindManagerOpen then
+            -- Keep menu color if keybind manager is open
+            return
+        end
+        Tween(btn, {BackgroundColor3 = Color3.fromRGB(25, 25, 30)}, 0.2)
+    end)
+    
+    -- Click handler
+    btn.MouseButton1Click:Connect(function()
+        if i == 1 then
+            -- Toggle keybind manager window
+            if _G.KeybindManagerOpen then
+                -- Close window
+                if _G.KeybindManagerWindow and _G.KeybindManagerWindow.Parent then
+                    -- Save position
+                    _G.KeybindManagerPosition = _G.KeybindManagerWindow.Position
+                    
+                    local titleBar = _G.KeybindManagerWindow:FindFirstChild("Frame")
+                    local scrollFrame = _G.KeybindManagerWindow:FindFirstChild("ScrollingFrame")
+                    
+                    Tween(_G.KeybindManagerWindow, {BackgroundTransparency = 1}, 0.2)
+                    local stroke = _G.KeybindManagerWindow:FindFirstChildOfClass("UIStroke")
+                    if stroke then
+                        Tween(stroke, {Transparency = 1}, 0.2)
+                    end
+                    if titleBar then
+                        Tween(titleBar, {BackgroundTransparency = 1}, 0.2)
+                        for _, element in ipairs(titleBar:GetChildren()) do
+                            if element:IsA("TextLabel") then
+                                Tween(element, {TextTransparency = 1}, 0.2)
+                            elseif element:IsA("TextButton") then
+                                Tween(element, {BackgroundTransparency = 1, TextTransparency = 1}, 0.2)
+                            end
+                        end
+                    end
+                    if scrollFrame then
+                        for _, child in ipairs(scrollFrame:GetChildren()) do
+                            if child:IsA("Frame") then
+                                Tween(child, {BackgroundTransparency = 1}, 0.2)
+                                for _, element in ipairs(child:GetChildren()) do
+                                    if element:IsA("TextLabel") then
+                                        Tween(element, {TextTransparency = 1}, 0.2)
+                                    elseif element:IsA("TextButton") then
+                                        Tween(element, {BackgroundTransparency = 1, TextTransparency = 1}, 0.2)
+                                    end
+                                end
+                            end
+                        end
+                    end
+                    
+                    task.wait(0.2)
+                    _G.KeybindManagerWindow:Destroy()
+                    _G.KeybindManagerWindow = nil
+                    _G.KeybindManagerOpen = false
+                    
+                    -- Update button background color
+                    if _G.KeybindManagerButton then
+                        Tween(_G.KeybindManagerButton, {BackgroundColor3 = Color3.fromRGB(25, 25, 30)}, 0.2)
+                    end
+                end
+                return
+            end
+            
+            _G.KeybindManagerOpen = true
+            
+            -- Update button background color
+            if _G.KeybindManagerButton then
+                Tween(_G.KeybindManagerButton, {BackgroundColor3 = Settings.MenuColor}, 0.2)
+            end
+            
+            local managerWindow = Instance.new("Frame")
+            -- Use saved position or default to center
+            if _G.KeybindManagerPosition then
+                managerWindow.Position = _G.KeybindManagerPosition
+            else
+                managerWindow.Position = UDim2.new(0.5, 0, 0.5, 0)
+            end
+            managerWindow.AnchorPoint = Vector2.new(0.5, 0.5)
+            managerWindow.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
+            managerWindow.BorderSizePixel = 0
+            managerWindow.ZIndex = 100
+            managerWindow.BackgroundTransparency = 1
+            managerWindow.Parent = ScreenGui
+            
+            _G.KeybindManagerWindow = managerWindow
+            
+            local managerCorner = Instance.new("UICorner")
+            managerCorner.CornerRadius = UDim.new(0, 10)
+            managerCorner.Parent = managerWindow
+            
+            local managerStroke = Instance.new("UIStroke")
+            managerStroke.Color = Settings.MenuColor
+            managerStroke.Thickness = 2
+            managerStroke.Transparency = 1
+            managerStroke.Parent = managerWindow
+            
+            -- Title
+            local titleBar = Instance.new("Frame")
+            titleBar.Size = UDim2.new(1, 0, 0, 40)
+            titleBar.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
+            titleBar.BorderSizePixel = 0
+            titleBar.BackgroundTransparency = 1
+            titleBar.ZIndex = 101
+            titleBar.Parent = managerWindow
+            
+            local titleCorner = Instance.new("UICorner")
+            titleCorner.CornerRadius = UDim.new(0, 10)
+            titleCorner.Parent = titleBar
+            
+            local titleLabel = Instance.new("TextLabel")
+            titleLabel.Size = UDim2.new(1, -50, 1, 0)
+            titleLabel.Position = UDim2.new(0, 15, 0, 0)
+            titleLabel.BackgroundTransparency = 1
+            titleLabel.Text = "Keybind Manager"
+            titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+            titleLabel.TextSize = 16
+            titleLabel.Font = Enum.Font.GothamBold
+            titleLabel.TextXAlignment = Enum.TextXAlignment.Left
+            titleLabel.TextTransparency = 1
+            titleLabel.ZIndex = 102
+            titleLabel.Parent = titleBar
+            
+            -- Close button
+            local closeBtn = Instance.new("TextButton")
+            closeBtn.Size = UDim2.new(0, 30, 0, 30)
+            closeBtn.Position = UDim2.new(1, -35, 0, 5)
+            closeBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
+            closeBtn.Text = "×"
+            closeBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+            closeBtn.TextSize = 20
+            closeBtn.Font = Enum.Font.GothamBold
+            closeBtn.BorderSizePixel = 0
+            closeBtn.BackgroundTransparency = 1
+            closeBtn.TextTransparency = 1
+            closeBtn.ZIndex = 102
+            closeBtn.Parent = titleBar
+            
+            local closeBtnCorner = Instance.new("UICorner")
+            closeBtnCorner.CornerRadius = UDim.new(0, 6)
+            closeBtnCorner.Parent = closeBtn
+            
+            closeBtn.MouseEnter:Connect(function()
+                Tween(closeBtn, {BackgroundColor3 = Color3.fromRGB(200, 50, 50)}, 0.2)
+            end)
+            
+            closeBtn.MouseLeave:Connect(function()
+                Tween(closeBtn, {BackgroundColor3 = Color3.fromRGB(30, 30, 35)}, 0.2)
+            end)
+            
+            closeBtn.MouseButton1Click:Connect(function()
+                -- Save position before closing
+                _G.KeybindManagerPosition = managerWindow.Position
+                Tween(managerWindow, {BackgroundTransparency = 1}, 0.2)
+                Tween(managerStroke, {Transparency = 1}, 0.2)
+                Tween(titleBar, {BackgroundTransparency = 1}, 0.2)
+                Tween(titleLabel, {TextTransparency = 1}, 0.2)
+                Tween(closeBtn, {BackgroundTransparency = 1, TextTransparency = 1}, 0.2)
+                
+                -- Animate all items
+                for _, child in ipairs(scrollFrame:GetChildren()) do
+                    if child:IsA("Frame") then
+                        Tween(child, {BackgroundTransparency = 1}, 0.2)
+                        for _, element in ipairs(child:GetChildren()) do
+                            if element:IsA("TextLabel") then
+                                Tween(element, {TextTransparency = 1}, 0.2)
+                            elseif element:IsA("TextButton") then
+                                Tween(element, {BackgroundTransparency = 1, TextTransparency = 1}, 0.2)
+                            end
+                        end
+                    end
+                end
+                
+                task.wait(0.2)
+                managerWindow:Destroy()
+                _G.KeybindManagerWindow = nil
+                _G.KeybindManagerOpen = false
+                
+                -- Update button background color
+                if _G.KeybindManagerButton then
+                    Tween(_G.KeybindManagerButton, {BackgroundColor3 = Color3.fromRGB(25, 25, 30)}, 0.2)
+                end
+            end)
+            
+            -- Make window draggable
+            local dragging = false
+            local dragStart = nil
+            local startPos = nil
+            
+            titleBar.InputBegan:Connect(function(input)
+                if input.UserInputType == Enum.UserInputType.MouseButton1 then
+                    dragging = true
+                    dragStart = input.Position
+                    startPos = managerWindow.Position
+                end
+            end)
+            
+            titleBar.InputEnded:Connect(function(input)
+                if input.UserInputType == Enum.UserInputType.MouseButton1 then
+                    dragging = false
+                end
+            end)
+            
+            UserInputService.InputChanged:Connect(function(input)
+                if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+                    local delta = input.Position - dragStart
+                    managerWindow.Position = UDim2.new(
+                        startPos.X.Scale,
+                        startPos.X.Offset + delta.X,
+                        startPos.Y.Scale,
+                        startPos.Y.Offset + delta.Y
+                    )
+                end
+            end)
+            
+            -- Scroll frame for keybinds
+            local scrollFrame = Instance.new("ScrollingFrame")
+            scrollFrame.Size = UDim2.new(1, -20, 1, -50)
+            scrollFrame.Position = UDim2.new(0, 10, 0, 45)
+            scrollFrame.BackgroundTransparency = 1
+            scrollFrame.BorderSizePixel = 0
+            scrollFrame.ScrollBarThickness = 4
+            scrollFrame.ScrollBarImageColor3 = Settings.MenuColor
+            scrollFrame.ZIndex = 101
+            scrollFrame.Parent = managerWindow
+            
+            local listLayout = Instance.new("UIListLayout")
+            listLayout.Padding = UDim.new(0, 8)
+            listLayout.Parent = scrollFrame
+            
+            -- Count keybinds to show
+            local keybindCount = 0
+            for name, bind in pairs(Settings.Keybinds) do
+                if name ~= "Hitbox" then
+                    if bind.Enabled then
+                        keybindCount = keybindCount + 1
+                    end
+                else
+                    -- Count hitbox binds
+                    for _, hitboxBind in pairs(bind) do
+                        if hitboxBind.Enabled then
+                            keybindCount = keybindCount + 1
+                        end
+                    end
+                end
+            end
+            
+            -- Create keybind items
+            for name, bind in pairs(Settings.Keybinds) do
+                if name ~= "Hitbox" then
+                    if bind.Enabled then
+                        local item = Instance.new("Frame")
+                        item.Size = UDim2.new(1, 0, 0, 50)
+                        item.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
+                        item.BackgroundTransparency = 1
+                        item.BorderSizePixel = 0
+                        item.ZIndex = 101
+                        item.Parent = scrollFrame
+                        
+                        local itemCorner = Instance.new("UICorner")
+                        itemCorner.CornerRadius = UDim.new(0, 6)
+                        itemCorner.Parent = item
+                        
+                        local nameLabel = Instance.new("TextLabel")
+                        nameLabel.Size = UDim2.new(0, 150, 1, 0)
+                        nameLabel.Position = UDim2.new(0, 10, 0, 0)
+                        nameLabel.BackgroundTransparency = 1
+                        nameLabel.Text = name
+                        nameLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+                        nameLabel.TextSize = 13
+                        nameLabel.Font = Enum.Font.GothamBold
+                        nameLabel.TextXAlignment = Enum.TextXAlignment.Left
+                        nameLabel.TextTransparency = 1
+                        nameLabel.ZIndex = 102
+                        nameLabel.Parent = item
+                        
+                        local keyLabel = Instance.new("TextButton")
+                        keyLabel.Size = UDim2.new(0, 80, 0, 25)
+                        keyLabel.Position = UDim2.new(1, -180, 0.5, -12.5)
+                        keyLabel.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
+                        keyLabel.Text = bind.Enabled and "[" .. (typeof(bind.Key) == "EnumItem" and bind.Key.Name or "NONE") .. "]" or "[NONE]"
+                        keyLabel.TextColor3 = Settings.MenuColor
+                        keyLabel.TextSize = 11
+                        keyLabel.Font = Enum.Font.GothamBold
+                        keyLabel.BorderSizePixel = 0
+                        keyLabel.BackgroundTransparency = 1
+                        keyLabel.TextTransparency = 1
+                        keyLabel.ZIndex = 102
+                        keyLabel.Parent = item
+                        
+                        local keyCorner = Instance.new("UICorner")
+                        keyCorner.CornerRadius = UDim.new(0, 4)
+                        keyCorner.Parent = keyLabel
+                        
+                        -- Click to change key
+                        local bindingKey = false
+                        keyLabel.MouseButton1Click:Connect(function()
+                            if bindingKey then return end
+                            bindingKey = true
+                            keyLabel.Text = "[Press...]"
+                            keyLabel.BackgroundColor3 = Settings.MenuColor
+                            
+                            local connection
+                            connection = UserInputService.InputBegan:Connect(function(input, gameProcessed)
+                                if input.UserInputType == Enum.UserInputType.Keyboard then
+                                    if input.KeyCode == Enum.KeyCode.Escape then
+                                        Settings.Keybinds[name].Enabled = false
+                                        keyLabel.Text = "[NONE]"
+                                    else
+                                        Settings.Keybinds[name].Enabled = true
+                                        Settings.Keybinds[name].Key = input.KeyCode
+                                        keyLabel.Text = "[" .. input.KeyCode.Name .. "]"
+                                    end
+                                    keyLabel.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
+                                    bindingKey = false
+                                    connection:Disconnect()
+                                elseif input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.MouseButton2 then
+                                    Settings.Keybinds[name].Enabled = true
+                                    Settings.Keybinds[name].Key = input.UserInputType
+                                    keyLabel.Text = input.UserInputType == Enum.UserInputType.MouseButton1 and "[M1]" or "[M2]"
+                                    keyLabel.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
+                                    bindingKey = false
+                                    connection:Disconnect()
+                                end
+                            end)
+                        end)
+                        
+                        local modeLabel = Instance.new("TextButton")
+                        modeLabel.Size = UDim2.new(0, 80, 0, 25)
+                        modeLabel.Position = UDim2.new(1, -90, 0.5, -12.5)
+                        modeLabel.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
+                        modeLabel.Text = bind.Mode
+                        modeLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+                        modeLabel.TextSize = 10
+                        modeLabel.Font = Enum.Font.Gotham
+                        modeLabel.BorderSizePixel = 0
+                        modeLabel.BackgroundTransparency = 1
+                        modeLabel.TextTransparency = 1
+                        modeLabel.ZIndex = 102
+                        modeLabel.Parent = item
+                        
+                        local modeCorner = Instance.new("UICorner")
+                        modeCorner.CornerRadius = UDim.new(0, 4)
+                        modeCorner.Parent = modeLabel
+                        
+                        -- Click to cycle through modes
+                        modeLabel.MouseButton1Click:Connect(function()
+                            local modes = {"Toggle", "Hold", "Always On"}
+                            local currentIndex = 1
+                            for i, mode in ipairs(modes) do
+                                if Settings.Keybinds[name].Mode == mode then
+                                    currentIndex = i
+                                    break
+                                end
+                            end
+                            
+                            -- Cycle to next mode
+                            local nextIndex = (currentIndex % 3) + 1
+                            local newMode = modes[nextIndex]
+                            
+                            Settings.Keybinds[name].Mode = newMode
+                            modeLabel.Text = newMode
+                            ShowNotification(name .. " mode: " .. newMode, 1.5)
+                            
+                            local activeName = name .. "Active"
+                            -- If Always On mode, activate the function
+                            if newMode == "Always On" and Settings[name] then
+                                Settings[activeName] = true
+                            elseif newMode ~= "Always On" then
+                                -- If switching from Always On to Toggle/Hold, deactivate
+                                Settings[activeName] = false
+                            end
+                        end)
+                    end
+                else
+                    -- Handle Hitbox binds
+                    for hitboxName, hitboxBind in pairs(bind) do
+                        if hitboxBind.Enabled then
+                            local item = Instance.new("Frame")
+                            item.Size = UDim2.new(1, 0, 0, 50)
+                            item.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
+                            item.BorderSizePixel = 0
+                            item.ZIndex = 101
+                            item.Parent = scrollFrame
+                            
+                            local itemCorner = Instance.new("UICorner")
+                            itemCorner.CornerRadius = UDim.new(0, 6)
+                            itemCorner.Parent = item
+                            
+                            local nameLabel = Instance.new("TextLabel")
+                            nameLabel.Size = UDim2.new(0, 150, 1, 0)
+                            nameLabel.Position = UDim2.new(0, 10, 0, 0)
+                            nameLabel.BackgroundTransparency = 1
+                            nameLabel.Text = "Hitbox: " .. hitboxName
+                            nameLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+                            nameLabel.TextSize = 13
+                            nameLabel.Font = Enum.Font.GothamBold
+                            nameLabel.TextXAlignment = Enum.TextXAlignment.Left
+                            nameLabel.ZIndex = 102
+                            nameLabel.Parent = item
+                            
+                            local keyLabel = Instance.new("TextButton")
+                            keyLabel.Size = UDim2.new(0, 80, 0, 25)
+                            keyLabel.Position = UDim2.new(1, -90, 0.5, -12.5)
+                            keyLabel.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
+                            keyLabel.Text = "[" .. (typeof(hitboxBind.Key) == "EnumItem" and hitboxBind.Key.Name or "NONE") .. "]"
+                            keyLabel.TextColor3 = Settings.MenuColor
+                            keyLabel.TextSize = 11
+                            keyLabel.Font = Enum.Font.GothamBold
+                            keyLabel.BorderSizePixel = 0
+                            keyLabel.ZIndex = 102
+                            keyLabel.Parent = item
+                            
+                            local keyCorner = Instance.new("UICorner")
+                            keyCorner.CornerRadius = UDim.new(0, 4)
+                            keyCorner.Parent = keyLabel
+                            
+                            -- Click to change key
+                            local bindingKey = false
+                            keyLabel.MouseButton1Click:Connect(function()
+                                if bindingKey then return end
+                                bindingKey = true
+                                keyLabel.Text = "[Press...]"
+                                keyLabel.BackgroundColor3 = Settings.MenuColor
+                                
+                                local connection
+                                connection = UserInputService.InputBegan:Connect(function(input, gameProcessed)
+                                    if input.UserInputType == Enum.UserInputType.Keyboard then
+                                        if input.KeyCode == Enum.KeyCode.Escape then
+                                            Settings.Keybinds.Hitbox[hitboxName].Enabled = false
+                                            keyLabel.Text = "[NONE]"
+                                        else
+                                            Settings.Keybinds.Hitbox[hitboxName].Enabled = true
+                                            Settings.Keybinds.Hitbox[hitboxName].Key = input.KeyCode
+                                            keyLabel.Text = "[" .. input.KeyCode.Name .. "]"
+                                        end
+                                        keyLabel.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
+                                        bindingKey = false
+                                        connection:Disconnect()
+                                    elseif input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.MouseButton2 then
+                                        Settings.Keybinds.Hitbox[hitboxName].Enabled = true
+                                        Settings.Keybinds.Hitbox[hitboxName].Key = input.UserInputType
+                                        keyLabel.Text = input.UserInputType == Enum.UserInputType.MouseButton1 and "[M1]" or "[M2]"
+                                        keyLabel.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
+                                        bindingKey = false
+                                        connection:Disconnect()
+                                    end
+                                end)
+                            end)
+                        end
+                    end
+                end
+            end
+            
+            -- Update scroll canvas size
+            listLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+                scrollFrame.CanvasSize = UDim2.new(0, 0, 0, listLayout.AbsoluteContentSize.Y + 10)
+            end)
+            
+            -- Animate window opening with fade in
+            local targetHeight = math.min(60 + (keybindCount * 58), 500)
+            managerWindow.Size = UDim2.new(0, 400, 0, targetHeight)
+            Tween(managerWindow, {BackgroundTransparency = 0}, 0.2)
+            Tween(managerStroke, {Transparency = 0}, 0.2)
+            Tween(titleBar, {BackgroundTransparency = 0}, 0.2)
+            Tween(titleLabel, {TextTransparency = 0}, 0.2)
+            Tween(closeBtn, {BackgroundTransparency = 0, TextTransparency = 0}, 0.2)
+            
+            -- Animate all items
+            for _, child in ipairs(scrollFrame:GetChildren()) do
+                if child:IsA("Frame") then
+                    Tween(child, {BackgroundTransparency = 0}, 0.2)
+                    for _, element in ipairs(child:GetChildren()) do
+                        if element:IsA("TextLabel") then
+                            Tween(element, {TextTransparency = 0}, 0.2)
+                        elseif element:IsA("TextButton") then
+                            Tween(element, {BackgroundTransparency = 0, TextTransparency = 0}, 0.2)
+                        end
+                    end
+                end
+            end
+        else
+            ShowNotification("Button " .. i .. " clicked", 1.5)
+        end
+    end)
+end
+
+-- Title Bar
 HintText.TextColor3 = Color3.fromRGB(255, 255, 255)
 HintText.TextSize = 13
 HintText.Font = Enum.Font.Gotham
@@ -1956,8 +2598,27 @@ end)
 Close.MouseButton1Click:Connect(function()
     savedMenuSize = Main.Size
     Tween(Main, {Size = UDim2.new(0, 0, 0, 0)}, 0.3)
+    Tween(TopPanel, {BackgroundTransparency = 1}, 0.15)
+    Tween(TopPanelStroke, {Transparency = 1}, 0.15)
+    -- Animate buttons
+    for _, child in ipairs(TopPanel:GetChildren()) do
+        if child:IsA("TextButton") then
+            Tween(child, {BackgroundTransparency = 1}, 0.15)
+            local stroke = child:FindFirstChildOfClass("UIStroke")
+            if stroke then
+                Tween(stroke, {Transparency = 1}, 0.15)
+            end
+        end
+    end
     task.wait(0.3)
     Main.Visible = false
+    TopPanel.Visible = false
+    
+    -- Hide keybind manager if open (but keep state)
+    if _G.KeybindManagerOpen and _G.KeybindManagerWindow then
+        _G.KeybindManagerPosition = _G.KeybindManagerWindow.Position
+        _G.KeybindManagerWindow.Visible = false
+    end
 end)
 
 -- Horizontal Tab Bar
@@ -2103,6 +2764,32 @@ local function CreateTab(name)
     tab.XPos = xPos
     
     btn.MouseButton1Click:Connect(function()
+        -- Close keybind menu when switching tabs
+        if currentKeybindMenu and currentKeybindMenu.Parent then
+            Tween(currentKeybindMenu, {BackgroundTransparency = 1}, 0.2)
+            local menuStroke = currentKeybindMenu:FindFirstChildOfClass("UIStroke")
+            if menuStroke then
+                Tween(menuStroke, {Transparency = 1}, 0.2)
+            end
+            
+            -- Animate all child elements
+            for _, child in ipairs(currentKeybindMenu:GetChildren()) do
+                if child:IsA("TextLabel") then
+                    Tween(child, {TextTransparency = 1}, 0.2)
+                elseif child:IsA("TextButton") then
+                    Tween(child, {BackgroundTransparency = 1, TextTransparency = 1}, 0.2)
+                end
+            end
+            
+            task.spawn(function()
+                task.wait(0.2)
+                if currentKeybindMenu then
+                    currentKeybindMenu:Destroy()
+                    currentKeybindMenu = nil
+                end
+            end)
+        end
+        
         for _, t in pairs(Tabs) do
             t.Scroll.Visible = false
             Tween(t.Button, {TextColor3 = Color3.fromRGB(150, 150, 150)}, 0.2)
@@ -2133,7 +2820,7 @@ end
 
 -- Modern UI Element Creation Functions
 
-local function CreateToggle(parent, text, default, callback)
+local function CreateToggle(parent, text, default, callback, keybindName)
     local frame = Instance.new("Frame")
     frame.Size = UDim2.new(1, 0, 0, 30)
     frame.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
@@ -2201,26 +2888,285 @@ local function CreateToggle(parent, text, default, callback)
         callback(enabled)
     end)
     
+    -- Right click - open keybind menu (only if keybindName provided)
+    if keybindName then
+        if not Settings.Keybinds[keybindName] then
+            Settings.Keybinds[keybindName] = {Key = Enum.KeyCode.E, Mode = "Toggle", Enabled = false}
+        end
+        
+        btn.MouseButton2Click:Connect(function()
+            -- Close existing menu if open (without waiting)
+            if currentKeybindMenu and currentKeybindMenu.Parent then
+                local oldMenu = currentKeybindMenu
+                Tween(oldMenu, {BackgroundTransparency = 1}, 0.2)
+                local menuStroke = oldMenu:FindFirstChildOfClass("UIStroke")
+                if menuStroke then
+                    Tween(menuStroke, {Transparency = 1}, 0.2)
+                end
+                
+                -- Animate all child elements
+                for _, child in ipairs(oldMenu:GetChildren()) do
+                    if child:IsA("TextLabel") then
+                        Tween(child, {TextTransparency = 1}, 0.2)
+                    elseif child:IsA("TextButton") then
+                        Tween(child, {BackgroundTransparency = 1, TextTransparency = 1}, 0.2)
+                    end
+                end
+                
+                -- Destroy after animation in background
+                task.spawn(function()
+                    task.wait(0.2)
+                    oldMenu:Destroy()
+                end)
+                
+                currentKeybindMenu = nil
+            end
+            
+            -- Get mouse position relative to ScreenGui
+            local mousePos = UserInputService:GetMouseLocation()
+            local guiInset = game:GetService("GuiService"):GetGuiInset()
+            local screenSize = ScreenGui.AbsoluteSize
+            
+            -- Adjust for GUI inset (top bar)
+            local adjustedMouseX = mousePos.X
+            local adjustedMouseY = mousePos.Y - guiInset.Y
+            
+            -- Calculate menu position at cursor (no offset)
+            local menuWidth = 200
+            local menuHeight = 165
+            
+            -- Position: cursor at top-left corner of menu
+            local posX = adjustedMouseX
+            local posY = adjustedMouseY
+            
+            -- Adjust position if menu would go off screen
+            if posX + menuWidth > screenSize.X then
+                posX = adjustedMouseX - menuWidth
+            end
+            
+            if posY + menuHeight > screenSize.Y then
+                posY = adjustedMouseY - menuHeight
+            end
+            
+            local menu = Instance.new("Frame")
+            menu.Size = UDim2.new(0, menuWidth, 0, menuHeight)
+            menu.Position = UDim2.new(0, posX, 0, posY)
+            menu.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
+            menu.BorderSizePixel = 0
+            menu.ZIndex = 200
+            menu.BackgroundTransparency = 1
+            menu.Parent = ScreenGui
+            
+            currentKeybindMenu = menu
+            
+            local menuCorner = Instance.new("UICorner")
+            menuCorner.CornerRadius = UDim.new(0, 8)
+            menuCorner.Parent = menu
+            
+            local menuStroke = Instance.new("UIStroke")
+            menuStroke.Color = Settings.MenuColor
+            menuStroke.Thickness = 2
+            menuStroke.Transparency = 1
+            menuStroke.Parent = menu
+            
+            -- Animate menu appearance
+            Tween(menu, {BackgroundTransparency = 0}, 0.2)
+            Tween(menuStroke, {Transparency = 0}, 0.2)
+            
+            local title = Instance.new("TextLabel")
+            title.Size = UDim2.new(1, -30, 0, 30)
+            title.Position = UDim2.new(0, 5, 0, 0)
+            title.BackgroundTransparency = 1
+            title.Text = "Keybind: " .. text
+            title.TextColor3 = Color3.fromRGB(255, 255, 255)
+            title.TextSize = 13
+            title.Font = Enum.Font.GothamBold
+            title.ZIndex = 201
+            title.TextTransparency = 1
+            title.Parent = menu
+            
+            Tween(title, {TextTransparency = 0}, 0.2)
+            
+            -- Close button (X)
+            local closeBtn = Instance.new("TextButton")
+            closeBtn.Size = UDim2.new(0, 25, 0, 25)
+            closeBtn.Position = UDim2.new(1, -28, 0, 2.5)
+            closeBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
+            closeBtn.Text = "×"
+            closeBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+            closeBtn.TextSize = 18
+            closeBtn.Font = Enum.Font.GothamBold
+            closeBtn.BorderSizePixel = 0
+            closeBtn.ZIndex = 202
+            closeBtn.BackgroundTransparency = 1
+            closeBtn.TextTransparency = 1
+            closeBtn.Parent = menu
+            
+            local closeBtnCorner = Instance.new("UICorner")
+            closeBtnCorner.CornerRadius = UDim.new(0, 4)
+            closeBtnCorner.Parent = closeBtn
+            
+            Tween(closeBtn, {BackgroundTransparency = 0, TextTransparency = 0}, 0.2)
+            
+            closeBtn.MouseEnter:Connect(function()
+                Tween(closeBtn, {BackgroundColor3 = Color3.fromRGB(200, 50, 50)}, 0.2)
+            end)
+            
+            closeBtn.MouseLeave:Connect(function()
+                Tween(closeBtn, {BackgroundColor3 = Color3.fromRGB(30, 30, 35)}, 0.2)
+            end)
+            
+            closeBtn.MouseButton1Click:Connect(function()
+                Tween(menu, {BackgroundTransparency = 1}, 0.2)
+                Tween(menuStroke, {Transparency = 1}, 0.2)
+                
+                -- Animate all child elements
+                for _, child in ipairs(menu:GetChildren()) do
+                    if child:IsA("TextLabel") then
+                        Tween(child, {TextTransparency = 1}, 0.2)
+                    elseif child:IsA("TextButton") then
+                        Tween(child, {BackgroundTransparency = 1, TextTransparency = 1}, 0.2)
+                    end
+                end
+                
+                task.wait(0.2)
+                menu:Destroy()
+                currentKeybindMenu = nil
+            end)
+            
+            local bindBtn = Instance.new("TextButton")
+            bindBtn.Size = UDim2.new(1, -20, 0, 30)
+            bindBtn.Position = UDim2.new(0, 10, 0, 40)
+            bindBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
+            bindBtn.Text = Settings.Keybinds[keybindName].Enabled and "[" .. (typeof(Settings.Keybinds[keybindName].Key) == "EnumItem" and Settings.Keybinds[keybindName].Key.Name or "NONE") .. "]" or "[NONE]"
+            bindBtn.TextColor3 = Color3.fromRGB(200, 200, 200)
+            bindBtn.TextSize = 12
+            bindBtn.Font = Enum.Font.Gotham
+            bindBtn.BorderSizePixel = 0
+            bindBtn.ZIndex = 201
+            bindBtn.BackgroundTransparency = 1
+            bindBtn.TextTransparency = 1
+            bindBtn.Parent = menu
+            
+            Tween(bindBtn, {BackgroundTransparency = 0, TextTransparency = 0}, 0.2)
+            
+            local bindCorner = Instance.new("UICorner")
+            bindCorner.CornerRadius = UDim.new(0, 4)
+            bindCorner.Parent = bindBtn
+            
+            local binding = false
+            bindBtn.MouseButton1Click:Connect(function()
+                if binding then return end
+                binding = true
+                bindBtn.Text = "[Press key...]"
+                bindBtn.BackgroundColor3 = Settings.MenuColor
+                
+                local connection
+                connection = UserInputService.InputBegan:Connect(function(input, gameProcessed)
+                    if input.UserInputType == Enum.UserInputType.Keyboard then
+                        if input.KeyCode == Enum.KeyCode.Escape then
+                            Settings.Keybinds[keybindName].Enabled = false
+                            bindBtn.Text = "[NONE]"
+                        else
+                            Settings.Keybinds[keybindName].Enabled = true
+                            Settings.Keybinds[keybindName].Key = input.KeyCode
+                            bindBtn.Text = "[" .. input.KeyCode.Name .. "]"
+                        end
+                        bindBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
+                        binding = false
+                        connection:Disconnect()
+                    elseif input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.MouseButton2 then
+                        Settings.Keybinds[keybindName].Enabled = true
+                        Settings.Keybinds[keybindName].Key = input.UserInputType
+                        bindBtn.Text = input.UserInputType == Enum.UserInputType.MouseButton1 and "[M1]" or "[M2]"
+                        bindBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
+                        binding = false
+                        connection:Disconnect()
+                    end
+                end)
+            end)
+            
+            local modes = {"Toggle", "Hold", "Always On"}
+            for i, mode in ipairs(modes) do
+                local modeBtn = Instance.new("TextButton")
+                modeBtn.Size = UDim2.new(1, -20, 0, 25)
+                modeBtn.Position = UDim2.new(0, 10, 0, 75 + (i-1) * 27)
+                modeBtn.BackgroundColor3 = Settings.Keybinds[keybindName].Mode == mode and Color3.fromRGB(40, 40, 45) or Color3.fromRGB(30, 30, 35)
+                modeBtn.Text = mode
+                modeBtn.TextColor3 = Settings.Keybinds[keybindName].Mode == mode and Settings.MenuColor or Color3.fromRGB(200, 200, 200)
+                modeBtn.TextSize = 11
+                modeBtn.Font = Enum.Font.Gotham
+                modeBtn.BorderSizePixel = 0
+                modeBtn.ZIndex = 201
+                modeBtn.BackgroundTransparency = 1
+                modeBtn.TextTransparency = 1
+                modeBtn.Parent = menu
+                
+                -- Animate with delay
+                task.spawn(function()
+                    task.wait(0.05 * i)
+                    Tween(modeBtn, {BackgroundTransparency = 0, TextTransparency = 0}, 0.2)
+                end)
+                
+                local modeBtnCorner = Instance.new("UICorner")
+                modeBtnCorner.CornerRadius = UDim.new(0, 3)
+                modeBtnCorner.Parent = modeBtn
+                
+                modeBtn.MouseButton1Click:Connect(function()
+                    Settings.Keybinds[keybindName].Mode = mode
+                    
+                    -- Update all mode buttons colors
+                    for _, child in ipairs(menu:GetChildren()) do
+                        if child:IsA("TextButton") and child ~= bindBtn and child ~= closeBtn then
+                            if child.Text == mode then
+                                Tween(child, {BackgroundColor3 = Color3.fromRGB(40, 40, 45)}, 0.2)
+                                child.TextColor3 = Settings.MenuColor
+                            else
+                                Tween(child, {BackgroundColor3 = Color3.fromRGB(30, 30, 35)}, 0.2)
+                                child.TextColor3 = Color3.fromRGB(200, 200, 200)
+                            end
+                        end
+                    end
+                    
+                    local activeName = keybindName .. "Active"
+                    -- Activate function if Always On mode is selected
+                    if mode == "Always On" and Settings[keybindName] then
+                        Settings[activeName] = true
+                    elseif mode ~= "Always On" then
+                        -- If switching from Always On to Toggle/Hold, deactivate
+                        Settings[activeName] = false
+                    end
+                    
+                    -- Legacy support for ESP, Aimbot, InfiniteJump
+                    if keybindName == "ESP" and Settings.ESP then
+                        Settings.ESPActive = mode == "Always On" or mode == "Toggle"
+                    elseif keybindName == "Aimbot" and Settings.Aimbot then
+                        Settings.AimbotActive = mode == "Always On" or mode == "Toggle"
+                    elseif keybindName == "InfiniteJump" and Settings.InfiniteJump then
+                        Settings.InfiniteJumpActive = mode == "Always On" or mode == "Toggle"
+                    end
+                    
+                    ShowNotification(text .. " mode: " .. mode, 1.5)
+                end)
+            end
+        end)
+    end
+    
     return {
         Frame = frame,
         SetValue = function(value)
             enabled = value
             if value then
                 checkbox.BackgroundColor3 = Settings.MenuColor
-                -- Add to accent color elements if not already there
                 local found = false
                 for _, cb in ipairs(AccentColorElements.CheckboxBackgrounds) do
-                    if cb == checkbox then
-                        found = true
-                        break
-                    end
+                    if cb == checkbox then found = true break end
                 end
                 if not found then
                     table.insert(AccentColorElements.CheckboxBackgrounds, checkbox)
                 end
             else
                 checkbox.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
-                -- Remove from accent color elements
                 for i, cb in ipairs(AccentColorElements.CheckboxBackgrounds) do
                     if cb == checkbox then
                         table.remove(AccentColorElements.CheckboxBackgrounds, i)
@@ -2228,7 +3174,8 @@ local function CreateToggle(parent, text, default, callback)
                     end
                 end
             end
-        end
+        end,
+        UpdateKeybind = keybindName and function() end or nil
     }
 end
 
@@ -2669,7 +3616,7 @@ local function CreateSlider(parent, text, min, max, default, callback)
     }
 end
 
-local function CreateDropdown(parent, text, options, default, callback)
+local function CreateDropdown(parent, text, options, default, callback, keybindName)
     local frame = Instance.new("Frame")
     frame.Size = UDim2.new(1, 0, 0, 30)
     frame.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
@@ -2700,6 +3647,7 @@ local function CreateDropdown(parent, text, options, default, callback)
     dropBtn.TextSize = 11
     dropBtn.Font = Enum.Font.Gotham
     dropBtn.BorderSizePixel = 0
+    dropBtn.ZIndex = 2
     dropBtn.Parent = frame
     
     local dropCorner = Instance.new("UICorner")
@@ -2732,10 +3680,231 @@ local function CreateDropdown(parent, text, options, default, callback)
         callback(currentOption)
     end)
     
+    -- Right click - open keybind menu for hitbox options (only if keybindName provided)
+    if keybindName then
+        -- Initialize keybinds for each hitbox option
+        if not Settings.Keybinds[keybindName] then
+            Settings.Keybinds[keybindName] = {}
+        end
+        for _, option in ipairs(options) do
+            if not Settings.Keybinds[keybindName][option] then
+                Settings.Keybinds[keybindName][option] = {Key = nil, Enabled = false}
+            end
+        end
+        
+        -- Add right-click handler to the entire frame
+        local rightClickBtn = Instance.new("TextButton")
+        rightClickBtn.Size = UDim2.new(1, 0, 1, 0)
+        rightClickBtn.BackgroundTransparency = 1
+        rightClickBtn.Text = ""
+        rightClickBtn.ZIndex = 1
+        rightClickBtn.Parent = frame
+        
+        rightClickBtn.MouseButton2Click:Connect(function()
+            -- Close existing menu if open (without waiting)
+            if currentKeybindMenu and currentKeybindMenu.Parent then
+                local oldMenu = currentKeybindMenu
+                Tween(oldMenu, {BackgroundTransparency = 1}, 0.2)
+                local menuStroke = oldMenu:FindFirstChildOfClass("UIStroke")
+                if menuStroke then
+                    Tween(menuStroke, {Transparency = 1}, 0.2)
+                end
+                
+                -- Animate all child elements
+                for _, child in ipairs(oldMenu:GetChildren()) do
+                    if child:IsA("TextLabel") then
+                        Tween(child, {TextTransparency = 1}, 0.2)
+                    elseif child:IsA("TextButton") then
+                        Tween(child, {BackgroundTransparency = 1, TextTransparency = 1}, 0.2)
+                    end
+                end
+                
+                -- Destroy after animation in background
+                task.spawn(function()
+                    task.wait(0.2)
+                    oldMenu:Destroy()
+                end)
+                
+                currentKeybindMenu = nil
+            end
+            
+            -- Get mouse position relative to ScreenGui
+            local mousePos = UserInputService:GetMouseLocation()
+            local guiInset = game:GetService("GuiService"):GetGuiInset()
+            local screenSize = ScreenGui.AbsoluteSize
+            
+            -- Adjust for GUI inset (top bar)
+            local adjustedMouseX = mousePos.X
+            local adjustedMouseY = mousePos.Y - guiInset.Y
+            
+            -- Calculate menu position at cursor
+            local menuWidth = 200
+            local menuHeight = 40 + (#options * 32)
+            
+            -- Position: cursor at top-left corner of menu
+            local posX = adjustedMouseX
+            local posY = adjustedMouseY
+            
+            -- Adjust position if menu would go off screen
+            if posX + menuWidth > screenSize.X then
+                posX = adjustedMouseX - menuWidth
+            end
+            
+            if posY + menuHeight > screenSize.Y then
+                posY = adjustedMouseY - menuHeight
+            end
+            
+            local menu = Instance.new("Frame")
+            menu.Size = UDim2.new(0, menuWidth, 0, menuHeight)
+            menu.Position = UDim2.new(0, posX, 0, posY)
+            menu.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
+            menu.BorderSizePixel = 0
+            menu.ZIndex = 200
+            menu.BackgroundTransparency = 1
+            menu.Parent = ScreenGui
+            
+            currentKeybindMenu = menu
+            
+            local menuCorner = Instance.new("UICorner")
+            menuCorner.CornerRadius = UDim.new(0, 8)
+            menuCorner.Parent = menu
+            
+            local menuStroke = Instance.new("UIStroke")
+            menuStroke.Color = Settings.MenuColor
+            menuStroke.Thickness = 2
+            menuStroke.Transparency = 1
+            menuStroke.Parent = menu
+            
+            -- Animate menu appearance
+            Tween(menu, {BackgroundTransparency = 0}, 0.2)
+            Tween(menuStroke, {Transparency = 0}, 0.2)
+            
+            local title = Instance.new("TextLabel")
+            title.Size = UDim2.new(1, -30, 0, 30)
+            title.Position = UDim2.new(0, 5, 0, 0)
+            title.BackgroundTransparency = 1
+            title.Text = "Hitbox Keybinds"
+            title.TextColor3 = Color3.fromRGB(255, 255, 255)
+            title.TextSize = 13
+            title.Font = Enum.Font.GothamBold
+            title.ZIndex = 201
+            title.TextTransparency = 1
+            title.Parent = menu
+            
+            Tween(title, {TextTransparency = 0}, 0.2)
+            
+            -- Close button (X)
+            local closeBtn = Instance.new("TextButton")
+            closeBtn.Size = UDim2.new(0, 25, 0, 25)
+            closeBtn.Position = UDim2.new(1, -28, 0, 2.5)
+            closeBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
+            closeBtn.Text = "×"
+            closeBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+            closeBtn.TextSize = 18
+            closeBtn.Font = Enum.Font.GothamBold
+            closeBtn.BorderSizePixel = 0
+            closeBtn.ZIndex = 202
+            closeBtn.BackgroundTransparency = 1
+            closeBtn.TextTransparency = 1
+            closeBtn.Parent = menu
+            
+            local closeBtnCorner = Instance.new("UICorner")
+            closeBtnCorner.CornerRadius = UDim.new(0, 4)
+            closeBtnCorner.Parent = closeBtn
+            
+            Tween(closeBtn, {BackgroundTransparency = 0, TextTransparency = 0}, 0.2)
+            
+            closeBtn.MouseEnter:Connect(function()
+                Tween(closeBtn, {BackgroundColor3 = Color3.fromRGB(200, 50, 50)}, 0.2)
+            end)
+            
+            closeBtn.MouseLeave:Connect(function()
+                Tween(closeBtn, {BackgroundColor3 = Color3.fromRGB(30, 30, 35)}, 0.2)
+            end)
+            
+            closeBtn.MouseButton1Click:Connect(function()
+                Tween(menu, {BackgroundTransparency = 1}, 0.2)
+                Tween(menuStroke, {Transparency = 1}, 0.2)
+                
+                -- Animate all child elements
+                for _, child in ipairs(menu:GetChildren()) do
+                    if child:IsA("TextLabel") then
+                        Tween(child, {TextTransparency = 1}, 0.2)
+                    elseif child:IsA("TextButton") then
+                        Tween(child, {BackgroundTransparency = 1, TextTransparency = 1}, 0.2)
+                    end
+                end
+                
+                task.wait(0.2)
+                menu:Destroy()
+                currentKeybindMenu = nil
+            end)
+            
+            -- Create bind button for each option
+            for i, option in ipairs(options) do
+                local optionBtn = Instance.new("TextButton")
+                optionBtn.Size = UDim2.new(1, -20, 0, 28)
+                optionBtn.Position = UDim2.new(0, 10, 0, 35 + (i-1) * 32)
+                optionBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
+                optionBtn.Text = option .. ": " .. (Settings.Keybinds[keybindName][option].Enabled and "[" .. (typeof(Settings.Keybinds[keybindName][option].Key) == "EnumItem" and Settings.Keybinds[keybindName][option].Key.Name or "NONE") .. "]" or "[NONE]")
+                optionBtn.TextColor3 = Color3.fromRGB(200, 200, 200)
+                optionBtn.TextSize = 11
+                optionBtn.Font = Enum.Font.Gotham
+                optionBtn.BorderSizePixel = 0
+                optionBtn.ZIndex = 201
+                optionBtn.BackgroundTransparency = 1
+                optionBtn.TextTransparency = 1
+                optionBtn.Parent = menu
+                
+                -- Animate with delay
+                task.spawn(function()
+                    task.wait(0.05 * i)
+                    Tween(optionBtn, {BackgroundTransparency = 0, TextTransparency = 0}, 0.2)
+                end)
+                
+                local optionCorner = Instance.new("UICorner")
+                optionCorner.CornerRadius = UDim.new(0, 4)
+                optionCorner.Parent = optionBtn
+                
+                local binding = false
+                optionBtn.MouseButton1Click:Connect(function()
+                    if binding then return end
+                    binding = true
+                    optionBtn.Text = option .. ": [Press key...]"
+                    optionBtn.BackgroundColor3 = Settings.MenuColor
+                    
+                    local connection
+                    connection = UserInputService.InputBegan:Connect(function(input, gameProcessed)
+                        if input.UserInputType == Enum.UserInputType.Keyboard then
+                            if input.KeyCode == Enum.KeyCode.Escape then
+                                Settings.Keybinds[keybindName][option].Enabled = false
+                                optionBtn.Text = option .. ": [NONE]"
+                            else
+                                Settings.Keybinds[keybindName][option].Enabled = true
+                                Settings.Keybinds[keybindName][option].Key = input.KeyCode
+                                optionBtn.Text = option .. ": [" .. input.KeyCode.Name .. "]"
+                            end
+                            optionBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
+                            binding = false
+                            connection:Disconnect()
+                        elseif input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.MouseButton2 then
+                            Settings.Keybinds[keybindName][option].Enabled = true
+                            Settings.Keybinds[keybindName][option].Key = input.UserInputType
+                            optionBtn.Text = option .. ": " .. (input.UserInputType == Enum.UserInputType.MouseButton1 and "[M1]" or "[M2]")
+                            optionBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
+                            binding = false
+                            connection:Disconnect()
+                        end
+                    end)
+                end)
+            end
+        end)
+    end
+    
     return frame
 end
 
-local function CreateToggleWithColor(parent, text, default, defaultColor, callback, colorCallback)
+local function CreateToggleWithColor(parent, text, default, defaultColor, callback, colorCallback, keybindName)
     local frame = Instance.new("Frame")
     frame.Size = UDim2.new(1, 0, 0, 30)
     frame.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
@@ -2823,6 +3992,252 @@ local function CreateToggleWithColor(parent, text, default, defaultColor, callba
         end
         callback(enabled)
     end)
+    
+    -- Right click - open keybind menu (only if keybindName provided)
+    if keybindName then
+        if not Settings.Keybinds[keybindName] then
+            Settings.Keybinds[keybindName] = {Key = Enum.KeyCode.E, Mode = "Toggle", Enabled = false}
+        end
+        
+        btn.MouseButton2Click:Connect(function()
+            -- Close existing menu if open (without waiting)
+            if currentKeybindMenu and currentKeybindMenu.Parent then
+                local oldMenu = currentKeybindMenu
+                Tween(oldMenu, {BackgroundTransparency = 1}, 0.2)
+                local menuStroke = oldMenu:FindFirstChildOfClass("UIStroke")
+                if menuStroke then
+                    Tween(menuStroke, {Transparency = 1}, 0.2)
+                end
+                
+                -- Animate all child elements
+                for _, child in ipairs(oldMenu:GetChildren()) do
+                    if child:IsA("TextLabel") then
+                        Tween(child, {TextTransparency = 1}, 0.2)
+                    elseif child:IsA("TextButton") then
+                        Tween(child, {BackgroundTransparency = 1, TextTransparency = 1}, 0.2)
+                    end
+                end
+                
+                -- Destroy after animation in background
+                task.spawn(function()
+                    task.wait(0.2)
+                    oldMenu:Destroy()
+                end)
+                
+                currentKeybindMenu = nil
+            end
+            
+            -- Get mouse position relative to ScreenGui
+            local mousePos = UserInputService:GetMouseLocation()
+            local guiInset = game:GetService("GuiService"):GetGuiInset()
+            local screenSize = ScreenGui.AbsoluteSize
+            
+            -- Adjust for GUI inset (top bar)
+            local adjustedMouseX = mousePos.X
+            local adjustedMouseY = mousePos.Y - guiInset.Y
+            
+            -- Calculate menu position at cursor (no offset)
+            local menuWidth = 200
+            local menuHeight = 165
+            
+            -- Position: cursor at top-left corner of menu
+            local posX = adjustedMouseX
+            local posY = adjustedMouseY
+            
+            -- Adjust position if menu would go off screen
+            if posX + menuWidth > screenSize.X then
+                posX = adjustedMouseX - menuWidth
+            end
+            
+            if posY + menuHeight > screenSize.Y then
+                posY = adjustedMouseY - menuHeight
+            end
+            
+            local menu = Instance.new("Frame")
+            menu.Size = UDim2.new(0, menuWidth, 0, menuHeight)
+            menu.Position = UDim2.new(0, posX, 0, posY)
+            menu.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
+            menu.BorderSizePixel = 0
+            menu.ZIndex = 200
+            menu.BackgroundTransparency = 1
+            menu.Parent = ScreenGui
+            
+            currentKeybindMenu = menu
+            
+            local menuCorner = Instance.new("UICorner")
+            menuCorner.CornerRadius = UDim.new(0, 8)
+            menuCorner.Parent = menu
+            
+            local menuStroke = Instance.new("UIStroke")
+            menuStroke.Color = Settings.MenuColor
+            menuStroke.Thickness = 2
+            menuStroke.Transparency = 1
+            menuStroke.Parent = menu
+            
+            -- Animate menu appearance
+            Tween(menu, {BackgroundTransparency = 0}, 0.2)
+            Tween(menuStroke, {Transparency = 0}, 0.2)
+            
+            local title = Instance.new("TextLabel")
+            title.Size = UDim2.new(1, -30, 0, 30)
+            title.Position = UDim2.new(0, 5, 0, 0)
+            title.BackgroundTransparency = 1
+            title.Text = "Keybind: " .. text
+            title.TextColor3 = Color3.fromRGB(255, 255, 255)
+            title.TextSize = 13
+            title.Font = Enum.Font.GothamBold
+            title.ZIndex = 201
+            title.TextTransparency = 1
+            title.Parent = menu
+            
+            Tween(title, {TextTransparency = 0}, 0.2)
+            
+            -- Close button (X)
+            local closeBtn = Instance.new("TextButton")
+            closeBtn.Size = UDim2.new(0, 25, 0, 25)
+            closeBtn.Position = UDim2.new(1, -28, 0, 2.5)
+            closeBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
+            closeBtn.Text = "×"
+            closeBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+            closeBtn.TextSize = 18
+            closeBtn.Font = Enum.Font.GothamBold
+            closeBtn.BorderSizePixel = 0
+            closeBtn.ZIndex = 202
+            closeBtn.BackgroundTransparency = 1
+            closeBtn.TextTransparency = 1
+            closeBtn.Parent = menu
+            
+            local closeBtnCorner = Instance.new("UICorner")
+            closeBtnCorner.CornerRadius = UDim.new(0, 4)
+            closeBtnCorner.Parent = closeBtn
+            
+            Tween(closeBtn, {BackgroundTransparency = 0, TextTransparency = 0}, 0.2)
+            
+            closeBtn.MouseEnter:Connect(function()
+                Tween(closeBtn, {BackgroundColor3 = Color3.fromRGB(200, 50, 50)}, 0.2)
+            end)
+            
+            closeBtn.MouseLeave:Connect(function()
+                Tween(closeBtn, {BackgroundColor3 = Color3.fromRGB(30, 30, 35)}, 0.2)
+            end)
+            
+            closeBtn.MouseButton1Click:Connect(function()
+                Tween(menu, {BackgroundTransparency = 1}, 0.2)
+                Tween(menuStroke, {Transparency = 1}, 0.2)
+                
+                -- Animate all child elements
+                for _, child in ipairs(menu:GetChildren()) do
+                    if child:IsA("TextLabel") then
+                        Tween(child, {TextTransparency = 1}, 0.2)
+                    elseif child:IsA("TextButton") then
+                        Tween(child, {BackgroundTransparency = 1, TextTransparency = 1}, 0.2)
+                    end
+                end
+                
+                task.wait(0.2)
+                menu:Destroy()
+                currentKeybindMenu = nil
+            end)
+            
+            local bindBtn = Instance.new("TextButton")
+            bindBtn.Size = UDim2.new(1, -20, 0, 30)
+            bindBtn.Position = UDim2.new(0, 10, 0, 40)
+            bindBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
+            bindBtn.Text = Settings.Keybinds[keybindName].Enabled and "[" .. (typeof(Settings.Keybinds[keybindName].Key) == "EnumItem" and Settings.Keybinds[keybindName].Key.Name or "NONE") .. "]" or "[NONE]"
+            bindBtn.TextColor3 = Color3.fromRGB(200, 200, 200)
+            bindBtn.TextSize = 12
+            bindBtn.Font = Enum.Font.Gotham
+            bindBtn.BorderSizePixel = 0
+            bindBtn.ZIndex = 201
+            bindBtn.BackgroundTransparency = 1
+            bindBtn.TextTransparency = 1
+            bindBtn.Parent = menu
+            
+            Tween(bindBtn, {BackgroundTransparency = 0, TextTransparency = 0}, 0.2)
+            
+            local bindCorner = Instance.new("UICorner")
+            bindCorner.CornerRadius = UDim.new(0, 4)
+            bindCorner.Parent = bindBtn
+            
+            local binding = false
+            bindBtn.MouseButton1Click:Connect(function()
+                if binding then return end
+                binding = true
+                bindBtn.Text = "[Press key...]"
+                bindBtn.BackgroundColor3 = Settings.MenuColor
+                
+                local connection
+                connection = UserInputService.InputBegan:Connect(function(input, gameProcessed)
+                    if input.UserInputType == Enum.UserInputType.Keyboard then
+                        if input.KeyCode == Enum.KeyCode.Escape then
+                            Settings.Keybinds[keybindName].Enabled = false
+                            bindBtn.Text = "[NONE]"
+                        else
+                            Settings.Keybinds[keybindName].Enabled = true
+                            Settings.Keybinds[keybindName].Key = input.KeyCode
+                            bindBtn.Text = "[" .. input.KeyCode.Name .. "]"
+                        end
+                        bindBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
+                        binding = false
+                        connection:Disconnect()
+                    elseif input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.MouseButton2 then
+                        Settings.Keybinds[keybindName].Enabled = true
+                        Settings.Keybinds[keybindName].Key = input.UserInputType
+                        bindBtn.Text = input.UserInputType == Enum.UserInputType.MouseButton1 and "[M1]" or "[M2]"
+                        bindBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
+                        binding = false
+                        connection:Disconnect()
+                    end
+                end)
+            end)
+            
+            local modes = {"Toggle", "Hold", "Always On"}
+            for i, mode in ipairs(modes) do
+                local modeBtn = Instance.new("TextButton")
+                modeBtn.Size = UDim2.new(1, -20, 0, 25)
+                modeBtn.Position = UDim2.new(0, 10, 0, 75 + (i-1) * 27)
+                modeBtn.BackgroundColor3 = Settings.Keybinds[keybindName].Mode == mode and Color3.fromRGB(40, 40, 45) or Color3.fromRGB(30, 30, 35)
+                modeBtn.Text = mode
+                modeBtn.TextColor3 = Settings.Keybinds[keybindName].Mode == mode and Settings.MenuColor or Color3.fromRGB(200, 200, 200)
+                modeBtn.TextSize = 11
+                modeBtn.Font = Enum.Font.Gotham
+                modeBtn.BorderSizePixel = 0
+                modeBtn.ZIndex = 201
+                modeBtn.BackgroundTransparency = 1
+                modeBtn.TextTransparency = 1
+                modeBtn.Parent = menu
+                
+                -- Animate with delay
+                task.spawn(function()
+                    task.wait(0.05 * i)
+                    Tween(modeBtn, {BackgroundTransparency = 0, TextTransparency = 0}, 0.2)
+                end)
+                
+                local modeBtnCorner = Instance.new("UICorner")
+                modeBtnCorner.CornerRadius = UDim.new(0, 3)
+                modeBtnCorner.Parent = modeBtn
+                
+                modeBtn.MouseButton1Click:Connect(function()
+                    Settings.Keybinds[keybindName].Mode = mode
+                    
+                    -- Update all mode buttons colors
+                    for _, child in ipairs(menu:GetChildren()) do
+                        if child:IsA("TextButton") and child ~= bindBtn and child ~= closeBtn then
+                            if child.Text == mode then
+                                Tween(child, {BackgroundColor3 = Color3.fromRGB(40, 40, 45)}, 0.2)
+                                child.TextColor3 = Settings.MenuColor
+                            else
+                                Tween(child, {BackgroundColor3 = Color3.fromRGB(30, 30, 35)}, 0.2)
+                                child.TextColor3 = Color3.fromRGB(200, 200, 200)
+                            end
+                        end
+                    end
+                    
+                    ShowNotification(text .. " mode: " .. mode, 1.5)
+                end)
+            end
+        end)
+    end
     
     -- Color picker popup
     local pickerOpen = false
@@ -3091,8 +4506,18 @@ local ConfigTab = CreateTab("Config")
 RecalculateTabPositions()
 
 -- Combat Tab (Aimbot functions)
-UIElements.Aimbot = CreateToggleWithKeybind(CombatTab.Content, "Aimbot", false, "Aimbot", function(enabled)
+UIElements.Aimbot = CreateToggle(CombatTab.Content, "Aimbot", false, function(enabled)
     Settings.Aimbot = enabled
+    
+    -- Mutual exclusion: disable AimLock when Aimbot is enabled
+    if enabled and Settings.AimLock then
+        Settings.AimLock = false
+        Settings.AimLockActive = false
+        if UIElements.AimLock then
+            UIElements.AimLock.SetValue(false)
+        end
+    end
+    
     -- Sync Active state based on keybind status and mode
     if enabled then
         if not Settings.Keybinds.Aimbot.Enabled then
@@ -3108,7 +4533,7 @@ UIElements.Aimbot = CreateToggleWithKeybind(CombatTab.Content, "Aimbot", false, 
     else
         Settings.AimbotActive = false
     end
-end)
+end, "Aimbot")
 
 UIElements.AimbotSmooth = CreateSlider(CombatTab.Content, "Smoothness", 1, 10, 1, function(value)
     Settings.AimbotSmooth = value
@@ -3116,11 +4541,36 @@ end)
 
 UIElements.AimLock = CreateToggle(CombatTab.Content, "AimLock", false, function(enabled)
     Settings.AimLock = enabled
-end)
+    
+    -- Mutual exclusion: disable Aimbot when AimLock is enabled
+    if enabled and Settings.Aimbot then
+        Settings.Aimbot = false
+        Settings.AimbotActive = false
+        if UIElements.Aimbot then
+            UIElements.Aimbot.SetValue(false)
+        end
+    end
+    
+    -- Sync Active state based on keybind status and mode
+    if enabled then
+        if not Settings.Keybinds.AimLock.Enabled then
+            -- No keybind: function works as simple on/off
+            Settings.AimLockActive = true
+        elseif Settings.Keybinds.AimLock.Mode == "Always On" then
+            Settings.AimLockActive = true
+        elseif Settings.Keybinds.AimLock.Mode == "Toggle" then
+            Settings.AimLockActive = true -- Default to active when enabled
+        else -- Hold mode
+            Settings.AimLockActive = false -- Wait for key press
+        end
+    else
+        Settings.AimLockActive = false
+    end
+end, "AimLock")
 
 CreateDropdown(CombatTab.Content, "Hitbox", {"Auto", "Head", "Torso"}, "Head", function(value)
     Settings.AimbotHitbox = value
-end)
+end, "Hitbox")
 
 UIElements.ShowFOV = CreateToggleWithColor(CombatTab.Content, "Show FOV", false, Color3.fromRGB(255, 255, 255), function(enabled)
     Settings.ShowFOV = enabled
@@ -3138,7 +4588,22 @@ end)
 
 UIElements.Prediction = CreateToggle(CombatTab.Content, "Prediction", false, function(enabled)
     Settings.Prediction = enabled
-end)
+    -- Sync Active state based on keybind status and mode
+    if enabled then
+        if not Settings.Keybinds.Prediction.Enabled then
+            -- No keybind: function works as simple on/off
+            Settings.PredictionActive = true
+        elseif Settings.Keybinds.Prediction.Mode == "Always On" then
+            Settings.PredictionActive = true
+        elseif Settings.Keybinds.Prediction.Mode == "Toggle" then
+            Settings.PredictionActive = true -- Default to active when enabled
+        else -- Hold mode
+            Settings.PredictionActive = false -- Wait for key press
+        end
+    else
+        Settings.PredictionActive = false
+    end
+end, "Prediction")
 
 UIElements.PredictionStrength = CreateSlider(CombatTab.Content, "Prediction Strength", 1, 20, 10, function(value)
     Settings.PredictionStrength = value
@@ -3146,14 +4611,29 @@ end)
 
 UIElements.NoRecoil = CreateToggle(CombatTab.Content, "No Recoil", false, function(enabled)
     Settings.NoRecoil = enabled
-end)
+    -- Sync Active state based on keybind status and mode
+    if enabled then
+        if not Settings.Keybinds.NoRecoil.Enabled then
+            -- No keybind: function works as simple on/off
+            Settings.NoRecoilActive = true
+        elseif Settings.Keybinds.NoRecoil.Mode == "Always On" then
+            Settings.NoRecoilActive = true
+        elseif Settings.Keybinds.NoRecoil.Mode == "Toggle" then
+            Settings.NoRecoilActive = true -- Default to active when enabled
+        else -- Hold mode
+            Settings.NoRecoilActive = false -- Wait for key press
+        end
+    else
+        Settings.NoRecoilActive = false
+    end
+end, "NoRecoil")
 
 UIElements.RecoilStrength = CreateSlider(CombatTab.Content, "Recoil Strength", 1, 100, 50, function(value)
     Settings.RecoilStrength = value
 end)
 
 -- Visuals Tab (ESP functions)
-UIElements.BoxESP = CreateToggleWithKeybind(VisualsTab.Content, "Box ESP", true, "ESP", function(enabled)
+UIElements.BoxESP = CreateToggle(VisualsTab.Content, "Box ESP", true, function(enabled)
     Settings.ESP = enabled
     -- Sync Active state based on keybind status and mode
     if enabled then
@@ -3170,11 +4650,11 @@ UIElements.BoxESP = CreateToggleWithKeybind(VisualsTab.Content, "Box ESP", true,
     else
         Settings.ESPActive = false
     end
-end)
+end, "ESP")
 
 UIElements.HealthBar = CreateToggle(VisualsTab.Content, "Health Bar", false, function(enabled)
     Settings.HealthBar = enabled
-end)
+end, "HealthBar")
 
 UIElements.Name = CreateToggleWithColor(VisualsTab.Content, "Name", false, Color3.fromRGB(255, 255, 255), function(enabled)
     Settings.Name = enabled
@@ -3190,7 +4670,7 @@ end)
 
 UIElements.TeamCheck = CreateToggle(VisualsTab.Content, "Team Check", false, function(enabled)
     Settings.TeamCheck = enabled
-end)
+end, "TeamCheck")
 
 UIElements.FilledBox = CreateToggle(VisualsTab.Content, "Filled Box", false, function(enabled)
     Settings.FilledBox = enabled
@@ -3199,11 +4679,11 @@ UIElements.FilledBox = CreateToggle(VisualsTab.Content, "Filled Box", false, fun
             box.Filled = enabled
         end
     end
-end)
+end, "FilledBox")
 
 UIElements.BoxCorner = CreateToggle(VisualsTab.Content, "Box Corner", false, function(enabled)
     Settings.BoxCorner = enabled
-end)
+end, "BoxCorner")
 
 UIElements.Skeleton = CreateToggleWithColor(VisualsTab.Content, "Skeleton", false, Color3.fromRGB(255, 255, 255), function(enabled)
     Settings.Skeleton = enabled
@@ -3221,20 +4701,20 @@ UIElements.Fullbright = CreateToggle(VisualsTab.Content, "Fullbright", false, fu
     lighting.Brightness = enabled and 2 or 1
     lighting.ClockTime = 14
     lighting.FogEnd = 100000
-end)
+end, "Fullbright")
 
 -- Local Tab (Local ESP functions)
 UIElements.LocalSkeleton = CreateToggleWithColor(LocalTab.Content, "Local Skeleton", false, Color3.fromRGB(0, 255, 0), function(enabled)
     Settings.LocalSkeleton = enabled
 end, function(color)
     Settings.LocalSkeletonColor = color
-end)
+end, "LocalSkeleton")
 
 UIElements.LocalHighlight = CreateToggleWithColor(LocalTab.Content, "Local Highlight", false, Color3.fromRGB(255, 255, 0), function(enabled)
     Settings.LocalHighlight = enabled
 end, function(color)
     Settings.LocalHighlightColor = color
-end)
+end, "LocalHighlight")
 
 -- Misc Tab
 -- Menu Color
@@ -3525,7 +5005,7 @@ menuBindButton.MouseButton1Click:Connect(function()
     end)
 end)
 
-UIElements.InfiniteJump = CreateToggleWithKeybind(MiscTab.Content, "Infinite Jump", false, "InfiniteJump", function(enabled)
+UIElements.InfiniteJump = CreateToggle(MiscTab.Content, "Infinite Jump", false, function(enabled)
     Settings.InfiniteJump = enabled
     -- Sync Active state based on keybind status and mode
     if enabled then
@@ -3542,11 +5022,11 @@ UIElements.InfiniteJump = CreateToggleWithKeybind(MiscTab.Content, "Infinite Jum
     else
         Settings.InfiniteJumpActive = false
     end
-end)
+end, "InfiniteJump")
 
 UIElements.DebugPanel = CreateToggle(MiscTab.Content, "Debug Panel", false, function(enabled)
     Settings.DebugPanel = enabled
-end)
+end, "DebugPanel")
 
 -- UI Tab
 -- Keylist Frame
@@ -3677,32 +5157,60 @@ local function UpdateKeylist()
     
     -- Check each keybind and build current state
     for name, bind in pairs(Settings.Keybinds) do
-        local isEnabled = Settings[name]
-        local isActive = false
-        
-        -- Check if the feature is actually active (not just enabled)
-        if name == "ESP" then
-            isActive = Settings.ESPActive
-        elseif name == "Aimbot" then
-            isActive = Settings.AimbotActive
-        elseif name == "InfiniteJump" then
-            isActive = Settings.InfiniteJumpActive
-        end
-        
-        -- Only show if: feature enabled, keybind enabled, AND currently active
-        if isEnabled and bind.Enabled and isActive then
-            local keyText = ""
-            if typeof(bind.Key) == "EnumItem" then
-                if bind.Key == Enum.UserInputType.MouseButton1 then
-                    keyText = "[M1]"
-                elseif bind.Key == Enum.UserInputType.MouseButton2 then
-                    keyText = "[M2]"
-                else
-                    keyText = "[" .. bind.Key.Name .. "]"
+        -- Skip Hitbox (it's a nested structure)
+        if name == "Hitbox" then
+            -- Show active hitbox binds
+            for hitboxName, hitboxBind in pairs(bind) do
+                if hitboxBind.Enabled and Settings.Aimbot then
+                    local keyText = ""
+                    if typeof(hitboxBind.Key) == "EnumItem" then
+                        if hitboxBind.Key == Enum.UserInputType.MouseButton1 then
+                            keyText = "[M1]"
+                        elseif hitboxBind.Key == Enum.UserInputType.MouseButton2 then
+                            keyText = "[M2]"
+                        else
+                            keyText = "[" .. hitboxBind.Key.Name .. "]"
+                        end
+                    end
+                    if keyText ~= "" then
+                        currentState["Hitbox: " .. hitboxName] = keyText
+                        activeCount = activeCount + 1
+                    end
                 end
             end
-            currentState[name] = keyText
-            activeCount = activeCount + 1
+        else
+            local isEnabled = Settings[name]
+            local isActive = false
+            
+            -- Check if the feature is actually active (not just enabled)
+            if name == "ESP" then
+                isActive = Settings.ESPActive
+            elseif name == "Aimbot" then
+                isActive = Settings.AimbotActive
+            elseif name == "InfiniteJump" then
+                isActive = Settings.InfiniteJumpActive
+            else
+                -- For other features, show if enabled and keybind is set
+                isActive = isEnabled
+            end
+            
+            -- Only show if: feature enabled, keybind enabled, AND currently active
+            if isEnabled and bind.Enabled and isActive then
+                local keyText = ""
+                if typeof(bind.Key) == "EnumItem" then
+                    if bind.Key == Enum.UserInputType.MouseButton1 then
+                        keyText = "[M1]"
+                    elseif bind.Key == Enum.UserInputType.MouseButton2 then
+                        keyText = "[M2]"
+                    else
+                        keyText = "[" .. bind.Key.Name .. "]"
+                    end
+                end
+                if keyText ~= "" then
+                    currentState[name] = keyText
+                    activeCount = activeCount + 1
+                end
+            end
         end
     end
     
@@ -3758,10 +5266,11 @@ local function UpdateKeylist()
             local isNewItem = newItems[name] == true
             
             local item = Instance.new("Frame")
-            item.Size = UDim2.new(1, 0, 0, 25)
+            item.Size = UDim2.new(1, 0, 0, isNewItem and 0 or 25)
             item.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
             item.BorderSizePixel = 0
-            item.BackgroundTransparency = isNewItem and 1 or 0
+            item.BackgroundTransparency = 0
+            item.ClipsDescendants = true
             item.Parent = KeylistContainer
             
             local itemCorner = Instance.new("UICorner")
@@ -3769,7 +5278,7 @@ local function UpdateKeylist()
             itemCorner.Parent = item
             
             local itemLabel = Instance.new("TextLabel")
-            itemLabel.Size = UDim2.new(1, -10, 1, 0)
+            itemLabel.Size = UDim2.new(1, -10, 0, 25)
             itemLabel.Position = UDim2.new(0, 5, 0, 0)
             itemLabel.BackgroundTransparency = 1
             itemLabel.Text = name
@@ -3780,25 +5289,36 @@ local function UpdateKeylist()
             itemLabel.TextTransparency = isNewItem and 1 or 0
             itemLabel.Parent = item
             
+            -- Background for key text
+            local keyBg = Instance.new("Frame")
+            keyBg.Size = UDim2.new(0, isNewItem and 0 or 60, 0, 18)
+            keyBg.Position = UDim2.new(1, -65, 0.5, -9)
+            keyBg.AnchorPoint = Vector2.new(0, 0.5)
+            keyBg.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
+            keyBg.BorderSizePixel = 0
+            keyBg.Parent = item
+            
+            local keyBgCorner = Instance.new("UICorner")
+            keyBgCorner.CornerRadius = UDim.new(0, 4)
+            keyBgCorner.Parent = keyBg
+            
             local keyLabel = Instance.new("TextLabel")
-            keyLabel.Size = UDim2.new(0, 60, 1, 0)
-            keyLabel.Position = UDim2.new(1, -65, 0, 0)
+            keyLabel.Size = UDim2.new(1, 0, 1, 0)
             keyLabel.BackgroundTransparency = 1
             keyLabel.Text = keyText
             keyLabel.TextColor3 = Settings.MenuColor
             keyLabel.TextSize = 11
             keyLabel.Font = Enum.Font.GothamBold
-            keyLabel.TextXAlignment = Enum.TextXAlignment.Right
+            keyLabel.TextXAlignment = Enum.TextXAlignment.Center
             keyLabel.TextTransparency = isNewItem and 1 or 0
-            keyLabel.Parent = item
+            keyLabel.Parent = keyBg
             
-            -- Animate appearance only for new items
+            -- Animate appearance only for new items (without delay)
             if isNewItem then
-                task.spawn(function()
-                    Tween(item, {BackgroundTransparency = 0}, 0.2)
-                    Tween(itemLabel, {TextTransparency = 0}, 0.2)
-                    Tween(keyLabel, {TextTransparency = 0}, 0.2)
-                end)
+                Tween(item, {Size = UDim2.new(1, 0, 0, 25)}, 0.2)
+                Tween(itemLabel, {TextTransparency = 0}, 0.2)
+                Tween(keyBg, {Size = UDim2.new(0, 60, 0, 18)}, 0.2)
+                Tween(keyLabel, {TextTransparency = 0}, 0.2)
             end
             
             table.insert(KeylistItems, item)
@@ -3807,8 +5327,9 @@ local function UpdateKeylist()
         lastKeylistState = currentState
     end
     
-    -- Update frame size and visibility
-    KeylistFrame.Size = UDim2.new(0, 200, 0, 35 + (activeCount * 30))
+    -- Update frame size with animation and visibility
+    local targetHeight = 35 + (activeCount * 30)
+    Tween(KeylistFrame, {Size = UDim2.new(0, 200, 0, targetHeight)}, 0.2)
     KeylistFrame.Visible = activeCount > 0 and Settings.ShowKeylist or false
 end
 
@@ -3817,7 +5338,7 @@ Settings.ShowKeylist = false
 UIElements.ShowKeylist = CreateToggle(UITab.Content, "Show Keylist", false, function(enabled)
     Settings.ShowKeylist = enabled
     UpdateKeylist()
-end)
+end, "ShowKeylist")
 
 -- Update keylist periodically (not every frame)
 task.spawn(function()
@@ -3890,33 +5411,46 @@ local function SaveConfig(configName)
         MenuColor = {Settings.MenuColor.R, Settings.MenuColor.G, Settings.MenuColor.B},
         
         -- Keybinds
-        Keybinds = {
-            ESP = {
-                Key = typeof(Settings.Keybinds.ESP.Key) == "EnumItem" and Settings.Keybinds.ESP.Key.Name or "E",
-                KeyType = typeof(Settings.Keybinds.ESP.Key) == "EnumItem" and (Settings.Keybinds.ESP.Key == Enum.UserInputType.MouseButton1 and "Mouse" or Settings.Keybinds.ESP.Key == Enum.UserInputType.MouseButton2 and "Mouse" or "Keyboard") or "Keyboard",
-                Mode = Settings.Keybinds.ESP.Mode,
-                Enabled = Settings.Keybinds.ESP.Enabled
-            },
-            Aimbot = {
-                Key = typeof(Settings.Keybinds.Aimbot.Key) == "EnumItem" and Settings.Keybinds.Aimbot.Key.Name or "Q",
-                KeyType = typeof(Settings.Keybinds.Aimbot.Key) == "EnumItem" and (Settings.Keybinds.Aimbot.Key == Enum.UserInputType.MouseButton1 and "Mouse" or Settings.Keybinds.Aimbot.Key == Enum.UserInputType.MouseButton2 and "Mouse" or "Keyboard") or "Keyboard",
-                Mode = Settings.Keybinds.Aimbot.Mode,
-                Enabled = Settings.Keybinds.Aimbot.Enabled
-            },
-            InfiniteJump = {
-                Key = typeof(Settings.Keybinds.InfiniteJump.Key) == "EnumItem" and Settings.Keybinds.InfiniteJump.Key.Name or "J",
-                KeyType = typeof(Settings.Keybinds.InfiniteJump.Key) == "EnumItem" and (Settings.Keybinds.InfiniteJump.Key == Enum.UserInputType.MouseButton1 and "Mouse" or Settings.Keybinds.InfiniteJump.Key == Enum.UserInputType.MouseButton2 and "Mouse" or "Keyboard") or "Keyboard",
-                Mode = Settings.Keybinds.InfiniteJump.Mode,
-                Enabled = Settings.Keybinds.InfiniteJump.Enabled
-            }
-        },
-        
-        -- UI Settings
-        MenuSize = {
-            Width = savedMenuSize.X.Offset,
-            Height = savedMenuSize.Y.Offset
-        }
+        Keybinds = {}
     }
+    
+    -- Serialize all keybinds
+    for keybindName, keybindData in pairs(Settings.Keybinds) do
+        if keybindName == "Hitbox" then
+            -- Special handling for Hitbox (nested structure)
+            configData.Keybinds[keybindName] = {}
+            for hitboxOption, hitboxBind in pairs(keybindData) do
+                configData.Keybinds[keybindName][hitboxOption] = {
+                    Key = typeof(hitboxBind.Key) == "EnumItem" and hitboxBind.Key.Name or tostring(hitboxBind.Key),
+                    KeyType = typeof(hitboxBind.Key) == "EnumItem" and (hitboxBind.Key == Enum.UserInputType.MouseButton1 and "Mouse" or hitboxBind.Key == Enum.UserInputType.MouseButton2 and "Mouse" or "Keyboard") or "Keyboard",
+                    Enabled = hitboxBind.Enabled
+                }
+            end
+        else
+            -- Regular keybind
+            configData.Keybinds[keybindName] = {
+                Key = typeof(keybindData.Key) == "EnumItem" and keybindData.Key.Name or tostring(keybindData.Key),
+                KeyType = typeof(keybindData.Key) == "EnumItem" and (keybindData.Key == Enum.UserInputType.MouseButton1 and "Mouse" or keybindData.Key == Enum.UserInputType.MouseButton2 and "Mouse" or "Keyboard") or "Keyboard",
+                Mode = keybindData.Mode,
+                Enabled = keybindData.Enabled
+            }
+        end
+    end
+    
+    configData.MenuSize = {
+        Width = savedMenuSize.X.Offset,
+        Height = savedMenuSize.Y.Offset
+    }
+    
+    -- Save Keybind Manager Position
+    if _G.KeybindManagerPosition then
+        configData.KeybindManagerPosition = {
+            XScale = _G.KeybindManagerPosition.X.Scale,
+            XOffset = _G.KeybindManagerPosition.X.Offset,
+            YScale = _G.KeybindManagerPosition.Y.Scale,
+            YOffset = _G.KeybindManagerPosition.Y.Offset
+        }
+    end
     
     local success, err = pcall(function()
         local jsonData = HttpService:JSONEncode(configData)
@@ -4083,6 +5617,16 @@ local function LoadConfig(configName)
             end
         end
         
+        -- Load Keybind Manager Position
+        if result.KeybindManagerPosition then
+            _G.KeybindManagerPosition = UDim2.new(
+                result.KeybindManagerPosition.XScale,
+                result.KeybindManagerPosition.XOffset,
+                result.KeybindManagerPosition.YScale,
+                result.KeybindManagerPosition.YOffset
+            )
+        end
+        
         -- Keybinds
         if result.Keybinds then
             for name, bind in pairs(result.Keybinds) do
@@ -4196,6 +5740,48 @@ local function LoadConfig(configName)
             end
         else
             Settings.InfiniteJumpActive = false
+        end
+        
+        if Settings.AimLock then
+            if not Settings.Keybinds.AimLock.Enabled then
+                Settings.AimLockActive = true
+            elseif Settings.Keybinds.AimLock.Mode == "Always On" then
+                Settings.AimLockActive = true
+            elseif Settings.Keybinds.AimLock.Mode == "Toggle" then
+                Settings.AimLockActive = true
+            else
+                Settings.AimLockActive = false
+            end
+        else
+            Settings.AimLockActive = false
+        end
+        
+        if Settings.NoRecoil then
+            if not Settings.Keybinds.NoRecoil.Enabled then
+                Settings.NoRecoilActive = true
+            elseif Settings.Keybinds.NoRecoil.Mode == "Always On" then
+                Settings.NoRecoilActive = true
+            elseif Settings.Keybinds.NoRecoil.Mode == "Toggle" then
+                Settings.NoRecoilActive = true
+            else
+                Settings.NoRecoilActive = false
+            end
+        else
+            Settings.NoRecoilActive = false
+        end
+        
+        if Settings.Prediction then
+            if not Settings.Keybinds.Prediction.Enabled then
+                Settings.PredictionActive = true
+            elseif Settings.Keybinds.Prediction.Mode == "Always On" then
+                Settings.PredictionActive = true
+            elseif Settings.Keybinds.Prediction.Mode == "Toggle" then
+                Settings.PredictionActive = true
+            else
+                Settings.PredictionActive = false
+            end
+        else
+            Settings.PredictionActive = false
         end
         
         game:GetService("StarterGui"):SetCore("SendNotification", {
@@ -4490,8 +6076,34 @@ local function ImportConfigFromClipboard()
         -- Keybinds
         if configData.Keybinds then
             for name, bind in pairs(configData.Keybinds) do
-                if Settings.Keybinds[name] then
-                    -- Check if it's a mouse button or keyboard key
+                if name == "Hitbox" then
+                    -- Special handling for Hitbox (nested structure)
+                    if not Settings.Keybinds[name] then
+                        Settings.Keybinds[name] = {}
+                    end
+                    for hitboxOption, hitboxBind in pairs(bind) do
+                        if not Settings.Keybinds[name][hitboxOption] then
+                            Settings.Keybinds[name][hitboxOption] = {}
+                        end
+                        
+                        if hitboxBind.KeyType == "Mouse" then
+                            if hitboxBind.Key == "MouseButton1" then
+                                Settings.Keybinds[name][hitboxOption].Key = Enum.UserInputType.MouseButton1
+                            elseif hitboxBind.Key == "MouseButton2" then
+                                Settings.Keybinds[name][hitboxOption].Key = Enum.UserInputType.MouseButton2
+                            end
+                        else
+                            for _, keyCode in pairs(Enum.KeyCode:GetEnumItems()) do
+                                if keyCode.Name == hitboxBind.Key then
+                                    Settings.Keybinds[name][hitboxOption].Key = keyCode
+                                    break
+                                end
+                            end
+                        end
+                        Settings.Keybinds[name][hitboxOption].Enabled = hitboxBind.Enabled ~= nil and hitboxBind.Enabled or false
+                    end
+                elseif Settings.Keybinds[name] then
+                    -- Regular keybind
                     if bind.KeyType == "Mouse" then
                         if bind.Key == "MouseButton1" then
                             Settings.Keybinds[name].Key = Enum.UserInputType.MouseButton1
@@ -4951,7 +6563,7 @@ local resizeDirection = nil
 local resizeStart = nil
 local startSize = nil
 local startPosition = nil
-local minSize = Vector2.new(940, 350)
+local minSize = Vector2.new(680, 350)
 local maxSize = Vector2.new(99999, 99999) -- Unlimited size (full screen)
 
 -- Resizing indicators (visual edges)
@@ -5169,8 +6781,27 @@ UserInputService.InputBegan:Connect(function(input, gameProcessed)
             -- Закрываем меню
             savedMenuSize = Main.Size
             Tween(Main, {Size = UDim2.new(0, 0, 0, 0)}, 0.15)
+            Tween(TopPanel, {BackgroundTransparency = 1}, 0.15)
+            Tween(TopPanelStroke, {Transparency = 1}, 0.15)
+            -- Animate buttons
+            for _, child in ipairs(TopPanel:GetChildren()) do
+                if child:IsA("TextButton") then
+                    Tween(child, {BackgroundTransparency = 1}, 0.15)
+                    local stroke = child:FindFirstChildOfClass("UIStroke")
+                    if stroke then
+                        Tween(stroke, {Transparency = 1}, 0.15)
+                    end
+                end
+            end
             task.wait(0.15)
             Main.Visible = false
+            TopPanel.Visible = false
+            
+            -- Hide keybind manager if open (but keep state)
+            if _G.KeybindManagerOpen and _G.KeybindManagerWindow then
+                _G.KeybindManagerPosition = _G.KeybindManagerWindow.Position
+                _G.KeybindManagerWindow.Visible = false
+            end
             -- Don't show hint again
         else
             -- Reset scroll position for all tabs
@@ -5182,9 +6813,30 @@ UserInputService.InputBegan:Connect(function(input, gameProcessed)
             
             -- Открываем меню
             HintFrame.Visible = false -- Hide hint when opening menu
+            TopPanel.Visible = true
             Main.Visible = true
             Main.Size = UDim2.new(0, 0, 0, 0)
             Tween(Main, {Size = savedMenuSize}, 0.2)
+            Tween(TopPanel, {BackgroundTransparency = 0}, 0.15)
+            Tween(TopPanelStroke, {Transparency = 0.7}, 0.15)
+            -- Animate buttons with delay
+            for i, child in ipairs(TopPanel:GetChildren()) do
+                if child:IsA("TextButton") then
+                    task.spawn(function()
+                        task.wait(0.03 * i)
+                        Tween(child, {BackgroundTransparency = 0}, 0.15)
+                        local stroke = child:FindFirstChildOfClass("UIStroke")
+                        if stroke then
+                            Tween(stroke, {Transparency = 0.5}, 0.15)
+                        end
+                    end)
+                end
+            end
+            
+            -- Show keybind manager if it was open
+            if _G.KeybindManagerOpen and _G.KeybindManagerWindow then
+                _G.KeybindManagerWindow.Visible = true
+            end
         end
     end
 end)
@@ -5199,6 +6851,19 @@ if Settings.Aimbot and Settings.Keybinds.Aimbot.Mode == "Always On" then
 end
 if Settings.InfiniteJump and Settings.Keybinds.InfiniteJump.Mode == "Always On" then
     Settings.InfiniteJumpActive = true
+end
+
+-- Initialize Active states for all other functions
+local keybindFunctions = {
+    "AimLock", "Prediction", "NoRecoil", "HealthBar", "TeamCheck", 
+    "FilledBox", "BoxCorner", "Fullbright", "DebugPanel", "ShowKeylist",
+    "LocalSkeleton", "LocalHighlight"
+}
+for _, funcName in ipairs(keybindFunctions) do
+    local activeName = funcName .. "Active"
+    if Settings[funcName] and Settings.Keybinds[funcName] and Settings.Keybinds[funcName].Mode == "Always On" then
+        Settings[activeName] = true
+    end
 end
 
 RunService.Heartbeat:Connect(UpdateESP)
@@ -5269,6 +6934,54 @@ UserInputService.InputBegan:Connect(function(input, gameProcessed)
             end
         end
     end
+    
+    -- Hitbox Keybinds
+    if Settings.Keybinds.Hitbox then
+        for hitboxName, hitboxBind in pairs(Settings.Keybinds.Hitbox) do
+            if hitboxBind.Enabled then
+                local keyMatch = false
+                if input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == hitboxBind.Key then
+                    keyMatch = true
+                elseif (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.MouseButton2) and input.UserInputType == hitboxBind.Key then
+                    keyMatch = true
+                end
+                
+                if keyMatch then
+                    Settings.AimbotHitbox = hitboxName
+                    ShowNotification("Hitbox: " .. hitboxName, 1.5)
+                    break
+                end
+            end
+        end
+    end
+    
+    -- Generic keybind handler for all other functions
+    local keybindFunctions = {
+        "AimLock", "Prediction", "NoRecoil", "HealthBar", "TeamCheck", 
+        "FilledBox", "BoxCorner", "Fullbright", "DebugPanel", "ShowKeylist",
+        "LocalSkeleton", "LocalHighlight"
+    }
+    
+    for _, funcName in ipairs(keybindFunctions) do
+        local bind = Settings.Keybinds[funcName]
+        if bind and bind.Enabled and Settings[funcName] then
+            local keyMatch = false
+            if input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == bind.Key then
+                keyMatch = true
+            elseif (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.MouseButton2) and input.UserInputType == bind.Key then
+                keyMatch = true
+            end
+            
+            if keyMatch then
+                local activeName = funcName .. "Active"
+                if bind.Mode == "Toggle" then
+                    Settings[activeName] = not Settings[activeName]
+                elseif bind.Mode == "Hold" then
+                    Settings[activeName] = true
+                end
+            end
+        end
+    end
 end)
 
 UserInputService.InputEnded:Connect(function(input, gameProcessed)
@@ -5313,9 +7026,33 @@ UserInputService.InputEnded:Connect(function(input, gameProcessed)
             Settings.InfiniteJumpActive = false
         end
     end
+    
+    -- Generic Hold mode release for all other functions
+    local keybindFunctions = {
+        "AimLock", "Prediction", "NoRecoil", "HealthBar", "TeamCheck", 
+        "FilledBox", "BoxCorner", "Fullbright", "DebugPanel", "ShowKeylist",
+        "LocalSkeleton", "LocalHighlight"
+    }
+    
+    for _, funcName in ipairs(keybindFunctions) do
+        local bind = Settings.Keybinds[funcName]
+        if bind and bind.Enabled and bind.Mode == "Hold" and Settings[funcName] then
+            local keyMatch = false
+            if input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == bind.Key then
+                keyMatch = true
+            elseif (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.MouseButton2) and input.UserInputType == bind.Key then
+                keyMatch = true
+            end
+            
+            if keyMatch then
+                local activeName = funcName .. "Active"
+                Settings[activeName] = false
+            end
+        end
+    end
 end)
 
-print("Sentinel loaded!")
+print("Sentinel v2.0 (Build 22.02.26) loaded!")
 
 -- Auto-load config after everything is initialized
 task.spawn(function()
