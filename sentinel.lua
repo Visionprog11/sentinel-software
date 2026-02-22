@@ -854,10 +854,24 @@ local function UpdateAimbot()
                     local deltaX = targetPos.X - mousePos.X
                     local deltaY = targetPos.Y - mousePos.Y
                     
-                    -- Apply smoothing
-                    local smoothFactor = 1 / Settings.AimbotSmooth
-                    deltaX = deltaX * smoothFactor
-                    deltaY = deltaY * smoothFactor
+                    -- Smoothness 1 = AimLock behavior
+                    if Settings.AimbotSmooth == 1 then
+                        local distanceToTarget = math.sqrt(deltaX * deltaX + deltaY * deltaY)
+                        
+                        -- AimLock mode: smooth approach, then instant lock
+                        if distanceToTarget > 15 then
+                            -- Far - smooth movement
+                            local smoothness = 2
+                            deltaX = deltaX / smoothness
+                            deltaY = deltaY / smoothness
+                        end
+                        -- Close (<=15px) - instant lock
+                    else
+                        -- Normal smooth aimbot
+                        local smoothFactor = 1 / Settings.AimbotSmooth
+                        deltaX = deltaX * smoothFactor
+                        deltaY = deltaY * smoothFactor
+                    end
                     
                     if mousemoverel then
                         mousemoverel(deltaX, deltaY)
@@ -6796,6 +6810,28 @@ UserInputService.InputBegan:Connect(function(input, gameProcessed)
             task.wait(0.15)
             Main.Visible = false
             TopPanel.Visible = false
+            
+            -- Close right-click menu if open
+            if currentKeybindMenu then
+                Tween(currentKeybindMenu, {BackgroundTransparency = 1}, 0.2)
+                local menuStroke = currentKeybindMenu:FindFirstChildOfClass("UIStroke")
+                if menuStroke then
+                    Tween(menuStroke, {Transparency = 1}, 0.2)
+                end
+                
+                -- Animate all child elements
+                for _, child in ipairs(currentKeybindMenu:GetChildren()) do
+                    if child:IsA("TextLabel") then
+                        Tween(child, {TextTransparency = 1}, 0.2)
+                    elseif child:IsA("TextButton") then
+                        Tween(child, {BackgroundTransparency = 1, TextTransparency = 1}, 0.2)
+                    end
+                end
+                
+                task.wait(0.2)
+                currentKeybindMenu:Destroy()
+                currentKeybindMenu = nil
+            end
             
             -- Hide keybind manager if open (but keep state)
             if _G.KeybindManagerOpen and _G.KeybindManagerWindow then
