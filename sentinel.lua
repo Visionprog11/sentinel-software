@@ -2508,7 +2508,7 @@ toggle(groupMisc, "High Jump", CONFIG.HighJumpEnabled, function(v)
     CONFIG.HighJumpEnabled = v 
 end, {ConfigKey = "HighJumpEnabled"})
 
-slider(groupMisc, "Jump Height", 50, 500, CONFIG.HighJumpValue, 0, function(v) 
+slider(groupMisc, "Jump Height", 0, 200, CONFIG.HighJumpValue, 0, function(v) 
     CONFIG.HighJumpValue = v 
 end, {ConfigKey = "HighJumpValue"})
 
