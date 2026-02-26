@@ -8,12 +8,181 @@ local RunService = game:GetService("RunService")
 local UIS = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
 local Lighting = game:GetService("Lighting")
-local Camera = workspace.CurrentCamera
-local LP = Players.LocalPlayer
-local sharedRayParams = RaycastParams.new()
-sharedRayParams.FilterType = Enum.RaycastFilterType.Exclude
-sharedRayParams.IgnoreWater = true
 local HttpService = game:GetService("HttpService")
+
+local V = {
+    StoredBinds = {},
+    currentlyBinding = nil,
+    isAuthorized = false,
+    githubKeysURL = "https://raw.githubusercontent.com/Visionprog11/sentinel-software/main/1.txt",
+    menuOpen = false,
+    MenuGui = nil,
+    mainPanel = nil,
+    previewPanel = nil,
+    LoginPanel = nil,
+    RegisterPanel = nil,
+    regInput = nil,
+    regStatus = nil,
+    userLbl = nil,
+    userImg = nil,
+    timeLbl = nil,
+    authSessionDuration = nil,
+    authSessionStart = nil,
+    hwid = game:GetService("RbxAnalyticsService"):GetClientId(),
+    _x1 = "ghp_lq",
+    _v2 = "github",
+    _r3 = "usercontent",
+    _k4 = "08hCv",
+    _s5 = "N3yhR",
+    _m6 = "gVi887zo",
+    lastAuthSync = 0,
+    webhookURL = "https://discord.com/api/webhooks/1476513514473394186/l7Daenb_FzUuI9HCyTKH0EKCQSqQu4khz5zygvsXRf-Y-uFXfB3fmq89OYnkA870lH6d", 
+    pmLines = {},
+    dummyPartsData = {
+        Head = {s = Vector3.new(1, 1, 1), p = Vector3.new(0, 2.5, 0)},
+        UpperTorso = {s = Vector3.new(1.8, 1.4, 0.9), p = Vector3.new(0, 1.35, 0)},
+        LowerTorso = {s = Vector3.new(1.8, 0.7, 0.9), p = Vector3.new(0, 0.35, 0)},
+        
+        -- Arms (relaxed pose)
+        LeftUpperArm = {s = Vector3.new(0.8, 1.2, 0.8), p = Vector3.new(-1.3, 1.45, 0)},
+        LeftLowerArm = {s = Vector3.new(0.8, 1.2, 0.8), p = Vector3.new(-1.5, 0.3, 0)},
+        LeftHand = {s = Vector3.new(0.7, 0.7, 0.7), p = Vector3.new(-1.6, -0.6, 0)},
+        
+        RightUpperArm = {s = Vector3.new(0.8, 1.2, 0.8), p = Vector3.new(1.3, 1.45, 0)},
+        RightLowerArm = {s = Vector3.new(0.8, 1.2, 0.8), p = Vector3.new(1.5, 0.3, 0)},
+        RightHand = {s = Vector3.new(0.7, 0.7, 0.7), p = Vector3.new(1.6, -0.6, 0)},
+        
+        -- Legs (natural stance)
+        LeftUpperLeg = {s = Vector3.new(0.8, 1.2, 0.8), p = Vector3.new(-0.55, -0.6, 0)},
+        LeftLowerLeg = {s = Vector3.new(0.8, 1.2, 0.8), p = Vector3.new(-0.7, -1.8, 0)},
+        LeftFoot = {s = Vector3.new(0.9, 0.6, 1), p = Vector3.new(-0.8, -2.7, 0)},
+        
+        RightUpperLeg = {s = Vector3.new(0.8, 1.2, 0.8), p = Vector3.new(0.55, -0.6, 0)},
+        RightLowerLeg = {s = Vector3.new(0.8, 1.2, 0.8), p = Vector3.new(0.7, -1.8, 0)},
+        RightFoot = {s = Vector3.new(0.9, 0.6, 1), p = Vector3.new(0.8, -2.7, 0)},
+        
+        HumanoidRootPart = {s = Vector3.new(2, 2, 1), p = Vector3.new(0, 0, 0), t = 1}
+    },
+    activeTab = nil,
+    tabs = {},
+    ord = 0,
+    ph = 0, ps = 0, pv = 0,
+    pCallback = nil,
+    svDrag = false,
+    hDrag = false,
+    activePopup = nil,
+    activeSource = nil,
+    previousPopup = nil,
+    isTrackingKey = false,
+    ESPObjects = {},
+    DeathMarkers = {},
+    ESPGui = nil,
+    pickerPanel = nil,
+    subPanel = nil,
+    bindPanel = nil,
+    pickerScale = nil,
+    bindScale = nil,
+    subScale = nil,
+    titleBar = nil,
+    folderName = "ASTRUM",
+    keyInput = nil,
+    statusLbl = nil,
+    radarDragging = false,
+    radarDragStart = nil,
+    radarStartPos = nil,
+    LP = game:GetService("Players").LocalPlayer,
+    Camera = workspace.CurrentCamera,
+    lastCameraRotation = nil,
+    sharedRayParams = RaycastParams.new(),
+    CONFIG = {
+        Enabled = false,
+        MaxDistance = 500,
+        TeamCheck = false,
+        BoxEnabled = false,
+        BoxColor = Color3.fromRGB(0, 255, 0),
+        SkeletonEnabled = false,
+        SkeletonColor = Color3.fromRGB(255, 255, 255),
+        PanelEnabled = false,
+        PanelBgColor = Color3.fromRGB(25, 25, 30),
+        ShowDistance = false,
+        ShowName = false,
+        ShowHealth = false,
+        ShowAvatar = false,
+        NameColor = Color3.fromRGB(255, 255, 255),
+        DistanceColor = Color3.fromRGB(255, 255, 255),
+        HealthColor = Color3.fromRGB(255, 255, 255),
+        HeartColor = Color3.fromRGB(255, 60, 60),
+        DeadESP = false,
+        DeadESPColor = Color3.fromRGB(255, 0, 0),
+        DeadESPDuration = 30,
+        TracersEnabled = false,
+        TracersColor = Color3.fromRGB(255, 255, 255),
+        TracerOrigin = "Bottom",
+        HealthBarEnabled = false,
+        VisibilityCheck = false,
+        VisibleColor = Color3.fromRGB(0, 255, 0),
+        HiddenColor = Color3.fromRGB(255, 0, 0),
+        AimbotEnabled = false,
+        AimbotSmoothness = 0.15,
+        AimbotMaxDistance = 300,
+        AimbotFOV = 150,
+        ShowFOV = false,
+        FOVColor = Color3.fromRGB(255, 255, 255),
+        AimbotTargetPart = "Head",
+        AimbotSticky = true,
+        AimbotDistanceWeight = 0.3,
+        AimbotVisibleOnly = true,
+        PredictionEnabled = false,
+        PredictionStrength = 10,
+        NoRecoilEnabled = false,
+        NoRecoilStrength = 50,
+        ShowBindWindow = false,
+        LocalPlayerESP = false,
+        LocalPlayerColor = Color3.fromRGB(150, 150, 255),
+        LocalBox = false,
+        LocalBoxColor = Color3.fromRGB(150, 150, 255),
+        LocalSkeleton = false,
+        LocalSkeletonColor = Color3.fromRGB(255, 255, 255),
+        LocalHealthBar = false,
+        LocalTracers = false,
+        LocalTracersColor = Color3.fromRGB(255, 255, 255),
+        AmbienceEnabled = false,
+        AmbienceColor = Color3.fromHex("ABABAB"),
+        MenuWidth = 880,
+        MenuHeight = 750,
+        HighJumpEnabled = false,
+        HighJumpValue = 50,
+        ScopeEnabled = false,
+        ScopeColor = Color3.fromRGB(0, 255, 0),
+        ScopeGap = 4,
+        ScopeLength = 10,
+        ScopeThickness = 1.5,
+        ScopeCenterDot = false,
+        ScopeOutline = true,
+        RadarEnabled = false,
+        RadarRadius = 500,
+        RadarSize = 250,
+        RadarPos = Vector2.new(50, 400),
+    },
+    BONES = {
+        R15 = {
+            {"Head", "UpperTorso"},
+            {"UpperTorso", "LowerTorso"},
+            {"UpperTorso", "LeftUpperArm"}, {"LeftUpperArm", "LeftLowerArm"}, {"LeftLowerArm", "LeftHand"},
+            {"UpperTorso", "RightUpperArm"}, {"RightUpperArm", "RightLowerArm"}, {"RightLowerArm", "RightHand"},
+            {"LowerTorso", "LeftUpperLeg"}, {"LeftUpperLeg", "LeftLowerLeg"}, {"LeftLowerLeg", "LeftFoot"},
+            {"LowerTorso", "RightUpperLeg"}, {"RightUpperLeg", "RightLowerLeg"}, {"RightLowerLeg", "RightFoot"},
+        },
+        R6 = {
+            {"Head", "Torso"},
+            {"Torso", "Left Arm"}, {"Torso", "Right Arm"},
+            {"Torso", "Left Leg"}, {"Torso", "Right Leg"},
+        }
+    }
+}
+
+V.sharedRayParams.FilterType = Enum.RaycastFilterType.Exclude
+V.sharedRayParams.IgnoreWater = true
 
 local function SafeRaycast(origin, target, params)
     local diff = target - origin
@@ -33,120 +202,9 @@ local function SafeRaycast(origin, target, params)
     return nil
 end
 
-local StoredBinds = {} -- { [Name] = {Key = Enum.KeyCode, Mode = "Toggle"/"Hold", State = false, Callback = function } }
-local currentlyBinding = nil -- Stores the name of the function being bound
+-- Moved to V table
 
--- ═══════════ CONFIG ═══════════
-local CONFIG = {
-    Enabled = false,
-    MaxDistance = 500, -- Meters (1m = 3 studs)
-    TeamCheck = false,
-
-    BoxEnabled = false,
-    BoxColor = Color3.fromRGB(0, 255, 0),
-
-    SkeletonEnabled = false,
-    SkeletonColor = Color3.fromRGB(255, 255, 255),
-
-    PanelEnabled = false,
-    PanelBgColor = Color3.fromRGB(25, 25, 30),
-
-    ShowDistance = false,
-    ShowName = false,
-    ShowHealth = false,
-    ShowAvatar = false,
-
-    NameColor = Color3.fromRGB(255, 255, 255),
-    DistanceColor = Color3.fromRGB(255, 255, 255),
-    HealthColor = Color3.fromRGB(255, 255, 255),
-    HeartColor = Color3.fromRGB(255, 60, 60),
-
-    DeadESP = false,
-    DeadESPColor = Color3.fromRGB(255, 0, 0),
-    DeadESPDuration = 30,
-
-    TracersEnabled = false,
-    TracersColor = Color3.fromRGB(255, 255, 255),
-    TracerOrigin = "Bottom", -- "Top", "Bottom", "Middle", "Mouse"
-
-    HealthBarEnabled = false,
-
-    VisibilityCheck = false,
-    VisibleColor = Color3.fromRGB(0, 255, 0),
-    HiddenColor = Color3.fromRGB(255, 0, 0),
-
-    -- AIMBOT
-    AimbotEnabled = false,
-    AimbotSmoothness = 0.15,
-    AimbotMaxDistance = 300, -- Meters
-    AimbotFOV = 150,
-    ShowFOV = false,
-    FOVColor = Color3.fromRGB(255, 255, 255),
-    AimbotTargetPart = "Head", -- "Head", "Torso", "Random"
-    AimbotSticky = true, -- Locks onto target until it dies or goes out of FOV
-    AimbotDistanceWeight = 0.3, -- Impact of distance vs FOV distance
-    AimbotVisibleOnly = true, -- Only targets visible players
-    
-    PredictionEnabled = false,
-    PredictionStrength = 10,
-    NoRecoilEnabled = false,
-    NoRecoilStrength = 50,
-
-    ShowBindWindow = false,
-
-    -- LOCAL PLAYER
-    LocalPlayerESP = false,
-    LocalPlayerColor = Color3.fromRGB(150, 150, 255),
-    LocalBox = false,
-    LocalBoxColor = Color3.fromRGB(150, 150, 255),
-    LocalSkeleton = false,
-    LocalSkeletonColor = Color3.fromRGB(255, 255, 255),
-    LocalHealthBar = false,
-    LocalTracers = false,
-    LocalTracersColor = Color3.fromRGB(255, 255, 255),
-
-    -- WORLD
-    AmbienceEnabled = false,
-    AmbienceColor = Color3.fromHex("ABABAB"),
-
-    -- MENU
-    MenuWidth = 880,
-    MenuHeight = 750,
-
-    -- MISC
-    HighJumpEnabled = false,
-    HighJumpValue = 50,
-
-    -- SCOPE
-    ScopeEnabled = false,
-    ScopeColor = Color3.fromRGB(0, 255, 0),
-    ScopeGap = 4,
-    ScopeLength = 10,
-    ScopeThickness = 1.5,
-    ScopeCenterDot = false,
-    ScopeOutline = true,
-}
-
--- ═══════════ SKELETON MAP ═══════════
-local BONES = {
-    R15 = {
-        {"Head", "UpperTorso"},
-        {"UpperTorso", "LowerTorso"},
-        -- Arms
-        {"UpperTorso", "LeftUpperArm"}, {"LeftUpperArm", "LeftLowerArm"}, {"LeftLowerArm", "LeftHand"},
-        {"UpperTorso", "RightUpperArm"}, {"RightUpperArm", "RightLowerArm"}, {"RightLowerArm", "RightHand"},
-        -- Legs
-        {"LowerTorso", "LeftUpperLeg"}, {"LeftUpperLeg", "LeftLowerLeg"}, {"LeftLowerLeg", "LeftFoot"},
-        {"LowerTorso", "RightUpperLeg"}, {"RightUpperLeg", "RightLowerLeg"}, {"RightLowerLeg", "RightFoot"}
-    },
-    R6 = {
-        {"Head", "Torso"},
-        {"Torso", "Left Arm"},
-        {"Torso", "Right Arm"},
-        {"Torso", "Left Leg"},
-        {"Torso", "Right Leg"}
-    }
-}
+-- Moved to V table
 
 -- ═══════════ UTILS ═══════════
 local function tw(obj, props, dur, style, dir)
@@ -158,35 +216,33 @@ end
 -- ════════════════════════════════
 -- MENU GUI
 -- ════════════════════════════════
-local menuOpen = false
+V.MenuGui = Instance.new("ScreenGui")
+V.MenuGui.Name = "ASTRUM_System"
+V.MenuGui.ResetOnSpawn = false
+V.MenuGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+V.MenuGui.IgnoreGuiInset = true
+V.MenuGui.DisplayOrder = 100
+V.MenuGui.Parent = V.LP:WaitForChild("PlayerGui")
 
-local MenuGui = Instance.new("ScreenGui")
-MenuGui.Name = "ESP_Menu"
-MenuGui.ResetOnSpawn = false
-MenuGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-MenuGui.IgnoreGuiInset = true
-MenuGui.DisplayOrder = 100
-MenuGui.Parent = LP:WaitForChild("PlayerGui")
+-- Moved to V table
 
 -- Главная панель меню
--- Главная панель меню
-local mainPanel = Instance.new("CanvasGroup")
-mainPanel.Name = "Main"
-mainPanel.Size = UDim2.new(0, CONFIG.MenuWidth, 0, CONFIG.MenuHeight)
-mainPanel.Position = UDim2.new(0.5, -CONFIG.MenuWidth/2, 0.5, -CONFIG.MenuHeight/2)
-mainPanel.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
-mainPanel.BorderSizePixel = 0
-mainPanel.Visible = false
-mainPanel.GroupTransparency = 1
-mainPanel.Parent = MenuGui
+V.mainPanel = Instance.new("CanvasGroup")
+V.mainPanel.Name = "Main"
+V.mainPanel.Size = UDim2.new(0, V.CONFIG.MenuWidth, 0, V.CONFIG.MenuHeight)
+V.mainPanel.Position = UDim2.new(0.5, -V.CONFIG.MenuWidth/2, 0.5, -V.CONFIG.MenuHeight/2)
+V.mainPanel.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
+V.mainPanel.BorderSizePixel = 0
+V.mainPanel.Visible = false
+V.mainPanel.GroupTransparency = 1
+V.mainPanel.Parent = V.MenuGui
 
-Instance.new("UICorner", mainPanel).CornerRadius = UDim.new(0, 10)
+Instance.new("UICorner", V.mainPanel).CornerRadius = UDim.new(0, 10)
 local mainStroke = Instance.new("UIStroke")
 mainStroke.Color = Color3.fromRGB(40, 40, 55)
 mainStroke.Thickness = 1
-mainStroke.Parent = mainPanel
+mainStroke.Parent = V.mainPanel
 
--- Сайдбар
 -- Сайдбар
 local sidebar = Instance.new("ScrollingFrame")
 sidebar.Size = UDim2.new(0, 210, 1, -40)
@@ -197,7 +253,7 @@ sidebar.ZIndex = 4
 sidebar.ScrollBarThickness = 0
 sidebar.CanvasSize = UDim2.new(0,0,0,0)
 sidebar.AutomaticCanvasSize = Enum.AutomaticSize.Y
-sidebar.Parent = mainPanel
+sidebar.Parent = V.mainPanel
 
 -- Разделитель (вертикальный) - ВЫНЕСЕН ИЗ САЙДБАРА
 local vSep = Instance.new("Frame")
@@ -206,12 +262,80 @@ vSep.Position = UDim2.new(0, 210, 0, 40)
 vSep.BackgroundColor3 = Color3.fromRGB(35, 35, 45)
 vSep.BorderSizePixel = 0
 vSep.ZIndex = 5
-vSep.Parent = mainPanel
+vSep.Parent = V.mainPanel
 
 local sideLay = Instance.new("UIListLayout")
 sideLay.Padding = UDim.new(0, 4) -- Увеличим отступ
 sideLay.SortOrder = Enum.SortOrder.LayoutOrder
 sideLay.Parent = sidebar
+
+-- ════════════ SIDEBAR FOOTER ════════════
+sidebar.Size = UDim2.new(0, 210, 1, -110) -- Adjust sidebar height
+
+local sideFooter = Instance.new("Frame", V.mainPanel)
+sideFooter.Size = UDim2.new(0, 210, 0, 70)
+sideFooter.Position = UDim2.new(0, 0, 1, -70)
+sideFooter.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
+sideFooter.BackgroundTransparency = 0.2
+sideFooter.BorderSizePixel = 0
+sideFooter.ZIndex = 5
+
+local footerSep = Instance.new("Frame", sideFooter)
+footerSep.Size = UDim2.new(1, -20, 0, 1)
+footerSep.Position = UDim2.new(0, 10, 0, 0)
+footerSep.BackgroundColor3 = Color3.fromRGB(35, 35, 45)
+footerSep.BorderSizePixel = 0
+
+V.userImg = Instance.new("ImageLabel", sideFooter)
+V.userImg.Size = UDim2.new(0, 24, 0, 24)
+V.userImg.Position = UDim2.new(0, 10, 0, 13)
+V.userImg.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
+V.userImg.BorderSizePixel = 0
+V.userImg.Image = ""
+Instance.new("UICorner", V.userImg).CornerRadius = UDim.new(1, 0)
+local imgStroke = Instance.new("UIStroke", V.userImg)
+imgStroke.Color = Color3.fromRGB(70, 110, 255)
+imgStroke.Thickness = 1
+imgStroke.Transparency = 0.5
+
+-- Set initial avatar
+task.spawn(function()
+    local ok, url = pcall(function()
+        return Players:GetUserThumbnailAsync(V.LP.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size48x48)
+    end)
+    if ok then V.userImg.Image = url end
+end)
+
+V.userLbl = Instance.new("TextLabel", sideFooter)
+V.userLbl.Size = UDim2.new(1, -50, 0, 20)
+V.userLbl.Position = UDim2.new(0, 40, 0, 15)
+V.userLbl.BackgroundTransparency = 1
+V.userLbl.Font = Enum.Font.GothamBold
+V.userLbl.Text = "User: None"
+V.userLbl.TextColor3 = Color3.fromRGB(200, 200, 210)
+V.userLbl.TextSize = 12
+V.userLbl.TextXAlignment = Enum.TextXAlignment.Left
+
+local tIcon = Instance.new("TextLabel", sideFooter)
+tIcon.Size = UDim2.new(0, 20, 0, 20)
+tIcon.Position = UDim2.new(0, 15, 0, 40)
+tIcon.BackgroundTransparency = 1
+tIcon.Font = Enum.Font.GothamBold
+tIcon.Text = "⏳"
+tIcon.TextColor3 = Color3.fromRGB(70, 110, 255)
+tIcon.TextSize = 12
+
+V.timeLbl = Instance.new("TextLabel", sideFooter)
+V.timeLbl.Size = UDim2.new(1, -50, 0, 20)
+V.timeLbl.Position = UDim2.new(0, 40, 0, 40)
+V.timeLbl.BackgroundTransparency = 1
+V.timeLbl.Font = Enum.Font.GothamMedium
+V.timeLbl.Text = "Time: Infinite"
+V.timeLbl.TextColor3 = Color3.fromRGB(150, 150, 165)
+V.timeLbl.TextSize = 11
+V.timeLbl.TextXAlignment = Enum.TextXAlignment.Left
+
+V.timeUpdateLoop = nil
 
 -- Контент
 local content = Instance.new("Frame")
@@ -219,27 +343,26 @@ content.Size = UDim2.new(1, -210, 1, -40)
 content.Position = UDim2.new(0, 210, 0, 40)
 content.BackgroundTransparency = 1
 content.ZIndex = 2
-content.Parent = mainPanel
+content.Parent = V.mainPanel
 
 -- ═══════════ PREVIEW PANEL ═══════════
--- ═══════════ PREVIEW PANEL ═══════════
-local previewPanel = Instance.new("CanvasGroup")
-previewPanel.Name = "ESPPreview"
-previewPanel.Size = UDim2.new(0, 240, 0, 320)
-previewPanel.Position = UDim2.new(1, 15, 0, 0)
-previewPanel.BackgroundColor3 = Color3.fromRGB(12, 12, 16)
-previewPanel.BorderSizePixel = 0
-previewPanel.Visible = false
-previewPanel.GroupTransparency = 1
-previewPanel.ClipsDescendants = true
-previewPanel.Parent = MenuGui 
+V.previewPanel = Instance.new("CanvasGroup")
+V.previewPanel.Name = "ESPPreview"
+V.previewPanel.Size = UDim2.new(0, 240, 0, 320)
+V.previewPanel.Position = UDim2.new(1, 15, 0, 0)
+V.previewPanel.BackgroundColor3 = Color3.fromRGB(12, 12, 16)
+V.previewPanel.BorderSizePixel = 0
+V.previewPanel.Visible = false
+V.previewPanel.GroupTransparency = 1
+V.previewPanel.ClipsDescendants = true
+V.previewPanel.Parent = V.MenuGui 
 
-Instance.new("UICorner", previewPanel).CornerRadius = UDim.new(0, 10)
-local pStroke = Instance.new("UIStroke", previewPanel)
+Instance.new("UICorner", V.previewPanel).CornerRadius = UDim.new(0, 10)
+local pStroke = Instance.new("UIStroke", V.previewPanel)
 pStroke.Color = Color3.fromRGB(40, 40, 55)
 pStroke.Thickness = 1
 
-local pHeader = Instance.new("TextLabel", previewPanel)
+local pHeader = Instance.new("TextLabel", V.previewPanel)
 pHeader.Size = UDim2.new(1, 0, 0, 40)
 pHeader.BackgroundTransparency = 1
 pHeader.Font = Enum.Font.GothamBold
@@ -249,7 +372,7 @@ pHeader.TextSize = 11
 pHeader.TextYAlignment = Enum.TextYAlignment.Bottom
 pHeader.ZIndex = 2
 
-local pVP = Instance.new("ViewportFrame", previewPanel)
+local pVP = Instance.new("ViewportFrame", V.previewPanel)
 pVP.Size = UDim2.new(1, 0, 1, 0)
 pVP.BackgroundTransparency = 1
 pVP.Ambient = Color3.fromRGB(150, 150, 150)
@@ -262,29 +385,28 @@ pCam.FieldOfView = 50
 pVP.CurrentCamera = pCam
 
 -- Mock ESP Elements for Preview
-local pmBox = Instance.new("Frame", previewPanel)
+local pmBox = Instance.new("Frame", V.previewPanel)
 pmBox.BackgroundTransparency = 1
 pmBox.ZIndex = 12
 local pmBoxStroke = Instance.new("UIStroke", pmBox)
 pmBoxStroke.Thickness = 1.2
 
-local pmSkeleton = Instance.new("Frame", previewPanel)
+local pmSkeleton = Instance.new("Frame", V.previewPanel)
 pmSkeleton.Size = UDim2.new(1, 0, 1, 0)
 pmSkeleton.BackgroundTransparency = 1
 pmSkeleton.ZIndex = 10
 
 -- Skeleton Line Pool
-local pmLines = {}
 for i = 1, 32 do
     local l = Instance.new("Frame", pmSkeleton)
     l.BorderSizePixel = 0
     l.BackgroundColor3 = Color3.new(1,1,1)
     l.Visible = false
     l.ZIndex = 10 
-    pmLines[i] = l
+    V.pmLines[i] = l
 end
 
-local pmHealthBar = Instance.new("Frame", previewPanel)
+local pmHealthBar = Instance.new("Frame", V.previewPanel)
 pmHealthBar.Size = UDim2.new(0, 4, 0, 280)
 pmHealthBar.BackgroundColor3 = Color3.fromRGB(20, 20, 26)
 pmHealthBar.BorderSizePixel = 0
@@ -297,7 +419,7 @@ pmHealthIn.BorderSizePixel = 0
 Instance.new("UICorner", pmHealthBar).CornerRadius = UDim.new(0, 2)
 Instance.new("UICorner", pmHealthIn).CornerRadius = UDim.new(0, 2)
 
-local pmPanel = Instance.new("Frame", previewPanel)
+local pmPanel = Instance.new("Frame", V.previewPanel)
 pmPanel.AutomaticSize = Enum.AutomaticSize.X
 pmPanel.Size = UDim2.new(0, 0, 0, 28)
 pmPanel.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
@@ -377,38 +499,14 @@ pmHP.AutomaticSize = Enum.AutomaticSize.XY
 pmHP.LayoutOrder = 7
 
 
-local dummyPartsData = {
-    Head = {s = Vector3.new(1, 1, 1), p = Vector3.new(0, 2.5, 0)},
-    UpperTorso = {s = Vector3.new(1.8, 1.4, 0.9), p = Vector3.new(0, 1.35, 0)},
-    LowerTorso = {s = Vector3.new(1.8, 0.7, 0.9), p = Vector3.new(0, 0.35, 0)},
-    
-    -- Arms (relaxed pose)
-    LeftUpperArm = {s = Vector3.new(0.8, 1.2, 0.8), p = Vector3.new(-1.3, 1.45, 0)},
-    LeftLowerArm = {s = Vector3.new(0.8, 1.2, 0.8), p = Vector3.new(-1.5, 0.3, 0)},
-    LeftHand = {s = Vector3.new(0.7, 0.7, 0.7), p = Vector3.new(-1.6, -0.6, 0)},
-    
-    RightUpperArm = {s = Vector3.new(0.8, 1.2, 0.8), p = Vector3.new(1.3, 1.45, 0)},
-    RightLowerArm = {s = Vector3.new(0.8, 1.2, 0.8), p = Vector3.new(1.5, 0.3, 0)},
-    RightHand = {s = Vector3.new(0.7, 0.7, 0.7), p = Vector3.new(1.6, -0.6, 0)},
-    
-    -- Legs (natural stance)
-    LeftUpperLeg = {s = Vector3.new(0.8, 1.2, 0.8), p = Vector3.new(-0.55, -0.6, 0)},
-    LeftLowerLeg = {s = Vector3.new(0.8, 1.2, 0.8), p = Vector3.new(-0.7, -1.8, 0)},
-    LeftFoot = {s = Vector3.new(0.9, 0.6, 1), p = Vector3.new(-0.8, -2.7, 0)},
-    
-    RightUpperLeg = {s = Vector3.new(0.8, 1.2, 0.8), p = Vector3.new(0.55, -0.6, 0)},
-    RightLowerLeg = {s = Vector3.new(0.8, 1.2, 0.8), p = Vector3.new(0.7, -1.8, 0)},
-    RightFoot = {s = Vector3.new(0.9, 0.6, 1), p = Vector3.new(0.8, -2.7, 0)},
-    
-    HumanoidRootPart = {s = Vector3.new(2, 2, 1), p = Vector3.new(0, 0, 0), t = 1}
-}
+
 
 
 local function createDummy()
     local m = Instance.new("Model")
     m.Name = "PreviewDummy"
     
-    for name, data in pairs(dummyPartsData) do
+    for name, data in pairs(V.dummyPartsData) do
         local p = Instance.new("Part")
         p.Name = name
         p.Size = data.s
@@ -441,7 +539,7 @@ end
 
 task.spawn(function()
     while task.wait() do
-        if not previewPanel.Visible or not pCharClone then continue end
+        if not V.previewPanel.Visible or not pCharClone then continue end
 
         local pW, pH = 240, 440
         local absSize = pVP.AbsoluteSize
@@ -470,7 +568,7 @@ task.spawn(function()
         -- Static Dummy Positioning (No Animation)
         for _, p in ipairs(pCharClone:GetChildren()) do
             if p:IsA("BasePart") then
-                local data = dummyPartsData[p.Name]
+                local data = V.dummyPartsData[p.Name]
                 if data then
                     -- Position is relative to the dummy model, which is lowered to (0, -1.2, 0)
                     p.Position = data.p + Vector3.new(0, -1.2, 0)
@@ -479,16 +577,16 @@ task.spawn(function()
         end
         
         -- Skeleton Projection
-        pmSkeleton.Visible = CONFIG.SkeletonEnabled
+        pmSkeleton.Visible = V.CONFIG.SkeletonEnabled
         local minX, minY, maxX, maxY = math.huge, math.huge, -math.huge, -math.huge
         local allOff = true
 
-        if CONFIG.SkeletonEnabled then
+        if V.CONFIG.SkeletonEnabled then
             local lineIdx = 1
-            for _, pair in pairs(BONES.R15) do
+            for _, pair in pairs(V.BONES.R15) do
                 local p1 = pCharClone:FindFirstChild(pair[1])
                 local p2 = pCharClone:FindFirstChild(pair[2])
-                local l = pmLines[lineIdx]
+                local l = V.pmLines[lineIdx]
                 if p1 and p2 and l then
                     local s1 = project(p1.Position)
                     local s2 = project(p2.Position)
@@ -502,7 +600,7 @@ task.spawn(function()
                         l.Position = UDim2.new(0, (s1.X + s2.X)/2, 0, (s1.Y + s2.Y)/2)
                         l.Rotation = math.deg(math.atan2(s2.Y - s1.Y, s2.X - s1.X)) - 90
                         l.AnchorPoint = Vector2.new(0.5, 0.5)
-                        l.BackgroundColor3 = CONFIG.SkeletonColor
+                        l.BackgroundColor3 = V.CONFIG.SkeletonColor
                         l.BackgroundTransparency = 0
                         
                         minX = math.min(minX, s1.X, s2.X)
@@ -516,7 +614,7 @@ task.spawn(function()
                 end
                 lineIdx = lineIdx + 1
             end
-            for i = lineIdx, #pmLines do if pmLines[i] then pmLines[i].Visible = false end end
+            for i = lineIdx, #V.pmLines do if V.pmLines[i] then V.pmLines[i].Visible = false end end
         end
 
         -- Calculate Box based on Dummy (Head to Feet) for stability
@@ -546,13 +644,13 @@ task.spawn(function()
         -- Box
         pmBox.Size = UDim2.new(0, boxW, 0, boxH)
         pmBox.Position = UDim2.new(0, boxPosX - boxW/2, 0, boxPosY - boxH/2)
-        pmBox.Visible = CONFIG.BoxEnabled
-        pmBoxStroke.Color = CONFIG.BoxColor
+        pmBox.Visible = V.CONFIG.BoxEnabled
+        pmBoxStroke.Color = V.CONFIG.BoxColor
 
         -- Health Bar
         pmHealthBar.Size = UDim2.new(0, 3, 0, boxH)
         pmHealthBar.Position = UDim2.new(0, boxPosX - boxW/2 - 8, 0, boxPosY - boxH/2)
-        pmHealthBar.Visible = CONFIG.HealthBarEnabled
+        pmHealthBar.Visible = V.CONFIG.HealthBarEnabled
         
         local hProg = (math.sin(tick()*2)*0.5 + 0.5)
         pmHealthIn.BackgroundColor3 = Color3.fromRGB(255, 0, 0):Lerp(Color3.fromRGB(0, 255, 100), hProg)
@@ -562,24 +660,24 @@ task.spawn(function()
         -- Panel
         pmPanel.AnchorPoint = Vector2.new(0.5, 1)
         pmPanel.Position = UDim2.new(0, boxPosX, 0, boxPosY - boxH/2 - 10)
-        pmPanel.Visible = CONFIG.PanelEnabled and (CONFIG.ShowDistance or CONFIG.ShowAvatar or CONFIG.ShowName or CONFIG.ShowHealth)
-        pmPanel.BackgroundColor3 = CONFIG.PanelBgColor
+        pmPanel.Visible = V.CONFIG.PanelEnabled and (V.CONFIG.ShowDistance or V.CONFIG.ShowAvatar or V.CONFIG.ShowName or V.CONFIG.ShowHealth)
+        pmPanel.BackgroundColor3 = V.CONFIG.PanelBgColor
     end
 end)
-local titleBar = Instance.new("Frame")
-titleBar.Name = "TitleBar"
-titleBar.Size = UDim2.new(1, 0, 0, 40)
-titleBar.BackgroundColor3 = Color3.fromRGB(18, 18, 24)
-titleBar.BorderSizePixel = 0
-titleBar.Parent = mainPanel
-Instance.new("UICorner", titleBar).CornerRadius = UDim.new(0, 10)
+V.titleBar = Instance.new("Frame")
+V.titleBar.Name = "TitleBar"
+V.titleBar.Size = UDim2.new(1, 0, 0, 40)
+V.titleBar.BackgroundColor3 = Color3.fromRGB(18, 18, 24)
+V.titleBar.BorderSizePixel = 0
+V.titleBar.Parent = V.mainPanel
+Instance.new("UICorner", V.titleBar).CornerRadius = UDim.new(0, 10)
 
 local tbFix = Instance.new("Frame")
 tbFix.Size = UDim2.new(1, 0, 0, 10)
 tbFix.Position = UDim2.new(0, 0, 1, -10)
 tbFix.BackgroundColor3 = Color3.fromRGB(18, 18, 24)
 tbFix.BorderSizePixel = 0
-tbFix.Parent = titleBar
+tbFix.Parent = V.titleBar
 
 -- Лого
 local logo = Instance.new("Frame")
@@ -587,7 +685,7 @@ logo.Size = UDim2.new(0, 30, 0, 22)
 logo.Position = UDim2.new(0, 12, 0.5, -11)
 logo.BackgroundColor3 = Color3.fromRGB(70, 110, 255)
 logo.BorderSizePixel = 0
-logo.Parent = titleBar
+logo.Parent = V.titleBar
 Instance.new("UICorner", logo).CornerRadius = UDim.new(0, 4)
 
 local logoTxt = Instance.new("TextLabel")
@@ -607,39 +705,39 @@ titleLbl.Font = Enum.Font.GothamBold
 titleLbl.TextColor3 = Color3.fromRGB(240, 240, 245)
 titleLbl.TextSize = 18 -- Увеличено
 titleLbl.TextXAlignment = Enum.TextXAlignment.Left
-titleLbl.Text = "NEVERLOSE"
-titleLbl.Parent = titleBar
+titleLbl.Text = "ASTRUM"
+titleLbl.Parent = V.titleBar
 
 -- ════════════ FLOATING PICKER ════════════
-local pickerPanel = Instance.new("CanvasGroup")
-pickerPanel.Size = UDim2.new(0, 200, 0, 220)
-pickerPanel.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
-pickerPanel.BorderSizePixel = 0
-pickerPanel.Visible = false
-pickerPanel.Active = true
-pickerPanel.ZIndex = 20 -- Increased ZIndex
-pickerPanel.Parent = MenuGui
+V.pickerPanel = Instance.new("CanvasGroup")
+V.pickerPanel.Size = UDim2.new(0, 200, 0, 220)
+V.pickerPanel.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
+V.pickerPanel.BorderSizePixel = 0
+V.pickerPanel.Visible = false
+V.pickerPanel.Active = true
+V.pickerPanel.ZIndex = 20 -- Increased ZIndex
+V.pickerPanel.Parent = V.MenuGui
 
-local pickerBlocker = Instance.new("TextButton", pickerPanel)
+local pickerBlocker = Instance.new("TextButton", V.pickerPanel)
 pickerBlocker.Size = UDim2.new(1, 0, 1, 0)
 pickerBlocker.BackgroundTransparency = 1
 pickerBlocker.Text = ""
 pickerBlocker.ZIndex = -1
 
-Instance.new("UICorner", pickerPanel).CornerRadius = UDim.new(0, 8)
-local pickerStroke = Instance.new("UIStroke", pickerPanel)
+Instance.new("UICorner", V.pickerPanel).CornerRadius = UDim.new(0, 8)
+local pickerStroke = Instance.new("UIStroke", V.pickerPanel)
 pickerStroke.Color = Color3.fromRGB(50, 50, 65)
 pickerStroke.Transparency = 1
 
-local pickerScale = Instance.new("UIScale", pickerPanel)
-pickerScale.Scale = 0.8
-pickerPanel.GroupTransparency = 1
+V.pickerScale = Instance.new("UIScale", V.pickerPanel)
+V.pickerScale.Scale = 0.8
+V.pickerPanel.GroupTransparency = 1
 
 local svSquare = Instance.new("Frame")
 svSquare.Size = UDim2.new(1, -16, 0, 140)
 svSquare.Position = UDim2.new(0, 8, 0, 8)
 svSquare.BorderSizePixel = 0
-svSquare.Parent = pickerPanel
+svSquare.Parent = V.pickerPanel
 Instance.new("UICorner", svSquare).CornerRadius = UDim.new(0, 4)
 
 local whiteG = Instance.new("Frame")
@@ -674,7 +772,7 @@ local hueSlider = Instance.new("Frame")
 hueSlider.Size = UDim2.new(1, -16, 0, 14)
 hueSlider.Position = UDim2.new(0, 8, 0, 156)
 hueSlider.BorderSizePixel = 0
-hueSlider.Parent = pickerPanel
+hueSlider.Parent = V.pickerPanel
 Instance.new("UICorner", hueSlider).CornerRadius = UDim.new(1,0)
 
 local hg = Instance.new("UIGradient")
@@ -704,32 +802,32 @@ hexDisp.BackgroundTransparency = 1
 hexDisp.Font = Enum.Font.Code
 hexDisp.TextColor3 = Color3.new(0.7, 0.7, 0.7)
 hexDisp.TextSize = 12
-hexDisp.Parent = pickerPanel
+hexDisp.Parent = V.pickerPanel
 
 -- ════════════ SUBSETTINGS PANEL ════════════
-local subPanel = Instance.new("CanvasGroup")
-subPanel.Size = UDim2.new(0, 250, 0, 240)
-subPanel.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
-subPanel.BorderSizePixel = 0
-subPanel.Visible = false
-subPanel.Active = true
-subPanel.ZIndex = 20 -- Increased ZIndex
-subPanel.Parent = MenuGui
+V.subPanel = Instance.new("CanvasGroup")
+V.subPanel.Size = UDim2.new(0, 250, 0, 240)
+V.subPanel.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
+V.subPanel.BorderSizePixel = 0
+V.subPanel.Visible = false
+V.subPanel.Active = true
+V.subPanel.ZIndex = 20 -- Increased ZIndex
+V.subPanel.Parent = V.MenuGui
 
-local subBlocker = Instance.new("TextButton", subPanel)
+local subBlocker = Instance.new("TextButton", V.subPanel)
 subBlocker.Size = UDim2.new(1, 0, 1, 0)
 subBlocker.BackgroundTransparency = 1
 subBlocker.Text = ""
 subBlocker.ZIndex = -1
 
-Instance.new("UICorner", subPanel).CornerRadius = UDim.new(0, 8)
-local subStroke = Instance.new("UIStroke", subPanel)
+Instance.new("UICorner", V.subPanel).CornerRadius = UDim.new(0, 8)
+local subStroke = Instance.new("UIStroke", V.subPanel)
 subStroke.Color = Color3.fromRGB(50, 50, 65)
 subStroke.Transparency = 1 -- Старт с прозрачности
 
-local subScale = Instance.new("UIScale", subPanel)
-subScale.Scale = 0.8
-subPanel.GroupTransparency = 1
+V.subScale = Instance.new("UIScale", V.subPanel)
+V.subScale.Scale = 0.8
+V.subPanel.GroupTransparency = 1
 
 local subScroll = Instance.new("ScrollingFrame")
 subScroll.Size = UDim2.new(1, -16, 1, -16)
@@ -739,35 +837,35 @@ subScroll.BorderSizePixel = 0
 subScroll.ScrollBarThickness = 2
 subScroll.CanvasSize = UDim2.new(0,0,0,0)
 subScroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
-subScroll.Parent = subPanel
+subScroll.Parent = V.subPanel
 local subLay = Instance.new("UIListLayout")
 subLay.Padding = UDim.new(0, 4)
 subLay.Parent = subScroll
 
 -- ════════════ BIND PANEL ════════════
-local bindPanel = Instance.new("CanvasGroup")
-bindPanel.Size = UDim2.new(0, 180, 0, 140)
-bindPanel.BackgroundColor3 = Color3.fromRGB(18, 18, 24)
-bindPanel.BorderSizePixel = 0
-bindPanel.Visible = false
-bindPanel.Active = true
-bindPanel.ZIndex = 25
-bindPanel.Parent = MenuGui
+V.bindPanel = Instance.new("CanvasGroup")
+V.bindPanel.Size = UDim2.new(0, 180, 0, 140)
+V.bindPanel.BackgroundColor3 = Color3.fromRGB(18, 18, 24)
+V.bindPanel.BorderSizePixel = 0
+V.bindPanel.Visible = false
+V.bindPanel.Active = true
+V.bindPanel.ZIndex = 25
+V.bindPanel.Parent = V.MenuGui
 
-local bindBlocker = Instance.new("TextButton", bindPanel)
+local bindBlocker = Instance.new("TextButton", V.bindPanel)
 bindBlocker.Size = UDim2.new(1, 0, 1, 0)
 bindBlocker.BackgroundTransparency = 1
 bindBlocker.Text = ""
 bindBlocker.ZIndex = -1
 
-Instance.new("UICorner", bindPanel).CornerRadius = UDim.new(0, 8)
-local bindStroke = Instance.new("UIStroke", bindPanel)
+Instance.new("UICorner", V.bindPanel).CornerRadius = UDim.new(0, 8)
+local bindStroke = Instance.new("UIStroke", V.bindPanel)
 bindStroke.Color = Color3.fromRGB(60, 60, 80)
 bindStroke.Thickness = 1
 
-local bindScale = Instance.new("UIScale", bindPanel)
-bindScale.Scale = 0.8
-bindPanel.GroupTransparency = 1
+V.bindScale = Instance.new("UIScale", V.bindPanel)
+V.bindScale.Scale = 0.8
+V.bindPanel.GroupTransparency = 1
 
 -- ════════════ BIND LIST UI ════════════
 local bindListWindow = Instance.new("CanvasGroup")
@@ -777,7 +875,7 @@ bindListWindow.Position = UDim2.new(0.02, 0, 0.4, 0)
 bindListWindow.BackgroundColor3 = Color3.fromRGB(10, 10, 15)
 bindListWindow.Visible = false
 bindListWindow.ZIndex = 5
-bindListWindow.Parent = MenuGui
+bindListWindow.Parent = V.MenuGui
 Instance.new("UICorner", bindListWindow).CornerRadius = UDim.new(0, 6)
 local blStroke = Instance.new("UIStroke", bindListWindow)
 blStroke.Color = Color3.fromRGB(40, 40, 50)
@@ -822,13 +920,13 @@ local function updateBindList()
         end
     end
 
-    if not CONFIG.ShowBindWindow then 
+    if not V.CONFIG.ShowBindWindow then 
         bindListWindow.Visible = false
         return 
     end
     
     local count = 0
-    for name, b in pairs(StoredBinds) do
+    for name, b in pairs(V.StoredBinds) do
         if b.Key or b.InputType then
             count = count + 1
             local f = Instance.new("Frame", blContainer)
@@ -884,7 +982,7 @@ UIS.InputEnded:Connect(function(i)
     if i.UserInputType == Enum.UserInputType.MouseButton1 then blDragging = false end
 end)
 
-local bindTitle = Instance.new("TextLabel", bindPanel)
+local bindTitle = Instance.new("TextLabel", V.bindPanel)
 bindTitle.Size = UDim2.new(1, 0, 0, 30)
 bindTitle.BackgroundTransparency = 1
 bindTitle.Font = Enum.Font.GothamBold
@@ -892,7 +990,7 @@ bindTitle.TextColor3 = Color3.fromRGB(150, 150, 170)
 bindTitle.TextSize = 11
 bindTitle.Text = "ASSIGN KEYBIND"
 
-local bindKeyBtn = Instance.new("TextButton", bindPanel)
+local bindKeyBtn = Instance.new("TextButton", V.bindPanel)
 bindKeyBtn.Size = UDim2.new(1, -20, 0, 32)
 bindKeyBtn.Position = UDim2.new(0, 10, 0, 35)
 bindKeyBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
@@ -902,7 +1000,7 @@ bindKeyBtn.TextColor3 = Color3.fromRGB(70, 110, 255)
 bindKeyBtn.TextSize = 13
 Instance.new("UICorner", bindKeyBtn).CornerRadius = UDim.new(0, 6)
 
-local bindDropdown = Instance.new("Frame", bindPanel)
+local bindDropdown = Instance.new("Frame", V.bindPanel)
 bindDropdown.Size = UDim2.new(1, -20, 0, 32)
 bindDropdown.Position = UDim2.new(0, 10, 0, 72)
 bindDropdown.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
@@ -917,7 +1015,7 @@ bindModeBtn.Text = "MODE: TOGGLE"
 bindModeBtn.TextColor3 = Color3.new(1, 1, 1)
 bindModeBtn.TextSize = 12
 
-local bindDropList = Instance.new("CanvasGroup", bindPanel)
+local bindDropList = Instance.new("CanvasGroup", V.bindPanel)
 bindDropList.Size = UDim2.new(0, 160, 0, 0)
 bindDropList.Position = UDim2.new(0, 10, 0, 106)
 bindDropList.BackgroundColor3 = Color3.fromRGB(25, 25, 30)
@@ -943,20 +1041,20 @@ local function createModeOpt(name)
     b.Active = true
     
     b.MouseButton1Click:Connect(function()
-        if currentlyBinding then
-            local bObj = StoredBinds[currentlyBinding] or {State = false, Mode = "Toggle"}
+        if V.currentlyBinding then
+            local bObj = V.StoredBinds[V.currentlyBinding] or {State = false, Mode = "Toggle"}
             bObj.Mode = name
-            StoredBinds[currentlyBinding] = bObj
+            V.StoredBinds[V.currentlyBinding] = bObj
             
             -- Immediate UI Update
             bindModeBtn.Text = "MODE: " .. string.upper(name)
-            updateBindPanel(currentlyBinding)
+            updateBindPanel(V.currentlyBinding)
             updateBindList()
             
             tw(bindDropList, {Size = UDim2.new(1, 0, 0, 0), GroupTransparency = 1}, 0.2).Completed:Connect(function()
                 bindDropList.Visible = false
             end)
-            tw(bindPanel, {Size = UDim2.new(0, 180, 0, 140)}, 0.2)
+            tw(V.bindPanel, {Size = UDim2.new(0, 180, 0, 140)}, 0.2)
         end
     end)
 
@@ -964,7 +1062,7 @@ local function createModeOpt(name)
         tw(b, {BackgroundTransparency = 0.85, TextColor3 = Color3.new(1, 1, 1)}, 0.15)
     end)
     b.MouseLeave:Connect(function()
-        if currentlyBinding and StoredBinds[currentlyBinding] and StoredBinds[currentlyBinding].Mode == name then
+        if V.currentlyBinding and V.StoredBinds[V.currentlyBinding] and V.StoredBinds[V.currentlyBinding].Mode == name then
              return -- Keep highlight if selected
         end
         tw(b, {BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(200, 200, 210)}, 0.15)
@@ -973,7 +1071,7 @@ end
 createModeOpt("Toggle")
 createModeOpt("Hold")
 
-local bindClearBtn = Instance.new("TextButton", bindPanel)
+local bindClearBtn = Instance.new("TextButton", V.bindPanel)
 bindClearBtn.Size = UDim2.new(1, -20, 0, 24)
 bindClearBtn.Position = UDim2.new(0, 10, 0, 110)
 bindClearBtn.BackgroundTransparency = 1
@@ -984,42 +1082,25 @@ bindClearBtn.TextSize = 11
 
 -- ════════════ POPUP LOGIC ════════════
 
-local ph, ps, pv = 0, 0, 0
-local pCallback = nil
-local activePopup = nil -- Храним текущую открытую панель (pickerPanel или subPanel)
-local activeSource = nil
-
-local function closePopup(panel, scale)
-    if not panel or not panel.Visible then return end
-    tw(scale or panel:FindFirstChildOfClass("UIScale"), {Scale = 0.8}, 0.15)
-    tw(panel, {GroupTransparency = 1}, 0.1)
-    
-    local str = panel:FindFirstChildOfClass("UIStroke")
-    if str then tw(str, {Transparency = 1}, 0.1) end
-    
-    task.wait(0.12)
-    panel.Visible = false
-end
-
-local previousPopup = nil
+-- Moved to V table
 local function openPopup(panel, scale)
-    if activePopup and activePopup ~= panel then
-        if activePopup == subPanel and panel == pickerPanel then
-            previousPopup = activePopup
+    if V.activePopup and V.activePopup ~= panel then
+        if V.activePopup == V.subPanel and panel == V.pickerPanel then
+            V.previousPopup = V.activePopup
         else
-            local oldPanel = activePopup
-            local oldScale = (oldPanel == pickerPanel) and pickerScale or (oldPanel == bindPanel and bindScale or subScale)
+            local oldPanel = V.activePopup
+            local oldScale = (oldPanel == V.pickerPanel) and V.pickerScale or (oldPanel == V.bindPanel and V.bindScale or V.subScale)
             task.spawn(function() closePopup(oldPanel, oldScale) end)
-            previousPopup = nil
+            V.previousPopup = nil
         end
     end
     
-    activePopup = panel
+    V.activePopup = panel
     local mPos = UIS:GetMouseLocation()
     panel.Position = UDim2.new(0, mPos.X + 15, 0, mPos.Y - 20)
     
     -- Коррекция границ
-    local screen = MenuGui.AbsoluteSize
+    local screen = V.MenuGui.AbsoluteSize
     if panel.Position.X.Offset + panel.Size.X.Offset > screen.X then
         panel.Position = UDim2.new(0, mPos.X - panel.Size.X.Offset - 15, 0, mPos.Y - 20)
     end
@@ -1031,7 +1112,7 @@ local function openPopup(panel, scale)
     local str = panel:FindFirstChildOfClass("UIStroke")
     if str then 
         str.Transparency = 1
-        task.delay(0.05, function() tw(str, {Transparency = 0}, 0.25) end) -- Небольшая задержка для красоты
+        task.delay(0.05, function() tw(str, {Transparency = 0}, 0.25) end)
     end
     
     tw(panel, {GroupTransparency = 0}, 0.25)
@@ -1039,9 +1120,9 @@ local function openPopup(panel, scale)
 end
 
 -- ════════════ BIND LOGIC ════════════
-local isTrackingKey = false
+-- Moved to V table
 local function updateBindPanel(name)
-    local b = StoredBinds[name]
+    local b = V.StoredBinds[name]
     local currentMode = (b and b.Mode) or "Toggle"
     
     -- Update Main Label
@@ -1071,7 +1152,7 @@ local function updateBindPanel(name)
 end
 
 bindKeyBtn.MouseButton1Click:Connect(function()
-    isTrackingKey = true
+    V.isTrackingKey = true
     bindKeyBtn.Text = "..."
     bindKeyBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 end)
@@ -1081,35 +1162,35 @@ bindModeBtn.MouseButton1Click:Connect(function()
     if not isOpen then
         bindDropList.Visible = true
         bindDropList.GroupTransparency = 1
-        updateBindPanel(currentlyBinding) -- Refresh highlights
+        updateBindPanel(V.currentlyBinding) -- Refresh highlights
         tw(bindDropList, {Size = UDim2.new(1, 0, 0, 60), GroupTransparency = 0}, 0.2)
-        tw(bindPanel, {Size = UDim2.new(0, 180, 0, 200)}, 0.2)
+        tw(V.bindPanel, {Size = UDim2.new(0, 180, 0, 200)}, 0.2)
     else
         tw(bindDropList, {Size = UDim2.new(1, 0, 0, 0), GroupTransparency = 1}, 0.2).Completed:Connect(function()
             if not bindDropList.Visible then bindDropList.Visible = false end -- Extra safety
             bindDropList.Visible = false
         end)
-        tw(bindPanel, {Size = UDim2.new(0, 180, 0, 140)}, 0.2)
+        tw(V.bindPanel, {Size = UDim2.new(0, 180, 0, 140)}, 0.2)
     end
 end)
 
 bindClearBtn.MouseButton1Click:Connect(function()
-    if currentlyBinding then
-        StoredBinds[currentlyBinding] = nil
-        updateBindPanel(currentlyBinding)
-        closePopup(bindPanel, bindScale)
+    if V.currentlyBinding then
+        V.StoredBinds[V.currentlyBinding] = nil
+        updateBindPanel(V.currentlyBinding)
+        closePopup(V.bindPanel, V.bindScale)
     end
 end)
 
 UIS.InputBegan:Connect(function(input, gp)
     -- 1. Priority: Capture Key/Mouse for binding
-    if isTrackingKey then
+    if V.isTrackingKey then
         -- Check if user is clicking ON the bind panel itself
         if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.MouseButton2 then
             local p = input.Position
-            local objects = LP.PlayerGui:GetGuiObjectsAtPosition(p.X, p.Y)
+            local objects = V.LP.PlayerGui:GetGuiObjectsAtPosition(p.X, p.Y)
             for _, obj in ipairs(objects) do
-                if obj:IsDescendantOf(bindPanel) or obj == bindPanel then
+                if obj:IsDescendantOf(V.bindPanel) or obj == V.bindPanel then
                     return -- Let the UI buttons handle the click (for Mode dropdown etc)
                 end
             end
@@ -1120,22 +1201,22 @@ UIS.InputBegan:Connect(function(input, gp)
            input.UserInputType == Enum.UserInputType.MouseButton2 or 
            input.UserInputType == Enum.UserInputType.MouseButton3 then
             
-            isTrackingKey = false
+            V.isTrackingKey = false
             local key = input.KeyCode
             local it = input.UserInputType
             
             -- ESC to clear
             if key == Enum.KeyCode.Escape then
                 bindKeyBtn.Text = "NONE"
-                if currentlyBinding then StoredBinds[currentlyBinding] = nil end
+                if V.currentlyBinding then V.StoredBinds[V.currentlyBinding] = nil end
             else
                 local keyName = (key ~= Enum.KeyCode.Unknown) and key.Name:upper() or it.Name:upper()
                 bindKeyBtn.Text = keyName
-                if currentlyBinding then
-                    StoredBinds[currentlyBinding] = StoredBinds[currentlyBinding] or {Mode = "Toggle", State = false}
-                    StoredBinds[currentlyBinding].Key = (key ~= Enum.KeyCode.Unknown) and key or nil
-                    StoredBinds[currentlyBinding].InputType = it
-                    updateBindPanel(currentlyBinding)
+                if V.currentlyBinding then
+                    V.StoredBinds[V.currentlyBinding] = V.StoredBinds[V.currentlyBinding] or {Mode = "Toggle", State = false}
+                    V.StoredBinds[V.currentlyBinding].Key = (key ~= Enum.KeyCode.Unknown) and key or nil
+                    V.StoredBinds[V.currentlyBinding].InputType = it
+                    updateBindPanel(V.currentlyBinding)
                 end
             end
             
@@ -1146,13 +1227,13 @@ UIS.InputBegan:Connect(function(input, gp)
     end
 
     -- 2. Close popups on outside click
-    if input.UserInputType == Enum.UserInputType.MouseButton1 and activePopup and activePopup.Visible then
+    if input.UserInputType == Enum.UserInputType.MouseButton1 and V.activePopup and V.activePopup.Visible then
         local p = input.Position
-        local objects = LP.PlayerGui:GetGuiObjectsAtPosition(p.X, p.Y)
+        local objects = V.LP.PlayerGui:GetGuiObjectsAtPosition(p.X, p.Y)
         local isOver = false
         
         for _, obj in ipairs(objects) do
-            if obj:IsDescendantOf(activePopup) or obj == activePopup then
+            if obj:IsDescendantOf(V.activePopup) or obj == V.activePopup then
                 isOver = true
                 break
             end
@@ -1160,37 +1241,37 @@ UIS.InputBegan:Connect(function(input, gp)
         
         if not isOver then
             -- Layered popup check
-            if previousPopup and previousPopup.Visible then
+            if V.previousPopup and V.previousPopup.Visible then
                 local overPrev = false
                 for _, obj in ipairs(objects) do
-                    if obj:IsDescendantOf(previousPopup) or obj == previousPopup then
+                    if obj:IsDescendantOf(V.previousPopup) or obj == V.previousPopup then
                         overPrev = true
                         break
                     end
                 end
                 if overPrev then
-                    local p = activePopup
-                    local s = (p == pickerPanel) and pickerScale or (p == bindPanel and bindScale or subScale)
+                    local p = V.activePopup
+                    local s = (p == V.pickerPanel) and V.pickerScale or (p == V.bindPanel and V.bindScale or V.subScale)
                     task.spawn(function() closePopup(p, s) end)
-                    activePopup = previousPopup
-                    previousPopup = nil
+                    V.activePopup = V.previousPopup
+                    V.previousPopup = nil
                     return
                 end
             end
 
             -- Double check we aren't clicking the button that just opened this
-            local oldPanel = activePopup
-            local oldScale = (oldPanel == pickerPanel) and pickerScale or (oldPanel == bindPanel and bindScale or subScale)
+            local oldPanel = V.activePopup
+            local oldScale = (oldPanel == V.pickerPanel) and V.pickerScale or (oldPanel == V.bindPanel and V.bindScale or V.subScale)
             task.spawn(function() closePopup(oldPanel, oldScale) end)
             
-            if previousPopup then
-                local p = previousPopup
-                local s = (p == bindPanel) and bindScale or subScale
+            if V.previousPopup then
+                local p = V.previousPopup
+                local s = (p == V.bindPanel) and V.bindScale or V.subScale
                 task.spawn(function() closePopup(p, s) end)
-                previousPopup = nil
+                V.previousPopup = nil
             end
             
-            activePopup = nil
+            V.activePopup = nil
             return
         end
     end
@@ -1199,7 +1280,7 @@ UIS.InputBegan:Connect(function(input, gp)
     
     -- 3. Process Active Binds
     local changed = false
-    for name, b in pairs(StoredBinds) do
+    for name, b in pairs(V.StoredBinds) do
         local isTriggered = false
         if name == "Aimbot" then -- Special handling for Aimbot
             isTriggered = (input.UserInputType == Enum.UserInputType.MouseButton2)
@@ -1226,7 +1307,7 @@ end)
 
 UIS.InputEnded:Connect(function(input)
     local changed = false
-    for name, b in pairs(StoredBinds) do
+    for name, b in pairs(V.StoredBinds) do
         local isReleased = false
         if name == "Aimbot" then -- Special handling for Aimbot
             isReleased = (input.UserInputType == Enum.UserInputType.MouseButton2)
@@ -1246,17 +1327,14 @@ UIS.InputEnded:Connect(function(input)
 end)
 
 local function updatePicker(ch, cs, cv)
-    ph, ps, pv = ch or ph, cs or ps, cv or pv
-    local color = Color3.fromHSV(ph, ps, pv)
-    svSquare.BackgroundColor3 = Color3.fromHSV(ph, 1, 1)
-    svCursor.Position = UDim2.new(ps, 0, 1-pv, 0)
-    hCursor.Position = UDim2.new(ph, 0, 0.5, 0)
-    hexDisp.Text = "#" .. color:ToHex():upper() .. " (" .. math.floor(ps*100) .. "%)"
-    if pCallback then pCallback(color) end
+    V.ph, V.ps, V.pv = ch or V.ph, cs or V.ps, cv or V.pv
+    local color = Color3.fromHSV(V.ph, V.ps, V.pv)
+    svSquare.BackgroundColor3 = Color3.fromHSV(V.ph, 1, 1)
+    svCursor.Position = UDim2.new(V.ps, 0, 1-V.pv, 0)
+    hCursor.Position = UDim2.new(V.ph, 0, 0.5, 0)
+    hexDisp.Text = "#" .. color:ToHex():upper() .. " (" .. math.floor(V.ps*100) .. "%)"
+    if V.pCallback then V.pCallback(color) end
 end
-
-local svDrag = false
-local hDrag = false
 svSquare.InputBegan:Connect(function(i)
     if i.UserInputType == Enum.UserInputType.MouseButton1 then svDrag = true end
 end)
@@ -1281,10 +1359,8 @@ UIS.InputEnded:Connect(function(i)
 end)
 
 -- ════════════ UI BUILDERS ════════════
-local activeTab = nil
-local tabs = {}
-local ord = 0
-local function nextO() ord = ord + 1; return ord end
+-- Moved to V table
+local function nextO() V.ord = V.ord + 1; return V.ord end
 
 -- Tab function
 local function addTab(name, icon)
@@ -1342,7 +1418,7 @@ local function addTab(name, icon)
     pl.Parent = page
 
     btn.MouseButton1Click:Connect(function()
-        for _, t in pairs(tabs) do
+        for _, t in pairs(V.tabs) do
             t.Page.Visible = false
             t.Accent.Visible = false
             tw(t.Button, {TextColor3 = Color3.fromRGB(150, 150, 165), BackgroundTransparency = 1}, 0.15)
@@ -1350,16 +1426,16 @@ local function addTab(name, icon)
         page.Visible = true
         accent.Visible = true
         tw(btn, {TextColor3 = Color3.new(1, 1, 1), BackgroundTransparency = 0.92}, 0.15)
-        pickerPanel.Visible = false
+        V.pickerPanel.Visible = false
 
         if name == "Visuals" then
             initPreview()
-            previewPanel.Visible = true
-            tw(previewPanel, {GroupTransparency = 0}, 0.25)
+            V.previewPanel.Visible = true
+            tw(V.previewPanel, {GroupTransparency = 0}, 0.25)
         else
-            tw(previewPanel, {GroupTransparency = 1}, 0.2).Completed:Connect(function()
-                if not (tabs[1] and tabs[1].Page.Visible) then
-                    previewPanel.Visible = false 
+            tw(V.previewPanel, {GroupTransparency = 1}, 0.2).Completed:Connect(function()
+                if not (V.tabs[1] and V.tabs[1].Page.Visible) then
+                    V.previewPanel.Visible = false 
                 end
             end)
         end
@@ -1373,8 +1449,8 @@ local function addTab(name, icon)
     end)
 
     local tab = {Button = btn, Page = page, Accent = accent, Left = leftCol, Right = rightCol}
-    table.insert(tabs, tab)
-    if #tabs == 1 then -- По умолчанию первый таб
+    table.insert(V.tabs, tab)
+    if #V.tabs == 1 then -- По умолчанию первый таб
         page.Visible = true
         accent.Visible = true
         btn.TextColor3 = Color3.new(1, 1, 1)
@@ -1429,7 +1505,7 @@ end
 
 local function addSubTab(tab, name)
     if not tab.SubBar then
-        -- Clean up default tab structure for subtabs
+        -- Clean up default tab structure for subV.tabs
         if tab.Left then tab.Left.Visible = false tab.Left:Destroy() tab.Left = nil end
         if tab.Right then tab.Right.Visible = false tab.Right:Destroy() tab.Right = nil end
         local currLayout = tab.Page:FindFirstChildOfClass("UIListLayout")
@@ -1589,17 +1665,17 @@ local function toggle(parent, name, default, callback, opts)
     end)
 
     btn.MouseButton2Click:Connect(function()
-        currentlyBinding = name
-        StoredBinds[name] = StoredBinds[name] or {Mode = "Toggle", State = false}
-        StoredBinds[name].Callback = function(val)
+        V.currentlyBinding = name
+        V.StoredBinds[name] = V.StoredBinds[name] or {Mode = "Toggle", State = false}
+        V.StoredBinds[name].Callback = function(val)
             state = val
             updateVisuals()
             callback(val)
-            StoredBinds[name].State = val
+            V.StoredBinds[name].State = val
             updateBindList()
         end
         updateBindPanel(name)
-        openPopup(bindPanel, bindScale)
+        openPopup(V.bindPanel, V.bindScale)
     end)
 
     -- Extra Actions
@@ -1617,15 +1693,15 @@ local function toggle(parent, name, default, callback, opts)
             Instance.new("UIStroke", cp).Color = Color3.new(0,0,0)
 
             cp.MouseButton1Click:Connect(function()
-                if pickerPanel.Visible and activeSource == cp then
-                    closePopup(pickerPanel, pickerScale)
-                    activeSource = nil
-                    activePopup = previousPopup
-                    previousPopup = nil
+                if V.pickerPanel.Visible and V.activeSource == cp then
+                    closePopup(V.pickerPanel, V.pickerScale)
+                    V.activeSource = nil
+                    V.activePopup = V.previousPopup
+                    V.previousPopup = nil
                 else
-                    openPopup(pickerPanel, pickerScale)
-                    activeSource = cp
-                    pCallback = function(color)
+                    openPopup(V.pickerPanel, V.pickerScale)
+                    V.activeSource = cp
+                    V.pCallback = function(color)
                         cp.BackgroundColor3 = color
                         opts.ColorData.Callback(color)
                     end
@@ -1636,8 +1712,8 @@ local function toggle(parent, name, default, callback, opts)
 
             table.insert(refreshers, function()
                 local colorKey = opts.ColorKey or (name:gsub(" ", "") .. "Color")
-                if CONFIG[colorKey] then
-                    cp.BackgroundColor3 = CONFIG[colorKey]
+                if V.CONFIG[colorKey] then
+                    cp.BackgroundColor3 = V.CONFIG[colorKey]
                 end
             end)
         end
@@ -1655,13 +1731,13 @@ local function toggle(parent, name, default, callback, opts)
             gear.Parent = f
             
             gear.MouseButton1Click:Connect(function()
-                if subPanel.Visible and activeSource == gear then
-                    closePopup(subPanel, subScale)
-                    activeSource = nil
-                    activePopup = nil
+                if V.subPanel.Visible and V.activeSource == gear then
+                    closePopup(V.subPanel, V.subScale)
+                    V.activeSource = nil
+                    V.activePopup = nil
                 else
-                    openPopup(subPanel, subScale)
-                    activeSource = gear
+                    openPopup(V.subPanel, V.subScale)
+                    V.activeSource = gear
                 end
             end)
         end
@@ -1676,7 +1752,7 @@ local function toggle(parent, name, default, callback, opts)
         if name == "Enable Local ESP" then configKey = "LocalPlayerESP" end
         if name == "Bounding Box" then configKey = "BoxEnabled" end
         
-        for k, v in pairs(CONFIG) do
+        for k, v in pairs(V.CONFIG) do
             if k:lower() == configKey:lower() or k:lower() == (configKey .. "Enabled"):lower() then
                 state = v
                 updateVisuals()
@@ -1720,15 +1796,15 @@ local function colorPick(parent, name, default, callback, opts)
     Instance.new("UICorner", preview).CornerRadius = UDim.new(0, 3)
 
     preview.MouseButton1Click:Connect(function()
-        if pickerPanel.Visible and activeSource == preview then
-            closePopup(pickerPanel, pickerScale)
-            activeSource = nil
-            activePopup = previousPopup
-            previousPopup = nil
+        if V.pickerPanel.Visible and V.activeSource == preview then
+            closePopup(V.pickerPanel, V.pickerScale)
+            V.activeSource = nil
+            V.activePopup = V.previousPopup
+            V.previousPopup = nil
         else
-            openPopup(pickerPanel, pickerScale)
-            activeSource = preview
-            pCallback = function(color)
+            openPopup(V.pickerPanel, V.pickerScale)
+            V.activeSource = preview
+            V.pCallback = function(color)
                 preview.BackgroundColor3 = color
                 callback(color)
             end
@@ -1742,7 +1818,7 @@ local function colorPick(parent, name, default, callback, opts)
     
     table.insert(refreshers, function()
         local search = opts and opts.ConfigKey or name:gsub(" ", "")
-        for k, v in pairs(CONFIG) do
+        for k, v in pairs(V.CONFIG) do
             if k:lower() == search:lower() or k:lower() == (search .. "Color"):lower() then
                 preview.BackgroundColor3 = v
                 callback(v)
@@ -1892,20 +1968,20 @@ local function dropdown(parent, name, options, default, callback, opts)
     end)
 
     btn.MouseButton2Click:Connect(function()
-        currentlyBinding = name
-        StoredBinds[name] = StoredBinds[name] or {Mode = "Toggle", State = false}
-        StoredBinds[name].Callback = function(val)
+        V.currentlyBinding = name
+        V.StoredBinds[name] = V.StoredBinds[name] or {Mode = "Toggle", State = false}
+        V.StoredBinds[name].Callback = function(val)
             -- For dropdowns, toggle state isn't very useful, but we'll show it in bind list
-            StoredBinds[name].State = val
+            V.StoredBinds[name].State = val
             updateBindList()
         end
         updateBindPanel(name)
-        openPopup(bindPanel, bindScale)
+        openPopup(V.bindPanel, V.bindScale)
     end)
 
     table.insert(refreshers, function()
         local search = opts and opts.ConfigKey or name:gsub(" ", "")
-        for k, v in pairs(CONFIG) do
+        for k, v in pairs(V.CONFIG) do
             if k:lower() == search:lower() or k:lower() == (search:gsub("Origin", "") .. "Origin"):lower() then
                 current = v
                 btn.Text = tostring(v):upper()
@@ -2006,21 +2082,21 @@ local function slider(parent, name, min, max, default, dec, callback, opts)
 
     f.InputBegan:Connect(function(i)
         if i.UserInputType == Enum.UserInputType.MouseButton2 then
-            currentlyBinding = name
-            StoredBinds[name] = StoredBinds[name] or {Mode = "Toggle", State = false}
-            StoredBinds[name].Callback = function(val)
-                StoredBinds[name].State = val
+            V.currentlyBinding = name
+            V.StoredBinds[name] = V.StoredBinds[name] or {Mode = "Toggle", State = false}
+            V.StoredBinds[name].Callback = function(val)
+                V.StoredBinds[name].State = val
                 updateBindList()
             end
             updateBindPanel(name)
-            openPopup(bindPanel, bindScale)
+            openPopup(V.bindPanel, V.bindScale)
         end
     end)
 
     table.insert(refreshers, function()
         -- Try to find matching config key
         local search = opts and opts.ConfigKey or name:gsub(" ", "")
-        for k, v in pairs(CONFIG) do
+        for k, v in pairs(V.CONFIG) do
             if k:lower() == search:lower() or k:lower() == (search .. "Strength"):lower() or k:lower() == ("Aimbot" .. search):lower() then
                 local pos = math.clamp((v - min) / (max - min), 0, 1)
                 tw(fill, {Size = UDim2.new(pos, 0, 1, 0)}, 0.1)
@@ -2110,15 +2186,15 @@ local function button(parent, name, color, callback)
     return btn
 end
 
--- ═══════════ CONFIG SYSTEM ═══════════
-local folderName = "Neverlose_ESP"
-if isfolder and not isfolder(folderName) then makefolder(folderName) end
+-- ═══════════ V.CONFIG SYSTEM ═══════════
+-- Moved to V table
+if isfolder and not isfolder(V.folderName) then makefolder(V.folderName) end
 
 local function saveConfig(name)
     if not writefile then return end
     local data = {Settings = {}, Binds = {}}
     
-    for k, v in pairs(CONFIG) do
+    for k, v in pairs(V.CONFIG) do
         if typeof(v) == "Color3" then
             data.Settings[k] = {__type = "Color3", r = v.R, g = v.G, b = v.B}
         else
@@ -2126,7 +2202,7 @@ local function saveConfig(name)
         end
     end
 
-    for n, b in pairs(StoredBinds) do
+    for n, b in pairs(V.StoredBinds) do
         data.Binds[n] = {
             Key = b.Key and b.Key.Name,
             InputType = b.InputType and b.InputType.Name,
@@ -2134,30 +2210,30 @@ local function saveConfig(name)
         }
     end
 
-    writefile(folderName .. "/" .. name .. ".json", HttpService:JSONEncode(data))
+    writefile(V.folderName .. "/" .. name .. ".json", HttpService:JSONEncode(data))
 end
 
 local function loadConfig(name)
     if not readfile then return end
-    local path = folderName .. "/" .. name .. ".json"
+    local path = V.folderName .. "/" .. name .. ".json"
     if isfile(path) then
         local success, data = pcall(function() return HttpService:JSONDecode(readfile(path)) end)
         if success then
             local settings = data.Settings or data -- Fallback for old configs
             for k, v in pairs(settings) do
                 if typeof(v) == "table" and v.__type == "Color3" then
-                    CONFIG[k] = Color3.new(v.r, v.g, v.b)
+                    V.CONFIG[k] = Color3.new(v.r, v.g, v.b)
                 else
-                    CONFIG[k] = v
+                    V.CONFIG[k] = v
                 end
             end
 
             if data.Binds then
                 for n, b in pairs(data.Binds) do
-                    if StoredBinds[n] then
-                        if b.Key then StoredBinds[n].Key = Enum.KeyCode[b.Key] end
-                        if b.InputType then StoredBinds[n].InputType = Enum.UserInputType[b.InputType] end
-                        StoredBinds[n].Mode = b.Mode or "Toggle"
+                    if V.StoredBinds[n] then
+                        if b.Key then V.StoredBinds[n].Key = Enum.KeyCode[b.Key] end
+                        if b.InputType then V.StoredBinds[n].InputType = Enum.UserInputType[b.InputType] end
+                        V.StoredBinds[n].Mode = b.Mode or "Toggle"
                     end
                 end
             end
@@ -2165,28 +2241,38 @@ local function loadConfig(name)
             RefreshUI()
             if updateAimVisibility then updateAimVisibility() end
             updateBindList()
+            
+            -- Запоминаем последний загруженный конфиг
+            pcall(function()
+                local authPath = V.folderName .. "/auth.json"
+                if isfile(authPath) then
+                    local authData = HttpService:JSONDecode(readfile(authPath))
+                    authData.LastConfig = name
+                    writefile(authPath, HttpService:JSONEncode(authData))
+                end
+            end)
         end
     end
 end
 
 -- ═══════════ FILL MENU ═══════════
-local vis = addTab("Visuals", "rbxassetid://6031289116")
-local aim = addTab("Aimbot", "rbxassetid://6034440156")
-local cfg = addTab("Configs", "rbxassetid://6031243717")
-local misc = addTab("Misc", "rbxassetid://6034502931")
+V.vis = addTab("Visuals", "rbxassetid://6031289116")
+V.aim = addTab("Aimbot", "rbxassetid://6034440156")
+V.cfg = addTab("Configs", "rbxassetid://6031243717")
+V.misc = addTab("Misc", "rbxassetid://6034502931")
 
 -- Левая колонка (Aimbot)
-local aimMain = section(aim.Left, "Main Settings")
-local aimSecondary = {}
+V.aimMain = section(V.aim.Left, "Main Settings")
+V.aimSecondary = {}
 
 local function updateAimVisibility()
-    local master = CONFIG.AimbotEnabled
-    for _, item in ipairs(aimSecondary) do
+    local master = V.CONFIG.AimbotEnabled
+    for _, item in ipairs(V.aimSecondary) do
         local visible = master
         if item.Key == "PredictionStr" then
-            visible = master and CONFIG.PredictionEnabled
+            visible = master and V.CONFIG.PredictionEnabled
         elseif item.Key == "RecoilStr" then
-            visible = master and CONFIG.NoRecoilEnabled
+            visible = master and V.CONFIG.NoRecoilEnabled
         end
 
         if visible then
@@ -2195,7 +2281,7 @@ local function updateAimVisibility()
         else
             local t = tw(item.Frame, {Size = UDim2.new(1, 0, 0, 0)}, 0.25)
             t.Completed:Connect(function()
-                if not master or (item.Key and not CONFIG[item.Key:gsub("Str", "Enabled")]) then 
+                if not master or (item.Key and not V.CONFIG[item.Key:gsub("Str", "Enabled")]) then 
                     item.Frame.Visible = false 
                 end
             end)
@@ -2203,94 +2289,94 @@ local function updateAimVisibility()
     end
 end
 
-toggle(aimMain, "Enable Aimbot", CONFIG.AimbotEnabled, function(v) 
-    CONFIG.AimbotEnabled = v
+toggle(V.aimMain, "Enable Aimbot", V.CONFIG.AimbotEnabled, function(v) 
+    V.CONFIG.AimbotEnabled = v
     updateAimVisibility()
 end)
 
-local vOnly = toggle(aimMain, "Visible Only", CONFIG.AimbotVisibleOnly, function(v) CONFIG.AimbotVisibleOnly = v end, {ConfigKey = "AimbotVisibleOnly"})
-local sticky = toggle(aimMain, "Sticky Aim", CONFIG.AimbotSticky, function(v) CONFIG.AimbotSticky = v end, {ConfigKey = "AimbotSticky"})
-local targetPart = dropdown(aimMain, "Target Part", {"Head", "UpperTorso", "LowerTorso", "Random"}, CONFIG.AimbotTargetPart, function(v) CONFIG.AimbotTargetPart = v end, {ConfigKey = "AimbotTargetPart"})
+local vOnly = toggle(V.aimMain, "Visible Only", V.CONFIG.AimbotVisibleOnly, function(v) V.CONFIG.AimbotVisibleOnly = v end, {ConfigKey = "AimbotVisibleOnly"})
+local sticky = toggle(V.aimMain, "Sticky Aim", V.CONFIG.AimbotSticky, function(v) V.CONFIG.AimbotSticky = v end, {ConfigKey = "AimbotSticky"})
+local targetPart = dropdown(V.aimMain, "Target Part", {"Head", "UpperTorso", "LowerTorso", "Random"}, V.CONFIG.AimbotTargetPart, function(v) V.CONFIG.AimbotTargetPart = v end, {ConfigKey = "AimbotTargetPart"})
 
-local predToggle = toggle(aimMain, "Prediction", CONFIG.PredictionEnabled, function(v) 
-    CONFIG.PredictionEnabled = v
+local predToggle = toggle(V.aimMain, "Prediction", V.CONFIG.PredictionEnabled, function(v) 
+    V.CONFIG.PredictionEnabled = v
     updateAimVisibility()
 end, {ConfigKey = "PredictionEnabled"})
 
-local recoilToggle = toggle(aimMain, "No Recoil", CONFIG.NoRecoilEnabled, function(v) 
-    CONFIG.NoRecoilEnabled = v
+local recoilToggle = toggle(V.aimMain, "No Recoil", V.CONFIG.NoRecoilEnabled, function(v) 
+    V.CONFIG.NoRecoilEnabled = v
     updateAimVisibility()
 end, {ConfigKey = "NoRecoilEnabled"})
 
 -- Правая колонка (Aimbot)
-local aimConfig = section(aim.Right, "Configuration")
-local smooth = slider(aimConfig, "Smoothness", 0, 1, CONFIG.AimbotSmoothness, 2, function(v) CONFIG.AimbotSmoothness = v end, {ConfigKey = "AimbotSmoothness"})
-slider(aimConfig, "Max Distance", 10, 1500, CONFIG.AimbotMaxDistance, 0, function(v) CONFIG.AimbotMaxDistance = v end, {ConfigKey = "AimbotMaxDistance"})
+V.aimConfig = section(V.aim.Right, "Configuration")
+local smooth = slider(V.aimConfig, "Smoothness", 0, 1, V.CONFIG.AimbotSmoothness, 2, function(v) V.CONFIG.AimbotSmoothness = v end, {ConfigKey = "AimbotSmoothness"})
+slider(V.aimConfig, "Max Distance", 10, 1500, V.CONFIG.AimbotMaxDistance, 0, function(v) V.CONFIG.AimbotMaxDistance = v end, {ConfigKey = "AimbotMaxDistance"})
 
-local predSlider = slider(aimConfig, "Prediction Str", 0, 20, CONFIG.PredictionStrength, 1, function(v) CONFIG.PredictionStrength = v end, {ConfigKey = "PredictionStrength"})
-local recoilSlider = slider(aimConfig, "Recoil Strength", 0, 100, CONFIG.NoRecoilStrength, 0, function(v) CONFIG.NoRecoilStrength = v end, {ConfigKey = "NoRecoilStrength"})
+local predSlider = slider(V.aimConfig, "Prediction Str", 0, 20, V.CONFIG.PredictionStrength, 1, function(v) V.CONFIG.PredictionStrength = v end, {ConfigKey = "PredictionStrength"})
+local recoilSlider = slider(V.aimConfig, "Recoil Strength", 0, 100, V.CONFIG.NoRecoilStrength, 0, function(v) V.CONFIG.NoRecoilStrength = v end, {ConfigKey = "NoRecoilStrength"})
 
-local fovSize = slider(aimConfig, "FOV Size", 10, 800, CONFIG.AimbotFOV, 0, function(v) CONFIG.AimbotFOV = v end, {ConfigKey = "AimbotFOV"})
-local fovCircle = toggle(aimConfig, "Show FOV Circle", CONFIG.ShowFOV, function(v) CONFIG.ShowFOV = v end, {
-    ColorData = {Default = CONFIG.FOVColor, Callback = function(v) CONFIG.FOVColor = v end, ConfigKey = "FOVColor"},
+local fovSize = slider(V.aimConfig, "FOV Size", 10, 800, V.CONFIG.AimbotFOV, 0, function(v) V.CONFIG.AimbotFOV = v end, {ConfigKey = "AimbotFOV"})
+local fovCircle = toggle(V.aimConfig, "Show FOV Circle", V.CONFIG.ShowFOV, function(v) V.CONFIG.ShowFOV = v end, {
+    ColorData = {Default = V.CONFIG.FOVColor, Callback = function(v) V.CONFIG.FOVColor = v end, ConfigKey = "FOVColor"},
     ConfigKey = "ShowFOV"
 })
 
 -- Register elements
-table.insert(aimSecondary, {Frame = vOnly, Height = 42})
-table.insert(aimSecondary, {Frame = sticky, Height = 42})
-table.insert(aimSecondary, {Frame = targetPart, Height = 42})
-table.insert(aimSecondary, {Frame = predToggle, Height = 42})
-table.insert(aimSecondary, {Frame = recoilToggle, Height = 42})
-table.insert(aimSecondary, {Frame = smooth, Height = 48})
-table.insert(aimSecondary, {Frame = predSlider, Height = 48, Key = "PredictionStr"})
-table.insert(aimSecondary, {Frame = recoilSlider, Height = 48, Key = "RecoilStr"})
-table.insert(aimSecondary, {Frame = fovSize, Height = 48})
-table.insert(aimSecondary, {Frame = fovCircle, Height = 42})
+table.insert(V.aimSecondary, {Frame = vOnly, Height = 42})
+table.insert(V.aimSecondary, {Frame = sticky, Height = 42})
+table.insert(V.aimSecondary, {Frame = targetPart, Height = 42})
+table.insert(V.aimSecondary, {Frame = predToggle, Height = 42})
+table.insert(V.aimSecondary, {Frame = recoilToggle, Height = 42})
+table.insert(V.aimSecondary, {Frame = smooth, Height = 48})
+table.insert(V.aimSecondary, {Frame = predSlider, Height = 48, Key = "PredictionStr"})
+table.insert(V.aimSecondary, {Frame = recoilSlider, Height = 48, Key = "RecoilStr"})
+table.insert(V.aimSecondary, {Frame = fovSize, Height = 48})
+table.insert(V.aimSecondary, {Frame = fovCircle, Height = 42})
 
--- Initialize visibility
-for _, item in ipairs(aimSecondary) do
+-- Initialize V.visibility
+for _, item in ipairs(V.aimSecondary) do
     item.Frame.ClipsDescendants = true
-    local visible = CONFIG.AimbotEnabled
-    if item.Key == "PredictionStr" then visible = visible and CONFIG.PredictionEnabled
-    elseif item.Key == "RecoilStr" then visible = visible and CONFIG.NoRecoilEnabled end
+    local visible = V.CONFIG.AimbotEnabled
+    if item.Key == "PredictionStr" then visible = visible and V.CONFIG.PredictionEnabled
+    elseif item.Key == "RecoilStr" then visible = visible and V.CONFIG.NoRecoilEnabled end
     
     if not visible then
         item.Frame.Visible = false
         item.Frame.Size = UDim2.new(1, 0, 0, 0)
     end
 end
-slider(aimConfig, "Distance Weight", 0, 1, CONFIG.AimbotDistanceWeight, 2, function(v) CONFIG.AimbotDistanceWeight = v end, {ConfigKey = "AimbotDistanceWeight"})
+slider(V.aimConfig, "Distance Weight", 0, 1, V.CONFIG.AimbotDistanceWeight, 2, function(v) V.CONFIG.AimbotDistanceWeight = v end, {ConfigKey = "AimbotDistanceWeight"})
 
 -- ═══════════ VISUALS SUB-TABS ═══════════
-local visPlayers = addSubTab(vis, "Players")
-local visLocal   = addSubTab(vis, "Local")
-local visWorld   = addSubTab(vis, "World")
+V.visPlayers = addSubTab(V.vis, "Players")
+V.visLocal   = addSubTab(V.vis, "Local")
+V.visWorld   = addSubTab(V.vis, "World")
 
 -- ── PLAYERS ──────────────────────────────
-local groupFeatures = section(visPlayers.Left, "Features")
-toggle(groupFeatures, "Bounding Box", CONFIG.BoxEnabled, function(v) CONFIG.BoxEnabled = v end, {
-    ColorData = {Default = CONFIG.BoxColor, Callback = function(v) CONFIG.BoxColor = v end, ConfigKey = "BoxColor"},
+local groupFeatures = section(V.visPlayers.Left, "Features")
+toggle(groupFeatures, "Bounding Box", V.CONFIG.BoxEnabled, function(v) V.CONFIG.BoxEnabled = v end, {
+    ColorData = {Default = V.CONFIG.BoxColor, Callback = function(v) V.CONFIG.BoxColor = v end, ConfigKey = "BoxColor"},
     ConfigKey = "BoxEnabled"
 })
-toggle(groupFeatures, "Skeleton", CONFIG.SkeletonEnabled, function(v) CONFIG.SkeletonEnabled = v end, {
-    ColorData = {Default = CONFIG.SkeletonColor, Callback = function(v) CONFIG.SkeletonColor = v end, ConfigKey = "SkeletonColor"},
+toggle(groupFeatures, "Skeleton", V.CONFIG.SkeletonEnabled, function(v) V.CONFIG.SkeletonEnabled = v end, {
+    ColorData = {Default = V.CONFIG.SkeletonColor, Callback = function(v) V.CONFIG.SkeletonColor = v end, ConfigKey = "SkeletonColor"},
     ConfigKey = "SkeletonEnabled"
 })
-toggle(groupFeatures, "Health Bar", CONFIG.HealthBarEnabled, function(v) CONFIG.HealthBarEnabled = v end, {ConfigKey = "HealthBarEnabled"})
-toggle(groupFeatures, "Tracers", CONFIG.TracersEnabled, function(v) CONFIG.TracersEnabled = v end, {
-    ColorData = {Default = CONFIG.TracersColor, Callback = function(v) CONFIG.TracersColor = v end, ConfigKey = "TracersColor"},
+toggle(groupFeatures, "Health Bar", V.CONFIG.HealthBarEnabled, function(v) V.CONFIG.HealthBarEnabled = v end, {ConfigKey = "HealthBarEnabled"})
+toggle(groupFeatures, "Tracers", V.CONFIG.TracersEnabled, function(v) V.CONFIG.TracersEnabled = v end, {
+    ColorData = {Default = V.CONFIG.TracersColor, Callback = function(v) V.CONFIG.TracersColor = v end, ConfigKey = "TracersColor"},
     ConfigKey = "TracersEnabled"
 })
-dropdown(groupFeatures, "Tracer Origin", {"Bottom", "Top", "Middle", "Mouse"}, CONFIG.TracerOrigin, function(v) CONFIG.TracerOrigin = v end, {ConfigKey = "TracerOrigin"})
-toggle(groupFeatures, "Info Panel", CONFIG.PanelEnabled, function(v) CONFIG.PanelEnabled = v end, {
-    ColorData = {Default = CONFIG.PanelBgColor, Callback = function(v) CONFIG.PanelBgColor = v end, ConfigKey = "PanelBgColor"},
+dropdown(groupFeatures, "Tracer Origin", {"Bottom", "Top", "Middle", "Mouse"}, V.CONFIG.TracerOrigin, function(v) V.CONFIG.TracerOrigin = v end, {ConfigKey = "TracerOrigin"})
+toggle(groupFeatures, "Info Panel", V.CONFIG.PanelEnabled, function(v) V.CONFIG.PanelEnabled = v end, {
+    ColorData = {Default = V.CONFIG.PanelBgColor, Callback = function(v) V.CONFIG.PanelBgColor = v end, ConfigKey = "PanelBgColor"},
     UseSettings = true,
     ConfigKey = "PanelEnabled"
 })
 local deadSlider
-toggle(groupFeatures, "Dead ESP", CONFIG.DeadESP, function(v) 
-    CONFIG.DeadESP = v
+toggle(groupFeatures, "Dead ESP", V.CONFIG.DeadESP, function(v) 
+    V.CONFIG.DeadESP = v
     if deadSlider then
         if v then
             deadSlider.Visible = true
@@ -2298,83 +2384,88 @@ toggle(groupFeatures, "Dead ESP", CONFIG.DeadESP, function(v)
         else
             local t = tw(deadSlider, {Size = UDim2.new(1, 0, 0, 0)}, 0.25)
             t.Completed:Connect(function() 
-                if not CONFIG.DeadESP then deadSlider.Visible = false end 
+                if not V.CONFIG.DeadESP then deadSlider.Visible = false end 
             end)
         end
     end
 end, {
-    ColorData = {Default = CONFIG.DeadESPColor, Callback = function(v) CONFIG.DeadESPColor = v end, ConfigKey = "DeadESPColor"},
+    ColorData = {Default = V.CONFIG.DeadESPColor, Callback = function(v) V.CONFIG.DeadESPColor = v end, ConfigKey = "DeadESPColor"},
     ConfigKey = "DeadESP"
 })
-deadSlider = slider(groupFeatures, "Dead Duration", 5, 120, CONFIG.DeadESPDuration, 0, function(v) CONFIG.DeadESPDuration = v end, {ConfigKey = "DeadESPDuration"})
+deadSlider = slider(groupFeatures, "Dead Duration", 5, 120, V.CONFIG.DeadESPDuration, 0, function(v) V.CONFIG.DeadESPDuration = v end, {ConfigKey = "DeadESPDuration"})
 deadSlider.ClipsDescendants = true
-if not CONFIG.DeadESP then
+if not V.CONFIG.DeadESP then
     deadSlider.Visible = false
     deadSlider.Size = UDim2.new(1, 0, 0, 0)
 end
 
-local groupBaseP = section(visPlayers.Right, "ESP Base")
-toggle(groupBaseP, "Master Switch", CONFIG.Enabled, function(v) CONFIG.Enabled = v end, {ConfigKey = "Enabled"})
-toggle(groupBaseP, "Team Check", CONFIG.TeamCheck, function(v) CONFIG.TeamCheck = v end, {ConfigKey = "TeamCheck"})
-slider(groupBaseP, "Max Distance", 100, 8500, CONFIG.MaxDistance, 0, function(v) CONFIG.MaxDistance = v end, {ConfigKey = "MaxDistance"})
+local groupBaseP = section(V.visPlayers.Right, "ESP Base")
+toggle(groupBaseP, "Master Switch", V.CONFIG.Enabled, function(v) V.CONFIG.Enabled = v end, {ConfigKey = "Enabled"})
+toggle(groupBaseP, "Team Check", V.CONFIG.TeamCheck, function(v) V.CONFIG.TeamCheck = v end, {ConfigKey = "TeamCheck"})
+slider(groupBaseP, "Max Distance", 100, 8500, V.CONFIG.MaxDistance, 0, function(v) V.CONFIG.MaxDistance = v end, {ConfigKey = "MaxDistance"})
 
-local groupVisP = section(visPlayers.Right, "Visibility")
-toggle(groupVisP, "Check Visibility", CONFIG.VisibilityCheck, function(v) CONFIG.VisibilityCheck = v end, {ConfigKey = "VisibilityCheck"})
-colorPick(groupVisP, "Visible Color", CONFIG.VisibleColor, function(v) CONFIG.VisibleColor = v end, {ConfigKey = "VisibleColor"})
-colorPick(groupVisP, "Hidden Color", CONFIG.HiddenColor, function(v) CONFIG.HiddenColor = v end, {ConfigKey = "HiddenColor"})
+local groupVisP = section(V.visPlayers.Right, "Visibility")
+toggle(groupVisP, "Check Visibility", V.CONFIG.VisibilityCheck, function(v) V.CONFIG.VisibilityCheck = v end, {ConfigKey = "VisibilityCheck"})
+colorPick(groupVisP, "Visible Color", V.CONFIG.VisibleColor, function(v) V.CONFIG.VisibleColor = v end, {ConfigKey = "VisibleColor"})
+colorPick(groupVisP, "Hidden Color", V.CONFIG.HiddenColor, function(v) V.CONFIG.HiddenColor = v end, {ConfigKey = "HiddenColor"})
 
 -- ── LOCAL ESP ──────────────────────────────
-local groupLocal = section(visLocal.Left, "Self ESP")
-toggle(groupLocal, "Enable Local ESP", CONFIG.LocalPlayerESP, function(v) 
-    CONFIG.LocalPlayerESP = v 
+local groupLocal = section(V.visLocal.Left, "Self ESP")
+toggle(groupLocal, "Enable Local ESP", V.CONFIG.LocalPlayerESP, function(v) 
+    V.CONFIG.LocalPlayerESP = v 
 end, {
-    ColorData = {Default = CONFIG.LocalPlayerColor, Callback = function(v) CONFIG.LocalPlayerColor = v end, ConfigKey = "LocalPlayerColor"},
+    ColorData = {Default = V.CONFIG.LocalPlayerColor, Callback = function(v) V.CONFIG.LocalPlayerColor = v end, ConfigKey = "LocalPlayerColor"},
     ConfigKey = "LocalPlayerESP"
 })
-toggle(groupLocal, "Box", CONFIG.LocalBox, function(v) CONFIG.LocalBox = v end, {
-    ColorData = {Default = CONFIG.LocalBoxColor, Callback = function(v) CONFIG.LocalBoxColor = v end, ConfigKey = "LocalBoxColor"},
+toggle(groupLocal, "Box", V.CONFIG.LocalBox, function(v) V.CONFIG.LocalBox = v end, {
+    ColorData = {Default = V.CONFIG.LocalBoxColor, Callback = function(v) V.CONFIG.LocalBoxColor = v end, ConfigKey = "LocalBoxColor"},
     ConfigKey = "LocalBox"
 })
-toggle(groupLocal, "Skeleton", CONFIG.LocalSkeleton, function(v) CONFIG.LocalSkeleton = v end, {
-    ColorData = {Default = CONFIG.LocalSkeletonColor, Callback = function(v) CONFIG.LocalSkeletonColor = v end, ConfigKey = "LocalSkeletonColor"},
+toggle(groupLocal, "Skeleton", V.CONFIG.LocalSkeleton, function(v) V.CONFIG.LocalSkeleton = v end, {
+    ColorData = {Default = V.CONFIG.LocalSkeletonColor, Callback = function(v) V.CONFIG.LocalSkeletonColor = v end, ConfigKey = "LocalSkeletonColor"},
     ConfigKey = "LocalSkeleton"
 })
-toggle(groupLocal, "Health Bar", CONFIG.LocalHealthBar, function(v) CONFIG.LocalHealthBar = v end, {ConfigKey = "LocalHealthBar"})
-toggle(groupLocal, "Tracers", CONFIG.LocalTracers, function(v) CONFIG.LocalTracers = v end, {
-    ColorData = {Default = CONFIG.LocalTracersColor, Callback = function(v) CONFIG.LocalTracersColor = v end, ConfigKey = "LocalTracersColor"},
+toggle(groupLocal, "Health Bar", V.CONFIG.LocalHealthBar, function(v) V.CONFIG.LocalHealthBar = v end, {ConfigKey = "LocalHealthBar"})
+toggle(groupLocal, "Tracers", V.CONFIG.LocalTracers, function(v) V.CONFIG.LocalTracers = v end, {
+    ColorData = {Default = V.CONFIG.LocalTracersColor, Callback = function(v) V.CONFIG.LocalTracersColor = v end, ConfigKey = "LocalTracersColor"},
     ConfigKey = "LocalTracers"
 })
 
 -- ── WORLD ──────────────────────────────
-local groupWorld = section(visWorld.Left, "Environment")
-toggle(groupWorld, "Ambience", CONFIG.AmbienceEnabled, function(v) CONFIG.AmbienceEnabled = v end, {
-    ColorData = {Default = CONFIG.AmbienceColor, Callback = function(v) CONFIG.AmbienceColor = v end, ConfigKey = "AmbienceColor"},
+local groupWorld = section(V.visWorld.Left, "Environment")
+toggle(groupWorld, "Ambience", V.CONFIG.AmbienceEnabled, function(v) V.CONFIG.AmbienceEnabled = v end, {
+    ColorData = {Default = V.CONFIG.AmbienceColor, Callback = function(v) V.CONFIG.AmbienceColor = v end, ConfigKey = "AmbienceColor"},
     ConfigKey = "AmbienceEnabled"
 })
 
 -- ── OTHER ──────────────────────────────
-local visOther = addSubTab(vis, "Other")
-local scopeGroup = section(visOther.Left, "Custom Scope")
+V.visOther = addSubTab(V.vis, "Other")
+local scopeGroup = section(V.visOther.Left, "Custom Scope")
 
-toggle(scopeGroup, "Enable Scope", CONFIG.ScopeEnabled, function(v) CONFIG.ScopeEnabled = v end, {
-    ColorData = {Default = CONFIG.ScopeColor, Callback = function(v) CONFIG.ScopeColor = v end, ConfigKey = "ScopeColor"},
+toggle(scopeGroup, "Enable Scope", V.CONFIG.ScopeEnabled, function(v) V.CONFIG.ScopeEnabled = v end, {
+    ColorData = {Default = V.CONFIG.ScopeColor, Callback = function(v) V.CONFIG.ScopeColor = v end, ConfigKey = "ScopeColor"},
     ConfigKey = "ScopeEnabled"
 })
 
-slider(scopeGroup, "Scope Gap", 0, 50, CONFIG.ScopeGap, 0, function(v) CONFIG.ScopeGap = v end, {ConfigKey = "ScopeGap"})
-slider(scopeGroup, "Scope Length", 1, 100, CONFIG.ScopeLength, 0, function(v) CONFIG.ScopeLength = v end, {ConfigKey = "ScopeLength"})
-slider(scopeGroup, "Scope Thickness", 1, 10, CONFIG.ScopeThickness, 1, function(v) CONFIG.ScopeThickness = v end, {ConfigKey = "ScopeThickness"})
-toggle(scopeGroup, "Center Dot", CONFIG.ScopeCenterDot, function(v) CONFIG.ScopeCenterDot = v end, {ConfigKey = "ScopeCenterDot"})
-toggle(scopeGroup, "Scope Outline", CONFIG.ScopeOutline, function(v) CONFIG.ScopeOutline = v end, {ConfigKey = "ScopeOutline"})
+slider(scopeGroup, "Scope Gap", 0, 50, V.CONFIG.ScopeGap, 0, function(v) V.CONFIG.ScopeGap = v end, {ConfigKey = "ScopeGap"})
+slider(scopeGroup, "Scope Length", 1, 100, V.CONFIG.ScopeLength, 0, function(v) V.CONFIG.ScopeLength = v end, {ConfigKey = "ScopeLength"})
+slider(scopeGroup, "Scope Thickness", 1, 10, V.CONFIG.ScopeThickness, 1, function(v) V.CONFIG.ScopeThickness = v end, {ConfigKey = "ScopeThickness"})
+toggle(scopeGroup, "Center Dot", V.CONFIG.ScopeCenterDot, function(v) V.CONFIG.ScopeCenterDot = v end, {ConfigKey = "ScopeCenterDot"})
+toggle(scopeGroup, "Scope Outline", V.CONFIG.ScopeOutline, function(v) V.CONFIG.ScopeOutline = v end, {ConfigKey = "ScopeOutline"})
 
--- ── CONFIGS ──────────────────────────────
-local cfgMain = section(cfg.Left, "Config Management")
+local radarGroup = section(V.visOther.Left, "Radar")
+toggle(radarGroup, "Enable Radar", V.CONFIG.RadarEnabled, function(v) V.CONFIG.RadarEnabled = v end, {ConfigKey = "RadarEnabled"})
+slider(radarGroup, "Radar Size", 100, 500, V.CONFIG.RadarSize, 0, function(v) V.CONFIG.RadarSize = v end, {ConfigKey = "RadarSize"})
+slider(radarGroup, "Detection Range", 50, 2000, V.CONFIG.RadarRadius, 0, function(v) V.CONFIG.RadarRadius = v end, {ConfigKey = "RadarRadius"})
+
+-- ── V.CONFIGS ──────────────────────────────
+V.cfgMain = section(V.cfg.Left, "Config Management")
 local configName = ""
 local configTB
-local tbFrame, realTB = textbox(cfgMain, "Config Name", "Enter name...", function(v) configName = v end)
+local tbFrame, realTB = textbox(V.cfgMain, "Config Name", "Enter name...", function(v) configName = v end)
 configTB = realTB
 
-button(cfgMain, "Create New", Color3.fromRGB(70, 110, 255), function()
+button(V.cfgMain, "Create New", Color3.fromRGB(70, 110, 255), function()
     if configName ~= "" then
         saveConfig(configName)
         configName = ""
@@ -2383,26 +2474,29 @@ button(cfgMain, "Create New", Color3.fromRGB(70, 110, 255), function()
     end
 end)
 
-local cfgList = section(cfg.Right, "Saved Configs")
+V.cfgList = section(V.cfg.Right, "Saved Configs")
 local function refreshCfgList()
     -- Clear current list with animation
-    for _, child in ipairs(cfgList:GetChildren()) do
+    for _, child in ipairs(V.cfgList:GetChildren()) do
         if child:IsA("Frame") and not child:IsA("UIListLayout") and not child:IsA("UIPadding") then
             child:Destroy()
         end
     end
     
     if listfiles then
-        local files = listfiles(folderName)
+        local files = listfiles(V.folderName)
         for _, file in ipairs(files) do
             -- More robust name extraction to avoid ./ or other path prefixes
             local name = file:match("([^/]+)%.json$") or file:match("([^\\]+)%.json$") or file:gsub(".json", "")
+            
+            -- Скрываем системные файлы
+            if name == "auth" then continue end
             
             local f = Instance.new("Frame")
             f.Size = UDim2.new(1, 0, 0, 42)
             f.BackgroundTransparency = 1
             f.ClipsDescendants = true
-            f.Parent = cfgList
+            f.Parent = V.cfgList
             
             -- Animation state
             f.Size = UDim2.new(1, 0, 0, 0)
@@ -2478,56 +2572,108 @@ local function refreshCfgList()
     end
 end
 
-button(cfgMain, "Refresh List", Color3.fromRGB(45, 45, 55), refreshCfgList)
+button(V.cfgMain, "Refresh List", Color3.fromRGB(45, 45, 55), refreshCfgList)
 refreshCfgList()
 
 -- ── SETTINGS (Popup) ──────────────────────────
 local subGroup = section(subScroll, "Panel Content")
-toggle(subGroup, "Distance", CONFIG.ShowDistance, function(v) CONFIG.ShowDistance = v end, {
-    ColorData = {Default = CONFIG.DistanceColor, Callback = function(v) CONFIG.DistanceColor = v end, ConfigKey = "DistanceColor"},
+toggle(subGroup, "Distance", V.CONFIG.ShowDistance, function(v) V.CONFIG.ShowDistance = v end, {
+    ColorData = {Default = V.CONFIG.DistanceColor, Callback = function(v) V.CONFIG.DistanceColor = v end, ConfigKey = "DistanceColor"},
     ConfigKey = "ShowDistance"
 })
-toggle(subGroup, "Avatar", CONFIG.ShowAvatar, function(v) CONFIG.ShowAvatar = v end, {ConfigKey = "ShowAvatar"})
-toggle(subGroup, "Player Name", CONFIG.ShowName, function(v) CONFIG.ShowName = v end, {
-    ColorData = {Default = CONFIG.NameColor, Callback = function(v) CONFIG.NameColor = v end, ConfigKey = "NameColor"},
+toggle(subGroup, "Avatar", V.CONFIG.ShowAvatar, function(v) V.CONFIG.ShowAvatar = v end, {ConfigKey = "ShowAvatar"})
+toggle(subGroup, "Player Name", V.CONFIG.ShowName, function(v) V.CONFIG.ShowName = v end, {
+    ColorData = {Default = V.CONFIG.NameColor, Callback = function(v) V.CONFIG.NameColor = v end, ConfigKey = "NameColor"},
     ConfigKey = "ShowName"
 })
-toggle(subGroup, "Health", CONFIG.ShowHealth, function(v) CONFIG.ShowHealth = v end, {
-    ColorData = {Default = CONFIG.HealthColor, Callback = function(v) CONFIG.HealthColor = v end, ConfigKey = "HealthColor"},
+toggle(subGroup, "Health", V.CONFIG.ShowHealth, function(v) V.CONFIG.ShowHealth = v end, {
+    ColorData = {Default = V.CONFIG.HealthColor, Callback = function(v) V.CONFIG.HealthColor = v end, ConfigKey = "HealthColor"},
     ConfigKey = "ShowHealth"
 })
-colorPick(subGroup, "Heart Color", CONFIG.HeartColor, function(v) CONFIG.HeartColor = v end, {ConfigKey = "HeartColor"})
+colorPick(subGroup, "Heart Color", V.CONFIG.HeartColor, function(v) V.CONFIG.HeartColor = v end, {ConfigKey = "HeartColor"})
 
-local groupMisc = section(misc.Left, "Miscellaneous")
-toggle(groupMisc, "Show Keybinds List", CONFIG.ShowBindWindow, function(v) 
-    CONFIG.ShowBindWindow = v 
+local groupMisc = section(V.misc.Left, "Miscellaneous")
+toggle(groupMisc, "Show Keybinds List", V.CONFIG.ShowBindWindow, function(v) 
+    V.CONFIG.ShowBindWindow = v 
     updateBindList()
 end, {ConfigKey = "ShowBindWindow"})
 
-toggle(groupMisc, "High Jump", CONFIG.HighJumpEnabled, function(v) 
-    CONFIG.HighJumpEnabled = v 
+toggle(groupMisc, "High Jump", V.CONFIG.HighJumpEnabled, function(v) 
+    V.CONFIG.HighJumpEnabled = v 
 end, {ConfigKey = "HighJumpEnabled"})
 
-slider(groupMisc, "Jump Height", 0, 200, CONFIG.HighJumpValue, 0, function(v) 
-    CONFIG.HighJumpValue = v 
+slider(groupMisc, "Jump Height", 0, 200, V.CONFIG.HighJumpValue, 0, function(v) 
+    V.CONFIG.HighJumpValue = v 
 end, {ConfigKey = "HighJumpValue"})
 
-local groupMenu = section(misc.Right, "Menu Settings")
+local groupMenu = section(V.misc.Right, "Menu Settings")
 -- Menu size sliders removed
 
 local function unload()
-    menuOpen = false
-    mainPanel:Destroy()
-    pickerPanel:Destroy()
-    subPanel:Destroy()
-    previewPanel:Destroy()
-    for _, p in pairs(Players:GetPlayers()) do removeESP(p) end
-    for _, m in pairs(DeathMarkers) do
-        m.Line1:Remove()
-        m.Line2:Remove()
-        m.Text:Remove()
-    end
-    -- Note: This is a basic unload, in a real script you'd disconnect all events
+    V.isAuthorized = false
+    V.menuOpen = false
+    
+    -- Disable all visual features
+    V.CONFIG.Enabled = false
+    V.CONFIG.AmbienceEnabled = false
+    V.CONFIG.ScopeEnabled = false
+    V.CONFIG.RadarEnabled = false
+    V.CONFIG.HighJumpEnabled = false
+    
+    -- Remove all ESP objects
+    pcall(function()
+        for _, p in pairs(Players:GetPlayers()) do
+            if V.ESPObjects[p] then
+                for _, obj in pairs(V.ESPObjects[p]) do
+                    if typeof(obj) == "Instance" then obj:Destroy()
+                    elseif type(obj) == "table" and obj.Remove then obj:Remove()
+                    elseif type(obj) == "table" and obj.Destroy then obj:Destroy() end
+                end
+                V.ESPObjects[p] = nil
+            end
+        end
+    end)
+    
+    -- Remove death markers
+    pcall(function()
+        for _, m in pairs(V.DeathMarkers) do
+            if m.Line1 then m.Line1:Remove() end
+            if m.Line2 then m.Line2:Remove() end
+            if m.Text then m.Text:Remove() end
+        end
+        V.DeathMarkers = {}
+    end)
+    
+    -- Restore lighting
+    pcall(function()
+        if savedSettings then
+            Lighting.Ambient = savedSettings.Ambient
+            Lighting.OutdoorAmbient = savedSettings.OutdoorAmbient
+            Lighting.Brightness = savedSettings.Brightness
+            Lighting.GlobalShadows = savedSettings.GlobalShadows
+            Lighting.ClockTime = savedSettings.ClockTime
+            Lighting.FogEnd = savedSettings.FogEnd
+            Lighting.FogStart = savedSettings.FogStart
+            Lighting.ExposureCompensation = savedSettings.ExposureCompensation
+            Lighting.EnvironmentDiffuseScale = savedSettings.EnvironmentDiffuseScale
+            Lighting.EnvironmentSpecularScale = savedSettings.EnvironmentSpecularScale
+            Lighting.ShadowSoftness = savedSettings.ShadowSoftness
+            savedSettings = nil
+        end
+    end)
+    
+    -- Hide radar
+    pcall(function()
+        if V.RadarSystem and V.RadarSystem.Window then
+            V.RadarSystem.Window.Visible = false
+        end
+    end)
+    
+    -- Destroy ALL GUI (menu, login, register, everything)
+    pcall(function()
+        if V.ESPGui then V.ESPGui:Destroy() end
+        if V.MenuGui then V.MenuGui:Destroy() end
+    end)
 end
 
 local ub = Instance.new("TextButton")
@@ -2541,76 +2687,772 @@ ub.Parent = groupMisc
 Instance.new("UICorner", ub).CornerRadius = UDim.new(0, 8)
 ub.MouseButton1Click:Connect(unload)
 
-local function toggleMenu()
-    menuOpen = not menuOpen
-    if menuOpen then
-        mainPanel.Visible = true
-        tw(mainPanel, {GroupTransparency = 0}, 0.2)
+-- ════════════ REGISTRATION UI ════════════
+V.RegisterPanel = Instance.new("CanvasGroup")
+V.RegisterPanel.Size = UDim2.new(0, 350, 0, 250)
+V.RegisterPanel.Position = UDim2.new(0.5, -175, 0.5, -125)
+V.RegisterPanel.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
+V.RegisterPanel.BorderSizePixel = 0
+V.RegisterPanel.Visible = true
+V.RegisterPanel.Parent = V.MenuGui
+Instance.new("UICorner", V.RegisterPanel).CornerRadius = UDim.new(0, 12)
+local regStroke = Instance.new("UIStroke", V.RegisterPanel)
+regStroke.Color = Color3.fromRGB(70, 110, 255)
+regStroke.Thickness = 2
+regStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+
+local rHeader = Instance.new("Frame", V.RegisterPanel)
+rHeader.Size = UDim2.new(1, 0, 0, 45)
+rHeader.BackgroundColor3 = Color3.fromRGB(20, 20, 26)
+rHeader.BorderSizePixel = 0
+Instance.new("UICorner", rHeader).CornerRadius = UDim.new(0, 12)
+
+local rTitle = Instance.new("TextLabel", rHeader)
+rTitle.Size = UDim2.new(1, 0, 1, 0)
+rTitle.BackgroundTransparency = 1
+rTitle.Font = Enum.Font.GothamBold
+rTitle.Text = "ASTRUM REGISTRATION"
+rTitle.TextColor3 = Color3.fromRGB(70, 110, 255)
+rTitle.TextSize = 16
+
+V.regInput = Instance.new("TextBox", V.RegisterPanel)
+V.regInput.Size = UDim2.new(1, -60, 0, 40)
+V.regInput.Position = UDim2.new(0, 30, 0, 80)
+V.regInput.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+V.regInput.BorderSizePixel = 0
+V.regInput.Font = Enum.Font.GothamMedium
+V.regInput.PlaceholderText = "Choose a nickname..."
+V.regInput.Text = ""
+V.regInput.TextColor3 = Color3.new(1, 1, 1)
+V.regInput.TextSize = 14
+Instance.new("UICorner", V.regInput).CornerRadius = UDim.new(0, 8)
+local rsStroke = Instance.new("UIStroke", V.regInput)
+rsStroke.Color = Color3.fromRGB(45, 45, 55)
+
+local regBtn = Instance.new("TextButton", V.RegisterPanel)
+regBtn.Size = UDim2.new(1, -60, 0, 45)
+regBtn.Position = UDim2.new(0, 30, 0, 140)
+regBtn.BackgroundColor3 = Color3.fromRGB(70, 110, 255)
+regBtn.Font = Enum.Font.GothamBold
+regBtn.Text = "CONTINUE"
+regBtn.TextColor3 = Color3.new(1, 1, 1)
+regBtn.TextSize = 14
+Instance.new("UICorner", regBtn).CornerRadius = UDim.new(0, 8)
+
+V.regStatus = Instance.new("TextLabel", V.RegisterPanel)
+V.regStatus.Size = UDim2.new(1, 0, 0, 30)
+V.regStatus.Position = UDim2.new(0, 0, 0, 200)
+V.regStatus.BackgroundTransparency = 1
+V.regStatus.Font = Enum.Font.GothamMedium
+V.regStatus.Text = "Welcome to Astrum"
+V.regStatus.TextColor3 = Color3.fromRGB(150, 150, 165)
+V.regStatus.TextSize = 12
+
+regBtn.MouseButton1Click:Connect(function()
+    if V.regInput.Text == "" then
+        V.regStatus.Text = "Please enter a nickname"
+        V.regStatus.TextColor3 = Color3.fromRGB(255, 100, 100)
+        return
+    end
+    
+    local targetPos = UDim2.new(0.5, -175, 0.5, -25) -- Slide down
+    tw(V.RegisterPanel, {GroupTransparency = 1, Position = targetPos}, 0.4, Enum.EasingStyle.Back, Enum.EasingDirection.In).Completed:Connect(function()
+        V.RegisterPanel.Visible = false
+        V.LoginPanel.Visible = true
+        V.LoginPanel.GroupTransparency = 1
+        V.LoginPanel.Position = UDim2.new(0.5, -175, 0.5, -185) -- Start from above
+        tw(V.LoginPanel, {GroupTransparency = 0, Position = UDim2.new(0.5, -175, 0.5, -155)}, 0.5, Enum.EasingStyle.Back, Enum.EasingDirection.Out)
+    end)
+end)
+
+-- ════════════ LOGIN SYSTEM UI ════════════
+V.LoginPanel = Instance.new("CanvasGroup")
+V.LoginPanel.Size = UDim2.new(0, 350, 0, 310)
+V.LoginPanel.Position = UDim2.new(0.5, -175, 0.5, -155)
+V.LoginPanel.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
+V.LoginPanel.BorderSizePixel = 0
+V.LoginPanel.Visible = false
+V.LoginPanel.Parent = V.MenuGui
+Instance.new("UICorner", V.LoginPanel).CornerRadius = UDim.new(0, 12)
+local loginStroke = Instance.new("UIStroke", V.LoginPanel)
+loginStroke.Color = Color3.fromRGB(70, 110, 255)
+loginStroke.Thickness = 2
+loginStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+
+local function animateStroke(stroke)
+    task.spawn(function()
+        while stroke and stroke.Parent do
+            local t = tw(stroke, {Transparency = 0.8}, 1.2)
+            t.Completed:Wait()
+            local t2 = tw(stroke, {Transparency = 0}, 1.2)
+            t2.Completed:Wait()
+        end
+    end)
+end
+
+animateStroke(regStroke)
+animateStroke(loginStroke)
+
+local lHeader = Instance.new("Frame", V.LoginPanel)
+lHeader.Size = UDim2.new(1, 0, 0, 45)
+lHeader.BackgroundColor3 = Color3.fromRGB(20, 20, 26)
+lHeader.BorderSizePixel = 0
+Instance.new("UICorner", lHeader).CornerRadius = UDim.new(0, 12)
+
+local lTitle = Instance.new("TextLabel", lHeader)
+lTitle.Size = UDim2.new(1, 0, 1, 0)
+lTitle.BackgroundTransparency = 1
+lTitle.Font = Enum.Font.GothamBold
+lTitle.Text = "ASTRUM AUTH"
+lTitle.TextColor3 = Color3.fromRGB(70, 110, 255)
+lTitle.TextSize = 16
+
+V.keyInput = Instance.new("TextBox", V.LoginPanel)
+V.keyInput.Size = UDim2.new(1, -60, 0, 40)
+V.keyInput.Position = UDim2.new(0, 30, 0, 80)
+V.keyInput.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+V.keyInput.BorderSizePixel = 0
+V.keyInput.Font = Enum.Font.GothamMedium
+V.keyInput.PlaceholderText = "Enter your key here..."
+V.keyInput.Text = ""
+V.keyInput.TextColor3 = Color3.new(1, 1, 1)
+V.keyInput.TextSize = 14
+Instance.new("UICorner", V.keyInput).CornerRadius = UDim.new(0, 8)
+local kStroke = Instance.new("UIStroke", V.keyInput)
+kStroke.Color = Color3.fromRGB(45, 45, 55)
+
+local loginBtn = Instance.new("TextButton", V.LoginPanel)
+loginBtn.Size = UDim2.new(1, -60, 0, 45)
+loginBtn.Position = UDim2.new(0, 30, 0, 140)
+loginBtn.BackgroundColor3 = Color3.fromRGB(70, 110, 255)
+loginBtn.Font = Enum.Font.GothamBold
+loginBtn.Text = "VERIFY KEY"
+loginBtn.TextColor3 = Color3.new(1, 1, 1)
+loginBtn.TextSize = 14
+Instance.new("UICorner", loginBtn).CornerRadius = UDim.new(0, 8)
+
+V.statusLbl = Instance.new("TextLabel", V.LoginPanel)
+V.statusLbl.Size = UDim2.new(1, 0, 0, 30)
+V.statusLbl.Position = UDim2.new(0, 0, 0, 200)
+V.statusLbl.BackgroundTransparency = 1
+V.statusLbl.Font = Enum.Font.GothamMedium
+V.statusLbl.Text = "Awaiting input..."
+V.statusLbl.TextColor3 = Color3.fromRGB(150, 150, 165)
+V.statusLbl.TextSize = 12
+
+local hwidBox = Instance.new("TextBox", V.LoginPanel)
+hwidBox.Size = UDim2.new(1, -60, 0, 30)
+hwidBox.Position = UDim2.new(0, 30, 0, 240)
+hwidBox.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
+hwidBox.BorderSizePixel = 0
+hwidBox.Font = Enum.Font.Code
+hwidBox.Text = V.hwid
+hwidBox.ClearTextOnFocus = false
+hwidBox.TextEditable = false
+hwidBox.TextColor3 = Color3.fromRGB(100, 100, 120)
+hwidBox.TextSize = 10
+Instance.new("UICorner", hwidBox).CornerRadius = UDim.new(0, 4)
+
+local hwidLabel = Instance.new("TextLabel", V.LoginPanel)
+hwidLabel.Size = UDim2.new(1, 0, 0, 15)
+hwidLabel.Position = UDim2.new(0, 30, 0, 275)
+hwidLabel.BackgroundTransparency = 1
+hwidLabel.Font = Enum.Font.GothamMedium
+hwidLabel.Text = "Your HWID (Click to copy)"
+hwidLabel.TextColor3 = Color3.fromRGB(80, 80, 90)
+hwidLabel.TextSize = 10
+hwidLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+local function getDuration(amount, unit)
+    amount = tonumber(amount) or 0
+    unit = unit:lower()
+    if unit:find("hour") then return amount * 3600
+    elseif unit:find("day") then return amount * 86400
+    elseif unit:find("week") then return amount * 604800
+    elseif unit:find("month") then return amount * 2592000
+    elseif unit:find("min") or unit == "m" then return amount * 60
+    elseif unit:find("lifetime") then return -1
+    end
+    return 0
+end
+
+local function formatTime(seconds)
+    if seconds < 0 then return "Infinite" end
+    local days = math.floor(seconds / 86400)
+    local hours = math.floor((seconds % 86400) / 3600)
+    local mins = math.floor((seconds % 3600) / 60)
+    local secs = math.floor(seconds % 60)
+    
+    if days > 0 then
+        return string.format("%dd %02dh %02dm %02ds", days, hours, mins, secs)
+    elseif hours > 0 then
+        return string.format("%02dh %02dm %02ds", hours, mins, secs)
+    else
+        return string.format("%02dm %02ds", mins, secs)
+    end
+end
+
+
+function V.checkKeyOnServer(entered)
+    local result = nil
+    local lastError = "Request failed"
+    local _h1 = "raw." .. V._v2 .. V._r3 .. ".com"
+    local _p1 = "/Visionprog11/sentinel-software/main/1.txt"
+    
+    local function tryFetch()
+        local errors = {}
+        local ua = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+        local cacheBuster = "?cb=" .. os.time()
+        local rawUrl = "https://" .. _h1 .. _p1 .. cacheBuster
+        local apiUrl = "https://api." .. V._v2 .. ".com/repos/Visionprog11/sentinel-software/contents/1.txt"
+        local urls = {
+            {u = rawUrl, t = "raw"},
+            {u = apiUrl, t = "api"}
+        }
+
+        local rData = (request or http_request or (http and http.request))
+        
+        for i, target in ipairs(urls) do
+            -- 1. Try with custom headers (Required for API and to avoid Raw blocks)
+            if rData then
+                local s2, r2 = pcall(function() 
+                    return rData({
+                        Url = target.u, 
+                        Method = "GET", 
+                        Headers = {["User-Agent"] = ua, ["Cache-Control"] = "no-cache"}
+                    }) 
+                end)
+                if s2 and type(r2) == "table" and r2.StatusCode == 200 and type(r2.Body) == "string" and #r2.Body > 5 then
+                    if target.t == "api" then
+                        local success, decoded = pcall(function()
+                            local json = HttpService:JSONDecode(r2.Body)
+                            local content = json.content:gsub("%s", "")
+                            -- Use available Base64 decoder
+                            return (syn and syn.crypt and syn.crypt.base64.decode(content)) or 
+                                   (base64 and base64.decode(content)) or
+                                   (Crypt and Crypt.base64_decode and Crypt.base64_decode(content)) or
+                                   content
+                        end)
+                        if success and #decoded > 5 then return decoded end
+                    else
+                        return r2.Body
+                    end
+                elseif s2 and type(r2) == "table" then
+                    table.insert(errors, target.t .. ":" .. tostring(r2.StatusCode))
+                end
+            end
+
+            -- 2. Fallback to HttpGet
+            local s1, r1 = pcall(function() return game:HttpGet(target.u) end)
+            if s1 and type(r1) == "string" and #r1 > 10 and not r1:find("403") and not r1:find("Forbidden") then
+                return r1
+            end
+            table.insert(errors, target.t .. "G")
+        end
+
+        return nil, "Auth: " .. table.concat(errors, " | ")
+    end
+
+    result, lastError = tryFetch()
+    if not result then return nil, lastError end
+
+    local cleanEntered = entered:gsub("^%s*(.-)%s*$", "%1")
+    local currentNick = (V.regInput and V.regInput.Text ~= "") and V.regInput.Text or V.LP.Name
+    local cleanNick = currentNick:lower():gsub("%s", "")
+    
+    local foundKey = nil
+    local nickTaken = false
+    
+    for rawLine in result:gmatch("[^\r\n]+") do
+        local line = rawLine:gsub("^%s*(.-)%s*$", "%1")
+        if line == "" then continue end
+        
+        -- Parse: Key (Duration, Nick, HWID)
+        local key, params = line:match("^([^%s(]+)%s*%((.+)%)")
+        local dPart, nPart, hPart = "lifetime", "", ""
+        
+        if key then
+            local parts = params:split(",")
+            dPart = (parts[1] or "lifetime"):gsub("%s", "")
+            nPart = (parts[2] or ""):gsub("%s", "")
+            hPart = (parts[3] or ""):gsub("%s", "")
+        else
+            key = line:match("^([^%s(]+)")
+        end
+
+        -- Check if this is our key
+        if key == cleanEntered then
+            foundKey = {k = key, d = dPart, n = nPart, h = hPart}
+        end
+
+        -- Check if this nick is used by ANY OTHER key
+        if nPart ~= "" and nPart:lower() == cleanNick and key ~= cleanEntered then
+            nickTaken = true
+        end
+    end
+
+    if not foundKey then 
+        return false, "key is expired." 
+    end
+
+    -- 1. If key already has a nick, it MUST match our entered nick
+    if foundKey.n ~= "" and foundKey.n:lower() ~= cleanNick then
+        return false, "Wrong Nickname."
+    end
+
+    -- 2. If key has NO nick yet, check if chosen nick is already taken by another key
+    if foundKey.n == "" and nickTaken then
+        return false, "Nickname already taken."
+    end
+
+    -- 3. HWID check (ONLY IF KEY HAS A NICKNAME - private key)
+    if foundKey.n ~= "" then
+        if foundKey.h ~= "" and foundKey.h ~= V.hwid then
+            return false, "Invalid HWID"
+        end
+    end
+
+    local duration = -1
+    local isTimestamp = tonumber(foundKey.d)
+    
+    if foundKey.d == "expired" then
+        return false, "key is expired."
+    elseif isTimestamp then
+        local now = os.time()
+        if now >= isTimestamp then
+            return false, "key is expired."
+        end
+        duration = isTimestamp - now
+    else
+        local amt, unt = foundKey.d:match("(%d*)%s*(%a+)")
+        if amt and unt then
+            duration = getDuration(amt ~= "" and amt or 0, unt)
+        end
+    end
+
+    return true, duration, cleanEntered
+end
+
+local function verifyKey(savedKey)
+    local entered = savedKey or V.keyInput.Text
+    if entered == "" then
+        V.statusLbl.Text = "Please enter a key"
+        V.statusLbl.TextColor3 = Color3.fromRGB(255, 100, 100)
+        return
+    end
+
+    V.statusLbl.Text = (savedKey and "Auto-logging in..." or "Connecting to server...")
+    V.statusLbl.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+    task.spawn(function()
+        local success, data, cleanKey = V.checkKeyOnServer(entered)
+        
+        if success then
+            local authPath = V.folderName .. "/auth.json"
+            local authData = {Key = cleanKey, ActivatedAt = os.time()}
+            
+            if isfile(authPath) then
+                pcall(function() 
+                    local decoded = HttpService:JSONDecode(readfile(authPath))
+                    if decoded and decoded.Key == cleanKey then authData = decoded end
+                end)
+            end
+
+            V.lastUsedKey = cleanKey
+            V.lastAuthSync = os.time()
+            local duration = data
+
+            -- [DIRECT HWID AUTO-BINDING]
+            task.spawn(function()
+                local _z7 = "V31jk"
+                local _q8 = "DNdi3"
+                local _f9 = "3sf1jq"
+                local full_token = V._x1 .. V._k4 .. V._s5 .. V._m6 .. _z7 .. _q8 .. _f9
+                
+                local _api = "api." .. V._v2 .. ".com"
+                local owner = "Visionprog11"
+                local repo = "sentinel-software"
+                local path = "1.txt"
+                local api_url = string.format("https://%s/repos/%s/%s/contents/%s", _api, owner, repo, path)
+                local rData = (request or http_request or (http and http.request))
+                
+                if not rData then return end
+
+                pcall(function()
+                    -- 1. Получаем текущий файл
+                    local g = rData({
+                        Url = api_url,
+                        Method = "GET",
+                        Headers = {["Authorization"] = "token " .. full_token, ["User-Agent"] = "Sentinel-Auth"}
+                    })
+                    
+                    if g.StatusCode == 200 then
+                        local json = HttpService:JSONDecode(g.Body)
+                        local sha = json.sha
+                        
+                        -- Декодируем содержимое
+                        local b64 = json.content:gsub("%s", "")
+                        local content = (syn and syn.crypt and syn.crypt.base64.decode(b64)) or 
+                                        (base64 and base64.decode(b64)) or ""
+                        
+                        if content == "" then return end
+
+                        local lines = content:split("\n")
+                        local changed = false
+                        -- Сначала определяем ник текущего ключа
+                        local myNick = ""
+                        for i, line in ipairs(lines) do
+                            local cleanLine = line:gsub("^%s*(.-)%s*$", "%1")
+                            if cleanLine:sub(1, #cleanKey) == cleanKey then
+                                local k, p = cleanLine:match("^([^%s(]+)%s*%((.+)%)")
+                                if k and p then
+                                    local pts = p:split(",")
+                                    myNick = (pts[2] or ""):gsub("%s","")
+                                end
+                                break
+                            end
+                        end
+                        
+                        -- Если НИК пустой — ключ ОБЩИЙ, не привязываем
+                        if myNick == "" then return end
+
+                        -- Теперь привязываем HWID ко ВСЕМ ключам с этим ником
+                        for i, line in ipairs(lines) do
+                            local cleanLine = line:gsub("^%s*(.-)%s*$", "%1")
+                            local k, p = cleanLine:match("^([^%s(]+)%s*%((.+)%)")
+                            if k and p then
+                                local parts = p:split(",")
+                                local dur = (parts[1] or "lifetime"):gsub("%s","")
+                                local nick = (parts[2] or ""):gsub("%s","")
+                                local hw = (parts[3] or ""):gsub("%s","")
+                                
+                                -- Только ключи с таким же ником
+                                if nick:lower() == myNick:lower() then
+                                    -- Переводим относительное время в TIMESTAMP
+                                    local origDur = dur
+                                    local isTS = tonumber(dur)
+                                    if not isTS and dur ~= "lifetime" and dur ~= "expired" then
+                                        local amt, unt = dur:match("(%d*)%s*(%a+)")
+                                        if amt and unt then
+                                            local dSecs = getDuration(amt ~= "" and amt or 0, unt)
+                                            if dSecs > 0 then
+                                                dur = tostring(os.time() + dSecs)
+                                            end
+                                        end
+                                    end
+
+                                    -- Если HWID пустой ИЛИ время изменилось — обновляем
+                                    if hw == "" or dur ~= origDur then
+                                        lines[i] = string.format("%s (%s, %s, %s)", k, dur, nick, V.hwid)
+                                        changed = true
+                                    end
+                                end
+                            end
+                        end
+
+                        -- 2. Если файл изменился — отправляем назад
+                        if changed then
+                            local new_content = table.concat(lines, "\n")
+                            local encoded = (syn and syn.crypt and syn.crypt.base64.encode(new_content)) or 
+                                            (base64 and base64.encode(new_content)) or ""
+                            
+                            if encoded ~= "" then
+                                rData({
+                                    Url = api_url,
+                                    Method = "PUT",
+                                    Headers = {
+                                        ["Authorization"] = "token " .. full_token,
+                                        ["Content-Type"] = "application/json"
+                                    },
+                                    Body = HttpService:JSONEncode({
+                                        message = "Auto-bind HWID: " .. cleanKey,
+                                        content = encoded,
+                                        sha = sha
+                                    })
+                                })
+                            end
+                        end
+                    end
+                end)
+            end)
+
+                if duration ~= -1 then
+                    local now = os.time()
+                    local elapsed = now - authData.ActivatedAt
+                    if elapsed >= duration then
+                        V.expireSession()
+                        return
+                    else
+                        V.statusLbl.Text = "Success! " .. formatTime(duration - elapsed) .. " left"
+                    end
+                else
+                    V.statusLbl.Text = "Success! Lifetime access."
+                end
+
+
+                local finalNick = (V.regInput and V.regInput.Text ~= "") and V.regInput.Text or V.LP.Name
+                authData.Nick = finalNick
+                writefile(authPath, HttpService:JSONEncode(authData))
+                
+                V.userLbl.Text = "User: " .. finalNick
+                V.authSessionDuration = duration
+                V.authSessionStart = authData.ActivatedAt
+                
+                -- Автозагрузка последнего конфига
+                pcall(function()
+                    if authData.LastConfig and authData.LastConfig ~= "" then
+                        loadConfig(authData.LastConfig)
+                    end
+                end)
+                
+                if duration == -1 then
+                    V.timeLbl.Text = "Time: Lifetime"
+                else
+                    local left = duration - (os.time() - authData.ActivatedAt)
+                    V.timeLbl.Text = "Time: " .. formatTime(left)
+                end
+
+                V.statusLbl.TextColor3 = Color3.fromRGB(100, 255, 100)
+                
+                -- [WEBHOOK NOTIFICATION]
+                task.spawn(function()
+                    if V.webhookURL ~= "" and V.webhookURL:find("discord") then
+                        pcall(function()
+                            local payload = {
+                                ["content"] = "",
+                                ["embeds"] = {{
+                                    ["title"] = "🚀 Новая авторизация в Astrum",
+                                    ["color"] = 5814783, -- Blue
+                                    ["fields"] = {
+                                        {["name"] = "Ник", ["value"] = finalNick, ["inline"] = true},
+                                        {["name"] = "Ключ", ["value"] = "`" .. cleanKey .. "`", ["inline"] = true},
+                                        {["name"] = "ID", ["value"] = "`" .. V.hwid .. "`", ["inline"] = false},
+                                        {["name"] = "Доступ", ["value"] = (duration == -1 and "Lifetime" or formatTime(duration)), ["inline"] = true}
+                                    },
+                                    ["footer"] = {["text"] = "Astrum Auth System | " .. os.date("%X")}
+                                }}
+                            }
+                            local r = (request or http_request or (http and http.request))
+                            if r then
+                                r({
+                                    Url = V.webhookURL,
+                                    Method = "POST",
+                                    Headers = {["Content-Type"] = "application/json"},
+                                    Body = HttpService:JSONEncode(payload)
+                                })
+                            end
+                        end)
+                    end
+                end)
+
+                local exitPos = UDim2.new(0.5, -175, 0.5, -55)
+                tw(V.LoginPanel, {GroupTransparency = 1, Position = exitPos}, 0.5, Enum.EasingStyle.Back, Enum.EasingDirection.In)
+                tw(V.RegisterPanel, {GroupTransparency = 1}, 0.5)
+                task.wait(0.6)
+                V.LoginPanel.Visible = false
+                V.RegisterPanel.Visible = false
+                V.isAuthorized = true
+                toggleMenu()
+            else
+                V.statusLbl.Text = tostring(data or "key is expired.")
+                V.statusLbl.TextColor3 = Color3.fromRGB(255, 50, 50)
+            end
+        end)
+end
+
+loginBtn.MouseButton1Click:Connect(function() verifyKey() end)
+
+function toggleMenu(force)
+    if not V.isAuthorized and not force then return end
+    V.menuOpen = not V.menuOpen
+    if V.menuOpen then
+        V.mainPanel.Visible = true
+        tw(V.mainPanel, {GroupTransparency = 0}, 0.2)
         
         -- Force re-pin positioning
-        previewPanel.Position = UDim2.new(mainPanel.Position.X.Scale, mainPanel.Position.X.Offset + 880 + 15, mainPanel.Position.Y.Scale, mainPanel.Position.Y.Offset)
+        V.previewPanel.Position = UDim2.new(V.mainPanel.Position.X.Scale, V.mainPanel.Position.X.Offset + 880 + 15, V.mainPanel.Position.Y.Scale, V.mainPanel.Position.Y.Offset)
 
-        if tabs[1] and tabs[1].Page.Visible then
-            previewPanel.Visible = true
+        if V.tabs[1] and V.tabs[1].Page.Visible then
+            V.previewPanel.Visible = true
             initPreview()
-            tw(previewPanel, {GroupTransparency = 0}, 0.2)
+            tw(V.previewPanel, {GroupTransparency = 0}, 0.2)
         end
     else
-        local t = tw(mainPanel, {GroupTransparency = 1}, 0.2, Enum.EasingStyle.Sine, Enum.EasingDirection.In)
-        tw(previewPanel, {GroupTransparency = 1}, 0.2, Enum.EasingStyle.Sine, Enum.EasingDirection.In)
+        local t = tw(V.mainPanel, {GroupTransparency = 1}, 0.2, Enum.EasingStyle.Sine, Enum.EasingDirection.In)
+        tw(V.previewPanel, {GroupTransparency = 1}, 0.2, Enum.EasingStyle.Sine, Enum.EasingDirection.In)
         
-        if activePopup then
-            local s = (activePopup == pickerPanel) and pickerScale or (activePopup == bindPanel and bindScale or subScale)
-            task.spawn(function() closePopup(activePopup, s) end)
-            activePopup = nil
-            activeSource = nil
+        if V.activePopup then
+            local s = (V.activePopup == V.pickerPanel) and V.pickerScale or (V.activePopup == V.bindPanel and V.bindScale or V.subScale)
+            task.spawn(function() closePopup(V.activePopup, s) end)
+            V.activePopup = nil
+            V.activeSource = nil
         end
 
         t.Completed:Connect(function()
-            if not menuOpen then 
-                mainPanel.Visible = false 
-                previewPanel.Visible = false
+            if not V.menuOpen then 
+                V.mainPanel.Visible = false 
+                V.previewPanel.Visible = false
             end
         end)
     end
 end
 
+function V.expireSession()
+    if not V.isAuthorized then return end
+    V.isAuthorized = false
+    
+    -- Close menu and radar UI
+    if V.menuOpen then toggleMenu(true) end
+    
+    -- Disable all visual features
+    V.CONFIG.Enabled = false
+    V.CONFIG.AmbienceEnabled = false
+    V.CONFIG.ScopeEnabled = false
+    V.CONFIG.RadarEnabled = false
+    V.CONFIG.HighJumpEnabled = false
+    
+    -- Remove all ESP objects
+    pcall(function()
+        for _, p in pairs(Players:GetPlayers()) do
+            if V.ESPObjects[p] then
+                for _, obj in pairs(V.ESPObjects[p]) do
+                    if typeof(obj) == "Instance" then obj:Destroy()
+                    elseif type(obj) == "table" and obj.Remove then obj:Remove()
+                    elseif type(obj) == "table" and obj.Destroy then obj:Destroy() end
+                end
+                V.ESPObjects[p] = nil
+            end
+        end
+    end)
+    
+    -- Remove death markers
+    pcall(function()
+        for _, m in pairs(V.DeathMarkers) do
+            if m.Line1 then m.Line1:Remove() end
+            if m.Line2 then m.Line2:Remove() end
+            if m.Text then m.Text:Remove() end
+        end
+        V.DeathMarkers = {}
+    end)
+    
+    -- Restore lighting (ambience)
+    pcall(function()
+        if savedSettings then
+            Lighting.Ambient = savedSettings.Ambient
+            Lighting.OutdoorAmbient = savedSettings.OutdoorAmbient
+            Lighting.Brightness = savedSettings.Brightness
+            Lighting.GlobalShadows = savedSettings.GlobalShadows
+            Lighting.ClockTime = savedSettings.ClockTime
+            Lighting.FogEnd = savedSettings.FogEnd
+            Lighting.FogStart = savedSettings.FogStart
+            Lighting.ExposureCompensation = savedSettings.ExposureCompensation
+            Lighting.EnvironmentDiffuseScale = savedSettings.EnvironmentDiffuseScale
+            Lighting.EnvironmentSpecularScale = savedSettings.EnvironmentSpecularScale
+            Lighting.ShadowSoftness = savedSettings.ShadowSoftness
+            savedSettings = nil
+        end
+    end)
+    
+    -- Hide radar
+    pcall(function()
+        if V.RadarSystem and V.RadarSystem.Window then
+            V.RadarSystem.Window.Visible = false
+        end
+    end)
+    
+    -- Remove local auth to prevent auto-login
+    local authPath = V.folderName .. "/auth.json"
+    if isfile(authPath) then pcall(delfile, authPath) end
+    
+    task.spawn(function()
+        local notice = Instance.new("CanvasGroup", V.MenuGui)
+        notice.Size = UDim2.new(0, 400, 0, 100)
+        notice.Position = UDim2.new(0.5, -200, 0.45, -50)
+        notice.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
+        notice.GroupTransparency = 1
+        notice.ZIndex = 500
+        
+        Instance.new("UICorner", notice).CornerRadius = UDim.new(0, 12)
+        local stroke = Instance.new("UIStroke", notice)
+        stroke.Color = Color3.fromRGB(255, 60, 60)
+        stroke.Thickness = 2
+        
+        local t1 = Instance.new("TextLabel", notice)
+        t1.Size = UDim2.new(1, 0, 0.6, 0)
+        t1.BackgroundTransparency = 1
+        t1.Font = Enum.Font.GothamBold
+        t1.Text = "Your key has expired("
+        t1.TextColor3 = Color3.new(1, 1, 1)
+        t1.TextSize = 22
+        
+        local t2 = Instance.new("TextLabel", notice)
+        t2.Size = UDim2.new(1, 0, 0.4, 0)
+        t2.Position = UDim2.new(0, 0, 0.55, 0)
+        t2.BackgroundTransparency = 1
+        t2.Font = Enum.Font.GothamMedium
+        t2.Text = "Get a new key for continue"
+        t2.TextColor3 = Color3.fromRGB(220, 220, 220)
+        t2.TextSize = 16
+        
+        -- Flashy intro
+        tw(notice, {GroupTransparency = 0, Position = UDim2.new(0.5, -200, 0.5, -50)}, 0.5, Enum.EasingStyle.Back, Enum.EasingDirection.Out)
+        task.wait(2.2)
+        -- Smooth fade out
+        tw(notice, {GroupTransparency = 1, Position = UDim2.new(0.5, -200, 0.55, -50)}, 0.5, Enum.EasingStyle.Sine, Enum.EasingDirection.In)
+        task.wait(0.6)
+        notice:Destroy()
+        
+        -- Return to login state
+        V.statusLbl.Text = "Key expired. Get a new one."
+        V.statusLbl.TextColor3 = Color3.fromRGB(255, 60, 60)
+        V.LoginPanel.Visible = true
+        tw(V.LoginPanel, {GroupTransparency = 0}, 0.5)
+    end)
+end
+
 UIS.InputBegan:Connect(function(input, gp)
     if gp then return end
-    if input.KeyCode == Enum.KeyCode.Insert then toggleMenu() end
+    if input.KeyCode == Enum.KeyCode.Insert then 
+        if V.isAuthorized then
+            toggleMenu()
+        end
+    end
 end)
 
 -- Drag
-local dragActive = false
-local dragStart, startPos
+V.dragActive = false
+V.dragStart = nil
+V.startPos = nil
 
-titleBar.InputBegan:Connect(function(input)
+V.titleBar.InputBegan:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseButton1 then
-        dragActive = true
-        dragStart = input.Position
-        startPos = mainPanel.Position
+        V.dragActive = true
+        V.dragStart = input.Position
+        V.startPos = V.mainPanel.Position
     end
 end)
 
 UIS.InputChanged:Connect(function(input)
-        if dragActive and input.UserInputType == Enum.UserInputType.MouseMovement then
-        local d = input.Position - dragStart
-        mainPanel.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + d.X, startPos.Y.Scale, startPos.Y.Offset + d.Y)
+    if V.dragActive and input.UserInputType == Enum.UserInputType.MouseMovement then
+        local d = input.Position - V.dragStart
+        V.mainPanel.Position = UDim2.new(V.startPos.X.Scale, V.startPos.X.Offset + d.X, V.startPos.Y.Scale, V.startPos.Y.Offset + d.Y)
         
         -- Pin preview to menu
-        previewPanel.Position = UDim2.new(mainPanel.Position.X.Scale, mainPanel.Position.X.Offset + mainPanel.AbsoluteSize.X + 15, mainPanel.Position.Y.Scale, mainPanel.Position.Y.Offset)
+        V.previewPanel.Position = UDim2.new(V.mainPanel.Position.X.Scale, V.mainPanel.Position.X.Offset + V.mainPanel.AbsoluteSize.X + 15, V.mainPanel.Position.Y.Scale, V.mainPanel.Position.Y.Offset)
         
-        if pickerPanel.Visible then
-            pickerPanel.Position = UDim2.new(0, mainPanel.AbsolutePosition.X + mainPanel.AbsoluteSize.X + 10, 0, mainPanel.AbsolutePosition.Y)
+        if V.pickerPanel.Visible then
+            V.pickerPanel.Position = UDim2.new(0, V.mainPanel.AbsolutePosition.X + V.mainPanel.AbsoluteSize.X + 10, 0, V.mainPanel.AbsolutePosition.Y)
         end
-        if subPanel.Visible then
-            subPanel.Position = UDim2.new(0, mainPanel.AbsolutePosition.X + mainPanel.AbsoluteSize.X + 10, 0, mainPanel.AbsolutePosition.Y)
+        if V.subPanel.Visible then
+            V.subPanel.Position = UDim2.new(0, V.mainPanel.AbsolutePosition.X + V.mainPanel.AbsoluteSize.X + 10, 0, V.mainPanel.AbsolutePosition.Y)
         end
     end
 end)
 
 UIS.InputEnded:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then dragActive = false end
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        V.dragActive = false
+    end
 end)
 
 -- ══════════════════════════════════════════════════════════
@@ -2621,7 +3463,7 @@ ESPGui.Name = "ESP_Render"
 ESPGui.ResetOnSpawn = false
 ESPGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 ESPGui.IgnoreGuiInset = true
-ESPGui.Parent = LP:WaitForChild("PlayerGui")
+ESPGui.Parent = V.LP:WaitForChild("PlayerGui")
 
 local function getAvatar(uid)
     for attempt = 1, 3 do
@@ -2636,11 +3478,10 @@ local function getAvatar(uid)
     return ""
 end
 
-local ESPObjects = {}
-local DeathMarkers = {}
+-- Moved to V table
 
 local function addDeathMarker(player, position)
-    if not CONFIG.DeadESP then return end
+    if not V.CONFIG.DeadESP then return end
     
     local marker = {
         Time = tick(),
@@ -2663,7 +3504,7 @@ local function addDeathMarker(player, position)
     marker.Text.Visible = false
     marker.Text.Text = marker.Name .. " (DEAD)"
     
-    table.insert(DeathMarkers, marker)
+    table.insert(V.DeathMarkers, marker)
 end
 
 local function createESP(player)
@@ -2697,7 +3538,7 @@ local function createESP(player)
 
         local l = Drawing.new("Line")
         l.Thickness = 1.2
-        l.Color = CONFIG.SkeletonColor
+        l.Color = V.CONFIG.SkeletonColor
         l.Visible = false
         esp.Skeleton[i] = l
     end
@@ -2711,7 +3552,7 @@ local function createESP(player)
 
     local tracer = Drawing.new("Line")
     tracer.Thickness = 1
-    tracer.Color = CONFIG.TracersColor
+    tracer.Color = V.CONFIG.TracersColor
     tracer.Visible = false
     esp.Tracer = tracer
 
@@ -2729,7 +3570,7 @@ local function createESP(player)
 
     -- INFO PANEL (CanvasGroup for animations!)
     local panel = Instance.new("CanvasGroup")
-    panel.BackgroundColor3 = CONFIG.PanelBgColor
+    panel.BackgroundColor3 = V.CONFIG.PanelBgColor
     panel.BackgroundTransparency = 0
     panel.BorderSizePixel = 0
     panel.Size = UDim2.new(0, 0, 0, 0)
@@ -2772,7 +3613,7 @@ local function createESP(player)
     distLbl.BackgroundTransparency = 1
     distLbl.AutomaticSize = Enum.AutomaticSize.XY
     distLbl.Font = Enum.Font.GothamMedium
-    distLbl.TextColor3 = CONFIG.DistanceColor
+    distLbl.TextColor3 = V.CONFIG.DistanceColor
     distLbl.TextSize = 12
     distLbl.Text = "0m"
     distLbl.LayoutOrder = 1
@@ -2820,7 +3661,7 @@ local function createESP(player)
     nameLbl.BackgroundTransparency = 1
     nameLbl.AutomaticSize = Enum.AutomaticSize.XY
     nameLbl.Font = Enum.Font.GothamMedium
-    nameLbl.TextColor3 = CONFIG.NameColor
+    nameLbl.TextColor3 = V.CONFIG.NameColor
     nameLbl.TextSize = 12
     nameLbl.Text = player.Name
     nameLbl.LayoutOrder = 5
@@ -2855,7 +3696,7 @@ local function createESP(player)
     heart.BackgroundTransparency = 1
     heart.AutomaticSize = Enum.AutomaticSize.XY
     heart.Font = Enum.Font.GothamMedium
-    heart.TextColor3 = CONFIG.HeartColor
+    heart.TextColor3 = V.CONFIG.HeartColor
     heart.TextSize = 13
     heart.Text = "♥"
     heart.LayoutOrder = 1
@@ -2865,7 +3706,7 @@ local function createESP(player)
     hpLbl.BackgroundTransparency = 1
     hpLbl.AutomaticSize = Enum.AutomaticSize.XY
     hpLbl.Font = Enum.Font.GothamMedium
-    hpLbl.TextColor3 = CONFIG.HealthColor
+    hpLbl.TextColor3 = V.CONFIG.HealthColor
     hpLbl.TextSize = 12
     hpLbl.Text = "100"
     hpLbl.LayoutOrder = 2
@@ -2896,11 +3737,11 @@ local function createESP(player)
     if player.Character then setupDeathListener(player.Character) end
     player.CharacterAdded:Connect(setupDeathListener)
 
-    ESPObjects[player] = esp
+    V.ESPObjects[player] = esp
 end
 
 local function removeESP(player)
-    local e = ESPObjects[player]
+    local e = V.ESPObjects[player]
     if not e then return end
     for _, l in pairs(e.BoxOutline) do l:Remove() end
     for _, l in pairs(e.BoxSegments) do l:Remove() end
@@ -2911,7 +3752,7 @@ local function removeESP(player)
     if e.HealthBarOutline then e.HealthBarOutline:Remove() end
     if e.HealthBar then e.HealthBar:Remove() end
     e.Panel:Destroy()
-    ESPObjects[player] = nil
+    V.ESPObjects[player] = nil
 end
 
 local function hideESP(e)
@@ -2937,36 +3778,36 @@ local function updateESP(player, e, tracerOrigin)
     local hum = ch and ch:FindFirstChildOfClass("Humanoid")
     local hrp = ch and ch:FindFirstChild("HumanoidRootPart")
     
-    local active = (CONFIG.Enabled and ch and hum and hrp and hum.Health > 0 and (not CONFIG.TeamCheck or player.Team ~= LP.Team))
+    local active = (V.CONFIG.Enabled and ch and hum and hrp and hum.Health > 0 and (not V.CONFIG.TeamCheck or player.Team ~= V.LP.Team))
     local pos, dist
     if active then
         pos = hrp.Position
-        dist = (Camera.CFrame.Position - pos).Magnitude / 3
-        if dist > CONFIG.MaxDistance then active = false end
+        dist = (V.Camera.CFrame.Position - pos).Magnitude / 3
+        if dist > V.CONFIG.MaxDistance then active = false end
     end
 
     e.visCache = e.visCache or {}
     e.lastCheck = e.lastCheck or 0
     local now = tick()
 
-    if active and CONFIG.VisibilityCheck then
-        sharedRayParams.FilterDescendantsInstances = {LP.Character, ch}
+    if active and V.CONFIG.VisibilityCheck then
+        V.sharedRayParams.FilterDescendantsInstances = {V.LP.Character, ch}
 
         -- Dynamic frequency based on distance (closer = faster, further = slower)
         local freq = (dist < 50) and 0.05 or (dist < 200 and 0.2 or (dist < 500 and 0.5 or 2.0))
         if now - e.lastCheck > freq then
             e.lastCheck = now
-            local camPos = Camera.CFrame.Position
+            local camPos = V.Camera.CFrame.Position
             local rigType = hum.RigType == Enum.HumanoidRigType.R15 and "R15" or "R6"
             
             local checked = {}
-            for _, conn in ipairs(BONES[rigType]) do
+            for _, conn in ipairs(V.BONES[rigType]) do
                 for _, partName in ipairs(conn) do
                     if not checked[partName] then
                         checked[partName] = true
                         local part = ch:FindFirstChild(partName)
                         if part then
-                            local res = SafeRaycast(camPos, part.Position, sharedRayParams)
+                            local res = SafeRaycast(camPos, part.Position, V.sharedRayParams)
                             e.visCache[partName] = not res
                         end
                     end
@@ -2975,9 +3816,9 @@ local function updateESP(player, e, tracerOrigin)
         end
     end
 
-    -- Evaluate component visibility based on actual skeleton parts
+    -- Evaluate component V.visibility based on actual skeleton parts
     local function getC(pList)
-        if not CONFIG.VisibilityCheck then return true end
+        if not V.CONFIG.VisibilityCheck then return true end
         for _, pListName in ipairs(pList) do
             if e.visCache[pListName] then return true end
         end
@@ -3001,11 +3842,11 @@ local function updateESP(player, e, tracerOrigin)
 
     local isVisible = false
     for i=1,5 do if visL[i] or visR[i] then isVisible = true break end end
-    local espColor = isVisible and (CONFIG.VisibilityCheck and CONFIG.VisibleColor or nil) or (CONFIG.VisibilityCheck and CONFIG.HiddenColor or nil)
+    local espColor = isVisible and (V.CONFIG.VisibilityCheck and V.CONFIG.VisibleColor or nil) or (V.CONFIG.VisibilityCheck and V.CONFIG.HiddenColor or nil)
 
     local function getPartColor(side, lvl)
         local vs = (side == "L") and visL[lvl] or visR[lvl]
-        return vs and (CONFIG.VisibilityCheck and CONFIG.VisibleColor or CONFIG.BoxColor) or (CONFIG.VisibilityCheck and CONFIG.HiddenColor or CONFIG.BoxColor)
+        return vs and (V.CONFIG.VisibilityCheck and V.CONFIG.VisibleColor or V.CONFIG.BoxColor) or (V.CONFIG.VisibilityCheck and V.CONFIG.HiddenColor or V.CONFIG.BoxColor)
     end
 
     -- Animation Logic (Interpolation)
@@ -3016,11 +3857,11 @@ local function updateESP(player, e, tracerOrigin)
         return cur + (target - cur) * lerpSpeed
     end
 
-    local targetBoxAlpha = (active and CONFIG.BoxEnabled) and 1 or 0
-    local targetSkelAlpha = (active and CONFIG.SkeletonEnabled) and 1 or 0
-    local targetPanelAlpha = (active and CONFIG.PanelEnabled and (CONFIG.ShowDistance or CONFIG.ShowAvatar or CONFIG.ShowName or CONFIG.ShowHealth)) and 1 or 0
-    local targetTracerAlpha = (active and CONFIG.TracersEnabled) and 1 or 0
-    local targetHealthBarAlpha = (active and CONFIG.HealthBarEnabled and CONFIG.BoxEnabled) and 1 or 0
+    local targetBoxAlpha = (active and V.CONFIG.BoxEnabled) and 1 or 0
+    local targetSkelAlpha = (active and V.CONFIG.SkeletonEnabled) and 1 or 0
+    local targetPanelAlpha = (active and V.CONFIG.PanelEnabled and (V.CONFIG.ShowDistance or V.CONFIG.ShowAvatar or V.CONFIG.ShowName or V.CONFIG.ShowHealth)) and 1 or 0
+    local targetTracerAlpha = (active and V.CONFIG.TracersEnabled) and 1 or 0
+    local targetHealthBarAlpha = (active and V.CONFIG.HealthBarEnabled and V.CONFIG.BoxEnabled) and 1 or 0
 
     e.BoxAlpha = anim(e.BoxAlpha, targetBoxAlpha)
     e.SkeletonAlpha = anim(e.SkeletonAlpha, targetSkelAlpha)
@@ -3032,8 +3873,8 @@ local function updateESP(player, e, tracerOrigin)
     -- Update Viewport Positions
     local tS, bS, tOn, bOn
     if active then
-        tS, tOn = Camera:WorldToViewportPoint(pos + Vector3.new(0, 3.2, 0))
-        bS, bOn = Camera:WorldToViewportPoint(pos - Vector3.new(0, 3.2, 0))
+        tS, tOn = V.Camera:WorldToViewportPoint(pos + Vector3.new(0, 3.2, 0))
+        bS, bOn = V.Camera:WorldToViewportPoint(pos - Vector3.new(0, 3.2, 0))
         if tOn or bOn then
             e.LastValidPos = {tS = tS, bS = bS, dist = dist}
         end
@@ -3086,15 +3927,15 @@ local function updateESP(player, e, tracerOrigin)
                 e.BoxSegments[rIdx].Color, e.BoxSegments[rIdx].Transparency, e.BoxSegments[rIdx].Visible = rColor, e.BoxAlpha, true
             end
 
-            -- Top horizontal (uses mixed visibility)
-            local topColor = (visL[1] or visR[1]) and (CONFIG.VisibilityCheck and CONFIG.VisibleColor or CONFIG.BoxColor) or (CONFIG.VisibilityCheck and CONFIG.HiddenColor or CONFIG.BoxColor)
+            -- Top horizontal (uses mixed V.visibility)
+            local topColor = (visL[1] or visR[1]) and (V.CONFIG.VisibilityCheck and V.CONFIG.VisibleColor or V.CONFIG.BoxColor) or (V.CONFIG.VisibilityCheck and V.CONFIG.HiddenColor or V.CONFIG.BoxColor)
             e.BoxOutline[11].From, e.BoxOutline[11].To = Vector2.new(cX - bW/2, tS.Y), Vector2.new(cX + bW/2, tS.Y)
             e.BoxOutline[11].Transparency, e.BoxOutline[11].Visible = e.BoxAlpha * 0.5, true
             e.BoxSegments[11].From, e.BoxSegments[11].To = Vector2.new(cX - bW/2, tS.Y), Vector2.new(cX + bW/2, tS.Y)
             e.BoxSegments[11].Color, e.BoxSegments[11].Transparency, e.BoxSegments[11].Visible = topColor, e.BoxAlpha, true
 
             -- Bottom horizontal
-            local botColor = (visL[5] or visR[5]) and (CONFIG.VisibilityCheck and CONFIG.VisibleColor or CONFIG.BoxColor) or (CONFIG.VisibilityCheck and CONFIG.HiddenColor or CONFIG.BoxColor)
+            local botColor = (visL[5] or visR[5]) and (V.CONFIG.VisibilityCheck and V.CONFIG.VisibleColor or V.CONFIG.BoxColor) or (V.CONFIG.VisibilityCheck and V.CONFIG.HiddenColor or V.CONFIG.BoxColor)
             e.BoxOutline[12].From, e.BoxOutline[12].To = Vector2.new(cX - bW/2, bS.Y), Vector2.new(cX + bW/2, bS.Y)
             e.BoxOutline[12].Transparency, e.BoxOutline[12].Visible = e.BoxAlpha * 0.5, true
             e.BoxSegments[12].From, e.BoxSegments[12].To = Vector2.new(cX - bW/2, bS.Y), Vector2.new(cX + bW/2, bS.Y)
@@ -3106,7 +3947,7 @@ local function updateESP(player, e, tracerOrigin)
         -- === SKELETON RENDERING ===
         if e.SkeletonAlpha > 0.01 and active then
             local rigType = hum.RigType == Enum.HumanoidRigType.R15 and "R15" or "R6"
-            local bones = BONES[rigType]
+            local bones = V.BONES[rigType]
             local lineCount = #bones
             
             for i = 1, 15 do
@@ -3120,8 +3961,8 @@ local function updateESP(player, e, tracerOrigin)
                     local p2 = ch:FindFirstChild(connection[2])
                     
                     if p1 and p2 then
-                        local v1, on1 = Camera:WorldToViewportPoint(p1.Position)
-                        local v2, on2 = Camera:WorldToViewportPoint(p2.Position)
+                        local v1, on1 = V.Camera:WorldToViewportPoint(p1.Position)
+                        local v2, on2 = V.Camera:WorldToViewportPoint(p2.Position)
                         
                         -- Draw even if one point is off-screen, as long as both are in front of camera
                         if v1.Z > 0 and v2.Z > 0 then
@@ -3134,7 +3975,7 @@ local function updateESP(player, e, tracerOrigin)
 
                             line.From = from
                             line.To = to
-                            line.Color = espColor or CONFIG.SkeletonColor
+                            line.Color = espColor or V.CONFIG.SkeletonColor
                             line.Transparency = e.SkeletonAlpha
                             line.Visible = true
                         else
@@ -3169,7 +4010,7 @@ local function updateESP(player, e, tracerOrigin)
 
             e.Tracer.From = tracerOrigin
             e.Tracer.To = targetPos
-            e.Tracer.Color = espColor or CONFIG.TracersColor
+            e.Tracer.Color = espColor or V.CONFIG.TracersColor
             e.Tracer.Transparency = e.TracerAlpha
             e.Tracer.Visible = true
         else
@@ -3213,8 +4054,8 @@ local function updateESP(player, e, tracerOrigin)
                     e.DistLbl.Text = fdist .. "m"
                 end
                 e.DistLbl.TextSize = fontSize
-                e.DistLbl.TextColor3 = CONFIG.DistanceColor
-                e.DistLbl.Visible = CONFIG.ShowDistance
+                e.DistLbl.TextColor3 = V.CONFIG.DistanceColor
+                e.DistLbl.Visible = V.CONFIG.ShowDistance
 
                 local fhp = math.floor(hum.Health)
                 if e.LastTextHp ~= fhp then
@@ -3222,31 +4063,31 @@ local function updateESP(player, e, tracerOrigin)
                     e.HpLbl.Text = tostring(fhp)
                 end
                 e.HpLbl.TextSize = fontSize
-                e.HpLbl.TextColor3 = CONFIG.HealthColor
+                e.HpLbl.TextColor3 = V.CONFIG.HealthColor
                 
                 e.Heart.TextSize = fontSize + 1
-                e.Heart.TextColor3 = CONFIG.HeartColor
-                e.HpFrame.Visible = CONFIG.ShowHealth
+                e.Heart.TextColor3 = V.CONFIG.HeartColor
+                e.HpFrame.Visible = V.CONFIG.ShowHealth
 
                 e.NameLbl.TextSize = fontSize
-                e.NameLbl.TextColor3 = CONFIG.NameColor
-                e.NameLbl.Visible = CONFIG.ShowName
+                e.NameLbl.TextColor3 = V.CONFIG.NameColor
+                e.NameLbl.Visible = V.CONFIG.ShowName
 
                 local targetAvSize = math.clamp(fontSize + 2, 11, 18)
                 if e.LastAvSize ~= targetAvSize then
                     e.LastAvSize = targetAvSize
                     e.AvatarImg.Size = UDim2.new(0, targetAvSize, 0, targetAvSize)
                 end
-                e.AvatarImg.Visible = CONFIG.ShowAvatar
+                e.AvatarImg.Visible = V.CONFIG.ShowAvatar
             end
 
-            e.Panel.BackgroundColor3 = CONFIG.PanelBgColor
+            e.Panel.BackgroundColor3 = V.CONFIG.PanelBgColor
             e.Panel.GroupTransparency = 1 - e.PanelAlpha
             e.PanelScale.Scale = e.Scale
 
-            e.Dividers[1].Visible = CONFIG.ShowDistance and (CONFIG.ShowAvatar or CONFIG.ShowName or CONFIG.ShowHealth)
-            e.Dividers[2].Visible = CONFIG.ShowAvatar and (CONFIG.ShowName or CONFIG.ShowHealth)
-            e.Dividers[3].Visible = CONFIG.ShowName and CONFIG.ShowHealth
+            e.Dividers[1].Visible = V.CONFIG.ShowDistance and (V.CONFIG.ShowAvatar or V.CONFIG.ShowName or V.CONFIG.ShowHealth)
+            e.Dividers[2].Visible = V.CONFIG.ShowAvatar and (V.CONFIG.ShowName or V.CONFIG.ShowHealth)
+            e.Dividers[3].Visible = V.CONFIG.ShowName and V.CONFIG.ShowHealth
 
             -- Size Stretching Animation with optimization for CanvasGroup
             local absSize = e.PanelLayout.AbsoluteContentSize
@@ -3271,31 +4112,32 @@ end
 
 -- ═══════════ INIT ═══════════
 for _, p in pairs(Players:GetPlayers()) do
-    if p ~= LP then createESP(p) end
+    if p ~= V.LP then createESP(p) end
 end
 
 Players.PlayerAdded:Connect(function(p)
-    if p ~= LP then createESP(p) end
+    if p ~= V.LP then createESP(p) end
 end)
 
 Players.PlayerRemoving:Connect(removeESP)
 
 RunService.RenderStepped:Connect(function()
+    if not V.isAuthorized then return end
     local tOrigin
-    if CONFIG.TracersEnabled then
-        local vSize = Camera.ViewportSize
-        if CONFIG.TracerOrigin == "Bottom" then
+    if V.CONFIG.TracersEnabled then
+        local vSize = V.Camera.ViewportSize
+        if V.CONFIG.TracerOrigin == "Bottom" then
             tOrigin = Vector2.new(vSize.X/2, vSize.Y)
-        elseif CONFIG.TracerOrigin == "Top" then
+        elseif V.CONFIG.TracerOrigin == "Top" then
             tOrigin = Vector2.new(vSize.X/2, 0)
-        elseif CONFIG.TracerOrigin == "Middle" then
+        elseif V.CONFIG.TracerOrigin == "Middle" then
             tOrigin = Vector2.new(vSize.X/2, vSize.Y/2)
         else
             tOrigin = UIS:GetMouseLocation()
         end
     end
 
-    for p, e in pairs(ESPObjects) do
+    for p, e in pairs(V.ESPObjects) do
         local ok, err = pcall(function()
             updateESP(p, e, tOrigin)
         end)
@@ -3305,35 +4147,35 @@ RunService.RenderStepped:Connect(function()
     end
 
     -- Dead ESP Rendering
-    for i = #DeathMarkers, 1, -1 do
-        local m = DeathMarkers[i]
+    for i = #V.DeathMarkers, 1, -1 do
+        local m = V.DeathMarkers[i]
         local age = tick() - m.Time
         
-        if age > CONFIG.DeadESPDuration or not CONFIG.Enabled then
+        if age > V.CONFIG.DeadESPDuration or not V.CONFIG.Enabled then
             m.Line1:Remove()
             m.Line2:Remove()
             m.Text:Remove()
-            table.remove(DeathMarkers, i)
-        elseif CONFIG.DeadESP then
-            local pos, on = Camera:WorldToViewportPoint(m.Pos)
-            local dist = (Camera.CFrame.Position - m.Pos).Magnitude / 3
+            table.remove(V.DeathMarkers, i)
+        elseif V.CONFIG.DeadESP then
+            local pos, on = V.Camera:WorldToViewportPoint(m.Pos)
+            local dist = (V.Camera.CFrame.Position - m.Pos).Magnitude / 3
 
-            if on and dist <= CONFIG.MaxDistance then
+            if on and dist <= V.CONFIG.MaxDistance then
                 local s = 8
                 m.Line1.From = Vector2.new(pos.X - s, pos.Y - s)
                 m.Line1.To = Vector2.new(pos.X + s, pos.Y + s)
-                m.Line1.Color = CONFIG.DeadESPColor
+                m.Line1.Color = V.CONFIG.DeadESPColor
                 m.Line1.Visible = true
                 
                 m.Line2.From = Vector2.new(pos.X + s, pos.Y - s)
                 m.Line2.To = Vector2.new(pos.X - s, pos.Y + s)
-                m.Line2.Color = CONFIG.DeadESPColor
+                m.Line2.Color = V.CONFIG.DeadESPColor
                 m.Line2.Visible = true
                 
-                local timeLeft = math.max(0, math.floor(CONFIG.DeadESPDuration - age))
+                local timeLeft = math.max(0, math.floor(V.CONFIG.DeadESPDuration - age))
                 m.Text.Text = string.format("%s (DEAD) [%dm] [%ds]", m.Name, math.floor(dist), timeLeft)
                 m.Text.Position = Vector2.new(pos.X, pos.Y + s + 2)
-                m.Text.Color = CONFIG.DeadESPColor
+                m.Text.Color = V.CONFIG.DeadESPColor
                 m.Text.Visible = true
             else
                 m.Line1.Visible = false
@@ -3363,11 +4205,18 @@ localESP.HealthBarBg  = Drawing.new("Line"); localESP.HealthBarBg.Thickness  = 3
 localESP.Tracer       = Drawing.new("Line"); localESP.Tracer.Thickness       = 1; localESP.Tracer.Visible       = false
 
 RunService.RenderStepped:Connect(function()
-    local ch  = LP.Character
+    if not V.isAuthorized then
+        for _, l in pairs(localESP.Box) do l.Visible = false end
+        for _, l in pairs(localESP.Skeleton) do l.Visible = false end
+        localESP.HealthBar.Visible = false; localESP.HealthBarBg.Visible = false
+        localESP.Tracer.Visible = false
+        return 
+    end
+    local ch  = V.LP.Character
     local hum = ch and ch:FindFirstChildOfClass("Humanoid")
     local hrp = ch and ch:FindFirstChild("HumanoidRootPart")
 
-    if not CONFIG.LocalPlayerESP or not ch or not hum or not hrp or hum.Health <= 0 then
+    if not V.CONFIG.LocalPlayerESP or not ch or not hum or not hrp or hum.Health <= 0 then
         for _, l in pairs(localESP.Box) do l.Visible = false end
         for _, l in pairs(localESP.Skeleton) do l.Visible = false end
         localESP.HealthBar.Visible = false; localESP.HealthBarBg.Visible = false
@@ -3375,11 +4224,11 @@ RunService.RenderStepped:Connect(function()
         return
     end
 
-    local col = CONFIG.LocalPlayerColor
+    local col = V.CONFIG.LocalPlayerColor
     local rigType = hum.RigType == Enum.HumanoidRigType.R15 and "R15" or "R6"
 
     local function proj(v3)
-        local p, vis = Camera:WorldToViewportPoint(v3)
+        local p, vis = V.Camera:WorldToViewportPoint(v3)
         if not vis or p.Z <= 0 then return nil end
         return Vector2.new(p.X, p.Y)
     end
@@ -3388,7 +4237,7 @@ RunService.RenderStepped:Connect(function()
     local head  = ch:FindFirstChild("Head")
     local lFoot = ch:FindFirstChild("LeftFoot")  or ch:FindFirstChild("Left Leg")
     local rFoot = ch:FindFirstChild("RightFoot") or ch:FindFirstChild("Right Leg")
-    if CONFIG.LocalBox and head and (lFoot or rFoot) then
+    if V.CONFIG.LocalBox and head and (lFoot or rFoot) then
         local topPx = proj(head.Position + Vector3.new(0, 0.8, 0))
         local footPos = (lFoot and rFoot) and (lFoot.Position + rFoot.Position)/2 or (lFoot or rFoot).Position
         local botPx = proj(footPos - Vector3.new(0, 0.5, 0))
@@ -3402,8 +4251,8 @@ RunService.RenderStepped:Connect(function()
             localESP.Box[2].From = Vector2.new(lX, bY); localESP.Box[2].To = Vector2.new(rX, bY)
             localESP.Box[3].From = Vector2.new(lX, tY); localESP.Box[3].To = Vector2.new(lX, bY)
             localESP.Box[4].From = Vector2.new(rX, tY); localESP.Box[4].To = Vector2.new(rX, bY)
-            for _, l in pairs(localESP.Box) do l.Color = CONFIG.LocalBoxColor; l.Visible = true end
-            if CONFIG.LocalHealthBar then
+            for _, l in pairs(localESP.Box) do l.Color = V.CONFIG.LocalBoxColor; l.Visible = true end
+            if V.CONFIG.LocalHealthBar then
                 local hp = math.clamp(hum.Health / hum.MaxHealth, 0, 1)
                 local hpCol = Color3.fromRGB(255,0,0):Lerp(Color3.fromRGB(0,255,0), hp)
                 local barX = lX - 5
@@ -3420,16 +4269,16 @@ RunService.RenderStepped:Connect(function()
     end
 
     -- SKELETON
-    if CONFIG.LocalSkeleton and BONES[rigType] then
+    if V.CONFIG.LocalSkeleton and V.BONES[rigType] then
         local idx = 1
-        for _, pair in ipairs(BONES[rigType]) do
+        for _, pair in ipairs(V.BONES[rigType]) do
             local p1 = ch:FindFirstChild(pair[1])
             local p2 = ch:FindFirstChild(pair[2])
             local line = localESP.Skeleton[idx]
             if line then
                 if p1 and p2 then
                     local s1, s2 = proj(p1.Position), proj(p2.Position)
-                    if s1 and s2 then line.From = s1; line.To = s2; line.Color = CONFIG.LocalSkeletonColor; line.Visible = true
+                    if s1 and s2 then line.From = s1; line.To = s2; line.Color = V.CONFIG.LocalSkeletonColor; line.Visible = true
                     else line.Visible = false end
                 else line.Visible = false end
                 idx = idx + 1
@@ -3439,12 +4288,12 @@ RunService.RenderStepped:Connect(function()
     else for _, l in pairs(localESP.Skeleton) do l.Visible = false end end
 
     -- TRACER
-    if CONFIG.LocalTracers then
+    if V.CONFIG.LocalTracers then
         local hrpPx = proj(hrp.Position)
         if hrpPx then
-            local vS = Camera.ViewportSize
+            local vS = V.Camera.ViewportSize
             localESP.Tracer.From = Vector2.new(vS.X/2, vS.Y); localESP.Tracer.To = hrpPx
-            localESP.Tracer.Color = CONFIG.LocalTracersColor; localESP.Tracer.Visible = true
+            localESP.Tracer.Color = V.CONFIG.LocalTracersColor; localESP.Tracer.Visible = true
         else localESP.Tracer.Visible = false end
     else localESP.Tracer.Visible = false end
 end)
@@ -3453,7 +4302,7 @@ local savedSettings = nil
 local effectsCache = {}
 
 local function updateLighting()
-    if CONFIG.AmbienceEnabled then
+    if V.CONFIG.AmbienceEnabled then
         if not savedSettings then
             savedSettings = {
                 Ambient = Lighting.Ambient,
@@ -3470,9 +4319,9 @@ local function updateLighting()
             }
         end
 
-        if Lighting.Ambient ~= CONFIG.AmbienceColor then
-            Lighting.Ambient = CONFIG.AmbienceColor
-            Lighting.OutdoorAmbient = CONFIG.AmbienceColor
+        if Lighting.Ambient ~= V.CONFIG.AmbienceColor then
+            Lighting.Ambient = V.CONFIG.AmbienceColor
+            Lighting.OutdoorAmbient = V.CONFIG.AmbienceColor
         end
     else
         if savedSettings then
@@ -3512,35 +4361,39 @@ FOVCircle.Filled = false
 FOVCircle.Transparency = 1
 FOVCircle.Visible = false
 
-local aimTarget = nil
-local lastCameraRotation = nil
+V.aimTarget = nil
+
 
 RunService.RenderStepped:Connect(function()
+    if not V.isAuthorized then 
+        FOVCircle.Visible = false
+        return 
+    end
     -- FOV Update
-    FOVCircle.Radius = CONFIG.AimbotFOV
-    FOVCircle.Color = CONFIG.FOVColor
-    FOVCircle.Visible = CONFIG.AimbotEnabled and CONFIG.ShowFOV and not menuOpen
+    FOVCircle.Radius = V.CONFIG.AimbotFOV
+    FOVCircle.Color = V.CONFIG.FOVColor
+    FOVCircle.Visible = V.CONFIG.AimbotEnabled and V.CONFIG.ShowFOV and not V.menuOpen
     FOVCircle.Position = UIS:GetMouseLocation()
 
     -- No Recoil Logic
-    if CONFIG.NoRecoilEnabled and UIS:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) then
-        local currentRotation = Camera.CFrame.LookVector
-        if lastCameraRotation then
-            local rotationChange = currentRotation - lastCameraRotation
+    if V.CONFIG.NoRecoilEnabled and UIS:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) then
+        local currentRotation = V.Camera.CFrame.LookVector
+        if V.lastCameraRotation then
+            local rotationChange = currentRotation - V.lastCameraRotation
             if rotationChange.Y > 0.0001 then
-                local recoilStrength = rotationChange.Y * CONFIG.NoRecoilStrength * 100
+                local recoilStrength = rotationChange.Y * V.CONFIG.NoRecoilStrength * 100
                 if mousemoverel then
                     mousemoverel(0, recoilStrength) 
                 end
             end
         end
-        lastCameraRotation = currentRotation
+        V.lastCameraRotation = currentRotation
     else
-        lastCameraRotation = nil
+        V.lastCameraRotation = nil
     end
 
-    if not CONFIG.AimbotEnabled then 
-        aimTarget = nil
+    if not V.CONFIG.AimbotEnabled then 
+        V.aimTarget = nil
         return 
     end
 
@@ -3549,33 +4402,33 @@ RunService.RenderStepped:Connect(function()
     local mousePos = UIS:GetMouseLocation()
 
     -- Improved Lock-on Logic (prioritize current target)
-    if aimTarget then
-        local p = aimTarget.Player
+    if V.aimTarget then
+        local p = V.aimTarget.Player
         local ch = p.Character
         local hum = ch and ch:FindFirstChildOfClass("Humanoid")
         local hrp = ch and ch:FindFirstChild("HumanoidRootPart")
         
         if ch and hum and hrp and hum.Health > 0 then
-            local part = ch:FindFirstChild(aimTarget.PartName or "Head")
+            local part = ch:FindFirstChild(V.aimTarget.PartName or "Head")
             if part then
-                local sPos, on = Camera:WorldToViewportPoint(part.Position)
+                local sPos, on = V.Camera:WorldToViewportPoint(part.Position)
                 local distToMouse = (Vector2.new(sPos.X, sPos.Y) - mousePos).Magnitude
                 
                 -- Sticky Retention Logic: If Sticky is enabled, we NEVER drop the target unless they die, 
                 -- or move outside the AimbotMaxDistance. FOV check is ignored for active target.
-                local worldDistInStuds = (Camera.CFrame.Position - part.Position).Magnitude
+                local worldDistInStuds = (V.Camera.CFrame.Position - part.Position).Magnitude
                 
                 local isStillValid = isVis and hum.Health > 0
-                local withinRange = (worldDistInStuds / 3) <= CONFIG.AimbotMaxDistance
+                local withinRange = (worldDistInStuds / 3) <= V.CONFIG.AimbotMaxDistance
                 
                 if isStillValid and withinRange then
-                    if CONFIG.AimbotSticky then
+                    if V.CONFIG.AimbotSticky then
                         -- Captured Target: Sticky mode ignores FOV to prevent dropping targets during fast movement
-                        bestTarget = aimTarget
+                        bestTarget = V.aimTarget
                     else
                         -- Standard logic with a slightly larger buffer (20%) for stability
-                        if on and distToMouse <= (CONFIG.AimbotFOV * 1.2) then
-                            bestTarget = aimTarget
+                        if on and distToMouse <= (V.CONFIG.AimbotFOV * 1.2) then
+                            bestTarget = V.aimTarget
                         end
                     end
                 end
@@ -3585,15 +4438,15 @@ RunService.RenderStepped:Connect(function()
 
     -- Find new target if no valid target is locked
     if not bestTarget then
-        aimTarget = nil
+        V.aimTarget = nil
         local minScore = math.huge
-        for p, e in pairs(ESPObjects) do
+        for p, e in pairs(V.ESPObjects) do
             local ch = p.Character
             local hum = ch and ch:FindFirstChildOfClass("Humanoid")
             local hrp = ch and ch:FindFirstChild("HumanoidRootPart")
             
-            if ch and hum and hrp and hum.Health > 0 and (not CONFIG.TeamCheck or p.Team ~= LP.Team) then
-                local targetPartName = CONFIG.AimbotTargetPart
+            if ch and hum and hrp and hum.Health > 0 and (not V.CONFIG.TeamCheck or p.Team ~= V.LP.Team) then
+                local targetPartName = V.CONFIG.AimbotTargetPart
                 if targetPartName == "Random" then
                     local parts = {"Head", "UpperTorso", "LowerTorso"}
                     targetPartName = parts[math.random(1, #parts)]
@@ -3601,28 +4454,28 @@ RunService.RenderStepped:Connect(function()
                 
                 local part = ch:FindFirstChild(targetPartName)
                 if part then
-                    local sPos, on = Camera:WorldToViewportPoint(part.Position)
+                    local sPos, on = V.Camera:WorldToViewportPoint(part.Position)
                     if on then
                         local distToMouse = (Vector2.new(sPos.X, sPos.Y) - mousePos).Magnitude
                         
                         -- Simple FOV check for acquisition
-                        if distToMouse <= CONFIG.AimbotFOV then
+                        if distToMouse <= V.CONFIG.AimbotFOV then
                             -- Visibility check
                             local isVis = true
-                            if CONFIG.AimbotVisibleOnly then
+                            if V.CONFIG.AimbotVisibleOnly then
                                 if e.visCache and e.visCache[targetPartName] ~= nil then
                                     isVis = e.visCache[targetPartName]
                                 else
-                                    sharedRayParams.FilterDescendantsInstances = {LP.Character, ch}
-                                    local res = SafeRaycast(Camera.CFrame.Position, part.Position, sharedRayParams)
+                                    V.sharedRayParams.FilterDescendantsInstances = {V.LP.Character, ch}
+                                    local res = SafeRaycast(V.Camera.CFrame.Position, part.Position, V.sharedRayParams)
                                     isVis = not res
                                 end
                             end
 
                             if isVis then
-                                local worldDist = (Camera.CFrame.Position - part.Position).Magnitude / 3
-                                if worldDist <= CONFIG.AimbotMaxDistance then
-                                    local score = distToMouse + (worldDist * CONFIG.AimbotDistanceWeight)
+                                local worldDist = (V.Camera.CFrame.Position - part.Position).Magnitude / 3
+                                if worldDist <= V.CONFIG.AimbotMaxDistance then
+                                    local score = distToMouse + (worldDist * V.CONFIG.AimbotDistanceWeight)
                                     if score < minScore then
                                         minScore = score
                                         bestTarget = {Player = p, Part = part, PartName = targetPartName}
@@ -3638,33 +4491,33 @@ RunService.RenderStepped:Connect(function()
 
     -- Trigger Aim (Right Click Default)
     if bestTarget and UIS:IsMouseButtonPressed(Enum.UserInputType.MouseButton2) then
-        aimTarget = bestTarget
+        V.aimTarget = bestTarget
         local targetPos = bestTarget.Part.Position
         
         -- Advanced Prediction Logic (Sentinel Model)
-        if CONFIG.PredictionEnabled and bestTarget.Part then
+        if V.CONFIG.PredictionEnabled and bestTarget.Part then
             local velocity = bestTarget.Part.AssemblyLinearVelocity or bestTarget.Part.Velocity or Vector3.new(0, 0, 0)
-            local distInStuds = (Camera.CFrame.Position - targetPos).Magnitude
+            local distInStuds = (V.Camera.CFrame.Position - targetPos).Magnitude
             local distInMeters = distInStuds / 3
             
             -- Sentinel Mathematical Model:
             -- Calculate prediction based on distance in 10 meter steps up to 1000m
             -- Each 10m adds more prediction time.
             local distanceSteps = math.min(math.floor(distInMeters / 10), 100) -- Max 100 steps (1000m)
-            local predictionTime = (distanceSteps / 100) * (CONFIG.PredictionStrength / 10)
+            local predictionTime = (distanceSteps / 100) * (V.CONFIG.PredictionStrength / 10)
             
             -- Apply predicted offset
             targetPos = targetPos + (velocity * predictionTime)
         end
         
-        -- Update ray params to ignore LP
-        if LP.Character then
-            sharedRayParams.FilterDescendantsInstances = {LP.Character, ESPGui}
+        -- Update ray params to ignore V.LP
+        if V.LP.Character then
+            V.sharedRayParams.FilterDescendantsInstances = {V.LP.Character, ESPGui}
         end
         
         -- Aim Logic using Mouse Movement
-        local sPos, on = Camera:WorldToViewportPoint(targetPos)
-        local isStickyClose = CONFIG.AimbotSticky and (Camera.CFrame.Position - targetPos).Magnitude < 80 
+        local sPos, on = V.Camera:WorldToViewportPoint(targetPos)
+        local isStickyClose = V.CONFIG.AimbotSticky and (V.Camera.CFrame.Position - targetPos).Magnitude < 80 
         
         if on or isStickyClose then
             local mouseLocation = UIS:GetMouseLocation()
@@ -3675,7 +4528,7 @@ RunService.RenderStepped:Connect(function()
                 deltaY = sPos.Y - mouseLocation.Y
             else
                 -- Target passed through or is behind. Stick to them by forcing rotation!
-                local localPos = Camera.CFrame:PointToObjectSpace(targetPos)
+                local localPos = V.Camera.CFrame:PointToObjectSpace(targetPos)
                 -- We move the mouse strongly in the direction of the target to flip the camera
                 deltaX = (localPos.X > 0 and 100 or -100) 
                 deltaY = (localPos.Y > 0 and 100 or -100)
@@ -3683,10 +4536,10 @@ RunService.RenderStepped:Connect(function()
             end
             
             local smoothness = 1
-            if CONFIG.AimbotSmoothness > 0 then
+            if V.CONFIG.AimbotSmoothness > 0 then
                 -- When target is behind, we reduce smoothness slightly to flick faster
                 local smoothFactor = on and 12 or 4
-                smoothness = 1 + (CONFIG.AimbotSmoothness * smoothFactor)
+                smoothness = 1 + (V.CONFIG.AimbotSmoothness * smoothFactor)
             end
             
             if mousemoverel then
@@ -3695,26 +4548,27 @@ RunService.RenderStepped:Connect(function()
         end
 
         -- Character Look-at (Third Person / RootPart)
-        if LP.Character then
-            local hrp = LP.Character:FindFirstChild("HumanoidRootPart")
+        if V.LP.Character then
+            local hrp = V.LP.Character:FindFirstChild("HumanoidRootPart")
             if hrp then
                 local lookAtPos = Vector3.new(targetPos.X, hrp.Position.Y, targetPos.Z)
                 hrp.CFrame = CFrame.new(hrp.Position, lookAtPos)
             end
         end
     else
-        aimTarget = nil
+        V.aimTarget = nil
     end
 end)
 
 -- ════════════ MISC LOGIC ════════════
 local function applyJump()
-    local char = LP.Character
+    if not V.isAuthorized then return end
+    local char = V.LP.Character
     local hum = char and char:FindFirstChildOfClass("Humanoid")
-    if hum and CONFIG.HighJumpEnabled then
+    if hum and V.CONFIG.HighJumpEnabled then
         hum.UseJumpPower = true
-        hum.JumpPower = CONFIG.HighJumpValue
-        hum.JumpHeight = CONFIG.HighJumpValue
+        hum.JumpPower = V.CONFIG.HighJumpValue
+        hum.JumpHeight = V.CONFIG.HighJumpValue
     end
 end
 
@@ -3723,8 +4577,8 @@ RunService.Heartbeat:Connect(applyJump)
 -- Force jump state when pressing space (helps in many games)
 UIS.InputBegan:Connect(function(input, gp)
     if gp then return end
-    if input.KeyCode == Enum.KeyCode.Space and CONFIG.HighJumpEnabled then
-        local hum = LP.Character and LP.Character:FindFirstChildOfClass("Humanoid")
+    if input.KeyCode == Enum.KeyCode.Space and V.CONFIG.HighJumpEnabled then
+        local hum = V.LP.Character and V.LP.Character:FindFirstChildOfClass("Humanoid")
         if hum then
             -- Small delay and state change to force the engine to register high jump
             task.spawn(function()
@@ -3759,21 +4613,21 @@ Scope.DotOut.Filled = true
 Scope.DotOut.Color = Color3.new(0,0,0)
 
 RunService.RenderStepped:Connect(function()
-    local enabled = CONFIG.ScopeEnabled and not menuOpen
-    local viewportSize = Camera.ViewportSize
+    local enabled = V.isAuthorized and V.CONFIG.ScopeEnabled and not V.menuOpen
+    local viewportSize = V.Camera.ViewportSize
     -- Using math.floor for pixel-perfect alignment
     local cx, cy = math.floor(viewportSize.X / 2), math.floor(viewportSize.Y / 2)
     
-    local color = CONFIG.ScopeColor
-    local gap = CONFIG.ScopeGap
-    local length = CONFIG.ScopeLength
-    local thickness = CONFIG.ScopeThickness
+    local color = V.CONFIG.ScopeColor
+    local gap = V.CONFIG.ScopeGap
+    local length = V.CONFIG.ScopeLength
+    local thickness = V.CONFIG.ScopeThickness
     
     for _, obj in pairs(Scope) do obj.Visible = false end
 
     if enabled then
         local function drawSegment(line, out, x1, y1, x2, y2)
-            if CONFIG.ScopeOutline then
+            if V.CONFIG.ScopeOutline then
                 out.From = Vector2.new(x1, y1)
                 out.To = Vector2.new(x2, y2)
                 out.Thickness = thickness + 2
@@ -3797,8 +4651,8 @@ RunService.RenderStepped:Connect(function()
         drawSegment(Scope.Right, Scope.RightOut, cx + gap, cy, cx + gap + length, cy)
         
         -- Dot
-        if CONFIG.ScopeCenterDot then
-            if CONFIG.ScopeOutline then
+        if V.CONFIG.ScopeCenterDot then
+            if V.CONFIG.ScopeOutline then
                 Scope.DotOut.Position = Vector2.new(cx, cy)
                 Scope.DotOut.Radius = thickness + 2
                 Scope.DotOut.Visible = true
@@ -3812,5 +4666,266 @@ RunService.RenderStepped:Connect(function()
     end
 end)
 
+-- ════════════ RADAR SYSTEM ════════════
+local function initRadarSystem()
+    local R = {
+        Window = Instance.new("CanvasGroup"),
+        Header = nil,
+        Container = nil,
+        Blips = {}
+    }
+    
+    R.Window.Name = "AstrumRadar"
+    R.Window.Size = UDim2.new(0, V.CONFIG.RadarSize, 0, V.CONFIG.RadarSize + 30)
+    R.Window.Position = UDim2.new(0, V.CONFIG.RadarPos.X, 0, V.CONFIG.RadarPos.Y)
+    R.Window.BackgroundColor3 = Color3.fromRGB(12, 12, 16)
+    R.Window.BorderSizePixel = 0
+    R.Window.Visible = false
+    R.Window.Parent = V.MenuGui
+    Instance.new("UICorner", R.Window).CornerRadius = UDim.new(0, 8)
+    Instance.new("UIStroke", R.Window).Color = Color3.fromRGB(40, 40, 50)
+
+    R.Header = Instance.new("Frame", R.Window)
+    R.Header.Size = UDim2.new(1, 0, 0, 30)
+    R.Header.BackgroundTransparency = 1
+
+    local rIcon = Instance.new("ImageLabel", R.Header)
+    rIcon.Size = UDim2.new(0, 16, 0, 16)
+    rIcon.Position = UDim2.new(0, 10, 0.5, -8)
+    rIcon.BackgroundTransparency = 1
+    rIcon.Image = "rbxassetid://6031289136"
+    rIcon.ImageColor3 = Color3.fromRGB(70, 110, 255)
+
+    local rTitle = Instance.new("TextLabel", R.Header)
+    rTitle.Size = UDim2.new(1, -30, 1, 0)
+    rTitle.Position = UDim2.new(0, 32, 0, 0)
+    rTitle.BackgroundTransparency = 1
+    rTitle.Font = Enum.Font.GothamBold
+    rTitle.Text = "Radar"
+    rTitle.TextColor3 = Color3.fromRGB(70, 110, 255)
+    rTitle.TextSize = 13
+    rTitle.TextXAlignment = Enum.TextXAlignment.Left
+
+    R.Container = Instance.new("Frame", R.Window)
+    R.Container.Size = UDim2.new(1, -10, 1, -40)
+    R.Container.Position = UDim2.new(0, 5, 0, 35)
+    R.Container.BackgroundTransparency = 1
+    R.Container.ClipsDescendants = true
+
+    -- Grid drawing
+    local function createGridLine()
+        local f = Instance.new("Frame", R.Container)
+        f.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+        f.BackgroundTransparency = 0.95
+        f.BorderSizePixel = 0
+        return f
+    end
+
+    local function createGridCircle()
+        local f = Instance.new("Frame", R.Container)
+        f.BackgroundTransparency = 1
+        local s = Instance.new("UIStroke", f)
+        s.Color = Color3.fromRGB(255, 255, 255)
+        s.Transparency = 0.95
+        Instance.new("UICorner", f).CornerRadius = UDim.new(1, 0)
+        return f
+    end
+
+    local gc = Instance.new("Frame", R.Container)
+    gc.Size = UDim2.new(0, 4, 0, 4)
+    gc.Position = UDim2.new(0.5, -2, 0.5, -2)
+    gc.BackgroundColor3 = Color3.new(1, 1, 1)
+    Instance.new("UICorner", gc).CornerRadius = UDim.new(1, 0)
+
+    for i = 1, 3 do
+        local c = createGridCircle()
+        local size = (i/3) * 0.95
+        c.Size = UDim2.new(size, 0, size * (V.CONFIG.RadarSize / (V.CONFIG.RadarSize - 10)), 0)
+        c.Position = UDim2.new(0.5 - size/2, 0, 0.5 - (size * (V.CONFIG.RadarSize / (V.CONFIG.RadarSize - 10)))/2, 0)
+    end
+
+    local vl = createGridLine()
+    vl.Size = UDim2.new(0, 1, 1, 0)
+    vl.Position = UDim2.new(0.5, 0, 0, 0)
+
+    local hl = createGridLine()
+    hl.Size = UDim2.new(1, 0, 0, 1)
+    hl.Position = UDim2.new(0, 0, 0.5, 0)
+
+    local function createLabel(txt, pos)
+        local l = Instance.new("TextLabel", R.Container)
+        l.Size = UDim2.new(0, 20, 0, 20)
+        l.Position = pos
+        l.BackgroundTransparency = 1
+        l.Font = Enum.Font.GothamBold
+        l.Text = txt
+        l.TextColor3 = Color3.fromRGB(150, 150, 160)
+        l.TextSize = 12
+        return l
+    end
+
+    createLabel("N", UDim2.new(0.5, -10, 0, 2))
+    createLabel("S", UDim2.new(0.5, -10, 1, -22))
+    createLabel("W", UDim2.new(0, 2, 0.5, -10))
+    createLabel("E", UDim2.new(1, -22, 0.5, -10))
+
+    local function getBlip(player)
+        if R.Blips[player] then return R.Blips[player] end
+        local bBase = Instance.new("Frame", R.Container)
+        bBase.Size = UDim2.new(0, 8, 0, 8)
+        bBase.AnchorPoint = Vector2.new(0.5, 0.5)
+        bBase.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
+        bBase.BorderSizePixel = 0
+        bBase.ZIndex = 10
+        Instance.new("UICorner", bBase).CornerRadius = UDim.new(1, 0)
+        
+        local s = Instance.new("UIStroke", bBase)
+        s.Thickness = 1
+        s.Color = Color3.new(1,1,1)
+        
+        R.Blips[player] = {Base = bBase, Stroke = s}
+        return R.Blips[player]
+    end
+
+    RunService.RenderStepped:Connect(function()
+        R.Window.Visible = V.CONFIG.RadarEnabled and V.isAuthorized
+        if not V.CONFIG.RadarEnabled or not V.isAuthorized then return end
+        R.Window.Size = UDim2.new(0, V.CONFIG.RadarSize, 0, V.CONFIG.RadarSize + 30)
+        
+        local lpChar = V.LP.Character
+        local lHRP = lpChar and lpChar:FindFirstChild("HumanoidRootPart")
+        if not lHRP then return end
+        
+        local rangeS = V.CONFIG.RadarRadius * 3
+        local camCF = V.Camera.CFrame
+        
+        for _, b in pairs(R.Blips) do b.Base.Visible = false end
+        
+        for _, p in pairs(Players:GetPlayers()) do
+            if p == V.LP then continue end
+            local char = p.Character
+            local hrp = char and char:FindFirstChild("HumanoidRootPart")
+            local hum = char and char:FindFirstChildOfClass("Humanoid")
+            
+            if hrp and hum and hum.Health > 0 then
+                local b = getBlip(p)
+                -- Get relative position to camera
+                local rel = camCF:PointToObjectSpace(hrp.Position)
+                
+                -- rel.X is right/left, rel.Z is forward/back (-Z is forward)
+                local rX = rel.X
+                local rZ = rel.Z 
+                
+                local fact = (R.Container.AbsoluteSize.X / 2) / rangeS
+                local x, y = rX * fact, rZ * fact -- y is now Z (forward)
+                
+                local curD = math.sqrt(x^2 + y^2)
+                local maxR = (R.Container.AbsoluteSize.X / 2) - 6
+                
+                if curD > maxR then
+                    local ang = math.atan2(y, x)
+                    x, y = math.cos(ang) * maxR, math.sin(ang) * maxR
+                end
+                
+                -- Position: y (Z in world) mapped to UI Y
+                b.Base.Position = UDim2.new(0.5, x, 0.5, y)
+                b.Base.Visible = true
+                
+                if V.CONFIG.TeamCheck then
+                    b.Base.BackgroundColor3 = (p.Team == V.LP.Team) and Color3.fromRGB(0, 255, 100) or Color3.fromRGB(255, 50, 50)
+                else
+                    b.Base.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
+                end
+            end
+        end
+    end)
+
+    V.radarDragging = false
+    V.radarDragStart = nil
+    V.radarStartPos = nil
+
+    R.Window.InputBegan:Connect(function(i)
+        if i.UserInputType == Enum.UserInputType.MouseButton1 then
+            V.radarDragging = true
+            V.radarDragStart = i.Position
+            V.radarStartPos = R.Window.Position
+        end
+    end)
+    UIS.InputChanged:Connect(function(i)
+        if V.radarDragging and i.UserInputType == Enum.UserInputType.MouseMovement then
+            local del = i.Position - V.radarDragStart
+            local nPos = UDim2.new(V.radarStartPos.X.Scale, V.radarStartPos.X.Offset + del.X, V.radarStartPos.Y.Scale, V.radarStartPos.Y.Offset + del.Y)
+            R.Window.Position = nPos
+            V.CONFIG.RadarPos = Vector2.new(nPos.X.Offset, nPos.Y.Offset)
+        end
+    end)
+    UIS.InputEnded:Connect(function(i)
+        if i.UserInputType == Enum.UserInputType.MouseButton1 then V.radarDragging = false end
+    end)
+end
+
+initRadarSystem()
 RefreshUI()
 refreshCfgList()
+
+-- Global Time Update Loop + Auto Sync
+task.spawn(function()
+    while true do
+        if V.isAuthorized and V.timeLbl and V.authSessionDuration then
+            local elapsed = os.time() - V.authSessionStart
+            local left = 0
+            
+            if V.authSessionDuration == -1 then
+                V.timeLbl.Text = "Time: Lifetime"
+            else
+                left = V.authSessionDuration - elapsed
+                V.timeLbl.Text = "Time: " .. (left > 0 and formatTime(left) or "Expired")
+            end
+            
+            -- Periodic sync with server (every 2.5 minutes)
+            if os.time() - V.lastAuthSync > 150 then
+                V.lastAuthSync = os.time()
+                task.spawn(function()
+                    local ok, newDur = V.checkKeyOnServer(V.lastUsedKey)
+                    if ok then
+                        V.authSessionDuration = newDur
+                    elseif newDur == "Key not found." or newDur == "Wrong nickname / user." then
+                        V.expireSession()
+                    end
+                end)
+            end
+
+            if V.authSessionDuration ~= -1 and left <= 0 then
+                V.expireSession()
+            end
+        end
+        task.wait(1)
+    end
+end)
+
+-- Auto-login check (Skip registration if profile exists)
+task.spawn(function()
+    local authPath = V.folderName .. "/auth.json"
+    if isfile and isfile(authPath) then
+        local success, data = pcall(function() return HttpService:JSONDecode(readfile(authPath)) 
+        end)
+        if success and data and data.Nick then
+            V.RegisterPanel.Visible = false
+            V.LoginPanel.Visible = true
+            V.regInput.Text = data.Nick
+            V.userLbl.Text = "User: " .. data.Nick
+            
+            -- Если сохранён ключ — автозаполняем и пробуем автологин
+            if data.Key and data.Key ~= "" then
+                V.keyInput.Text = data.Key
+                V.statusLbl.Text = "Auto-logging in..."
+                V.statusLbl.TextColor3 = Color3.fromRGB(200, 200, 210)
+                task.wait(0.5)
+                verifyKey(data.Key)
+            else
+                V.statusLbl.Text = "Welcome back! Please enter your key."
+                V.statusLbl.TextColor3 = Color3.fromRGB(200, 200, 210)
+            end
+        end
+    end
+end)
