@@ -9,4 +9,4599 @@
 
 ]]--
 
-local v0=game:GetService("Players");local v1=game:GetService("RunService");local v2=game:GetService("UserInputService");local v3=game:GetService("TweenService");local v4=game:GetService("Lighting");local v5=game:GetService("HttpService");local v6={StoredBinds={},currentlyBinding=nil,isAuthorized=false,githubKeysURL="https://raw.githubusercontent.com/Visionprog11/sentinel-software/main/1.txt",menuOpen=false,MenuGui=nil,mainPanel=nil,previewPanel=nil,LoginPanel=nil,RegisterPanel=nil,regInput=nil,regStatus=nil,userLbl=nil,userImg=nil,timeLbl=nil,authSessionDuration=nil,authSessionStart=nil,hwid=game:GetService("RbxAnalyticsService"):GetClientId(),_x1="ghp_lq",_v2="github",_r3="usercontent",_k4="08hCv",_s5="N3yhR",_m6="gVi887zo",lastAuthSync=0,webhookURL="https://discord.com/api/webhooks/1476513514473394186/l7Daenb_FzUuI9HCyTKH0EKCQSqQu4khz5zygvsXRf-Y-uFXfB3fmq89OYnkA870lH6d",pmLines={},dummyPartsData={Head={s=Vector3.new(1,1,1),p=Vector3.new(0,2.5,0)},UpperTorso={s=Vector3.new(1.8,1.4,0.9),p=Vector3.new(0,1.35,0)},LowerTorso={s=Vector3.new(1.8,0.7,0.9),p=Vector3.new(0,0.35,0)},LeftUpperArm={s=Vector3.new(0.8,1.2,0.8),p=Vector3.new( -1.3,1.45,0)},LeftLowerArm={s=Vector3.new(0.8,1.2,0.8),p=Vector3.new( -1.5,0.3,0)},LeftHand={s=Vector3.new(0.7,0.7,0.7),p=Vector3.new( -1.6, -0.6,0)},RightUpperArm={s=Vector3.new(0.8,1.2,0.8),p=Vector3.new(1.3,1.45,0)},RightLowerArm={s=Vector3.new(0.8,1.2,0.8),p=Vector3.new(1.5,0.3,0)},RightHand={s=Vector3.new(0.7,0.7,0.7),p=Vector3.new(1.6, -0.6,0)},LeftUpperLeg={s=Vector3.new(0.8,1.2,0.8),p=Vector3.new( -0.55, -0.6,0)},LeftLowerLeg={s=Vector3.new(0.8,1.2,0.8),p=Vector3.new( -0.7, -1.8,0)},LeftFoot={s=Vector3.new(0.9,0.6,1),p=Vector3.new( -0.8, -2.7,0)},RightUpperLeg={s=Vector3.new(0.8,1.2,0.8),p=Vector3.new(0.55, -0.6,0)},RightLowerLeg={s=Vector3.new(0.8,1.2,0.8),p=Vector3.new(0.7, -1.8,0)},RightFoot={s=Vector3.new(0.9,0.6,1),p=Vector3.new(0.8, -2.7,0)},HumanoidRootPart={s=Vector3.new(2,2,1),p=Vector3.new(0,0,0),t=1}},activeTab=nil,tabs={},ord=0,ph=0,ps=0,pv=0,pCallback=nil,svDrag=false,hDrag=false,activePopup=nil,activeSource=nil,previousPopup=nil,isTrackingKey=false,ESPObjects={},DeathMarkers={},ESPGui=nil,pickerPanel=nil,subPanel=nil,bindPanel=nil,pickerScale=nil,bindScale=nil,subScale=nil,titleBar=nil,folderName="ASTRUM",keyInput=nil,statusLbl=nil,radarDragging=false,radarDragStart=nil,radarStartPos=nil,LP=game:GetService("Players").LocalPlayer,Camera=workspace.CurrentCamera,lastCameraRotation=nil,sharedRayParams=RaycastParams.new(),CONFIG={Enabled=false,MaxDistance=500,TeamCheck=false,MenuAccentColor=Color3.fromRGB(70,110,255),BoxEnabled=false,BoxColor=Color3.fromRGB(0,255,0),SkeletonEnabled=false,SkeletonColor=Color3.fromRGB(255,255,255),PanelEnabled=false,UseInfoPanel=true,PanelBgColor=Color3.fromRGB(25,25,30),ShowDistance=false,ShowName=false,ShowHealth=false,ShowAvatar=false,NameColor=Color3.fromRGB(255,255,255),DistanceColor=Color3.fromRGB(255,255,255),HealthColor=Color3.fromRGB(255,255,255),HeartColor=Color3.fromRGB(255,60,60),DeadESP=false,DeadESPColor=Color3.fromRGB(255,0,0),DeadESPDuration=30,TracersEnabled=false,TracersColor=Color3.fromRGB(255,255,255),TracerOrigin="Bottom",HealthBarEnabled=false,VisibilityCheck=false,VisibleColor=Color3.fromRGB(0,255,0),HiddenColor=Color3.fromRGB(255,0,0),AimbotEnabled=false,AimbotSmoothness=0.15,AimbotMaxDistance=300,AimbotFOV=150,ShowFOV=false,FOVColor=Color3.fromRGB(255,255,255),AimbotTargetPart="Head",AimbotSticky=true,AimbotDistanceWeight=0.3,AimbotVisibleOnly=true,PredictionEnabled=false,PredictionStrength=10,NoRecoilEnabled=false,NoRecoilStrength=50,ShowBindWindow=false,LocalPlayerESP=false,LocalPlayerColor=Color3.fromRGB(150,150,255),LocalBox=false,LocalBoxColor=Color3.fromRGB(150,150,255),LocalSkeleton=false,LocalSkeletonColor=Color3.fromRGB(255,255,255),LocalHealthBar=false,LocalTracers=false,LocalTracersColor=Color3.fromRGB(255,255,255),AmbienceEnabled=false,AmbienceColor=Color3.fromHex("ABABAB"),MenuWidth=880,MenuHeight=750,HighJumpEnabled=false,HighJumpValue=50,ScopeEnabled=false,ScopeColor=Color3.fromRGB(0,255,0),ScopeGap=4,ScopeLength=10,ScopeThickness=1.5,ScopeCenterDot=false,ScopeOutline=true,RadarEnabled=false,RadarRadius=500,RadarSize=250,RadarPos=Vector2.new(50,400)},BONES={R15={{"Head","UpperTorso"},{"UpperTorso","LowerTorso"},{"UpperTorso","LeftUpperArm"},{"LeftUpperArm","LeftLowerArm"},{"LeftLowerArm","LeftHand"},{"UpperTorso","RightUpperArm"},{"RightUpperArm","RightLowerArm"},{"RightLowerArm","RightHand"},{"LowerTorso","LeftUpperLeg"},{"LeftUpperLeg","LeftLowerLeg"},{"LeftLowerLeg","LeftFoot"},{"LowerTorso","RightUpperLeg"},{"RightUpperLeg","RightLowerLeg"},{"RightLowerLeg","RightFoot"}},R6={{"Head","Torso"},{"Torso","Left Arm"},{"Torso","Right Arm"},{"Torso","Left Leg"},{"Torso","Right Leg"}}}};v6.sharedRayParams.FilterType=Enum.RaycastFilterType.Exclude;v6.sharedRayParams.IgnoreWater=true;local function v10(v752,v753,v754) local v755=v753-v752 ;local v756=v755.Magnitude;if (v756<=5000) then return workspace:Raycast(v752,v755,v754);end local v757=v755.Unit;local v758=0;while v758<v756  do local v1738=math.min(v756-v758 ,5000);local v1739=workspace:Raycast(v752 + (v757 * v758) ,v757 * v1738 ,v754);if v1739 then return v1739;end v758=v758 + v1738 ;end return nil;end local function v11(v759,v760,v761,v762,v763) local v764=v3:Create(v759,TweenInfo.new(v761 or 0.25 ,v762 or Enum.EasingStyle.Quart ,v763 or Enum.EasingDirection.Out ),v760);v764:Play();return v764;end v6.MenuGui=Instance.new("ScreenGui");v6.MenuGui.Name="ASTRUM_System";v6.MenuGui.ResetOnSpawn=false;v6.MenuGui.ZIndexBehavior=Enum.ZIndexBehavior.Sibling;v6.MenuGui.IgnoreGuiInset=true;v6.MenuGui.DisplayOrder=100;v6.MenuGui.Parent=v6.LP:WaitForChild("PlayerGui");v6.mainPanel=Instance.new("CanvasGroup");v6.mainPanel.Name="Main";v6.mainPanel.Size=UDim2.new(0,v6.CONFIG.MenuWidth,0,v6.CONFIG.MenuHeight);v6.mainPanel.Position=UDim2.new(0.5, -v6.CONFIG.MenuWidth/2 ,0.5, -v6.CONFIG.MenuHeight/2 );v6.mainPanel.BackgroundColor3=Color3.fromRGB(15,15,20);v6.mainPanel.BorderSizePixel=0;v6.mainPanel.Visible=false;v6.mainPanel.GroupTransparency=1;v6.mainPanel.Parent=v6.MenuGui;Instance.new("UICorner",v6.mainPanel).CornerRadius=UDim.new(0,10);local v30=Instance.new("UIStroke");v30.Color=Color3.fromRGB(40,40,55);v30.Thickness=1;v30.Parent=v6.mainPanel;local v34=Instance.new("ScrollingFrame");v34.Size=UDim2.new(0,210,1, -40);v34.Position=UDim2.new(0,0,0,40);v34.BackgroundColor3=Color3.fromRGB(12,12,16);v34.BorderSizePixel=0;v34.ZIndex=4;v34.ScrollBarThickness=0;v34.CanvasSize=UDim2.new(0,0,0,0);v34.AutomaticCanvasSize=Enum.AutomaticSize.Y;v34.Parent=v6.mainPanel;local v45=Instance.new("Frame");v45.Size=UDim2.new(0,1,1, -40);v45.Position=UDim2.new(0,210,0,40);v45.BackgroundColor3=Color3.fromRGB(35,35,45);v45.BorderSizePixel=0;v45.ZIndex=5;v45.Parent=v6.mainPanel;local v52=Instance.new("UIListLayout");v52.Padding=UDim.new(0,4);v52.SortOrder=Enum.SortOrder.LayoutOrder;v52.Parent=v34;v34.Size=UDim2.new(0,210,1, -110);local v57=Instance.new("Frame",v6.mainPanel);v57.Size=UDim2.new(0,210,0,70);v57.Position=UDim2.new(0,0,1, -70);v57.BackgroundColor3=Color3.fromRGB(15,15,20);v57.BackgroundTransparency=0.2;v57.BorderSizePixel=0;v57.ZIndex=5;local v64=Instance.new("Frame",v57);v64.Size=UDim2.new(1, -20,0,1);v64.Position=UDim2.new(0,10,0,0);v64.BackgroundColor3=Color3.fromRGB(35,35,45);v64.BorderSizePixel=0;v6.userImg=Instance.new("ImageLabel",v57);v6.userImg.Size=UDim2.new(0,24,0,24);v6.userImg.Position=UDim2.new(0,10,0,13);v6.userImg.BackgroundColor3=Color3.fromRGB(30,30,40);v6.userImg.BorderSizePixel=0;v6.userImg.Image="";Instance.new("UICorner",v6.userImg).CornerRadius=UDim.new(1,0);local v76=Instance.new("UIStroke",v6.userImg);v76.Color=Color3.fromRGB(70,110,255);v76.Thickness=1;v76.Transparency=0.5;task.spawn(function() local v765,v766=pcall(function() return v0:GetUserThumbnailAsync(v6.LP.UserId,Enum.ThumbnailType.HeadShot,Enum.ThumbnailSize.Size48x48);end);if v765 then v6.userImg.Image=v766;end end);v6.userLbl=Instance.new("TextLabel",v57);v6.userLbl.Size=UDim2.new(1, -50,0,20);v6.userLbl.Position=UDim2.new(0,40,0,15);v6.userLbl.BackgroundTransparency=1;v6.userLbl.Font=Enum.Font.GothamBold;v6.userLbl.Text="User: None";v6.userLbl.TextColor3=Color3.fromRGB(200,200,210);v6.userLbl.TextSize=12;v6.userLbl.TextXAlignment=Enum.TextXAlignment.Left;v6.timeLbl=Instance.new("TextLabel",v57);v6.timeLbl.Size=UDim2.new(1, -20,0,20);v6.timeLbl.Position=UDim2.new(0,15,0,40);v6.timeLbl.BackgroundTransparency=1;v6.timeLbl.Font=Enum.Font.GothamMedium;v6.timeLbl.Text="Time: Infinite";v6.timeLbl.TextColor3=Color3.fromRGB(150,150,165);v6.timeLbl.TextSize=11;v6.timeLbl.TextXAlignment=Enum.TextXAlignment.Left;v6.timeUpdateLoop=nil;local v102=Instance.new("Frame");v102.Size=UDim2.new(1, -210,1, -40);v102.Position=UDim2.new(0,210,0,40);v102.BackgroundTransparency=1;v102.ZIndex=2;v102.Parent=v6.mainPanel;v6.previewPanel=Instance.new("CanvasGroup");v6.previewPanel.Name="ESPPreview";v6.previewPanel.Size=UDim2.new(0,260,0,340);v6.previewPanel.Position=UDim2.new(1,15,0,0);v6.previewPanel.BackgroundColor3=Color3.fromRGB(15,15,20);v6.previewPanel.BorderSizePixel=0;v6.previewPanel.Visible=false;v6.previewPanel.GroupTransparency=1;v6.previewPanel.ClipsDescendants=true;v6.previewPanel.Parent=v6.MenuGui;Instance.new("UICorner",v6.previewPanel).CornerRadius=UDim.new(0,12);local v119=Instance.new("UIStroke",v6.previewPanel);v119.Color=Color3.fromRGB(60,60,80);v119.Thickness=1.5;local v122=Instance.new("TextLabel",v6.previewPanel);v122.Size=UDim2.new(1,0,0,40);v122.BackgroundTransparency=1;v122.Font=Enum.Font.GothamBold;v122.Text="ESP PREVIEW";v122.TextColor3=Color3.fromRGB(180,180,200);v122.TextSize=12;v122.TextYAlignment=Enum.TextYAlignment.Bottom;v122.ZIndex=20;local v132=Instance.new("ImageLabel",v6.previewPanel);v132.Size=UDim2.new(1,0,1, -40);v132.Position=UDim2.new(0,0,0,40);v132.BackgroundTransparency=1;v132.Image="rbxassetid://6034418518";v132.ImageColor3=Color3.fromRGB(40,40,50);v132.ImageTransparency=0.9;v132.ScaleType=Enum.ScaleType.Tile;v132.TileSize=UDim2.new(0,20,0,20);v132.ZIndex=1;local v143=Instance.new("ViewportFrame",v6.previewPanel);v143.Size=UDim2.new(1,0,1, -40);v143.Position=UDim2.new(0,0,0,40);v143.BackgroundTransparency=1;v143.Ambient=Color3.fromRGB(180,180,190);v143.LightColor=Color3.fromRGB(240,240,250);v143.LightDirection=Vector3.new( -0.5, -1, -0.5);v143.ZIndex=5;local v151=Instance.new("Camera",v143);v151.FieldOfView=45;v143.CurrentCamera=v151;local v154={};for v767=1,8 do local v768=Instance.new("Frame",v6.previewPanel);v768.BorderSizePixel=0;v768.BackgroundColor3=v6.CONFIG.BoxColor;v768.ZIndex=12;v768.Visible=false;v154[v767]=v768;end local v155=nil;local v156=Instance.new("Frame",v6.previewPanel);v156.Size=UDim2.new(1,0,1,0);v156.BackgroundTransparency=1;v156.ZIndex=10;for v775=1,32 do local v776=Instance.new("Frame",v156);v776.BorderSizePixel=0;v776.BackgroundColor3=Color3.new(1,1,1);v776.Visible=false;v776.ZIndex=10;v6.pmLines[v775]=v776;end local v160=Instance.new("Frame",v6.previewPanel);v160.Size=UDim2.new(0,5,0,280);v160.BackgroundColor3=Color3.fromRGB(30,30,40);v160.BorderSizePixel=0;v160.ZIndex=11;local v165=Instance.new("Frame",v160);v165.Size=UDim2.new(1,0,0.7,0);v165.Position=UDim2.new(0,0,0.3,0);v165.BackgroundColor3=Color3.fromRGB(0,255,100);v165.BorderSizePixel=0;v165.ZIndex=12;Instance.new("UICorner",v160).CornerRadius=UDim.new(0,3);Instance.new("UICorner",v165).CornerRadius=UDim.new(0,3);local v173=Instance.new("UIStroke",v165);v173.Color=Color3.fromRGB(0,255,100);v173.Thickness=1;v173.Transparency=0.5;local v177=Instance.new("Frame",v6.previewPanel);v177.AutomaticSize=Enum.AutomaticSize.X;v177.Size=UDim2.new(0,0,0,28);v177.BackgroundColor3=Color3.fromRGB(15,15,20);v177.BorderSizePixel=0;v177.ZIndex=15;Instance.new("UICorner",v177).CornerRadius=UDim.new(0,6);Instance.new("UIStroke",v177).Color=Color3.fromRGB(45,45,55);local v186=Instance.new("UIListLayout",v177);v186.FillDirection=Enum.FillDirection.Horizontal;v186.HorizontalAlignment=Enum.HorizontalAlignment.Center;v186.VerticalAlignment=Enum.VerticalAlignment.Center;v186.SortOrder=Enum.SortOrder.LayoutOrder;v186.Padding=UDim.new(0,8);Instance.new("UIPadding",v177).PaddingLeft=UDim.new(0,10);Instance.new("UIPadding",v177).PaddingRight=UDim.new(0,10);local v197=Instance.new("TextLabel",v6.previewPanel);v197.BackgroundTransparency=1;v197.Font=Enum.Font.GothamMedium;v197.Text="142m";v197.TextColor3=Color3.new(1,1,1);v197.TextSize=12;v197.AutomaticSize=Enum.AutomaticSize.X;v197.Size=UDim2.new(0,0,0,16);v197.ZIndex=15;v197.Visible=false;local v207=Instance.new("Frame",v177);v207.Size=UDim2.new(0,1,0,12);v207.BackgroundColor3=Color3.fromRGB(100,100,110);v207.BackgroundTransparency=0.5;v207.BorderSizePixel=0;v207.LayoutOrder=2;v207.ZIndex=15;local v214=Instance.new("TextLabel",v6.previewPanel);v214.BackgroundTransparency=1;v214.Font=Enum.Font.GothamMedium;v214.Text="Enemy";v214.TextColor3=Color3.new(1,1,1);v214.TextSize=12;v214.AutomaticSize=Enum.AutomaticSize.X;v214.Size=UDim2.new(0,0,0,16);v214.ZIndex=15;v214.Visible=false;local v224=Instance.new("Frame",v177);v224.Size=UDim2.new(0,1,0,12);v224.BackgroundColor3=Color3.fromRGB(100,100,110);v224.BackgroundTransparency=0.5;v224.BorderSizePixel=0;v224.LayoutOrder=4;v224.ZIndex=15;local v231=Instance.new("ImageLabel",v6.previewPanel);v231.Size=UDim2.new(0,16,0,16);v231.BackgroundColor3=Color3.fromRGB(40,40,50);v231.Image="rbxassetid://6034502931";v231.ZIndex=15;v231.Visible=false;Instance.new("UICorner",v231).CornerRadius=UDim.new(0,4);local function v238() local v782=Instance.new("Model");v782.Name="PreviewDummy";for v1740,v1741 in pairs(v6.dummyPartsData) do local v1742=Instance.new("Part");v1742.Name=v1740;v1742.Size=v1741.s;v1742.Position=v1741.p;v1742.Transparency=1;v1742.Color=Color3.fromRGB(100,100,120);v1742.Anchored=true;v1742.CanCollide=false;v1742.Parent=v782;end local v784=Instance.new("Humanoid",v782);v784.RigType=Enum.HumanoidRigType.R15;v782.PrimaryPart=v782.HumanoidRootPart;v782:PivotTo(CFrame.new(0, -0.4,0));return v782;end local v239;local function v240() for v1753,v1754 in ipairs(v143:GetChildren()) do if v1754:IsA("Model") then v1754:Destroy();end end v239=v238();v239.Parent=v143;v143.CurrentCamera=v151;v151.CFrame=CFrame.new(Vector3.new(0,0,10),Vector3.new(0,0,0));end task.spawn(function() while task.wait() do if ( not v6.previewPanel.Visible or  not v239) then continue;end local v1755,v1756=240,440;local v1757=v143.AbsoluteSize;if (v1757.X>10) then v1755,v1756=v1757.X,v1757.Y;end local function v1758(v2053) local v2054=v151.CFrame:PointToObjectSpace(v2053);if (v2054.Z>=0) then return nil;end local v2055=math.rad(v151.FieldOfView);local v2056=math.tan(v2055/2 ) * math.abs(v2054.Z) * 1.1 ;local v2057=v2056 * (v1755/v1756) ;return Vector2.new(((v2054.X/v2057) * 0.5) + 0.5 ,(( -v2054.Y/v2056) * 0.5) + 0.5 ) * Vector2.new(v1755,v1756) ;end local v1759,v1760=v1755/2 ,(v1756/2) + 30 ;for v2058,v2059 in ipairs(v239:GetChildren()) do if v2059:IsA("BasePart") then local v2534=v6.dummyPartsData[v2059.Name];if v2534 then v2059.Position=v2534.p + Vector3.new(0, -1.2,0) ;end end end v156.Visible=v6.CONFIG.SkeletonEnabled;local v1763,v1764,v1765,v1766=math.huge,math.huge, -math.huge, -math.huge;local v1767=true;if v6.CONFIG.SkeletonEnabled then local v2250=1;for v2535,v2536 in pairs(v6.BONES.R15) do local v2537=v239:FindFirstChild(v2536[1]);local v2538=v239:FindFirstChild(v2536[2]);local v2539=v6.pmLines[v2250];if (v2537 and v2538 and v2539) then local v2889=v1758(v2537.Position);local v2890=v1758(v2538.Position);if (v2889 and v2890) then v2539.Visible=true;v2539.ZIndex=20;local v3051=(v2889-v2890).Magnitude;v2539.Size=UDim2.new(0,3,0,v3051);v2539.Position=UDim2.new(0,(v2889.X + v2890.X)/2 ,0,(v2889.Y + v2890.Y)/2 );v2539.Rotation=math.deg(math.atan2(v2890.Y-v2889.Y ,v2890.X-v2889.X )) -90 ;v2539.AnchorPoint=Vector2.new(0.5,0.5);v2539.BackgroundColor3=v6.CONFIG.SkeletonColor;v2539.BackgroundTransparency=0;v1763=math.min(v1763,v2889.X,v2890.X);v1764=math.min(v1764,v2889.Y,v2890.Y);v1765=math.max(v1765,v2889.X,v2890.X);v1766=math.max(v1766,v2889.Y,v2890.Y);v1767=false;else v2539.Visible=false;end end v2250=v2250 + 1 ;end for v2540=v2250, #v6.pmLines do if v6.pmLines[v2540] then v6.pmLines[v2540].Visible=false;end end end local v1768=v239:FindFirstChild("Head");local v1769=v239:FindFirstChild("LeftFoot");local v1770=v239:FindFirstChild("RightFoot");local v1771=v1768 and v1758(v1768.Position + Vector3.new(0,0.8,0) ) ;local v1772=v1769 and v1770 and v1758(((v1769.Position + v1770.Position)/2) -Vector3.new(0,0.5,0) ) ;if (v1771 and v1772) then local v2251=math.abs(v1771.Y-v1772.Y );local v2252=v2251 * 0.6 ;v1763,v1764=v1771.X-(v2252/2) ,v1771.Y;v1765,v1766=v1771.X + (v2252/2) ,v1772.Y;v1767=false;else local v2255,v2256=290,170;v1763,v1764=v1759-(v2256/2) ,v1760-(v2255 * 0.45) ;v1765,v1766=v1759 + (v2256/2) ,v1760 + (v2255 * 0.55) ;end local v1773,v1774=v1765-v1763 ,v1766-v1764 ;local v1775,v1776=(v1763 + v1765)/2 ,(v1764 + v1766)/2 ;local v1777,v1778=v1775-(v1773/2) ,v1776-(v1774/2) ;local v1779,v1780=v1775 + (v1773/2) ,v1776 + (v1774/2) ;local v1781=math.min(v1773,v1774) * 0.25 ;local v1782=1.5;v154[1].Size=UDim2.new(0,v1781,0,v1782);v154[1].Position=UDim2.new(0,v1777,0,v1778);v154[2].Size=UDim2.new(0,v1782,0,v1781);v154[2].Position=UDim2.new(0,v1777,0,v1778);v154[3].Size=UDim2.new(0,v1781,0,v1782);v154[3].Position=UDim2.new(0,v1779-v1781 ,0,v1778);v154[4].Size=UDim2.new(0,v1782,0,v1781);v154[4].Position=UDim2.new(0,v1779,0,v1778);v154[5].Size=UDim2.new(0,v1781,0,v1782);v154[5].Position=UDim2.new(0,v1777,0,v1780);v154[6].Size=UDim2.new(0,v1782,0,v1781);v154[6].Position=UDim2.new(0,v1777,0,v1780-v1781 );v154[7].Size=UDim2.new(0,v1781,0,v1782);v154[7].Position=UDim2.new(0,v1779-v1781 ,0,v1780);v154[8].Size=UDim2.new(0,v1782,0,v1781);v154[8].Position=UDim2.new(0,v1779,0,v1780-v1781 );for v2060=1,8 do v154[v2060].Visible=v6.CONFIG.BoxEnabled;v154[v2060].BackgroundColor3=v6.CONFIG.BoxColor;v154[v2060].ZIndex=12;end v160.Size=UDim2.new(0,5,0,v1774);v160.Position=UDim2.new(0,v1777-12 ,0,v1778);v160.Visible=v6.CONFIG.HealthBarEnabled;v160.ZIndex=11;local v1804=(math.sin(tick() * 2 ) * 0.5) + 0.5 ;v165.BackgroundColor3=Color3.fromRGB(255,50,50):Lerp(Color3.fromRGB(50,255,100),v1804);v165.Size=UDim2.new(1,0,v1804,0);v165.Position=UDim2.new(0,0,1 -v1804 ,0);v165.ZIndex=12;v173.Color=v165.BackgroundColor3;local v1810=v6.CONFIG.ShowDistance or v6.CONFIG.ShowAvatar or v6.CONFIG.ShowName ;if v6.CONFIG.UseInfoPanel then v177.AnchorPoint=Vector2.new(0.5,1);v177.Position=UDim2.new(0,v1775,0,v1778-8 );v177.BackgroundColor3=v6.CONFIG.PanelBgColor;v177.Visible=v1810;v177.ZIndex=14;v197.Parent=v177;v214.Parent=v177;v231.Parent=v177;v197.Visible=v6.CONFIG.ShowDistance;v197.LayoutOrder=1;v207.Visible=v6.CONFIG.ShowDistance and (v6.CONFIG.ShowName or v6.CONFIG.ShowAvatar) ;v214.Visible=v6.CONFIG.ShowName;v214.LayoutOrder=3;v224.Visible=v6.CONFIG.ShowName and v6.CONFIG.ShowAvatar ;v231.Visible=v6.CONFIG.ShowAvatar;v231.LayoutOrder=5;else v177.Visible=false;v197.Parent=v6.previewPanel;v214.Parent=v6.previewPanel;v231.Parent=v6.previewPanel;local v2282=v1778-8 ;local v2283=v214.TextBounds.X or 40 ;local v2284=16;local v2285=4;local v2286=0;if v6.CONFIG.ShowName then v2286=v2286 + v2283 ;end if v6.CONFIG.ShowAvatar then v2286=v2286 + v2284 ;end if (v6.CONFIG.ShowName and v6.CONFIG.ShowAvatar) then v2286=v2286 + v2285 ;end local v2287=v1775-(v2286/2) ;if v6.CONFIG.ShowAvatar then v231.Position=UDim2.new(0,v2287,0,v2282-v2284 );v231.Visible=true;v231.ZIndex=15;v2287=v2287 + v2284 + v2285 ;else v231.Visible=false;end if v6.CONFIG.ShowName then v214.Position=UDim2.new(0,v2287,0,v2282-12 );v214.Visible=true;v214.ZIndex=15;else v214.Visible=false;end if v6.CONFIG.ShowDistance then v197.Position=UDim2.new(0,v1775-((v197.TextBounds.X or 30)/2) ,0,v1780 + 6 );v197.Visible=true;v197.ZIndex=15;else v197.Visible=false;end v207.Visible=false;v224.Visible=false;end end end);v6.titleBar=Instance.new("Frame");v6.titleBar.Name="TitleBar";v6.titleBar.Size=UDim2.new(1,0,0,40);v6.titleBar.BackgroundColor3=Color3.fromRGB(18,18,24);v6.titleBar.BorderSizePixel=0;v6.titleBar.Parent=v6.mainPanel;Instance.new("UICorner",v6.titleBar).CornerRadius=UDim.new(0,10);local v248=Instance.new("Frame");v248.Size=UDim2.new(1,0,0,10);v248.Position=UDim2.new(0,0,1, -10);v248.BackgroundColor3=Color3.fromRGB(18,18,24);v248.BorderSizePixel=0;v248.Parent=v6.titleBar;local v254=Instance.new("Frame");v254.Size=UDim2.new(0,30,0,22);v254.Position=UDim2.new(0,12,0.5, -11);v254.BackgroundColor3=Color3.fromRGB(70,110,255);v254.BorderSizePixel=0;v254.Parent=v6.titleBar;Instance.new("UICorner",v254).CornerRadius=UDim.new(0,4);local v261=Instance.new("TextLabel");v261.Size=UDim2.new(1,0,1,0);v261.BackgroundTransparency=1;v261.Font=Enum.Font.GothamBlack;v261.TextColor3=Color3.new(1,1,1);v261.TextSize=11;v261.Text="ESP";v261.Parent=v254;local v270=Instance.new("TextLabel");v270.Size=UDim2.new(0,150,1,0);v270.Position=UDim2.new(0,50,0,0);v270.BackgroundTransparency=1;v270.Font=Enum.Font.GothamBold;v270.TextColor3=Color3.fromRGB(240,240,245);v270.TextSize=18;v270.TextXAlignment=Enum.TextXAlignment.Left;v270.Text="ASTRUM";v270.Parent=v6.titleBar;v6.pickerPanel=Instance.new("CanvasGroup");v6.pickerPanel.Size=UDim2.new(0,200,0,220);v6.pickerPanel.BackgroundColor3=Color3.fromRGB(15,15,20);v6.pickerPanel.BorderSizePixel=0;v6.pickerPanel.Visible=false;v6.pickerPanel.Active=true;v6.pickerPanel.ZIndex=20;v6.pickerPanel.Parent=v6.MenuGui;local v288=Instance.new("TextButton",v6.pickerPanel);v288.Size=UDim2.new(1,0,1,0);v288.BackgroundTransparency=1;v288.Text="";v288.ZIndex= -1;Instance.new("UICorner",v6.pickerPanel).CornerRadius=UDim.new(0,8);local v294=Instance.new("UIStroke",v6.pickerPanel);v294.Color=Color3.fromRGB(50,50,65);v294.Transparency=1;v6.pickerScale=Instance.new("UIScale",v6.pickerPanel);v6.pickerScale.Scale=0.8;v6.pickerPanel.GroupTransparency=1;local v300=Instance.new("Frame");v300.Size=UDim2.new(1, -16,0,140);v300.Position=UDim2.new(0,8,0,8);v300.BorderSizePixel=0;v300.Parent=v6.pickerPanel;Instance.new("UICorner",v300).CornerRadius=UDim.new(0,4);local v306=Instance.new("Frame");v306.Size=UDim2.new(1,0,1,0);v306.BorderSizePixel=0;v306.Parent=v300;Instance.new("UICorner",v306).CornerRadius=UDim.new(0,4);local v311=Instance.new("UIGradient");v311.Transparency=NumberSequence.new({NumberSequenceKeypoint.new(0,0),NumberSequenceKeypoint.new(1,1)});v311.Color=ColorSequence.new(Color3.new(1,1,1));v311.Parent=v306;local v315=Instance.new("Frame");v315.Size=UDim2.new(1,0,1,0);v315.BorderSizePixel=0;v315.Parent=v300;Instance.new("UICorner",v315).CornerRadius=UDim.new(0,4);local v320=Instance.new("UIGradient");v320.Rotation=90;v320.Transparency=NumberSequence.new({NumberSequenceKeypoint.new(0,1),NumberSequenceKeypoint.new(1,0)});v320.Color=ColorSequence.new(Color3.new(0,0,0));v320.Parent=v315;local v325=Instance.new("Frame");v325.Size=UDim2.new(0,6,0,6);v325.BackgroundColor3=Color3.new(1,1,1);v325.Parent=v300;Instance.new("UICorner",v325).CornerRadius=UDim.new(1,0);Instance.new("UIStroke",v325).Thickness=1;local v331=Instance.new("Frame");v331.Size=UDim2.new(1, -16,0,14);v331.Position=UDim2.new(0,8,0,156);v331.BorderSizePixel=0;v331.Parent=v6.pickerPanel;Instance.new("UICorner",v331).CornerRadius=UDim.new(1,0);local v337=Instance.new("UIGradient");v337.Color=ColorSequence.new({ColorSequenceKeypoint.new(0,Color3.new(1,0,0)),ColorSequenceKeypoint.new(0.16,Color3.new(1,1,0)),ColorSequenceKeypoint.new(0.33,Color3.new(0,1,0)),ColorSequenceKeypoint.new(0.5,Color3.new(0,1,1)),ColorSequenceKeypoint.new(0.66,Color3.new(0,0,1)),ColorSequenceKeypoint.new(0.83,Color3.new(1,0,1)),ColorSequenceKeypoint.new(1,Color3.new(1,0,0))});v337.Parent=v331;local v340=Instance.new("Frame");v340.Size=UDim2.new(0,4,1,4);v340.Position=UDim2.new(0,0,0.5,0);v340.AnchorPoint=Vector2.new(0.5,0.5);v340.BackgroundColor3=Color3.new(1,1,1);v340.Parent=v331;Instance.new("UICorner",v340).CornerRadius=UDim.new(0,2);local v347=Instance.new("TextLabel");v347.Size=UDim2.new(1,0,0,30);v347.Position=UDim2.new(0,0,0,180);v347.BackgroundTransparency=1;v347.Font=Enum.Font.Code;v347.TextColor3=Color3.new(0.7,0.7,0.7);v347.TextSize=12;v347.Parent=v6.pickerPanel;v6.subPanel=Instance.new("CanvasGroup");v6.subPanel.Size=UDim2.new(0,250,0,240);v6.subPanel.BackgroundColor3=Color3.fromRGB(15,15,20);v6.subPanel.BorderSizePixel=0;v6.subPanel.Visible=false;v6.subPanel.Active=true;v6.subPanel.ZIndex=20;v6.subPanel.Parent=v6.MenuGui;local v364=Instance.new("TextButton",v6.subPanel);v364.Size=UDim2.new(1,0,1,0);v364.BackgroundTransparency=1;v364.Text="";v364.ZIndex= -1;Instance.new("UICorner",v6.subPanel).CornerRadius=UDim.new(0,8);local v370=Instance.new("UIStroke",v6.subPanel);v370.Color=Color3.fromRGB(50,50,65);v370.Transparency=1;v6.subScale=Instance.new("UIScale",v6.subPanel);v6.subScale.Scale=0.8;v6.subPanel.GroupTransparency=1;local v376=Instance.new("ScrollingFrame");v376.Size=UDim2.new(1, -16,1, -16);v376.Position=UDim2.new(0,8,0,8);v376.BackgroundTransparency=1;v376.BorderSizePixel=0;v376.ScrollBarThickness=2;v376.CanvasSize=UDim2.new(0,0,0,0);v376.AutomaticCanvasSize=Enum.AutomaticSize.Y;v376.Parent=v6.subPanel;local v385=Instance.new("UIListLayout");v385.Padding=UDim.new(0,4);v385.Parent=v376;v6.bindPanel=Instance.new("CanvasGroup");v6.bindPanel.Size=UDim2.new(0,180,0,140);v6.bindPanel.BackgroundColor3=Color3.fromRGB(18,18,24);v6.bindPanel.BorderSizePixel=0;v6.bindPanel.Visible=false;v6.bindPanel.Active=true;v6.bindPanel.ZIndex=25;v6.bindPanel.Parent=v6.MenuGui;local v396=Instance.new("TextButton",v6.bindPanel);v396.Size=UDim2.new(1,0,1,0);v396.BackgroundTransparency=1;v396.Text="";v396.ZIndex= -1;Instance.new("UICorner",v6.bindPanel).CornerRadius=UDim.new(0,8);local v402=Instance.new("UIStroke",v6.bindPanel);v402.Color=Color3.fromRGB(60,60,80);v402.Thickness=1;v6.bindScale=Instance.new("UIScale",v6.bindPanel);v6.bindScale.Scale=0.8;v6.bindPanel.GroupTransparency=1;local v408=Instance.new("CanvasGroup");v408.Name="BindList";v408.Size=UDim2.new(0,150,0,30);v408.Position=UDim2.new(0.02,0,0.4,0);v408.BackgroundColor3=Color3.fromRGB(10,10,15);v408.Visible=false;v408.ZIndex=5;v408.Parent=v6.MenuGui;Instance.new("UICorner",v408).CornerRadius=UDim.new(0,6);local v417=Instance.new("UIStroke",v408);v417.Color=Color3.fromRGB(40,40,50);v417.Thickness=1;local v420=Instance.new("Frame",v408);v420.Size=UDim2.new(1,0,0,24);v420.BackgroundColor3=Color3.fromRGB(15,15,22);v420.BorderSizePixel=0;local v424=Instance.new("ImageLabel",v420);v424.Size=UDim2.new(0,14,0,14);v424.Position=UDim2.new(0,6,0.5, -7);v424.BackgroundTransparency=1;v424.Image="rbxassetid://6034440156";v424.ImageColor3=Color3.fromRGB(70,110,255);local v430=Instance.new("TextLabel",v420);v430.Size=UDim2.new(1, -26,1,0);v430.Position=UDim2.new(0,24,0,0);v430.BackgroundTransparency=1;v430.Font=Enum.Font.GothamBold;v430.Text="Binds";v430.TextColor3=Color3.new(1,1,1);v430.TextSize=12;v430.TextXAlignment=Enum.TextXAlignment.Left;local v439=Instance.new("Frame",v408);v439.Size=UDim2.new(1,0,1, -24);v439.Position=UDim2.new(0,0,0,24);v439.BackgroundTransparency=1;local v443=Instance.new("UIListLayout",v439);v443.Padding=UDim.new(0,2);v443.SortOrder=Enum.SortOrder.LayoutOrder;local function v446() for v1811,v1812 in ipairs(v439:GetChildren()) do if v1812:IsA("Frame") then v1812:Destroy();end end if  not v6.CONFIG.ShowBindWindow then v408.Visible=false;return;end local v792=0;for v1813,v1814 in pairs(v6.StoredBinds) do if (v1814.Key or v1814.InputType) then v792=v792 + 1 ;local v2290=Instance.new("Frame",v439);v2290.Size=UDim2.new(1,0,0,20);v2290.BackgroundTransparency=1;local v2293=Instance.new("TextLabel",v2290);v2293.Size=UDim2.new(1, -40,1,0);v2293.Position=UDim2.new(0,8,0,0);v2293.BackgroundTransparency=1;v2293.Font=Enum.Font.GothamMedium;v2293.Text=v1813;v2293.TextColor3=Color3.fromRGB(200,200,210);v2293.TextSize=11;v2293.TextXAlignment=Enum.TextXAlignment.Left;local v2304=Instance.new("TextLabel",v2290);v2304.Size=UDim2.new(0,35,1,0);v2304.Position=UDim2.new(1, -40,0,0);v2304.BackgroundTransparency=1;v2304.Font=Enum.Font.GothamBold;v2304.Text=(v1814.State and "on") or "off" ;v2304.TextColor3=(v1814.State and Color3.new(1,1,1)) or Color3.fromRGB(100,100,110) ;v2304.TextSize=10;v2304.TextXAlignment=Enum.TextXAlignment.Right;end end if (v792>0) then v408.Visible=true;v11(v408,{Size=UDim2.new(0,150,0,28 + (v792 * 22) )},0.2);else v408.Visible=false;end end local v447,v448,v449;v408.InputBegan:Connect(function(v793) if (v793.UserInputType==Enum.UserInputType.MouseButton1) then v447=true;v448=v793.Position;v449=v408.Position;end end);v2.InputChanged:Connect(function(v794) if (v447 and (v794.UserInputType==Enum.UserInputType.MouseMovement)) then local v2071=v794.Position-v448 ;v408.Position=UDim2.new(v449.X.Scale,v449.X.Offset + v2071.X ,v449.Y.Scale,v449.Y.Offset + v2071.Y );end end);v2.InputEnded:Connect(function(v795) if (v795.UserInputType==Enum.UserInputType.MouseButton1) then v447=false;end end);local v450=Instance.new("TextLabel",v6.bindPanel);v450.Size=UDim2.new(1,0,0,30);v450.BackgroundTransparency=1;v450.Font=Enum.Font.GothamBold;v450.TextColor3=Color3.fromRGB(150,150,170);v450.TextSize=11;v450.Text="ASSIGN KEYBIND";local v457=Instance.new("TextButton",v6.bindPanel);v457.Size=UDim2.new(1, -20,0,32);v457.Position=UDim2.new(0,10,0,35);v457.BackgroundColor3=Color3.fromRGB(30,30,40);v457.Font=Enum.Font.GothamBold;v457.Text="NONE";v457.TextColor3=Color3.fromRGB(70,110,255);v457.TextSize=13;Instance.new("UICorner",v457).CornerRadius=UDim.new(0,6);local v466=Instance.new("Frame",v6.bindPanel);v466.Size=UDim2.new(1, -20,0,32);v466.Position=UDim2.new(0,10,0,72);v466.BackgroundColor3=Color3.fromRGB(30,30,40);Instance.new("UICorner",v466).CornerRadius=UDim.new(0,6);local v471=Instance.new("TextButton",v466);v471.Name="ModeButton";v471.Size=UDim2.new(1,0,1,0);v471.BackgroundTransparency=1;v471.Font=Enum.Font.GothamMedium;v471.Text="MODE: TOGGLE";v471.TextColor3=Color3.new(1,1,1);v471.TextSize=12;local v479=Instance.new("CanvasGroup",v6.bindPanel);v479.Size=UDim2.new(0,160,0,0);v479.Position=UDim2.new(0,10,0,106);v479.BackgroundColor3=Color3.fromRGB(25,25,30);v479.Visible=false;v479.ZIndex=30;Instance.new("UICorner",v479).CornerRadius=UDim.new(0,6);local v486=Instance.new("UIStroke",v479);v486.Color=Color3.fromRGB(50,50,70);local v488=Instance.new("UIListLayout",v479);local function v489(v796) local v797=Instance.new("TextButton",v479);v797.Name="Option"   .. v796 ;v797.Size=UDim2.new(1,0,0,28);v797.BackgroundTransparency=1;v797.BackgroundColor3=Color3.fromRGB(70,110,255);v797.Font=Enum.Font.GothamMedium;v797.Text=v796;v797.TextColor3=Color3.fromRGB(200,200,210);v797.TextSize=12;v797.ZIndex=35;v797.Active=true;v797.MouseButton1Click:Connect(function() if v6.currentlyBinding then local v2315=v6.StoredBinds[v6.currentlyBinding] or {State=false,Mode="Toggle"} ;v2315.Mode=v796;v6.StoredBinds[v6.currentlyBinding]=v2315;v471.Text="MODE: "   .. string.upper(v796) ;updateBindPanel(v6.currentlyBinding);v446();v11(v479,{Size=UDim2.new(1,0,0,0),GroupTransparency=1},0.2).Completed:Connect(function() v479.Visible=false;end);v11(v6.bindPanel,{Size=UDim2.new(0,180,0,140)},0.2);end end);v797.MouseEnter:Connect(function() v11(v797,{BackgroundTransparency=0.85,TextColor3=Color3.new(1,1,1)},0.15);end);v797.MouseLeave:Connect(function() if (v6.currentlyBinding and v6.StoredBinds[v6.currentlyBinding] and (v6.StoredBinds[v6.currentlyBinding].Mode==v796)) then return;end v11(v797,{BackgroundTransparency=1,TextColor3=Color3.fromRGB(200,200,210)},0.15);end);end v489("Toggle");v489("Hold");local v490=Instance.new("TextButton",v6.bindPanel);v490.Size=UDim2.new(1, -20,0,24);v490.Position=UDim2.new(0,10,0,110);v490.BackgroundTransparency=1;v490.Font=Enum.Font.GothamMedium;v490.Text="CLEAR BIND";v490.TextColor3=Color3.fromRGB(255,80,80);v490.TextSize=11;local function v498(v809,v810) if ( not v809 or  not v809.Visible) then return;end local v811=v809:FindFirstChildOfClass("UIStroke");if v811 then v11(v811,{Transparency=1},0.2);end v11(v809,{GroupTransparency=1},0.2);v11(v810,{Scale=0.85},0.2,Enum.EasingStyle.Quart,Enum.EasingDirection.In);task.wait(0.2);v809.Visible=false;if v6.activeSource then v6.activeSource=nil;end end local function v499(v813,v814) if (v6.activePopup and (v6.activePopup~=v813)) then if ((v6.activePopup==v6.subPanel) and (v813==v6.pickerPanel)) then v6.previousPopup=v6.activePopup;else local v2544=v6.activePopup;local v2545=((v2544==v6.pickerPanel) and v6.pickerScale) or ((v2544==v6.bindPanel) and v6.bindScale) or v6.subScale ;task.spawn(function() v498(v2544,v2545);end);v6.previousPopup=nil;end end v6.activePopup=v813;local v816=v2:GetMouseLocation();v813.Position=UDim2.new(0,v816.X + 15 ,0,v816.Y-20 );local v818=v6.MenuGui.AbsoluteSize;if ((v813.Position.X.Offset + v813.Size.X.Offset)>v818.X) then v813.Position=UDim2.new(0,(v816.X-v813.Size.X.Offset) -15 ,0,v816.Y-20 );end v813.Visible=true;v813.GroupTransparency=1;v814.Scale=0.85;local v822=v813:FindFirstChildOfClass("UIStroke");if v822 then v822.Transparency=1;task.delay(0.05,function() v11(v822,{Transparency=0},0.25);end);end v11(v813,{GroupTransparency=0},0.25);v11(v814,{Scale=1},0.3,Enum.EasingStyle.Back,Enum.EasingDirection.Out);end local function v500(v823) local v824=v6.StoredBinds[v823];local v825=(v824 and v824.Mode) or "Toggle" ;v471.Text="MODE: "   .. string.upper(v825) ;v471.TextColor3=Color3.new(1,1,1);if (v824 and (v824.Key or v824.InputType)) then local v2076=(v824.Key and v824.Key.Name:upper()) or (v824.InputType and v824.InputType.Name:upper()) or "NONE" ;v457.Text=v2076;v490.Visible=true;else v457.Text="NONE";v490.Visible=false;end for v1815,v1816 in ipairs(v479:GetChildren()) do if (v1816:IsA("TextButton") and v1816.Name:match("^Option")) then local v2319=v1816.Name:gsub("^Option","");if (v2319==v825) then v11(v1816,{BackgroundTransparency=0.85,TextColor3=Color3.new(1,1,1)},0.15);else v11(v1816,{BackgroundTransparency=1,TextColor3=Color3.fromRGB(200,200,210)},0.15);end end end end v457.MouseButton1Click:Connect(function() v6.isTrackingKey=true;v457.Text="...";v457.TextColor3=Color3.fromRGB(255,255,255);end);v471.MouseButton1Click:Connect(function() local v831=v479.Visible;if  not v831 then v479.Visible=true;v479.GroupTransparency=1;v500(v6.currentlyBinding);v11(v479,{Size=UDim2.new(1,0,0,60),GroupTransparency=0},0.2);v11(v6.bindPanel,{Size=UDim2.new(0,180,0,200)},0.2);else v11(v479,{Size=UDim2.new(1,0,0,0),GroupTransparency=1},0.2).Completed:Connect(function() if  not v479.Visible then v479.Visible=false;end v479.Visible=false;end);v11(v6.bindPanel,{Size=UDim2.new(0,180,0,140)},0.2);end end);v490.MouseButton1Click:Connect(function() if v6.currentlyBinding then v6.StoredBinds[v6.currentlyBinding]=nil;v500(v6.currentlyBinding);v498(v6.bindPanel,v6.bindScale);end end);v2.InputBegan:Connect(function(v832,v833) if v6.isTrackingKey then if ((v832.UserInputType==Enum.UserInputType.MouseButton1) or (v832.UserInputType==Enum.UserInputType.MouseButton2)) then local v2547=v832.Position;local v2548=v6.LP.PlayerGui:GetGuiObjectsAtPosition(v2547.X,v2547.Y);for v2789,v2790 in ipairs(v2548) do if (v2790:IsDescendantOf(v6.bindPanel) or (v2790==v6.bindPanel)) then return;end end end if ((v832.UserInputType==Enum.UserInputType.Keyboard) or (v832.UserInputType==Enum.UserInputType.MouseButton1) or (v832.UserInputType==Enum.UserInputType.MouseButton2) or (v832.UserInputType==Enum.UserInputType.MouseButton3)) then v6.isTrackingKey=false;local v2550=v832.KeyCode;local v2551=v832.UserInputType;if (v2550==Enum.KeyCode.Escape) then v457.Text="NONE";if v6.currentlyBinding then v6.StoredBinds[v6.currentlyBinding]=nil;end else local v2893=((v2550~=Enum.KeyCode.Unknown) and v2550.Name:upper()) or v2551.Name:upper() ;v457.Text=v2893;if v6.currentlyBinding then v6.StoredBinds[v6.currentlyBinding]=v6.StoredBinds[v6.currentlyBinding] or {Mode="Toggle",State=false} ;v6.StoredBinds[v6.currentlyBinding].Key=((v2550~=Enum.KeyCode.Unknown) and v2550) or nil ;v6.StoredBinds[v6.currentlyBinding].InputType=v2551;v500(v6.currentlyBinding);end end v457.TextColor3=Color3.fromRGB(70,110,255);v446();return;end end if ((v832.UserInputType==Enum.UserInputType.MouseButton1) and v6.activePopup and v6.activePopup.Visible) then local v2084=v832.Position;local v2085=v6.LP.PlayerGui:GetGuiObjectsAtPosition(v2084.X,v2084.Y);local v2086=false;for v2321,v2322 in ipairs(v2085) do if (v2322:IsDescendantOf(v6.activePopup) or (v2322==v6.activePopup)) then v2086=true;break;end end if  not v2086 then if (v6.previousPopup and v6.previousPopup.Visible) then local v2895=false;for v2980,v2981 in ipairs(v2085) do if (v2981:IsDescendantOf(v6.previousPopup) or (v2981==v6.previousPopup)) then v2895=true;break;end end if v2895 then local v3064=v6.activePopup;local v3065=((v3064==v6.pickerPanel) and v6.pickerScale) or ((v3064==v6.bindPanel) and v6.bindScale) or v6.subScale ;task.spawn(function() v498(v3064,v3065);end);v6.activePopup=v6.previousPopup;v6.previousPopup=nil;return;end end local v2553=v6.activePopup;local v2554=((v2553==v6.pickerPanel) and v6.pickerScale) or ((v2553==v6.bindPanel) and v6.bindScale) or v6.subScale ;task.spawn(function() v498(v2553,v2554);end);if v6.previousPopup then local v2896=v6.previousPopup;local v2897=((v2896==v6.bindPanel) and v6.bindScale) or v6.subScale ;task.spawn(function() v498(v2896,v2897);end);v6.previousPopup=nil;end v6.activePopup=nil;return;end end if v833 then return;end local v834=false;for v1817,v1818 in pairs(v6.StoredBinds) do local v1819=false;if (v1817=="Aimbot") then v1819=v832.UserInputType==Enum.UserInputType.MouseButton2 ;elseif (v1818.Key and (v1818.Key~=Enum.KeyCode.Unknown)) then v1819=v832.KeyCode==v1818.Key ;elseif v1818.InputType then v1819=v832.UserInputType==v1818.InputType ;end if v1819 then if (v1818.Mode=="Toggle") then v1818.State= not v1818.State;if v1818.Callback then v1818.Callback(v1818.State);end v834=true;elseif (v1818.Mode=="Hold") then v1818.State=true;if v1818.Callback then v1818.Callback(true);end v834=true;end end end if v834 then v446();end end);v2.InputEnded:Connect(function(v835) local v836=false;for v1820,v1821 in pairs(v6.StoredBinds) do local v1822=false;if (v1820=="Aimbot") then v1822=v835.UserInputType==Enum.UserInputType.MouseButton2 ;elseif (v1821.Key and (v1821.Key~=Enum.KeyCode.Unknown)) then v1822=v835.KeyCode==v1821.Key ;elseif v1821.InputType then v1822=v835.UserInputType==v1821.InputType ;end if (v1822 and (v1821.Mode=="Hold")) then v1821.State=false;if v1821.Callback then v1821.Callback(false);end v836=true;end end if v836 then v446();end end);local function v501(v837,v838,v839) v6.ph,v6.ps,v6.pv=v837 or v6.ph ,v838 or v6.ps ,v839 or v6.pv ;local v843=Color3.fromHSV(v6.ph,v6.ps,v6.pv);v300.BackgroundColor3=Color3.fromHSV(v6.ph,1,1);v325.Position=UDim2.new(v6.ps,0,1 -v6.pv ,0);v340.Position=UDim2.new(v6.ph,0,0.5,0);v347.Text="#"   .. v843:ToHex():upper()   .. " ("   .. math.floor(v6.ps * 100 )   .. "%)" ;if v6.pCallback then v6.pCallback(v843);end end v300.InputBegan:Connect(function(v848) if (v848.UserInputType==Enum.UserInputType.MouseButton1) then svDrag=true;end end);v331.InputBegan:Connect(function(v849) if (v849.UserInputType==Enum.UserInputType.MouseButton1) then hDrag=true;end end);v2.InputChanged:Connect(function(v850) if (v850.UserInputType==Enum.UserInputType.MouseMovement) then if svDrag then local v2556=math.clamp((v850.Position.X-v300.AbsolutePosition.X)/v300.AbsoluteSize.X ,0,1);local v2557=math.clamp((v850.Position.Y-v300.AbsolutePosition.Y)/v300.AbsoluteSize.Y ,0,1);v501(nil,v2556,1 -v2557 );elseif hDrag then local v2899=math.clamp((v850.Position.X-v331.AbsolutePosition.X)/v331.AbsoluteSize.X ,0,1);v501(v2899,nil,nil);end end end);v2.InputEnded:Connect(function(v851) if (v851.UserInputType==Enum.UserInputType.MouseButton1) then svDrag,hDrag=false,false;end end);local function v502() v6.ord=v6.ord + 1 ;return v6.ord;end local function v503(v853,v854) local v855=Instance.new("TextButton");v855.Size=UDim2.new(1,0,0,50);v855.BackgroundTransparency=1;v855.Font=Enum.Font.GothamBold;v855.TextSize=15;v855.TextColor3=Color3.fromRGB(180,180,200);v855.Text="      "   .. v853 ;v855.TextXAlignment=Enum.TextXAlignment.Left;v855.AutoButtonColor=false;v855.LayoutOrder=v502();v855.ZIndex=20;v855.Visible=true;v855.Parent=v34;local v870=Instance.new("Frame");v870.Size=UDim2.new(0,3,0.6,0);v870.Position=UDim2.new(0,0,0.2,0);v870.BackgroundColor3=Color3.fromRGB(70,110,255);v870.BorderSizePixel=0;v870.Visible=false;v870.Parent=v855;local v877=Instance.new("ScrollingFrame");v877.Size=UDim2.new(1, -20,1, -10);v877.Position=UDim2.new(0,10,0,5);v877.BackgroundTransparency=1;v877.BorderSizePixel=0;v877.ScrollBarThickness=3;v877.ScrollBarImageColor3=Color3.fromRGB(60,60,80);v877.CanvasSize=UDim2.new(0,0,0,0);v877.AutomaticCanvasSize=Enum.AutomaticSize.Y;v877.Visible=false;v877.Parent=v102;local v889=Instance.new("Frame");v889.Size=UDim2.new(0.5, -5,1,0);v889.BackgroundTransparency=1;v889.Parent=v877;Instance.new("UIListLayout",v889).Padding=UDim.new(0,15);local v894=Instance.new("Frame");v894.Size=UDim2.new(0.5, -5,1,0);v894.Position=UDim2.new(0.5,5,0,0);v894.BackgroundTransparency=1;v894.Parent=v877;Instance.new("UIListLayout",v894).Padding=UDim.new(0,15);local v900=Instance.new("UIListLayout");v900.FillDirection=Enum.FillDirection.Horizontal;v900.Padding=UDim.new(0,10);v900.SortOrder=Enum.SortOrder.LayoutOrder;v900.Parent=v877;v855.MouseButton1Click:Connect(function() for v2087,v2088 in pairs(v6.tabs) do v2088.Page.Visible=false;v2088.Accent.Visible=false;v11(v2088.Button,{TextColor3=Color3.fromRGB(150,150,165),BackgroundTransparency=1},0.15);end v877.Visible=true;v870.Visible=true;v11(v855,{TextColor3=Color3.new(1,1,1),BackgroundTransparency=0.92},0.15);if (v6.activePopup and v6.activePopup.Visible) then local v2324=((v6.activePopup==v6.pickerPanel) and v6.pickerScale) or ((v6.activePopup==v6.bindPanel) and v6.bindScale) or v6.subScale ;task.spawn(function() v498(v6.activePopup,v2324);end);end if v6.pickerPanel.Visible then task.spawn(function() v498(v6.pickerPanel,v6.pickerScale);end);end if v6.subPanel.Visible then task.spawn(function() v498(v6.subPanel,v6.subScale);end);end if (v6.bindPanel and v6.bindPanel.Visible) then task.spawn(function() v498(v6.bindPanel,v6.bindScale);end);end v6.activePopup=nil;v6.previousPopup=nil;v6.activeSource=nil;if (v853=="Visuals") then v240();v6.previewPanel.Visible=true;v11(v6.previewPanel,{GroupTransparency=0},0.25);else v11(v6.previewPanel,{GroupTransparency=1},0.2).Completed:Connect(function() if  not (v6.tabs[1] and v6.tabs[1].Page.Visible) then v6.previewPanel.Visible=false;end end);end end);v855.MouseEnter:Connect(function() if  not v877.Visible then v11(v855,{TextColor3=Color3.new(0.9,0.9,0.9),BackgroundTransparency=0.96},0.15);end end);v855.MouseLeave:Connect(function() if  not v877.Visible then v11(v855,{TextColor3=Color3.fromRGB(150,150,165),BackgroundTransparency=1},0.15);end end);local v907={Button=v855,Page=v877,Accent=v870,Left=v889,Right=v894};table.insert(v6.tabs,v907);if ( #v6.tabs==1) then v877.Visible=true;v870.Visible=true;v855.TextColor3=Color3.new(1,1,1);v855.BackgroundColor3=Color3.new(1,1,1);v855.BackgroundTransparency=0.95;end return v907;end local function v504(v908,v909) local v910=Instance.new("Frame");v910.Size=UDim2.new(1,0,0,0);v910.AutomaticSize=Enum.AutomaticSize.Y;v910.BackgroundTransparency=1;v910.LayoutOrder=v502();v910.Parent=v908;local v917=Instance.new("TextLabel");v917.Size=UDim2.new(1,0,0,20);v917.Position=UDim2.new(0,5,0,0);v917.BackgroundTransparency=1;v917.Font=Enum.Font.GothamBold;v917.TextColor3=Color3.fromRGB(100,100,120);v917.TextSize=11;v917.TextXAlignment=Enum.TextXAlignment.Left;v917.Text=string.upper(v909);v917.Parent=v910;local v929=Instance.new("Frame");v929.Size=UDim2.new(1,0,0,0);v929.Position=UDim2.new(0,0,0,22);v929.AutomaticSize=Enum.AutomaticSize.Y;v929.BackgroundColor3=Color3.fromRGB(20,20,26);v929.BorderSizePixel=0;v929.Parent=v910;Instance.new("UICorner",v929).CornerRadius=UDim.new(0,8);local v937=Instance.new("UIStroke",v929);v937.Color=Color3.fromRGB(35,35,45);v937.Thickness=1;local v940=Instance.new("UIListLayout",v929);v940.Padding=UDim.new(0,1);v940.SortOrder=Enum.SortOrder.LayoutOrder;local v944=Instance.new("UIPadding",v929);v944.PaddingBottom=UDim.new(0,2);v944.PaddingTop=UDim.new(0,2);return v929;end local function v505(v947,v948) if  not v947.SubBar then if v947.Left then v947.Left.Visible=false;v947.Left:Destroy();v947.Left=nil;end if v947.Right then v947.Right.Visible=false;v947.Right:Destroy();v947.Right=nil;end local v2096=v947.Page:FindFirstChildOfClass("UIListLayout");if v2096 then v2096:Destroy();end v947.Page.AutomaticCanvasSize=Enum.AutomaticSize.None;v947.Page.CanvasSize=UDim2.new(0,0,0,0);v947.Page.ScrollBarThickness=0;v947.SubBar=Instance.new("Frame");v947.SubBar.Size=UDim2.new(1, -10,0,35);v947.SubBar.Position=UDim2.new(0,5,0,2);v947.SubBar.BackgroundTransparency=1;v947.SubBar.Parent=v947.Page;local v2107=Instance.new("UIListLayout");v2107.FillDirection=Enum.FillDirection.Horizontal;v2107.Padding=UDim.new(0,15);v2107.VerticalAlignment=Enum.VerticalAlignment.Center;v2107.Parent=v947.SubBar;v947.SubTabs={};end local v949=Instance.new("TextButton");v949.Size=UDim2.new(0,0,1,0);v949.AutomaticSize=Enum.AutomaticSize.X;v949.BackgroundTransparency=1;v949.Font=Enum.Font.GothamBold;v949.TextSize=13;v949.TextColor3=Color3.fromRGB(140,140,155);v949.Text=v948:upper();v949.AutoButtonColor=false;v949.Parent=v947.SubBar;local v962=Instance.new("Frame");v962.Size=UDim2.new(1,0,0,2);v962.Position=UDim2.new(0,0,1, -2);v962.BackgroundColor3=Color3.fromRGB(70,110,255);v962.BorderSizePixel=0;v962.Visible=false;v962.Parent=v949;local v969=Instance.new("ScrollingFrame");v969.Size=UDim2.new(1,0,1, -40);v969.Position=UDim2.new(0,0,0,40);v969.BackgroundTransparency=1;v969.BorderSizePixel=0;v969.ScrollBarThickness=2;v969.ScrollBarImageColor3=Color3.fromRGB(60,60,80);v969.AutomaticCanvasSize=Enum.AutomaticSize.Y;v969.Visible=false;v969.Parent=v947.Page;local v981=Instance.new("Frame");v981.Size=UDim2.new(0.5, -5,1,0);v981.BackgroundTransparency=1;v981.Parent=v969;Instance.new("UIListLayout",v981).Padding=UDim.new(0,15);local v986=Instance.new("Frame");v986.Size=UDim2.new(0.5, -5,1,0);v986.Position=UDim2.new(0.5,5,0,0);v986.BackgroundTransparency=1;v986.Parent=v969;Instance.new("UIListLayout",v986).Padding=UDim.new(0,15);local v992=Instance.new("UIListLayout");v992.FillDirection=Enum.FillDirection.Horizontal;v992.Padding=UDim.new(0,10);v992.Parent=v969;local v997={Button=v949,Page=v969,Left=v981,Right=v986,Line=v962};v949.MouseButton1Click:Connect(function() for v2115,v2116 in pairs(v947.SubTabs) do v2116.Page.Visible=false;v2116.Line.Visible=false;v11(v2116.Button,{TextColor3=Color3.fromRGB(140,140,155)},0.2);end v969.Visible=true;v962.Visible=true;v11(v949,{TextColor3=Color3.new(1,1,1)},0.2);end);table.insert(v947.SubTabs,v997);if ( #v947.SubTabs==1) then v969.Visible=true;v962.Visible=true;v949.TextColor3=Color3.new(1,1,1);end return v997;end local v506={};local function v507() for v1830,v1831 in ipairs(v506) do v1831();end end local function v508(v998,v999,v1000,v1001,v1002) local v1003=v1000;local v1004=Instance.new("Frame");v1004.Size=UDim2.new(1,0,0,42);v1004.BackgroundColor3=Color3.fromRGB(22,22,28);v1004.BorderSizePixel=0;v1004.LayoutOrder=v502();v1004.Parent=v998;Instance.new("UICorner",v1004).CornerRadius=UDim.new(0,8);local v1011=Instance.new("TextLabel");v1011.Size=UDim2.new(1, -110,1,0);v1011.Position=UDim2.new(0,14,0,0);v1011.BackgroundTransparency=1;v1011.Font=Enum.Font.GothamMedium;v1011.TextColor3=Color3.fromRGB(220,220,230);v1011.TextSize=14;v1011.TextXAlignment=Enum.TextXAlignment.Left;v1011.Text=v999;v1011.Parent=v1004;local v1023=Instance.new("Frame");v1023.Size=UDim2.new(0,48,0,24);v1023.Position=UDim2.new(1, -64,0.5, -12);v1023.BackgroundColor3=(v1000 and Color3.fromRGB(70,110,255)) or Color3.fromRGB(45,45,55) ;v1023.BorderSizePixel=0;v1023.Parent=v1004;Instance.new("UICorner",v1023).CornerRadius=UDim.new(1,0);local v1030=Instance.new("Frame");v1030.Size=UDim2.new(0,20,0,20);v1030.Position=(v1000 and UDim2.new(1, -22,0.5, -10)) or UDim2.new(0,2,0.5, -10) ;v1030.BackgroundColor3=Color3.new(1,1,1);v1030.BorderSizePixel=0;v1030.Parent=v1023;Instance.new("UICorner",v1030).CornerRadius=UDim.new(1,0);local v1037=Instance.new("TextButton");v1037.Size=UDim2.new(1,0,1,0);v1037.BackgroundTransparency=1;v1037.Text="";v1037.ZIndex=2;v1037.Parent=v1004;local function v1043() v11(v1023,{BackgroundColor3=(v1003 and Color3.fromRGB(70,110,255)) or Color3.fromRGB(45,45,55) },0.2);v11(v1030,{Position=(v1003 and UDim2.new(1, -22,0.5, -10)) or UDim2.new(0,2,0.5, -10) },0.2);end v1037.MouseButton1Click:Connect(function() v1003= not v1003;v1043();v1001(v1003);end);v1037.MouseButton2Click:Connect(function() v6.currentlyBinding=v999;v6.StoredBinds[v999]=v6.StoredBinds[v999] or {Mode="Toggle",State=false} ;v6.StoredBinds[v999].Callback=function(v2122) v1003=v2122;v1043();v1001(v2122);v6.StoredBinds[v999].State=v2122;v446();end;v500(v999);v499(v6.bindPanel,v6.bindScale);end);if v1002 then if v1002.ColorData then local v2562=Instance.new("TextButton");v2562.Size=UDim2.new(0,24,0,14);v2562.Position=UDim2.new(1, -115,0.5, -7);v2562.BackgroundColor3=v1002.ColorData.Default;v2562.BorderSizePixel=0;v2562.Text="";v2562.ZIndex=3;v2562.Parent=v1004;Instance.new("UICorner",v2562).CornerRadius=UDim.new(0,3);Instance.new("UIStroke",v2562).Color=Color3.new(0,0,0);v2562.MouseButton1Click:Connect(function() if (v6.pickerPanel.Visible and (v6.activeSource==v2562)) then v498(v6.pickerPanel,v6.pickerScale);v6.activeSource=nil;v6.activePopup=v6.previousPopup;v6.previousPopup=nil;else v499(v6.pickerPanel,v6.pickerScale);v6.activeSource=v2562;v6.pCallback=function(v3068) v2562.BackgroundColor3=v3068;v1002.ColorData.Callback(v3068);end;local v2988,v2989,v2990=v2562.BackgroundColor3:ToHSV();v501(v2988,v2989,v2990);end end);table.insert(v506,function() local v2792=v1002.ColorKey or (v999:gsub(" ","")   .. "Color") ;if v6.CONFIG[v2792] then v2562.BackgroundColor3=v6.CONFIG[v2792];end end);end if v1002.UseSettings then local v2573=Instance.new("TextButton");v2573.Size=UDim2.new(0,24,0,24);v2573.Position=UDim2.new(1, -145,0.5, -12);v2573.BackgroundTransparency=1;v2573.Font=Enum.Font.GothamBold;v2573.TextSize=14;v2573.TextColor3=Color3.fromRGB(150,150,160);v2573.Text="";v2573.ZIndex=3;v2573.Parent=v1004;local v2584=Instance.new("Frame");v2584.Name="GearIcon";v2584.Size=UDim2.new(0,16,0,16);v2584.Position=UDim2.new(0.5, -8,0.5, -8);v2584.BackgroundTransparency=1;v2584.ZIndex=4;v2584.Parent=v2573;for v2793=0,2 do local v2794=Instance.new("Frame",v2584);v2794.Size=UDim2.new(0,3,0,3);v2794.Position=UDim2.new(0.5, -1.5,0.25,(v2793 * 5) -1 );v2794.BackgroundColor3=Color3.fromRGB(150,150,160);v2794.BorderSizePixel=0;Instance.new("UICorner",v2794).CornerRadius=UDim.new(1,0);end v2573.MouseButton1Click:Connect(function() if (v6.subPanel.Visible and (v6.activeSource==v2573)) then v498(v6.subPanel,v6.subScale);v6.activeSource=nil;v6.activePopup=nil;else if (v6.activePopup and v6.activePopup.Visible) then local v3106=((v6.activePopup==v6.pickerPanel) and v6.pickerScale) or ((v6.activePopup==v6.bindPanel) and v6.bindScale) or v6.subScale ;task.spawn(function() v498(v6.activePopup,v3106);end);v6.activePopup=nil;end task.wait(0.05);v499(v6.subPanel,v6.subScale);v6.activeSource=v2573;v6.activePopup=v6.subPanel;end end);end end v1004.MouseEnter:Connect(function() v11(v1004,{BackgroundColor3=Color3.fromRGB(28,28,36)},0.15);end);v1004.MouseLeave:Connect(function() v11(v1004,{BackgroundColor3=Color3.fromRGB(22,22,28)},0.15);end);table.insert(v506,function() local v1835=(v1002 and v1002.ConfigKey) or v999:gsub(" ","") ;if (v999=="Enable Aimbot") then v1835="AimbotEnabled";end if (v999=="Enable Local ESP") then v1835="LocalPlayerESP";end if (v999=="Bounding Box") then v1835="BoxEnabled";end for v2124,v2125 in pairs(v6.CONFIG) do if ((v2124:lower()==v1835:lower()) or (v2124:lower()==(v1835   .. "Enabled"):lower())) then v1003=v2125;v1043();v1001(v1003);break;end end end);return v1004;end local function v509(v1044,v1045,v1046,v1047,v1048) local v1049=Instance.new("Frame");v1049.Size=UDim2.new(1,0,0,42);v1049.BackgroundColor3=Color3.fromRGB(22,22,28);v1049.BorderSizePixel=0;v1049.LayoutOrder=v502();v1049.Parent=v1044;Instance.new("UICorner",v1049).CornerRadius=UDim.new(0,8);local v1056=Instance.new("TextLabel");v1056.Size=UDim2.new(1, -50,1,0);v1056.Position=UDim2.new(0,14,0,0);v1056.BackgroundTransparency=1;v1056.Font=Enum.Font.GothamMedium;v1056.TextColor3=Color3.fromRGB(220,220,230);v1056.TextSize=14;v1056.TextXAlignment=Enum.TextXAlignment.Left;v1056.Text=v1045;v1056.Parent=v1049;local v1068=Instance.new("TextButton");v1068.Size=UDim2.new(0,28,0,16);v1068.Position=UDim2.new(1, -44,0.5, -8);v1068.BackgroundColor3=v1046;v1068.BorderSizePixel=0;v1068.Text="";v1068.Parent=v1049;Instance.new("UICorner",v1068).CornerRadius=UDim.new(0,3);v1068.MouseButton1Click:Connect(function() if (v6.pickerPanel.Visible and (v6.activeSource==v1068)) then v498(v6.pickerPanel,v6.pickerScale);v6.activeSource=nil;v6.activePopup=v6.previousPopup;v6.previousPopup=nil;else v499(v6.pickerPanel,v6.pickerScale);v6.activeSource=v1068;v6.pCallback=function(v2591) v1068.BackgroundColor3=v2591;v1047(v2591);end;local v2331,v2332,v2333=v1068.BackgroundColor3:ToHSV();v501(v2331,v2332,v2333);end end);v1049.MouseEnter:Connect(function() v11(v1049,{BackgroundColor3=Color3.fromRGB(28,28,36)},0.15);end);v1049.MouseLeave:Connect(function() v11(v1049,{BackgroundColor3=Color3.fromRGB(22,22,28)},0.15);end);table.insert(v506,function() local v1836=(v1048 and v1048.ConfigKey) or v1045:gsub(" ","") ;for v2126,v2127 in pairs(v6.CONFIG) do if ((v2126:lower()==v1836:lower()) or (v2126:lower()==(v1836   .. "Color"):lower())) then v1068.BackgroundColor3=v2127;v1047(v2127);break;end end end);return v1049;end local function v510(v1076,v1077,v1078,v1079,v1080,v1081) local v1082=false;local v1083=v1079;local v1084=Instance.new("Frame");v1084.Size=UDim2.new(1,0,0,42);v1084.BackgroundTransparency=1;v1084.ClipsDescendants=false;v1084.LayoutOrder=v502();v1084.Parent=v1076;local v1090=Instance.new("Frame");v1090.Size=UDim2.new(1,0,0,42);v1090.BackgroundColor3=Color3.fromRGB(22,22,28);v1090.BorderSizePixel=0;v1090.Parent=v1084;Instance.new("UICorner",v1090).CornerRadius=UDim.new(0,8);local v1096=Instance.new("TextLabel");v1096.Size=UDim2.new(1, -120,1,0);v1096.Position=UDim2.new(0,14,0,0);v1096.BackgroundTransparency=1;v1096.Font=Enum.Font.GothamMedium;v1096.TextColor3=Color3.fromRGB(220,220,230);v1096.TextSize=14;v1096.TextXAlignment=Enum.TextXAlignment.Left;v1096.Text=v1077;v1096.Parent=v1090;local v1108=Instance.new("TextButton");v1108.Size=UDim2.new(0,90,0,24);v1108.Position=UDim2.new(1, -104,0.5, -12);v1108.BackgroundColor3=Color3.fromRGB(45,45,55);v1108.BorderSizePixel=0;v1108.Font=Enum.Font.GothamBold;v1108.TextColor3=Color3.fromRGB(70,110,255);v1108.Text=v1083:upper();v1108.Parent=v1090;Instance.new("UICorner",v1108).CornerRadius=UDim.new(0,6);local v1119=Instance.new("TextLabel");v1119.Size=UDim2.new(0,20,0,20);v1119.Position=UDim2.new(1, -25,0.5, -10);v1119.BackgroundTransparency=1;v1119.Font=Enum.Font.GothamBold;v1119.Text=">";v1119.TextColor3=Color3.fromRGB(150,150,160);v1119.TextSize=14;v1119.Rotation=90;v1119.Parent=v1090;local v1129=Instance.new("Frame");v1129.Size=UDim2.new(1,0,0,0);v1129.Position=UDim2.new(0,0,0,45);v1129.BackgroundColor3=Color3.fromRGB(24,24,30);v1129.BorderSizePixel=0;v1129.ClipsDescendants=true;v1129.Visible=false;v1129.ZIndex=10;v1129.Parent=v1084;Instance.new("UICorner",v1129).CornerRadius=UDim.new(0,8);local v1139=Instance.new("UIStroke",v1129);v1139.Color=Color3.fromRGB(45,45,55);v1139.Thickness=1;local v1142=Instance.new("UIListLayout",v1129);v1142.SortOrder=Enum.SortOrder.LayoutOrder;v1142.Padding=UDim.new(0,2);Instance.new("UIPadding",v1129).PaddingTop=UDim.new(0,4);for v1837,v1838 in ipairs(v1078) do local v1839=Instance.new("TextButton");v1839.Size=UDim2.new(1, -10,0,32);v1839.Position=UDim2.new(0,5,0,0);v1839.BackgroundTransparency=((v1838==v1083) and 0.9) or 1 ;v1839.BackgroundColor3=Color3.fromRGB(70,110,255);v1839.Font=Enum.Font.GothamMedium;v1839.TextColor3=((v1838==v1083) and Color3.fromRGB(70,110,255)) or Color3.fromRGB(180,180,190) ;v1839.TextSize=13;v1839.Text=v1838;v1839.LayoutOrder=v1837;v1839.ZIndex=11;v1839.Parent=v1129;Instance.new("UICorner",v1839).CornerRadius=UDim.new(0,6);v1839.MouseEnter:Connect(function() if (v1083~=v1838) then v11(v1839,{BackgroundTransparency=0.95,TextColor3=Color3.fromRGB(220,220,230)},0.1);end end);v1839.MouseLeave:Connect(function() if (v1083~=v1838) then v11(v1839,{BackgroundTransparency=1,TextColor3=Color3.fromRGB(180,180,190)},0.1);end end);v1839.MouseButton1Click:Connect(function() v1083=v1838;v1108.Text=v1083:upper();v1080(v1083);v1082=false;v11(v1119,{Rotation=90},0.2);v11(v1129,{Size=UDim2.new(1,0,0,0)},0.2).Completed:Connect(function() if  not v1082 then v1129.Visible=false;end end);v11(v1084,{Size=UDim2.new(1,0,0,42)},0.2);for v2334,v2335 in pairs(v1129:GetChildren()) do if v2335:IsA("TextButton") then local v2801=v2335.Text==v1083 ;v11(v2335,{TextColor3=(v2801 and Color3.fromRGB(70,110,255)) or Color3.fromRGB(180,180,190) ,BackgroundTransparency=(v2801 and 0.9) or 1 },0.1);end end end);end v1108.MouseButton1Click:Connect(function() v1082= not v1082;if v1082 then v1129.Visible=true;local v2337=( #v1078 * 34) + 8 ;v11(v1119,{Rotation=270},0.2);v11(v1129,{Size=UDim2.new(1,0,0,v2337)},0.25,Enum.EasingStyle.Quart,Enum.EasingDirection.Out);v11(v1084,{Size=UDim2.new(1,0,0,45 + v2337 )},0.25,Enum.EasingStyle.Quart,Enum.EasingDirection.Out);else v11(v1119,{Rotation=90},0.2);v11(v1129,{Size=UDim2.new(1,0,0,0)},0.2).Completed:Connect(function() if  not v1082 then v1129.Visible=false;end end);v11(v1084,{Size=UDim2.new(1,0,0,42)},0.2);end end);v1108.MouseButton2Click:Connect(function() v6.currentlyBinding=v1077;v6.StoredBinds[v1077]=v6.StoredBinds[v1077] or {Mode="Toggle",State=false} ;v6.StoredBinds[v1077].Callback=function(v2129) v6.StoredBinds[v1077].State=v2129;v446();end;v500(v1077);v499(v6.bindPanel,v6.bindScale);end);table.insert(v506,function() local v1856=(v1081 and v1081.ConfigKey) or v1077:gsub(" ","") ;for v2131,v2132 in pairs(v6.CONFIG) do if ((v2131:lower()==v1856:lower()) or (v2131:lower()==(v1856:gsub("Origin","")   .. "Origin"):lower())) then v1083=v2132;v1108.Text=tostring(v2132):upper();v1080(v2132);for v2802,v2803 in pairs(v1129:GetChildren()) do if v2803:IsA("TextButton") then local v2998=v2803.Text==v1083 ;v11(v2803,{TextColor3=(v2998 and Color3.fromRGB(70,110,255)) or Color3.fromRGB(180,180,190) ,BackgroundTransparency=(v2998 and 0.9) or 1 },0.1);end end break;end end end);return v1084;end local function v511(v1147,v1148,v1149,v1150,v1151,v1152,v1153,v1154) local v1155=Instance.new("Frame");v1155.Size=UDim2.new(1,0,0,48);v1155.BackgroundTransparency=1;v1155.LayoutOrder=v502();v1155.Parent=v1147;local v1160=Instance.new("TextLabel");v1160.Size=UDim2.new(1, -20,0,20);v1160.Position=UDim2.new(0,14,0,5);v1160.BackgroundTransparency=1;v1160.Font=Enum.Font.GothamMedium;v1160.TextColor3=Color3.fromRGB(220,220,230);v1160.TextSize=13;v1160.TextXAlignment=Enum.TextXAlignment.Left;v1160.Text=v1148;v1160.Parent=v1155;local v1172=Instance.new("TextLabel");v1172.Size=UDim2.new(0,40,0,20);v1172.Position=UDim2.new(1, -54,0,5);v1172.BackgroundTransparency=1;v1172.Font=Enum.Font.GothamBold;v1172.TextColor3=Color3.fromRGB(150,150,160);v1172.TextSize=12;v1172.TextXAlignment=Enum.TextXAlignment.Right;v1172.Text=tostring(v1151);v1172.Parent=v1155;local v1184=Instance.new("Frame");v1184.Size=UDim2.new(1, -28,0,4);v1184.Position=UDim2.new(0,14,0,32);v1184.BackgroundColor3=Color3.fromRGB(45,45,55);v1184.BorderSizePixel=0;v1184.Parent=v1155;Instance.new("UICorner",v1184).CornerRadius=UDim.new(1,0);local v1191=Instance.new("Frame");v1191.Size=UDim2.new((v1151-v1149)/(v1150-v1149) ,0,1,0);v1191.BackgroundColor3=Color3.fromRGB(70,110,255);v1191.BorderSizePixel=0;v1191.Parent=v1184;Instance.new("UICorner",v1191).CornerRadius=UDim.new(1,0);local v1197=Instance.new("Frame");v1197.Size=UDim2.new(0,12,0,12);v1197.AnchorPoint=Vector2.new(0.5,0.5);v1197.Position=UDim2.new((v1151-v1149)/(v1150-v1149) ,0,0.5,0);v1197.BackgroundColor3=Color3.new(1,1,1);v1197.BorderSizePixel=0;v1197.Parent=v1184;Instance.new("UICorner",v1197).CornerRadius=UDim.new(1,0);local v1205=false;local function v1206(v1857) local v1858=math.clamp((v1857.Position.X-v1184.AbsolutePosition.X)/v1184.AbsoluteSize.X ,0,1);local v1859=v1149 + ((v1150-v1149) * v1858) ;if (v1152==0) then v1859=math.floor(v1859 + 0.5 );else v1859=math.floor((v1859 * (10^v1152)) + 0.5 )/(10^v1152) ;end v11(v1191,{Size=UDim2.new(v1858,0,1,0)},0.1);v11(v1197,{Position=UDim2.new(v1858,0,0.5,0)},0.1);v1172.Text=tostring(v1859);v1153(v1859);end v1155.InputBegan:Connect(function(v1861) if (v1861.UserInputType==Enum.UserInputType.MouseButton1) then v1205=true;v1206(v1861);end end);v2.InputChanged:Connect(function(v1862) if (v1205 and (v1862.UserInputType==Enum.UserInputType.MouseMovement)) then v1206(v1862);end end);v2.InputEnded:Connect(function(v1863) if (v1863.UserInputType==Enum.UserInputType.MouseButton1) then v1205=false;end end);v1155.InputBegan:Connect(function(v1864) if (v1864.UserInputType==Enum.UserInputType.MouseButton2) then v6.currentlyBinding=v1148;v6.StoredBinds[v1148]=v6.StoredBinds[v1148] or {Mode="Toggle",State=false} ;v6.StoredBinds[v1148].Callback=function(v2595) v6.StoredBinds[v1148].State=v2595;v446();end;v500(v1148);v499(v6.bindPanel,v6.bindScale);end end);table.insert(v506,function() local v1865=(v1154 and v1154.ConfigKey) or v1148:gsub(" ","") ;for v2133,v2134 in pairs(v6.CONFIG) do if ((v2133:lower()==v1865:lower()) or (v2133:lower()==(v1865   .. "Strength"):lower()) or (v2133:lower()==("Aimbot"   .. v1865):lower())) then local v2597=math.clamp((v2134-v1149)/(v1150-v1149) ,0,1);v11(v1191,{Size=UDim2.new(v2597,0,1,0)},0.1);v11(v1197,{Position=UDim2.new(v2597,0,0.5,0)},0.1);v1172.Text=tostring(v2134);v1153(v2134);break;end end end);return v1155;end local function v512(v1207,v1208,v1209,v1210) local v1211=Instance.new("Frame");v1211.Size=UDim2.new(1,0,0,60);v1211.BackgroundTransparency=1;v1211.LayoutOrder=v502();v1211.Parent=v1207;local v1216=Instance.new("TextLabel");v1216.Size=UDim2.new(1, -20,0,20);v1216.Position=UDim2.new(0,14,0,5);v1216.BackgroundTransparency=1;v1216.Font=Enum.Font.GothamMedium;v1216.TextColor3=Color3.fromRGB(220,220,230);v1216.TextSize=13;v1216.TextXAlignment=Enum.TextXAlignment.Left;v1216.Text=v1208;v1216.Parent=v1211;local v1228=Instance.new("Frame");v1228.Size=UDim2.new(1, -28,0,30);v1228.Position=UDim2.new(0,14,0,25);v1228.BackgroundColor3=Color3.fromRGB(22,22,28);v1228.BorderSizePixel=0;v1228.Parent=v1211;Instance.new("UICorner",v1228).CornerRadius=UDim.new(0,6);local v1235=Instance.new("UIStroke",v1228);v1235.Color=Color3.fromRGB(45,45,55);local v1237=Instance.new("TextBox");v1237.Size=UDim2.new(1, -20,1,0);v1237.Position=UDim2.new(0,10,0,0);v1237.BackgroundTransparency=1;v1237.Font=Enum.Font.GothamMedium;v1237.PlaceholderText=v1209;v1237.Text="";v1237.TextColor3=Color3.new(1,1,1);v1237.PlaceholderColor3=Color3.fromRGB(80,80,90);v1237.TextSize=14;v1237.TextXAlignment=Enum.TextXAlignment.Left;v1237.ClearTextOnFocus=false;v1237.Parent=v1228;v1237:GetPropertyChangedSignal("Text"):Connect(function() v1210(v1237.Text);end);v1237.FocusLost:Connect(function() v1210(v1237.Text);end);return v1211,v1237;end local function v513(v1250,v1251,v1252,v1253) local v1254=Instance.new("TextButton");v1254.Size=UDim2.new(1,0,0,36);v1254.BackgroundColor3=v1252 or Color3.fromRGB(70,110,255) ;v1254.BorderSizePixel=0;v1254.Font=Enum.Font.GothamBold;v1254.Text=v1251:upper();v1254.TextColor3=Color3.new(1,1,1);v1254.TextSize=13;v1254.LayoutOrder=v502();v1254.Parent=v1250;Instance.new("UICorner",v1254).CornerRadius=UDim.new(0,8);v1254.MouseButton1Click:Connect(v1253);v1254.MouseEnter:Connect(function() v11(v1254,{BackgroundTransparency=0.1},0.1);end);v1254.MouseLeave:Connect(function() v11(v1254,{BackgroundTransparency=0},0.1);end);return v1254;end if (isfolder and  not isfolder(v6.folderName)) then makefolder(v6.folderName);end local function v514(v1266) if  not writefile then return;end local v1267={Settings={},Binds={}};for v1866,v1867 in pairs(v6.CONFIG) do if (typeof(v1867)=="Color3") then v1267.Settings[v1866]={__type="Color3",r=v1867.R,g=v1867.G,b=v1867.B};else v1267.Settings[v1866]=v1867;end end for v1868,v1869 in pairs(v6.StoredBinds) do v1267.Binds[v1868]={Key=v1869.Key and v1869.Key.Name ,InputType=v1869.InputType and v1869.InputType.Name ,Mode=v1869.Mode};end v1267.MenuPos={X=v6.mainPanel.Position.X.Offset,Y=v6.mainPanel.Position.Y.Offset};pcall(function() if (v6.RadarSystem and v6.RadarSystem.Window) then v1267.RadarPos={X=v6.RadarSystem.Window.Position.X.Offset,Y=v6.RadarSystem.Window.Position.Y.Offset};end end);writefile(v6.folderName   .. "/"   .. v1266   .. ".json" ,v5:JSONEncode(v1267));end local function v515(v1269) if  not readfile then return;end local v1270=v6.folderName   .. "/"   .. v1269   .. ".json" ;if isfile(v1270) then local v2135,v2136=pcall(function() return v5:JSONDecode(readfile(v1270));end);if v2135 then local v2599=v2136.Settings or v2136 ;for v2804,v2805 in pairs(v2599) do if ((typeof(v2805)=="table") and (v2805.__type=="Color3")) then v6.CONFIG[v2804]=Color3.new(v2805.r,v2805.g,v2805.b);else v6.CONFIG[v2804]=v2805;end end if v2136.Binds then for v3001,v3002 in pairs(v2136.Binds) do if v6.StoredBinds[v3001] then if v3002.Key then v6.StoredBinds[v3001].Key=Enum.KeyCode[v3002.Key];end if v3002.InputType then v6.StoredBinds[v3001].InputType=Enum.UserInputType[v3002.InputType];end v6.StoredBinds[v3001].Mode=v3002.Mode or "Toggle" ;end end end v507();if updateAimVisibility then updateAimVisibility();end v446();if v2136.MenuPos then v6.mainPanel.Position=UDim2.new(0,v2136.MenuPos.X,0,v2136.MenuPos.Y);v6.previewPanel.Position=UDim2.new(0,v2136.MenuPos.X + v6.mainPanel.AbsoluteSize.X + 15 ,0,v2136.MenuPos.Y);end if v2136.RadarPos then pcall(function() if (v6.RadarSystem and v6.RadarSystem.Window) then v6.RadarSystem.Window.Position=UDim2.new(0,v2136.RadarPos.X,0,v2136.RadarPos.Y);end end);end pcall(function() local v2806=v6.folderName   .. "/auth.json" ;if isfile(v2806) then local v3003=v5:JSONDecode(readfile(v2806));v3003.LastConfig=v1269;writefile(v2806,v5:JSONEncode(v3003));end end);end end end v6.vis=v503("Visuals","rbxassetid://6031289116");v6.aim=v503("Aimbot","rbxassetid://6034440156");v6.cfg=v503("Configs","rbxassetid://6031243717");v6.misc=v503("Misc","rbxassetid://6034502931");v6.aimMain=v504(v6.aim.Left,"Main Settings");v6.aimSecondary={};local function v522() local v1271=v6.CONFIG.AimbotEnabled;for v1871,v1872 in ipairs(v6.aimSecondary) do local v1873=v1271;if (v1872.Key=="PredictionStr") then v1873=v1271 and v6.CONFIG.PredictionEnabled ;elseif (v1872.Key=="RecoilStr") then v1873=v1271 and v6.CONFIG.NoRecoilEnabled ;end if v1873 then v1872.Frame.Visible=true;v11(v1872.Frame,{Size=UDim2.new(1,0,0,v1872.Height)},0.3);else local v2345=v11(v1872.Frame,{Size=UDim2.new(1,0,0,0)},0.25);v2345.Completed:Connect(function() if ( not v1271 or (v1872.Key and  not v6.CONFIG[v1872.Key:gsub("Str","Enabled")])) then v1872.Frame.Visible=false;end end);end end end v508(v6.aimMain,"Enable Aimbot",v6.CONFIG.AimbotEnabled,function(v1272) v6.CONFIG.AimbotEnabled=v1272;v522();end);local v523=v508(v6.aimMain,"Visible Only",v6.CONFIG.AimbotVisibleOnly,function(v1274) v6.CONFIG.AimbotVisibleOnly=v1274;end,{ConfigKey="AimbotVisibleOnly"});local v524=v508(v6.aimMain,"Sticky Aim",v6.CONFIG.AimbotSticky,function(v1276) v6.CONFIG.AimbotSticky=v1276;end,{ConfigKey="AimbotSticky"});local v525=v510(v6.aimMain,"Target Part",{"Head","UpperTorso","LowerTorso","Random"},v6.CONFIG.AimbotTargetPart,function(v1278) v6.CONFIG.AimbotTargetPart=v1278;end,{ConfigKey="AimbotTargetPart"});local v526=v508(v6.aimMain,"Prediction",v6.CONFIG.PredictionEnabled,function(v1280) v6.CONFIG.PredictionEnabled=v1280;v522();end,{ConfigKey="PredictionEnabled"});local v527=v508(v6.aimMain,"No Recoil",v6.CONFIG.NoRecoilEnabled,function(v1282) v6.CONFIG.NoRecoilEnabled=v1282;v522();end,{ConfigKey="NoRecoilEnabled"});v6.aimConfig=v504(v6.aim.Right,"Configuration");local v529=v511(v6.aimConfig,"Smoothness",0,1,v6.CONFIG.AimbotSmoothness,2,function(v1284) v6.CONFIG.AimbotSmoothness=v1284;end,{ConfigKey="AimbotSmoothness"});v511(v6.aimConfig,"Max Distance",10,1500,v6.CONFIG.AimbotMaxDistance,0,function(v1286) v6.CONFIG.AimbotMaxDistance=v1286;end,{ConfigKey="AimbotMaxDistance"});local v530=v511(v6.aimConfig,"Prediction Str",0,20,v6.CONFIG.PredictionStrength,1,function(v1288) v6.CONFIG.PredictionStrength=v1288;end,{ConfigKey="PredictionStrength"});local v531=v511(v6.aimConfig,"Recoil Strength",0,100,v6.CONFIG.NoRecoilStrength,0,function(v1290) v6.CONFIG.NoRecoilStrength=v1290;end,{ConfigKey="NoRecoilStrength"});local v532=v511(v6.aimConfig,"FOV Size",10,800,v6.CONFIG.AimbotFOV,0,function(v1292) v6.CONFIG.AimbotFOV=v1292;end,{ConfigKey="AimbotFOV"});local v533=v508(v6.aimConfig,"Show FOV Circle",v6.CONFIG.ShowFOV,function(v1294) v6.CONFIG.ShowFOV=v1294;end,{ColorData={Default=v6.CONFIG.FOVColor,Callback=function(v1296) v6.CONFIG.FOVColor=v1296;end,ConfigKey="FOVColor"},ConfigKey="ShowFOV"});table.insert(v6.aimSecondary,{Frame=v523,Height=42});table.insert(v6.aimSecondary,{Frame=v524,Height=42});table.insert(v6.aimSecondary,{Frame=v525,Height=42});table.insert(v6.aimSecondary,{Frame=v526,Height=42});table.insert(v6.aimSecondary,{Frame=v527,Height=42});table.insert(v6.aimSecondary,{Frame=v529,Height=48});table.insert(v6.aimSecondary,{Frame=v530,Height=48,Key="PredictionStr"});table.insert(v6.aimSecondary,{Frame=v531,Height=48,Key="RecoilStr"});table.insert(v6.aimSecondary,{Frame=v532,Height=48});table.insert(v6.aimSecondary,{Frame=v533,Height=42});for v1298,v1299 in ipairs(v6.aimSecondary) do v1299.Frame.ClipsDescendants=true;local v1301=v6.CONFIG.AimbotEnabled;if (v1299.Key=="PredictionStr") then v1301=v1301 and v6.CONFIG.PredictionEnabled ;elseif (v1299.Key=="RecoilStr") then v1301=v1301 and v6.CONFIG.NoRecoilEnabled ;end if  not v1301 then v1299.Frame.Visible=false;v1299.Frame.Size=UDim2.new(1,0,0,0);end end v511(v6.aimConfig,"Distance Weight",0,1,v6.CONFIG.AimbotDistanceWeight,2,function(v1302) v6.CONFIG.AimbotDistanceWeight=v1302;end,{ConfigKey="AimbotDistanceWeight"});v6.visPlayers=v505(v6.vis,"Players");v6.visLocal=v505(v6.vis,"Local");v6.visWorld=v505(v6.vis,"World");local v537=v504(v6.visPlayers.Left,"Features");v508(v537,"Bounding Box",v6.CONFIG.BoxEnabled,function(v1304) v6.CONFIG.BoxEnabled=v1304;end,{ColorData={Default=v6.CONFIG.BoxColor,Callback=function(v1306) v6.CONFIG.BoxColor=v1306;end,ConfigKey="BoxColor"},ConfigKey="BoxEnabled"});v508(v537,"Skeleton",v6.CONFIG.SkeletonEnabled,function(v1308) v6.CONFIG.SkeletonEnabled=v1308;end,{ColorData={Default=v6.CONFIG.SkeletonColor,Callback=function(v1310) v6.CONFIG.SkeletonColor=v1310;end,ConfigKey="SkeletonColor"},ConfigKey="SkeletonEnabled"});v508(v537,"Health Bar",v6.CONFIG.HealthBarEnabled,function(v1312) v6.CONFIG.HealthBarEnabled=v1312;end,{ConfigKey="HealthBarEnabled"});v508(v537,"Tracers",v6.CONFIG.TracersEnabled,function(v1314) v6.CONFIG.TracersEnabled=v1314;end,{ColorData={Default=v6.CONFIG.TracersColor,Callback=function(v1316) v6.CONFIG.TracersColor=v1316;end,ConfigKey="TracersColor"},ConfigKey="TracersEnabled"});v510(v537,"Tracer Origin",{"Bottom","Top","Middle","Mouse"},v6.CONFIG.TracerOrigin,function(v1318) v6.CONFIG.TracerOrigin=v1318;end,{ConfigKey="TracerOrigin"});v508(v537,"Use Info Panel",v6.CONFIG.UseInfoPanel,function(v1320) v6.CONFIG.UseInfoPanel=v1320;end,{ConfigKey="UseInfoPanel"});v508(v537,"Show Distance",v6.CONFIG.ShowDistance,function(v1322) v6.CONFIG.ShowDistance=v1322;end,{ColorData={Default=v6.CONFIG.DistanceColor,Callback=function(v1324) v6.CONFIG.DistanceColor=v1324;end,ConfigKey="DistanceColor"},ConfigKey="ShowDistance"});v508(v537,"Show Name",v6.CONFIG.ShowName,function(v1326) v6.CONFIG.ShowName=v1326;end,{ColorData={Default=v6.CONFIG.NameColor,Callback=function(v1328) v6.CONFIG.NameColor=v1328;end,ConfigKey="NameColor"},ConfigKey="ShowName"});v508(v537,"Show Avatar",v6.CONFIG.ShowAvatar,function(v1330) v6.CONFIG.ShowAvatar=v1330;end,{ConfigKey="ShowAvatar"});local v538;v508(v537,"Dead ESP",v6.CONFIG.DeadESP,function(v1332) v6.CONFIG.DeadESP=v1332;if v538 then if v1332 then v538.Visible=true;v11(v538,{Size=UDim2.new(1,0,0,48)},0.3);else local v2601=v11(v538,{Size=UDim2.new(1,0,0,0)},0.25);v2601.Completed:Connect(function() if  not v6.CONFIG.DeadESP then v538.Visible=false;end end);end end end,{ColorData={Default=v6.CONFIG.DeadESPColor,Callback=function(v1334) v6.CONFIG.DeadESPColor=v1334;end,ConfigKey="DeadESPColor"},ConfigKey="DeadESP"});v538=v511(v537,"Dead Duration",5,120,v6.CONFIG.DeadESPDuration,0,function(v1336) v6.CONFIG.DeadESPDuration=v1336;end,{ConfigKey="DeadESPDuration"});v538.ClipsDescendants=true;if  not v6.CONFIG.DeadESP then v538.Visible=false;v538.Size=UDim2.new(1,0,0,0);end local v540=v504(v6.visPlayers.Right,"ESP Base");v508(v540,"Master Switch",v6.CONFIG.Enabled,function(v1338) v6.CONFIG.Enabled=v1338;end,{ConfigKey="Enabled"});v508(v540,"Team Check",v6.CONFIG.TeamCheck,function(v1340) v6.CONFIG.TeamCheck=v1340;end,{ConfigKey="TeamCheck"});v511(v540,"Max Distance",100,8500,v6.CONFIG.MaxDistance,0,function(v1342) v6.CONFIG.MaxDistance=v1342;end,{ConfigKey="MaxDistance"});local v541=v504(v6.visPlayers.Right,"Visibility");v508(v541,"Check Visibility",v6.CONFIG.VisibilityCheck,function(v1344) v6.CONFIG.VisibilityCheck=v1344;end,{ConfigKey="VisibilityCheck"});v509(v541,"Visible Color",v6.CONFIG.VisibleColor,function(v1346) v6.CONFIG.VisibleColor=v1346;end,{ConfigKey="VisibleColor"});v509(v541,"Hidden Color",v6.CONFIG.HiddenColor,function(v1348) v6.CONFIG.HiddenColor=v1348;end,{ConfigKey="HiddenColor"});local v542=v504(v6.visLocal.Left,"Self ESP");v508(v542,"Enable Local ESP",v6.CONFIG.LocalPlayerESP,function(v1350) v6.CONFIG.LocalPlayerESP=v1350;end,{ColorData={Default=v6.CONFIG.LocalPlayerColor,Callback=function(v1352) v6.CONFIG.LocalPlayerColor=v1352;end,ConfigKey="LocalPlayerColor"},ConfigKey="LocalPlayerESP"});v508(v542,"Box",v6.CONFIG.LocalBox,function(v1354) v6.CONFIG.LocalBox=v1354;end,{ColorData={Default=v6.CONFIG.LocalBoxColor,Callback=function(v1356) v6.CONFIG.LocalBoxColor=v1356;end,ConfigKey="LocalBoxColor"},ConfigKey="LocalBox"});v508(v542,"Skeleton",v6.CONFIG.LocalSkeleton,function(v1358) v6.CONFIG.LocalSkeleton=v1358;end,{ColorData={Default=v6.CONFIG.LocalSkeletonColor,Callback=function(v1360) v6.CONFIG.LocalSkeletonColor=v1360;end,ConfigKey="LocalSkeletonColor"},ConfigKey="LocalSkeleton"});v508(v542,"Health Bar",v6.CONFIG.LocalHealthBar,function(v1362) v6.CONFIG.LocalHealthBar=v1362;end,{ConfigKey="LocalHealthBar"});v508(v542,"Tracers",v6.CONFIG.LocalTracers,function(v1364) v6.CONFIG.LocalTracers=v1364;end,{ColorData={Default=v6.CONFIG.LocalTracersColor,Callback=function(v1366) v6.CONFIG.LocalTracersColor=v1366;end,ConfigKey="LocalTracersColor"},ConfigKey="LocalTracers"});local v543=v504(v6.visWorld.Left,"Environment");v508(v543,"Ambience",v6.CONFIG.AmbienceEnabled,function(v1368) v6.CONFIG.AmbienceEnabled=v1368;end,{ColorData={Default=v6.CONFIG.AmbienceColor,Callback=function(v1370) v6.CONFIG.AmbienceColor=v1370;end,ConfigKey="AmbienceColor"},ConfigKey="AmbienceEnabled"});v6.visOther=v505(v6.vis,"Other");local v545=v504(v6.visOther.Left,"Custom Scope");v508(v545,"Enable Scope",v6.CONFIG.ScopeEnabled,function(v1372) v6.CONFIG.ScopeEnabled=v1372;end,{ColorData={Default=v6.CONFIG.ScopeColor,Callback=function(v1374) v6.CONFIG.ScopeColor=v1374;end,ConfigKey="ScopeColor"},ConfigKey="ScopeEnabled"});v511(v545,"Scope Gap",0,50,v6.CONFIG.ScopeGap,0,function(v1376) v6.CONFIG.ScopeGap=v1376;end,{ConfigKey="ScopeGap"});v511(v545,"Scope Length",1,100,v6.CONFIG.ScopeLength,0,function(v1378) v6.CONFIG.ScopeLength=v1378;end,{ConfigKey="ScopeLength"});v511(v545,"Scope Thickness",1,10,v6.CONFIG.ScopeThickness,1,function(v1380) v6.CONFIG.ScopeThickness=v1380;end,{ConfigKey="ScopeThickness"});v508(v545,"Center Dot",v6.CONFIG.ScopeCenterDot,function(v1382) v6.CONFIG.ScopeCenterDot=v1382;end,{ConfigKey="ScopeCenterDot"});v508(v545,"Scope Outline",v6.CONFIG.ScopeOutline,function(v1384) v6.CONFIG.ScopeOutline=v1384;end,{ConfigKey="ScopeOutline"});local v546=v504(v6.visOther.Left,"Radar");v508(v546,"Enable Radar",v6.CONFIG.RadarEnabled,function(v1386) v6.CONFIG.RadarEnabled=v1386;end,{ConfigKey="RadarEnabled"});v511(v546,"Radar Size",100,500,v6.CONFIG.RadarSize,0,function(v1388) v6.CONFIG.RadarSize=v1388;end,{ConfigKey="RadarSize"});v511(v546,"Detection Range",50,2000,v6.CONFIG.RadarRadius,0,function(v1390) v6.CONFIG.RadarRadius=v1390;end,{ConfigKey="RadarRadius"});v6.cfgMain=v504(v6.cfg.Left,"Config Management");local v548="";local v549;local v550,v551=v512(v6.cfgMain,"Config Name","Enter name...",function(v1392) v548=v1392;end);v549=v551;v513(v6.cfgMain,"Create New",Color3.fromRGB(70,110,255),function() if (v548~="") then v514(v548);v548="";v549.Text="";refreshCfgList();end end);v6.cfgList=v504(v6.cfg.Right,"Saved Configs");local function v553() for v1876,v1877 in ipairs(v6.cfgList:GetChildren()) do if (v1877:IsA("Frame") and  not v1877:IsA("UIListLayout") and  not v1877:IsA("UIPadding")) then v1877:Destroy();end end if listfiles then local v2140=listfiles(v6.folderName);for v2346,v2347 in ipairs(v2140) do local v2348=v2347:match("([^/]+)%.json$") or v2347:match("([^\\]+)%.json$") or v2347:gsub(".json","") ;if (v2348=="auth") then continue;end local v2349=Instance.new("Frame");v2349.Size=UDim2.new(1,0,0,42);v2349.BackgroundTransparency=1;v2349.ClipsDescendants=true;v2349.Parent=v6.cfgList;v2349.Size=UDim2.new(1,0,0,0);v11(v2349,{Size=UDim2.new(1,0,0,42)},0.3);local v2355=Instance.new("Frame");v2355.Size=UDim2.new(1,0,1,0);v2355.BackgroundColor3=Color3.fromRGB(255,255,255);v2355.BackgroundTransparency=1;v2355.BorderSizePixel=0;v2355.ZIndex=0;v2355.Parent=v2349;Instance.new("UICorner",v2355).CornerRadius=UDim.new(0,8);v2349.MouseEnter:Connect(function() v11(v2355,{BackgroundTransparency=0.95},0.2);end);v2349.MouseLeave:Connect(function() v11(v2355,{BackgroundTransparency=1},0.2);end);local v2363=Instance.new("TextLabel");v2363.Size=UDim2.new(1, -120,1,0);v2363.Position=UDim2.new(0,12,0,0);v2363.BackgroundTransparency=1;v2363.Font=Enum.Font.GothamMedium;v2363.Text=v2348;v2363.TextColor3=Color3.new(1,1,1);v2363.TextSize=14;v2363.TextXAlignment=Enum.TextXAlignment.Left;v2363.Parent=v2349;local v2375=Instance.new("TextButton");v2375.Size=UDim2.new(0,40,0,24);v2375.Position=UDim2.new(1, -145,0.5, -12);v2375.BackgroundColor3=Color3.fromRGB(50,50,60);v2375.Text="LOAD";v2375.Font=Enum.Font.GothamBold;v2375.TextColor3=Color3.new(1,1,1);v2375.TextSize=10;v2375.Parent=v2349;Instance.new("UICorner",v2375).CornerRadius=UDim.new(0,4);v2375.MouseButton1Click:Connect(function() v515(v2348);end);local v2386=Instance.new("TextButton");v2386.Size=UDim2.new(0,45,0,24);v2386.Position=UDim2.new(1, -100,0.5, -12);v2386.BackgroundColor3=Color3.fromRGB(40,70,40);v2386.Text="SAVE";v2386.Font=Enum.Font.GothamBold;v2386.TextColor3=Color3.new(1,1,1);v2386.TextSize=10;v2386.Parent=v2349;Instance.new("UICorner",v2386).CornerRadius=UDim.new(0,4);v2386.MouseButton1Click:Connect(function() v514(v2348);end);local v2396=Instance.new("TextButton");v2396.Size=UDim2.new(0,40,0,24);v2396.Position=UDim2.new(1, -50,0.5, -12);v2396.BackgroundColor3=Color3.fromRGB(80,40,40);v2396.Text="DEL";v2396.Font=Enum.Font.GothamBold;v2396.TextColor3=Color3.new(1,1,1);v2396.TextSize=10;v2396.Parent=v2349;Instance.new("UICorner",v2396).CornerRadius=UDim.new(0,4);v2396.MouseButton1Click:Connect(function() local v2602=v2347;if delfile then delfile(v2602);end v11(v2349,{Size=UDim2.new(1,0,0,0)},0.2).Completed:Connect(function() v553();end);end);end end end v513(v6.cfgMain,"Refresh List",Color3.fromRGB(45,45,55),v553);v553();local v554=v504(v6.misc.Left,"Miscellaneous");v508(v554,"Show Keybinds List",v6.CONFIG.ShowBindWindow,function(v1393) v6.CONFIG.ShowBindWindow=v1393;v446();end,{ConfigKey="ShowBindWindow"});v508(v554,"High Jump",v6.CONFIG.HighJumpEnabled,function(v1395) v6.CONFIG.HighJumpEnabled=v1395;end,{ConfigKey="HighJumpEnabled"});v511(v554,"Jump Height",0,200,v6.CONFIG.HighJumpValue,0,function(v1397) v6.CONFIG.HighJumpValue=v1397;end,{ConfigKey="HighJumpValue"});local v555=v504(v6.misc.Right,"Menu Settings");v6.accentElements={};local function v557(v1399) v6.CONFIG.MenuAccentColor=v1399;for v1878,v1879 in ipairs(v6.accentElements) do pcall(function() if (v1879.type=="BackgroundColor3") then v1879.obj.BackgroundColor3=v1399;elseif (v1879.type=="TextColor3") then v1879.obj.TextColor3=v1399;elseif (v1879.type=="Color") then v1879.obj.Color=v1399;elseif (v1879.type=="ImageColor3") then v1879.obj.ImageColor3=v1399;end end);end for v1880,v1881 in pairs(v6.tabs) do if v1881.Page.Visible then v11(v1881.Button,{TextColor3=Color3.new(1,1,1)},0);end if v1881.Accent then v1881.Accent.BackgroundColor3=v1399;end end end v509(v555,"Menu Color",v6.CONFIG.MenuAccentColor,function(v1401) v557(v1401);end,{ConfigKey="MenuAccentColor"});local function v558() v6.isAuthorized=false;v6.menuOpen=false;v6.CONFIG.Enabled=false;v6.CONFIG.AmbienceEnabled=false;v6.CONFIG.ScopeEnabled=false;v6.CONFIG.RadarEnabled=false;v6.CONFIG.HighJumpEnabled=false;pcall(function() for v2141,v2142 in pairs(v0:GetPlayers()) do if v6.ESPObjects[v2142] then for v2807,v2808 in pairs(v6.ESPObjects[v2142]) do if (typeof(v2808)=="Instance") then v2808:Destroy();elseif ((type(v2808)=="table") and v2808.Remove) then v2808:Remove();elseif ((type(v2808)=="table") and v2808.Destroy) then v2808:Destroy();end end v6.ESPObjects[v2142]=nil;end end end);pcall(function() for v2143,v2144 in pairs(v6.DeathMarkers) do if v2144.Line1 then v2144.Line1:Remove();end if v2144.Line2 then v2144.Line2:Remove();end if v2144.Text then v2144.Text:Remove();end end v6.DeathMarkers={};end);pcall(function() if savedSettings then v4.Ambient=savedSettings.Ambient;v4.OutdoorAmbient=savedSettings.OutdoorAmbient;v4.Brightness=savedSettings.Brightness;v4.GlobalShadows=savedSettings.GlobalShadows;v4.ClockTime=savedSettings.ClockTime;v4.FogEnd=savedSettings.FogEnd;v4.FogStart=savedSettings.FogStart;v4.ExposureCompensation=savedSettings.ExposureCompensation;v4.EnvironmentDiffuseScale=savedSettings.EnvironmentDiffuseScale;v4.EnvironmentSpecularScale=savedSettings.EnvironmentSpecularScale;v4.ShadowSoftness=savedSettings.ShadowSoftness;savedSettings=nil;end end);pcall(function() if (v6.RadarSystem and v6.RadarSystem.Window) then v6.RadarSystem.Window.Visible=false;end end);pcall(function() if v6.ESPGui then v6.ESPGui:Destroy();end if v6.MenuGui then v6.MenuGui:Destroy();end end);end local v559=Instance.new("TextButton");v559.Size=UDim2.new(1,0,0,42);v559.BackgroundColor3=Color3.fromRGB(40,20,20);v559.Font=Enum.Font.GothamBold;v559.Text="UNLOAD SCRIPT";v559.TextColor3=Color3.new(1,0.4,0.4);v559.TextSize=14;v559.Parent=v554;Instance.new("UICorner",v559).CornerRadius=UDim.new(0,8);v559.MouseButton1Click:Connect(v558);v6.RegisterPanel=Instance.new("CanvasGroup");v6.RegisterPanel.Size=UDim2.new(0,350,0,250);v6.RegisterPanel.Position=UDim2.new(0.5, -175,0.5, -125);v6.RegisterPanel.BackgroundColor3=Color3.fromRGB(15,15,20);v6.RegisterPanel.BorderSizePixel=0;v6.RegisterPanel.Visible=true;v6.RegisterPanel.Parent=v6.MenuGui;Instance.new("UICorner",v6.RegisterPanel).CornerRadius=UDim.new(0,12);local v576=Instance.new("UIStroke",v6.RegisterPanel);v576.Color=Color3.fromRGB(70,110,255);v576.Thickness=2;v576.ApplyStrokeMode=Enum.ApplyStrokeMode.Border;local v581=Instance.new("Frame",v6.RegisterPanel);v581.Size=UDim2.new(1,0,0,45);v581.BackgroundColor3=Color3.fromRGB(20,20,26);v581.BorderSizePixel=0;Instance.new("UICorner",v581).CornerRadius=UDim.new(0,12);local v586=Instance.new("TextLabel",v581);v586.Size=UDim2.new(1,0,1,0);v586.BackgroundTransparency=1;v586.Font=Enum.Font.GothamBold;v586.Text="ASTRUM REGISTRATION";v586.TextColor3=Color3.fromRGB(70,110,255);v586.TextSize=16;v6.regInput=Instance.new("TextBox",v6.RegisterPanel);v6.regInput.Size=UDim2.new(1, -60,0,40);v6.regInput.Position=UDim2.new(0,30,0,80);v6.regInput.BackgroundColor3=Color3.fromRGB(25,25,35);v6.regInput.BorderSizePixel=0;v6.regInput.Font=Enum.Font.GothamMedium;v6.regInput.PlaceholderText="Choose a nickname...";v6.regInput.Text="";v6.regInput.TextColor3=Color3.new(1,1,1);v6.regInput.TextSize=14;Instance.new("UICorner",v6.regInput).CornerRadius=UDim.new(0,8);local v604=Instance.new("UIStroke",v6.regInput);v604.Color=Color3.fromRGB(45,45,55);local v606=Instance.new("TextButton",v6.RegisterPanel);v606.Size=UDim2.new(1, -60,0,45);v606.Position=UDim2.new(0,30,0,140);v606.BackgroundColor3=Color3.fromRGB(70,110,255);v606.Font=Enum.Font.GothamBold;v606.Text="CONTINUE";v606.TextColor3=Color3.new(1,1,1);v606.TextSize=14;Instance.new("UICorner",v606).CornerRadius=UDim.new(0,8);v6.regStatus=Instance.new("TextLabel",v6.RegisterPanel);v6.regStatus.Size=UDim2.new(1,0,0,30);v6.regStatus.Position=UDim2.new(0,0,0,200);v6.regStatus.BackgroundTransparency=1;v6.regStatus.Font=Enum.Font.GothamMedium;v6.regStatus.Text="Welcome to Astrum";v6.regStatus.TextColor3=Color3.fromRGB(150,150,165);v6.regStatus.TextSize=12;v606.MouseButton1Click:Connect(function() if (v6.regInput.Text=="") then v6.regStatus.Text="Please enter a nickname";v6.regStatus.TextColor3=Color3.fromRGB(255,100,100);return;end local v1409=UDim2.new(0.5, -175,0.5, -25);v11(v6.RegisterPanel,{GroupTransparency=1,Position=v1409},0.4,Enum.EasingStyle.Back,Enum.EasingDirection.In).Completed:Connect(function() v6.RegisterPanel.Visible=false;v6.LoginPanel.Visible=true;v6.LoginPanel.GroupTransparency=1;v6.LoginPanel.Position=UDim2.new(0.5, -175,0.5, -185);v11(v6.LoginPanel,{GroupTransparency=0,Position=UDim2.new(0.5, -175,0.5, -155)},0.5,Enum.EasingStyle.Back,Enum.EasingDirection.Out);end);end);v6.LoginPanel=Instance.new("CanvasGroup");v6.LoginPanel.Size=UDim2.new(0,350,0,310);v6.LoginPanel.Position=UDim2.new(0.5, -175,0.5, -155);v6.LoginPanel.BackgroundColor3=Color3.fromRGB(15,15,20);v6.LoginPanel.BorderSizePixel=0;v6.LoginPanel.Visible=false;v6.LoginPanel.Parent=v6.MenuGui;Instance.new("UICorner",v6.LoginPanel).CornerRadius=UDim.new(0,12);local v631=Instance.new("UIStroke",v6.LoginPanel);v631.Color=Color3.fromRGB(70,110,255);v631.Thickness=2;v631.ApplyStrokeMode=Enum.ApplyStrokeMode.Border;local function v635(v1410) task.spawn(function() while v1410 and v1410.Parent  do local v2147=v11(v1410,{Transparency=0.8},1.2);v2147.Completed:Wait();local v2148=v11(v1410,{Transparency=0},1.2);v2148.Completed:Wait();end end);end v635(v576);v635(v631);local v636=Instance.new("Frame",v6.LoginPanel);v636.Size=UDim2.new(1,0,0,45);v636.BackgroundColor3=Color3.fromRGB(20,20,26);v636.BorderSizePixel=0;Instance.new("UICorner",v636).CornerRadius=UDim.new(0,12);local v641=Instance.new("TextLabel",v636);v641.Size=UDim2.new(1,0,1,0);v641.BackgroundTransparency=1;v641.Font=Enum.Font.GothamBold;v641.Text="ASTRUM AUTH";v641.TextColor3=Color3.fromRGB(70,110,255);v641.TextSize=16;v6.keyInput=Instance.new("TextBox",v6.LoginPanel);v6.keyInput.Size=UDim2.new(1, -60,0,40);v6.keyInput.Position=UDim2.new(0,30,0,80);v6.keyInput.BackgroundColor3=Color3.fromRGB(25,25,35);v6.keyInput.BorderSizePixel=0;v6.keyInput.Font=Enum.Font.GothamMedium;v6.keyInput.PlaceholderText="Enter your key here...";v6.keyInput.Text="";v6.keyInput.TextColor3=Color3.new(1,1,1);v6.keyInput.TextSize=14;Instance.new("UICorner",v6.keyInput).CornerRadius=UDim.new(0,8);local v659=Instance.new("UIStroke",v6.keyInput);v659.Color=Color3.fromRGB(45,45,55);local v661=Instance.new("TextButton",v6.LoginPanel);v661.Size=UDim2.new(1, -60,0,45);v661.Position=UDim2.new(0,30,0,140);v661.BackgroundColor3=Color3.fromRGB(70,110,255);v661.Font=Enum.Font.GothamBold;v661.Text="VERIFY KEY";v661.TextColor3=Color3.new(1,1,1);v661.TextSize=14;Instance.new("UICorner",v661).CornerRadius=UDim.new(0,8);v6.statusLbl=Instance.new("TextLabel",v6.LoginPanel);v6.statusLbl.Size=UDim2.new(1,0,0,30);v6.statusLbl.Position=UDim2.new(0,0,0,200);v6.statusLbl.BackgroundTransparency=1;v6.statusLbl.Font=Enum.Font.GothamMedium;v6.statusLbl.Text="Awaiting input...";v6.statusLbl.TextColor3=Color3.fromRGB(150,150,165);v6.statusLbl.TextSize=12;local v678=Instance.new("TextBox",v6.LoginPanel);v678.Size=UDim2.new(1, -60,0,30);v678.Position=UDim2.new(0,30,0,240);v678.BackgroundColor3=Color3.fromRGB(20,20,25);v678.BorderSizePixel=0;v678.Font=Enum.Font.Code;v678.Text=v6.hwid;v678.ClearTextOnFocus=false;v678.TextEditable=false;v678.TextColor3=Color3.fromRGB(100,100,120);v678.TextSize=10;Instance.new("UICorner",v678).CornerRadius=UDim.new(0,4);local v691=Instance.new("TextLabel",v6.LoginPanel);v691.Size=UDim2.new(1,0,0,15);v691.Position=UDim2.new(0,30,0,275);v691.BackgroundTransparency=1;v691.Font=Enum.Font.GothamMedium;v691.Text="Your HWID (Click to copy)";v691.TextColor3=Color3.fromRGB(80,80,90);v691.TextSize=10;v691.TextXAlignment=Enum.TextXAlignment.Left;local function v700(v1411,v1412) v1411=tonumber(v1411) or 0 ;v1412=v1412:lower();if v1412:find("hour") then return v1411 * 3600 ;elseif v1412:find("day") then return v1411 * 86400 ;elseif v1412:find("week") then return v1411 * 604800 ;elseif v1412:find("month") then return v1411 * 2592000 ;elseif (v1412:find("min") or (v1412=="m")) then return v1411 * 60 ;elseif v1412:find("lifetime") then return  -1;end return 0;end local function v701(v1413) if (v1413<0) then return "Infinite";end local v1414=math.floor(v1413/86400 );local v1415=math.floor((v1413%86400)/3600 );local v1416=math.floor((v1413%3600)/60 );local v1417=math.floor(v1413%60 );if (v1414>0) then return string.format("%dd %02dh %02dm %02ds",v1414,v1415,v1416,v1417);elseif (v1415>0) then return string.format("%02dh %02dm %02ds",v1415,v1416,v1417);else return string.format("%02dm %02ds",v1416,v1417);end end v6.checkKeyOnServer=function(v1418) local v1419=nil;local v1420="Request failed";local v1421="raw."   .. v6._v2   .. v6._r3   .. ".com" ;local v1422="/Visionprog11/sentinel-software/main/1.txt";local function v1423() local v1887={};local v1888="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";local v1889="?cb="   .. os.time() ;local v1890="https://"   .. v1421   .. v1422   .. v1889 ;local v1891="https://api."   .. v6._v2   .. ".com/repos/Visionprog11/sentinel-software/contents/1.txt" ;local v1892="https://ghproxy.net/https://"   .. v1421   .. v1422   .. v1889 ;local v1893={{u=v1890,t="raw"},{u=v1891,t="api"},{u=v1892,t="raw"}};local v1894=request or http_request or (http and http.request) ;for v2149,v2150 in ipairs(v1893) do if v1894 then local v2605,v2606=pcall(function() return v1894({Url=v2150.u,Method="GET",Headers={["User-Agent"]=v1888,["Cache-Control"]="no-cache"}});end);if (v2605 and (type(v2606)=="table") and (v2606.StatusCode==200) and (type(v2606.Body)=="string") and ( #v2606.Body>5)) then if (v2150.t=="api") then local v3071,v3072=pcall(function() local v3110=v5:JSONDecode(v2606.Body);local v3111=v3110.content:gsub("%s","");return (syn and syn.crypt and syn.crypt.base64.decode(v3111)) or (base64 and base64.decode(v3111)) or (Crypt and Crypt.base64_decode and Crypt.base64_decode(v3111)) or v3111 ;end);if (v3071 and ( #v3072>5)) then return v3072;end elseif ( not v2606.Body:find("404") and  not v2606.Body:find("Not Found")) then return v2606.Body;end elseif (v2605 and (type(v2606)=="table")) then table.insert(v1887,v2150.t   .. ":"   .. tostring(v2606.StatusCode) );end end local v2151,v2152=pcall(function() return game:HttpGet(v2150.u);end);if (v2151 and (type(v2152)=="string") and ( #v2152>10) and  not v2152:find("403") and  not v2152:find("Forbidden") and  not v2152:find("Not Found")) then return v2152;end table.insert(v1887,v2150.t   .. "G" );end return nil,"Auth: "   .. table.concat(v1887," | ") ;end local v1424=3;for v1895=1,v1424 do v1419,v1420=v1423();if v1419 then break;end if (v1895<v1424) then v6.statusLbl.Text="Connecting... ("   .. v1895   .. "/"   .. v1424   .. ")" ;task.wait(1.5);end end if  not v1419 then return nil,v1420;end local v1425=v1418:gsub("^%s*(.-)%s*$","%1");local v1426=(v6.regInput and (v6.regInput.Text~="") and v6.regInput.Text) or v6.LP.Name ;local v1427=v1426:lower():gsub("%s","");local v1428=nil;local v1429=false;for v1896 in v1419:gmatch("[^\r\n]+") do local v1897=v1896:gsub("^%s*(.-)%s*$","%1");if (v1897=="") then continue;end local v1898,v1899=v1897:match("^([^%s(]+)%s*%((.+)%)");local v1900,v1901,v1902="lifetime","","";if v1898 then local v2431=v1899:split(",");v1900=(v2431[1] or "lifetime"):gsub("%s","");v1901=(v2431[2] or ""):gsub("%s","");v1902=(v2431[3] or ""):gsub("%s","");else v1898=v1897:match("^([^%s(]+)");end if (v1898==v1425) then v1428={k=v1898,d=v1900,n=v1901,h=v1902};end if ((v1901~="") and (v1901:lower()==v1427) and (v1898~=v1425)) then v1429=true;end end if  not v1428 then return false,"key is expired.";end if ((v1428.n~="") and (v1428.n:lower()~=v1427)) then return false,"Wrong Nickname.";end if ((v1428.n=="") and v1429) then return false,"Nickname already taken.";end if (v1428.n~="") then if ((v1428.h~="") and (v1428.h~=v6.hwid)) then return false,"Invalid HWID";end end local v1430= -1;local v1431=tonumber(v1428.d);if (v1428.d=="expired") then return false,"key is expired.";elseif v1431 then local v2607=os.time();if (v2607>=v1431) then return false,"key is expired.";end v1430=v1431-v2607 ;else local v2608,v2609=v1428.d:match("(%d*)%s*(%a+)");if (v2608 and v2609) then v1430=v700(((v2608~="") and v2608) or 0 ,v2609);end end return true,v1430,v1425;end;local function v703(v1432) local v1433=v1432 or v6.keyInput.Text ;if (v1433=="") then v6.statusLbl.Text="Please enter a key";v6.statusLbl.TextColor3=Color3.fromRGB(255,100,100);return;end v6.statusLbl.Text=(v1432 and "Auto-logging in...") or "Connecting to server..." ;v6.statusLbl.TextColor3=Color3.fromRGB(255,255,255);task.spawn(function() local v1903,v1904,v1905=v6.checkKeyOnServer(v1433);if v1903 then local v2432=v6.folderName   .. "/auth.json" ;local v2433={Key=v1905,ActivatedAt=os.time()};if isfile(v2432) then pcall(function() local v2906=v5:JSONDecode(readfile(v2432));if (v2906 and (v2906.Key==v1905)) then v2433=v2906;end end);end v6.lastUsedKey=v1905;v6.lastAuthSync=os.time();local v2436=v1904;task.spawn(function() local v2610="V31jk";local v2611="DNdi3";local v2612="3sf1jq";local v2613=v6._x1   .. v6._k4   .. v6._s5   .. v6._m6   .. v2610   .. v2611   .. v2612 ;local v2614="api."   .. v6._v2   .. ".com" ;local v2615="Visionprog11";local v2616="sentinel-software";local v2617="1.txt";local v2618=string.format("https://%s/repos/%s/%s/contents/%s",v2614,v2615,v2616,v2617);local v2619=request or http_request or (http and http.request) ;if  not v2619 then return;end pcall(function() local v2809=v2619({Url=v2618,Method="GET",Headers={Authorization="token "   .. v2613 ,["User-Agent"]="Sentinel-Auth"}});if (v2809.StatusCode==200) then local v3006=v5:JSONDecode(v2809.Body);local v3007=v3006.sha;local v3008=v3006.content:gsub("%s","");local v3009=(syn and syn.crypt and syn.crypt.base64.decode(v3008)) or (base64 and base64.decode(v3008)) or "" ;if (v3009=="") then return;end local v3010=v3009:split("\n");local v3011=false;local v3012="";for v3073,v3074 in ipairs(v3010) do local v3075=v3074:gsub("^%s*(.-)%s*$","%1");if (v3075:sub(1, #v1905)==v1905) then local v3128,v3129=v3075:match("^([^%s(]+)%s*%((.+)%)");if (v3128 and v3129) then local v3168=v3129:split(",");v3012=(v3168[2] or ""):gsub("%s","");end break;end end if (v3012=="") then return;end for v3076,v3077 in ipairs(v3010) do local v3078=v3077:gsub("^%s*(.-)%s*$","%1");local v3079,v3080=v3078:match("^([^%s(]+)%s*%((.+)%)");if (v3079 and v3080) then local v3130=v3080:split(",");local v3131=(v3130[1] or "lifetime"):gsub("%s","");local v3132=(v3130[2] or ""):gsub("%s","");local v3133=(v3130[3] or ""):gsub("%s","");if (v3132:lower()==v3012:lower()) then local v3169=v3131;local v3170=tonumber(v3131);if ( not v3170 and (v3131~="lifetime") and (v3131~="expired")) then local v3173,v3174=v3131:match("(%d*)%s*(%a+)");if (v3173 and v3174) then local v3180=v700(((v3173~="") and v3173) or 0 ,v3174);if (v3180>0) then v3131=tostring(os.time() + v3180 );end end end if ((v3133=="") or (v3131~=v3169)) then v3010[v3076]=string.format("%s (%s, %s, %s)",v3079,v3131,v3132,v6.hwid);v3011=true;end end end end if v3011 then local v3112=table.concat(v3010,"\n");local v3113=(syn and syn.crypt and syn.crypt.base64.encode(v3112)) or (base64 and base64.encode(v3112)) or "" ;if (v3113~="") then v2619({Url=v2618,Method="PUT",Headers={Authorization="token "   .. v2613 ,["Content-Type"]="application/json"},Body=v5:JSONEncode({message="Auto-bind HWID: "   .. v1905 ,content=v3113,sha=v3007})});end end end end);end);if (v2436~= -1) then local v2810=os.time();local v2811=v2810-v2433.ActivatedAt ;if (v2811>=v2436) then v6.expireSession();return;else v6.statusLbl.Text="Success! "   .. v701(v2436-v2811 )   .. " left" ;end else v6.statusLbl.Text="Success! Lifetime access.";end local v2437=(v6.regInput and (v6.regInput.Text~="") and v6.regInput.Text) or v6.LP.Name ;v2433.Nick=v2437;writefile(v2432,v5:JSONEncode(v2433));v6.userLbl.Text="User: "   .. v2437 ;v6.authSessionDuration=v2436;v6.authSessionStart=v2433.ActivatedAt;pcall(function() if (v2433.LastConfig and (v2433.LastConfig~="")) then v515(v2433.LastConfig);end end);if (v2436== -1) then v6.timeLbl.Text="Time: Lifetime";else local v2814=v2436-(os.time() -v2433.ActivatedAt) ;v6.timeLbl.Text="Time: "   .. v701(v2814) ;end v6.statusLbl.TextColor3=Color3.fromRGB(100,255,100);task.spawn(function() if ((v6.webhookURL~="") and v6.webhookURL:find("discord")) then pcall(function() local v3014={content="",embeds={{title="[ASTRUM] New Authorization",color=5814783,fields={{name="Nick",value=v2437,inline=true},{name="Key",value="`"   .. v1905   .. "`" ,inline=true},{name="ID",value="`"   .. v6.hwid   .. "`" ,inline=false},{name="Access",value=((v2436== -1) and "Lifetime") or v701(v2436) ,inline=true}},footer={text="Astrum Auth System | "   .. os.date("%X") }}}};local v3015=request or http_request or (http and http.request) ;if v3015 then v3015({Url=v6.webhookURL,Method="POST",Headers={["Content-Type"]="application/json"},Body=v5:JSONEncode(v3014)});end end);end end);local v2444=UDim2.new(0.5, -175,0.5, -55);v11(v6.LoginPanel,{GroupTransparency=1,Position=v2444},0.5,Enum.EasingStyle.Back,Enum.EasingDirection.In);v11(v6.RegisterPanel,{GroupTransparency=1},0.5);task.wait(0.6);v6.LoginPanel.Visible=false;v6.RegisterPanel.Visible=false;v6.isAuthorized=true;toggleMenu();else v6.statusLbl.Text=tostring(v1904 or "key is expired." );v6.statusLbl.TextColor3=Color3.fromRGB(255,50,50);end end);end v661.MouseButton1Click:Connect(function() v703();end);function toggleMenu(v1436) if ( not v6.isAuthorized and  not v1436) then return;end v6.menuOpen= not v6.menuOpen;if v6.menuOpen then v6.mainPanel.Visible=true;v11(v6.mainPanel,{GroupTransparency=0},0.2);v2.MouseBehavior=Enum.MouseBehavior.Default;v2.MouseIconEnabled=true;v6.previewPanel.Position=UDim2.new(v6.mainPanel.Position.X.Scale,v6.mainPanel.Position.X.Offset + 880 + 15 ,v6.mainPanel.Position.Y.Scale,v6.mainPanel.Position.Y.Offset);if (v6.tabs[1] and v6.tabs[1].Page.Visible) then v6.previewPanel.Visible=true;v240();v11(v6.previewPanel,{GroupTransparency=0},0.2);end else local v2160=v11(v6.mainPanel,{GroupTransparency=1},0.2,Enum.EasingStyle.Sine,Enum.EasingDirection.In);v11(v6.previewPanel,{GroupTransparency=1},0.2,Enum.EasingStyle.Sine,Enum.EasingDirection.In);if (v6.activePopup and v6.activePopup.Visible) then local v2621=((v6.activePopup==v6.pickerPanel) and v6.pickerScale) or ((v6.activePopup==v6.bindPanel) and v6.bindScale) or v6.subScale ;task.spawn(function() v498(v6.activePopup,v2621);end);end if v6.pickerPanel.Visible then task.spawn(function() v498(v6.pickerPanel,v6.pickerScale);end);end if v6.subPanel.Visible then task.spawn(function() v498(v6.subPanel,v6.subScale);end);end if (v6.bindPanel and v6.bindPanel.Visible) then task.spawn(function() v498(v6.bindPanel,v6.bindScale);end);end v6.activePopup=nil;v6.previousPopup=nil;v6.activeSource=nil;v2.MouseBehavior=Enum.MouseBehavior.Default;v2.MouseIconEnabled=true;v2160.Completed:Connect(function() if  not v6.menuOpen then v6.mainPanel.Visible=false;v6.previewPanel.Visible=false;end end);end end v6.expireSession=function() if  not v6.isAuthorized then return;end v6.isAuthorized=false;if v6.menuOpen then toggleMenu(true);end v6.CONFIG.Enabled=false;v6.CONFIG.AmbienceEnabled=false;v6.CONFIG.ScopeEnabled=false;v6.CONFIG.RadarEnabled=false;v6.CONFIG.HighJumpEnabled=false;pcall(function() for v2167,v2168 in pairs(v0:GetPlayers()) do if v6.ESPObjects[v2168] then for v2818,v2819 in pairs(v6.ESPObjects[v2168]) do if (typeof(v2819)=="Instance") then v2819:Destroy();elseif ((type(v2819)=="table") and v2819.Remove) then v2819:Remove();elseif ((type(v2819)=="table") and v2819.Destroy) then v2819:Destroy();end end v6.ESPObjects[v2168]=nil;end end end);pcall(function() for v2169,v2170 in pairs(v6.DeathMarkers) do if v2170.Line1 then v2170.Line1:Remove();end if v2170.Line2 then v2170.Line2:Remove();end if v2170.Text then v2170.Text:Remove();end end v6.DeathMarkers={};end);pcall(function() if savedSettings then v4.Ambient=savedSettings.Ambient;v4.OutdoorAmbient=savedSettings.OutdoorAmbient;v4.Brightness=savedSettings.Brightness;v4.GlobalShadows=savedSettings.GlobalShadows;v4.ClockTime=savedSettings.ClockTime;v4.FogEnd=savedSettings.FogEnd;v4.FogStart=savedSettings.FogStart;v4.ExposureCompensation=savedSettings.ExposureCompensation;v4.EnvironmentDiffuseScale=savedSettings.EnvironmentDiffuseScale;v4.EnvironmentSpecularScale=savedSettings.EnvironmentSpecularScale;v4.ShadowSoftness=savedSettings.ShadowSoftness;savedSettings=nil;end end);pcall(function() if (v6.RadarSystem and v6.RadarSystem.Window) then v6.RadarSystem.Window.Visible=false;end end);local v1444=v6.folderName   .. "/auth.json" ;if isfile(v1444) then pcall(delfile,v1444);end task.spawn(function() local v1907=Instance.new("CanvasGroup",v6.MenuGui);v1907.Size=UDim2.new(0,400,0,100);v1907.Position=UDim2.new(0.5, -200,0.45, -50);v1907.BackgroundColor3=Color3.fromRGB(15,15,20);v1907.GroupTransparency=1;v1907.ZIndex=500;Instance.new("UICorner",v1907).CornerRadius=UDim.new(0,12);local v1914=Instance.new("UIStroke",v1907);v1914.Color=Color3.fromRGB(255,60,60);v1914.Thickness=2;local v1917=Instance.new("TextLabel",v1907);v1917.Size=UDim2.new(1,0,0.6,0);v1917.BackgroundTransparency=1;v1917.Font=Enum.Font.GothamBold;v1917.Text="Your key has expired(";v1917.TextColor3=Color3.new(1,1,1);v1917.TextSize=22;local v1925=Instance.new("TextLabel",v1907);v1925.Size=UDim2.new(1,0,0.4,0);v1925.Position=UDim2.new(0,0,0.55,0);v1925.BackgroundTransparency=1;v1925.Font=Enum.Font.GothamMedium;v1925.Text="Get a new key for continue";v1925.TextColor3=Color3.fromRGB(220,220,220);v1925.TextSize=16;v11(v1907,{GroupTransparency=0,Position=UDim2.new(0.5, -200,0.5, -50)},0.5,Enum.EasingStyle.Back,Enum.EasingDirection.Out);task.wait(2.2);v11(v1907,{GroupTransparency=1,Position=UDim2.new(0.5, -200,0.55, -50)},0.5,Enum.EasingStyle.Sine,Enum.EasingDirection.In);task.wait(0.6);v1907:Destroy();v6.statusLbl.Text="Key expired. Get a new one.";v6.statusLbl.TextColor3=Color3.fromRGB(255,60,60);v6.LoginPanel.Visible=true;v11(v6.LoginPanel,{GroupTransparency=0},0.5);end);end;v2.InputBegan:Connect(function(v1445,v1446) if v1446 then return;end if (v1445.KeyCode==Enum.KeyCode.Insert) then if v6.isAuthorized then toggleMenu();end end end);v6.dragActive=false;v6.dragStart=nil;v6.startPos=nil;v6.titleBar.InputBegan:Connect(function(v1447) if (v1447.UserInputType==Enum.UserInputType.MouseButton1) then v6.dragActive=true;v6.dragStart=v1447.Position;v6.startPos=v6.mainPanel.Position;end end);v2.InputChanged:Connect(function(v1448) if (v6.dragActive and (v1448.UserInputType==Enum.UserInputType.MouseMovement)) then local v2176=v1448.Position-v6.dragStart ;v6.mainPanel.Position=UDim2.new(v6.startPos.X.Scale,v6.startPos.X.Offset + v2176.X ,v6.startPos.Y.Scale,v6.startPos.Y.Offset + v2176.Y );v6.previewPanel.Position=UDim2.new(v6.mainPanel.Position.X.Scale,v6.mainPanel.Position.X.Offset + v6.mainPanel.AbsoluteSize.X + 15 ,v6.mainPanel.Position.Y.Scale,v6.mainPanel.Position.Y.Offset);if v6.pickerPanel.Visible then v6.pickerPanel.Position=UDim2.new(0,v6.mainPanel.AbsolutePosition.X + v6.mainPanel.AbsoluteSize.X + 10 ,0,v6.mainPanel.AbsolutePosition.Y);end if v6.subPanel.Visible then v6.subPanel.Position=UDim2.new(0,v6.mainPanel.AbsolutePosition.X + v6.mainPanel.AbsoluteSize.X + 10 ,0,v6.mainPanel.AbsolutePosition.Y);end end end);v2.InputEnded:Connect(function(v1449) if (v1449.UserInputType==Enum.UserInputType.MouseButton1) then v6.dragActive=false;end end);local v708=Instance.new("ScreenGui");v708.Name="ESP_Render";v708.ResetOnSpawn=false;v708.ZIndexBehavior=Enum.ZIndexBehavior.Sibling;v708.IgnoreGuiInset=true;v708.Parent=v6.LP:WaitForChild("PlayerGui");local function v714(v1450) for v1937=1,3 do local v1938,v1939=pcall(function() return v0:GetUserThumbnailAsync(v1450,Enum.ThumbnailType.HeadShot,Enum.ThumbnailSize.Size48x48);end);if (v1938 and v1939 and (v1939~="")) then return v1939;end task.wait(1);end return "";end local function v715(v1451,v1452) if  not v6.CONFIG.DeadESP then return;end local v1453={Time=tick(),Pos=v1452,Name=v1451.Name,Line1=Drawing.new("Line"),Line2=Drawing.new("Line"),Text=Drawing.new("Text")};v1453.Line1.Thickness=1;v1453.Line1.Visible=false;v1453.Line2.Thickness=1;v1453.Line2.Visible=false;v1453.Text.Size=13;v1453.Text.Center=true;v1453.Text.Outline=true;v1453.Text.Font=Drawing.Fonts.UI;v1453.Text.Visible=false;v1453.Text.Text=v1453.Name   .. " (DEAD)" ;table.insert(v6.DeathMarkers,v1453);end local function v716(v1465) local v1466={};v1466.BoxOutline={};v1466.BoxSegments={};for v1940=1,12 do local v1941=Drawing.new("Line");v1941.Color=Color3.fromRGB(0,0,0);v1941.Thickness=3;v1941.Visible=false;v1466.BoxOutline[v1940]=v1941;local v1946=Drawing.new("Line");v1946.Thickness=1.5;v1946.Visible=false;v1466.BoxSegments[v1940]=v1946;end v1466.SkeletonOutline={};v1466.Skeleton={};for v1950=1,15 do local v1951=Drawing.new("Line");v1951.Thickness=3;v1951.Color=Color3.new(0,0,0);v1951.Visible=false;v1466.SkeletonOutline[v1950]=v1951;local v1956=Drawing.new("Line");v1956.Thickness=1.2;v1956.Color=v6.CONFIG.SkeletonColor;v1956.Visible=false;v1466.Skeleton[v1950]=v1956;end local v1471=Drawing.new("Line");v1471.Thickness=3;v1471.Color=Color3.new(0,0,0);v1471.Visible=false;v1466.TracerOutline=v1471;local v1476=Drawing.new("Line");v1476.Thickness=1;v1476.Color=v6.CONFIG.TracersColor;v1476.Visible=false;v1466.Tracer=v1476;local v1482=Drawing.new("Line");v1482.Thickness=3;v1482.Color=Color3.new(0,0,0);v1482.Visible=false;v1466.HealthBarOutline=v1482;local v1487=Drawing.new("Line");v1487.Thickness=1;v1487.Visible=false;v1466.HealthBar=v1487;local v1491=Instance.new("CanvasGroup");v1491.BackgroundColor3=v6.CONFIG.PanelBgColor;v1491.BackgroundTransparency=0;v1491.BorderSizePixel=0;v1491.Size=UDim2.new(0,0,0,0);v1491.Visible=false;v1491.GroupTransparency=1;v1491.ClipsDescendants=true;v1491.Parent=v708;Instance.new("UICorner",v1491).CornerRadius=UDim.new(0,6);local v1502=Instance.new("UIScale",v1491);v1502.Scale=0.7;local v1504=Instance.new("UIPadding",v1491);v1504.PaddingLeft=UDim.new(0,6);v1504.PaddingRight=UDim.new(0,6);v1504.PaddingTop=UDim.new(0,4);v1504.PaddingBottom=UDim.new(0,4);local v1509=Instance.new("UIListLayout",v1491);v1509.FillDirection=Enum.FillDirection.Horizontal;v1509.SortOrder=Enum.SortOrder.LayoutOrder;v1509.VerticalAlignment=Enum.VerticalAlignment.Center;v1509.Padding=UDim.new(0,6);v1466.PanelLayout=v1509;v1466.CurrentPanelSize=Vector2.new(0,0);v1466.LastUseInfoPanel=nil;v1466.LastLayoutSize=Vector2.new(0,0);v1466.LastLayoutTick=0;v1466.BoxAlpha=0;v1466.SkeletonAlpha=0;v1466.PanelAlpha=0;v1466.TracerAlpha=0;v1466.HealthBarAlpha=0;v1466.Scale=0.7;v1466.LastValidPos={tS=Vector3.new(0,0,0),bS=Vector3.new(0,0,0),dist=0};local v1529=Instance.new("TextLabel");v1529.Name="1_Dist";v1529.BackgroundTransparency=1;v1529.AutomaticSize=Enum.AutomaticSize.XY;v1529.Font=Enum.Font.GothamMedium;v1529.TextColor3=v6.CONFIG.DistanceColor;v1529.TextSize=12;v1529.Text="0m";v1529.LayoutOrder=1;v1529.Parent=v1491;local v1542=Instance.new("Frame");v1542.Name="2_Div";v1542.BackgroundColor3=Color3.fromRGB(200,200,210);v1542.BackgroundTransparency=0.2;v1542.BorderSizePixel=0;v1542.Size=UDim2.new(0,2,0,12);v1542.LayoutOrder=2;v1542.Parent=v1491;local v1550=Instance.new("ImageLabel");v1550.Name="3_Av";v1550.Size=UDim2.new(0,16,0,16);v1550.BackgroundColor3=Color3.fromRGB(40,40,50);v1550.ScaleType=Enum.ScaleType.Crop;v1550.BorderSizePixel=0;v1550.LayoutOrder=3;v1550.Parent=v1491;Instance.new("UICorner",v1550).CornerRadius=UDim.new(0,3);task.spawn(function() local v1962=v714(v1465.UserId);if (v1962~="") then v1550.Image=v1962;end end);local v1560=Instance.new("Frame");v1560.Name="4_Div";v1560.BackgroundColor3=Color3.fromRGB(200,200,210);v1560.BackgroundTransparency=0.2;v1560.BorderSizePixel=0;v1560.Size=UDim2.new(0,2,0,12);v1560.LayoutOrder=4;v1560.Parent=v1491;local v1568=Instance.new("TextLabel");v1568.Name="5_Name";v1568.BackgroundTransparency=1;v1568.AutomaticSize=Enum.AutomaticSize.XY;v1568.Font=Enum.Font.GothamMedium;v1568.TextColor3=v6.CONFIG.NameColor;v1568.TextSize=12;v1568.Text=v1465.Name;v1568.LayoutOrder=5;v1568.Parent=v1491;v1466.Panel=v1491;v1466.PanelScale=v1502;v1466.DistLbl=v1529;v1466.NameLbl=v1568;v1466.AvatarImg=v1550;v1466.Dividers={v1542,v1560};local function v1586(v1963) local v1964=v1963:WaitForChild("Humanoid",10);if v1964 then v1964.Died:Connect(function() local v2625=v1963:FindFirstChild("HumanoidRootPart");if v2625 then v715(v1465,v2625.Position);end local v2626=v6.ESPObjects[v1465];if v2626 then v2626.LastValidPos=nil;if  not v6.CONFIG.DeadESP then hideESP(v2626);end end end);end end if v1465.Character then v1586(v1465.Character);end v1465.CharacterAdded:Connect(v1586);v1465.CharacterRemoving:Connect(function() local v1965=v6.ESPObjects[v1465];if v1965 then v1965.LastValidPos=nil;hideESP(v1965);end end);v6.ESPObjects[v1465]=v1466;end local function v717(v1588) local v1589=v6.ESPObjects[v1588];if  not v1589 then return;end for v1966,v1967 in pairs(v1589.BoxOutline) do v1967:Remove();end for v1968,v1969 in pairs(v1589.BoxSegments) do v1969:Remove();end for v1970,v1971 in pairs(v1589.SkeletonOutline) do v1971:Remove();end for v1972,v1973 in pairs(v1589.Skeleton) do v1973:Remove();end if v1589.TracerOutline then v1589.TracerOutline:Remove();end if v1589.Tracer then v1589.Tracer:Remove();end if v1589.HealthBarOutline then v1589.HealthBarOutline:Remove();end if v1589.HealthBar then v1589.HealthBar:Remove();end if v1589.Dividers then for v2475,v2476 in pairs(v1589.Dividers) do if v2476 then v2476:Destroy();end end end if v1589.DistLbl then v1589.DistLbl:Destroy();end if v1589.NameLbl then v1589.NameLbl:Destroy();end if v1589.AvatarImg then v1589.AvatarImg:Destroy();end if v1589.PanelScale then v1589.PanelScale:Destroy();end if v1589.Panel then v1589.Panel:Destroy();end v6.ESPObjects[v1588]=nil;end local function v718(v1591) v1591.BoxAlpha=0;v1591.SkeletonAlpha=0;v1591.PanelAlpha=0;v1591.TracerAlpha=0;v1591.HealthBarAlpha=0;for v1974,v1975 in pairs(v1591.BoxOutline) do if v1975 then v1975.Visible=false;end end for v1976,v1977 in pairs(v1591.BoxSegments) do if v1977 then v1977.Visible=false;end end for v1978,v1979 in pairs(v1591.SkeletonOutline) do if v1979 then v1979.Visible=false;end end for v1980,v1981 in pairs(v1591.Skeleton) do if v1981 then v1981.Visible=false;end end if v1591.TracerOutline then v1591.TracerOutline.Visible=false;end if v1591.Tracer then v1591.Tracer.Visible=false;end if v1591.HealthBarOutline then v1591.HealthBarOutline.Visible=false;end if v1591.HealthBar then v1591.HealthBar.Visible=false;end if v1591.Panel then v1591.Panel.Visible=false;end if v1591.DistLbl then v1591.DistLbl.Visible=false;end if v1591.NameLbl then v1591.NameLbl.Visible=false;end if v1591.AvatarImg then v1591.AvatarImg.Visible=false;end v1591.LastValidPos=nil;end local function v719(v1598,v1599,v1600) local v1601=v1598.Character;local v1602=v1601 and v1601:FindFirstChildOfClass("Humanoid") ;local v1603=v1601 and v1601:FindFirstChild("HumanoidRootPart") ;local v1604=v6.CONFIG.Enabled and v1601 and v1602 and v1603 and (v1602.Health>0) and ( not v6.CONFIG.TeamCheck or (v1598.Team~=v6.LP.Team)) ;local v1605,v1606;if v1604 then v1605=v1603.Position;v1606=(v6.Camera.CFrame.Position-v1605).Magnitude/3 ;if (v1606>v6.CONFIG.MaxDistance) then v1604=false;v1599.LastValidPos=nil;end else v1599.LastValidPos=nil;end v1599.visCache=v1599.visCache or {} ;v1599.lastCheck=v1599.lastCheck or 0 ;local v1609=tick();if (v1604 and v6.CONFIG.VisibilityCheck) then v6.sharedRayParams.FilterDescendantsInstances={v6.LP.Character,v1601};local v2191=((v1606<50) and 0.05) or ((v1606<200) and 0.2) or ((v1606<500) and 0.5) or 2 ;if ((v1609-v1599.lastCheck)>v2191) then v1599.lastCheck=v1609;local v2629=v6.Camera.CFrame.Position;local v2630=((v1602.RigType==Enum.HumanoidRigType.R15) and "R15") or "R6" ;local v2631={};for v2820,v2821 in ipairs(v6.BONES[v2630]) do for v2908,v2909 in ipairs(v2821) do if  not v2631[v2909] then v2631[v2909]=true;local v3082=v1601:FindFirstChild(v2909);if v3082 then local v3134=v10(v2629,v3082.Position,v6.sharedRayParams);v1599.visCache[v2909]= not v3134;end end end end end end local function v1610(v1982) if  not v6.CONFIG.VisibilityCheck then return true;end for v2192,v2193 in ipairs(v1982) do if v1599.visCache[v2193] then return true;end end return false;end local v1611={v1610({"Head"}),v1610({"LeftUpperArm","Left Arm"}),v1610({"LeftLowerArm","LeftHand","LowerTorso","Torso"}),v1610({"LeftUpperLeg","Left Leg"}),v1610({"LeftFoot","LeftLowerLeg","Left Leg"})};local v1612={v1610({"Head"}),v1610({"RightUpperArm","Right Arm"}),v1610({"RightLowerArm","RightHand","LowerTorso","Torso"}),v1610({"RightUpperLeg","Right Leg"}),v1610({"RightFoot","RightLowerLeg","Right Leg"})};local v1613=false;for v1983=1,5 do if (v1611[v1983] or v1612[v1983]) then v1613=true;break;end end local v1614=(v1613 and ((v6.CONFIG.VisibilityCheck and v6.CONFIG.VisibleColor) or nil)) or (v6.CONFIG.VisibilityCheck and v6.CONFIG.HiddenColor) or nil ;local function v1615(v1984,v1985) local v1986=((v1984=="L") and v1611[v1985]) or v1612[v1985] ;return (v1986 and ((v6.CONFIG.VisibilityCheck and v6.CONFIG.VisibleColor) or v6.CONFIG.BoxColor)) or (v6.CONFIG.VisibilityCheck and v6.CONFIG.HiddenColor) or v6.CONFIG.BoxColor ;end local v1616=0.15;local function v1617(v1987,v1988) v1987=v1987 or 0 ;if (math.abs(v1987-v1988 )<0.001) then return v1988;end return v1987 + ((v1988-v1987) * v1616) ;end local v1618=(v1604 and v6.CONFIG.BoxEnabled and 1) or 0 ;local v1619=(v1604 and v6.CONFIG.SkeletonEnabled and 1) or 0 ;local v1620=(v1604 and (v6.CONFIG.ShowDistance or v6.CONFIG.ShowAvatar or v6.CONFIG.ShowName) and 1) or 0 ;local v1621=(v1604 and v6.CONFIG.TracersEnabled and 1) or 0 ;local v1622=(v1604 and v6.CONFIG.HealthBarEnabled and v6.CONFIG.BoxEnabled and 1) or 0 ;v1599.BoxAlpha=v1617(v1599.BoxAlpha,v1618);v1599.SkeletonAlpha=v1617(v1599.SkeletonAlpha,v1619);v1599.PanelAlpha=v1617(v1599.PanelAlpha,v1620);v1599.TracerAlpha=v1617(v1599.TracerAlpha,v1621);v1599.HealthBarAlpha=v1617(v1599.HealthBarAlpha,v1622);v1599.Scale=v1617(v1599.Scale,((v1620>0.5) and 1) or 0.7 );local v1629,v1630,v1631,v1632;if v1604 then v1629,v1631=v6.Camera:WorldToViewportPoint(v1605 + Vector3.new(0,3.2,0) );v1630,v1632=v6.Camera:WorldToViewportPoint(v1605-Vector3.new(0,3.2,0) );if (v1631 or v1632) then v1599.LastValidPos={tS=v1629,bS=v1630,dist=v1606};end else v1629,v1630=Vector3.new(0,0,0),Vector3.new(0,0,0);v1606=0;end if (v1604 and (v1631 or v1632)) then local v2194=math.abs(v1629.Y-v1630.Y );local v2195=v2194 * 0.55 ;local v2196=v1629.X;local v2197={Vector2.new(v2196-(v2195/2) ,v1629.Y),Vector2.new(v2196 + (v2195/2) ,v1629.Y),Vector2.new(v2196 + (v2195/2) ,v1630.Y),Vector2.new(v2196-(v2195/2) ,v1630.Y)};if (v1599.BoxAlpha>0.01) then local v2633=v2194/5 ;for v2822=1,5 do local v2823=v1629.Y + ((v2822-1) * v2633) ;local v2824=v1629.Y + (v2822 * v2633) ;local v2825=v1615("L",v2822);local v2826=v2822;local v2827=Vector2.new(v2196-(v2195/2) ,v2823);local v2828=Vector2.new(v2196-(v2195/2) ,v2824);v1599.BoxOutline[v2826].From,v1599.BoxOutline[v2826].To=v2827,v2828;v1599.BoxOutline[v2826].Transparency,v1599.BoxOutline[v2826].Visible=v1599.BoxAlpha * 0.5 ,true;v1599.BoxSegments[v2826].From,v1599.BoxSegments[v2826].To=v2827,v2828;v1599.BoxSegments[v2826].Color,v1599.BoxSegments[v2826].Transparency,v1599.BoxSegments[v2826].Visible=v2825,v1599.BoxAlpha,true;local v2839=v1615("R",v2822);local v2840=v2822 + 5 ;local v2841=Vector2.new(v2196 + (v2195/2) ,v2823);local v2842=Vector2.new(v2196 + (v2195/2) ,v2824);v1599.BoxOutline[v2840].From,v1599.BoxOutline[v2840].To=v2841,v2842;v1599.BoxOutline[v2840].Transparency,v1599.BoxOutline[v2840].Visible=v1599.BoxAlpha * 0.5 ,true;v1599.BoxSegments[v2840].From,v1599.BoxSegments[v2840].To=v2841,v2842;v1599.BoxSegments[v2840].Color,v1599.BoxSegments[v2840].Transparency,v1599.BoxSegments[v2840].Visible=v2839,v1599.BoxAlpha,true;end local v2634=((v1611[1] or v1612[1]) and ((v6.CONFIG.VisibilityCheck and v6.CONFIG.VisibleColor) or v6.CONFIG.BoxColor)) or (v6.CONFIG.VisibilityCheck and v6.CONFIG.HiddenColor) or v6.CONFIG.BoxColor ;v1599.BoxOutline[11].From,v1599.BoxOutline[11].To=Vector2.new(v2196-(v2195/2) ,v1629.Y),Vector2.new(v2196 + (v2195/2) ,v1629.Y);v1599.BoxOutline[11].Transparency,v1599.BoxOutline[11].Visible=v1599.BoxAlpha * 0.5 ,true;v1599.BoxSegments[11].From,v1599.BoxSegments[11].To=Vector2.new(v2196-(v2195/2) ,v1629.Y),Vector2.new(v2196 + (v2195/2) ,v1629.Y);v1599.BoxSegments[11].Color,v1599.BoxSegments[11].Transparency,v1599.BoxSegments[11].Visible=v2634,v1599.BoxAlpha,true;local v2645=((v1611[5] or v1612[5]) and ((v6.CONFIG.VisibilityCheck and v6.CONFIG.VisibleColor) or v6.CONFIG.BoxColor)) or (v6.CONFIG.VisibilityCheck and v6.CONFIG.HiddenColor) or v6.CONFIG.BoxColor ;v1599.BoxOutline[12].From,v1599.BoxOutline[12].To=Vector2.new(v2196-(v2195/2) ,v1630.Y),Vector2.new(v2196 + (v2195/2) ,v1630.Y);v1599.BoxOutline[12].Transparency,v1599.BoxOutline[12].Visible=v1599.BoxAlpha * 0.5 ,true;v1599.BoxSegments[12].From,v1599.BoxSegments[12].To=Vector2.new(v2196-(v2195/2) ,v1630.Y),Vector2.new(v2196 + (v2195/2) ,v1630.Y);v1599.BoxSegments[12].Color,v1599.BoxSegments[12].Transparency,v1599.BoxSegments[12].Visible=v2645,v1599.BoxAlpha,true;else for v2852=1,12 do v1599.BoxOutline[v2852].Visible,v1599.BoxSegments[v2852].Visible=false,false;end end if ((v1599.SkeletonAlpha>0.01) and v1604) then local v2655=((v1602.RigType==Enum.HumanoidRigType.R15) and "R15") or "R6" ;local v2656=v6.BONES[v2655];local v2657= #v2656;for v2855=1,15 do local v2856=v1599.Skeleton[v2855];local v2857=v1599.SkeletonOutline[v2855];if  not v2856 then continue;end if (v2855<=v2657) then local v3016=v2656[v2855];local v3017=v1601:FindFirstChild(v3016[1]);local v3018=v1601:FindFirstChild(v3016[2]);if (v3017 and v3018) then local v3114,v3115=v6.Camera:WorldToViewportPoint(v3017.Position);local v3116,v3117=v6.Camera:WorldToViewportPoint(v3018.Position);if ((v3114.Z>0) and (v3116.Z>0)) then local v3153,v3154=Vector2.new(v3114.X,v3114.Y),Vector2.new(v3116.X,v3116.Y);v2857.From=v3153;v2857.To=v3154;v2857.Transparency=v1599.SkeletonAlpha * 0.5 ;v2857.Visible=true;v2856.From=v3153;v2856.To=v3154;v2856.Color=v1614 or v6.CONFIG.SkeletonColor ;v2856.Transparency=v1599.SkeletonAlpha;v2856.Visible=true;else v2856.Visible=false;v2857.Visible=false;end else v2856.Visible=false;v2857.Visible=false;end else v2856.Visible=false;v2857.Visible=false;end end else for v2858=1,15 do if v1599.Skeleton[v2858] then v1599.Skeleton[v2858].Visible=false;end if v1599.SkeletonOutline[v2858] then v1599.SkeletonOutline[v2858].Visible=false;end end end if ((v1599.TracerAlpha>0.01) and v1600) then local v2658=Vector2.new(v1630.X,v1630.Y);v1599.TracerOutline.From=v1600;v1599.TracerOutline.To=v2658;v1599.TracerOutline.Transparency=v1599.TracerAlpha * 0.5 ;v1599.TracerOutline.Visible=true;v1599.Tracer.From=v1600;v1599.Tracer.To=v2658;v1599.Tracer.Color=v1614 or v6.CONFIG.TracersColor ;v1599.Tracer.Transparency=v1599.TracerAlpha;v1599.Tracer.Visible=true;else v1599.Tracer.Visible=false;v1599.TracerOutline.Visible=false;end if ((v1599.HealthBarAlpha>0.01) and v1602) then local v2671=math.clamp(v1602.Health/v1602.MaxHealth ,0,1);local v2672=Color3.fromRGB(0,255,0);local v2673=Color3.fromRGB(255,0,0);local v2674=v2673:Lerp(v2672,v2671);local v2675=v2197[1] + Vector2.new( -5,0) ;local v2676=v2197[4] + Vector2.new( -5,0) ;v1599.HealthBarOutline.From=v2675;v1599.HealthBarOutline.To=v2676;v1599.HealthBarOutline.Transparency=v1599.HealthBarAlpha * 0.5 ;v1599.HealthBarOutline.Visible=true;v1599.HealthBar.From=v2676;v1599.HealthBar.To=v2676:Lerp(v2675,v2671);v1599.HealthBar.Color=v2674;v1599.HealthBar.Transparency=v1599.HealthBarAlpha;v1599.HealthBar.Visible=true;else v1599.HealthBarOutline.Visible,v1599.HealthBar.Visible=false,false;end if (v1599.PanelAlpha>0.01) then local v2689=v1604 and (v1631 or v1632) ;if (v1604 and v2689) then local v2910=math.clamp(math.floor(((73/math.max(v1606,1)) * 12) + 0.5 ),9,16);local v2911=math.clamp(v2910 + 2 ,11,18);local v2912=math.floor(v1606);if (v1599.LastTextDist~=v2912) then v1599.LastTextDist=v2912;v1599.DistLbl.Text=v2912   .. "m" ;end v1599.DistLbl.TextSize=v2910;v1599.DistLbl.TextColor3=v6.CONFIG.DistanceColor;v1599.DistLbl.Visible=v6.CONFIG.ShowDistance;v1599.NameLbl.TextSize=v2910;v1599.NameLbl.TextColor3=v6.CONFIG.NameColor;v1599.NameLbl.Visible=v6.CONFIG.ShowName;local v2923=math.clamp(v2910 + 2 ,11,18);if (v1599.LastAvSize~=v2923) then v1599.LastAvSize=v2923;v1599.AvatarImg.Size=UDim2.new(0,v2923,0,v2923);end v1599.AvatarImg.Visible=v6.CONFIG.ShowAvatar;else if v1599.DistLbl then v1599.DistLbl.Visible=false;end if v1599.NameLbl then v1599.NameLbl.Visible=false;end if v1599.AvatarImg then v1599.AvatarImg.Visible=false;end end local v2690=v6.CONFIG.UseInfoPanel;local v2691=v1599.LastUseInfoPanel~=v2690 ;v1599.LastUseInfoPanel=v2690;if v2690 then v1599.Panel.BackgroundColor3=v6.CONFIG.PanelBgColor;v1599.Panel.GroupTransparency=1 -v1599.PanelAlpha ;v1599.PanelScale.Scale=v1599.Scale;v1599.Dividers[1].Visible=v6.CONFIG.ShowDistance and (v6.CONFIG.ShowAvatar or v6.CONFIG.ShowName) ;v1599.Dividers[2].Visible=v6.CONFIG.ShowAvatar and v6.CONFIG.ShowName ;local v2933=tick();local v2934;if ((v2933-v1599.LastLayoutTick)>0.05) then v2934=v1599.PanelLayout.AbsoluteContentSize;v1599.LastLayoutSize=v2934;v1599.LastLayoutTick=v2933;else v2934=v1599.LastLayoutSize;end if (v2934.X>0) then local v3094=v2934 + Vector2.new(12,8) ;local v3095=v1599.CurrentPanelSize-v3094 ;if (v3095.Magnitude>1) then v1599.CurrentPanelSize=v1599.CurrentPanelSize:Lerp(v3094,0.15);v1599.Panel.Size=UDim2.new(0,math.round(v1599.CurrentPanelSize.X),0,math.round(v1599.CurrentPanelSize.Y));end end v1599.Panel.Position=UDim2.new(0,v2196-(v1599.CurrentPanelSize.X/2) ,0,(v1629.Y-v1599.CurrentPanelSize.Y) -6 );v1599.Panel.Visible=true;if v2691 then if (v1599.DistLbl.Parent~=v1599.Panel) then v1599.DistLbl.Parent=v1599.Panel;end if (v1599.NameLbl.Parent~=v1599.Panel) then v1599.NameLbl.Parent=v1599.Panel;end if (v1599.AvatarImg.Parent~=v1599.Panel) then v1599.AvatarImg.Parent=v1599.Panel;end end else v1599.Panel.Visible=false;v1599.CurrentPanelSize=Vector2.new(0,0);if v2691 then if (v1599.DistLbl.Parent~=v708) then v1599.DistLbl.Parent=v708;end if (v1599.NameLbl.Parent~=v708) then v1599.NameLbl.Parent=v708;end if (v1599.AvatarImg.Parent~=v708) then v1599.AvatarImg.Parent=v708;end end local v2939=v1629.Y-5 ;local v2940=v1599.NameLbl.TextBounds.X or 0 ;local v2941=v1599.AvatarImg.AbsoluteSize.X or 16 ;local v2942=4;local v2943=0;if v6.CONFIG.ShowName then v2943=v2943 + v2940 ;end if v6.CONFIG.ShowAvatar then v2943=v2943 + v2941 ;end if (v6.CONFIG.ShowName and v6.CONFIG.ShowAvatar) then v2943=v2943 + v2942 ;end local v2944=v2196-(v2943/2) ;if v6.CONFIG.ShowAvatar then v1599.AvatarImg.Position=UDim2.new(0,v2944,0,v2939-v2941 );v2944=v2944 + v2941 + v2942 ;end if v6.CONFIG.ShowName then local v3097=v1599.NameLbl.TextSize or 12 ;v1599.NameLbl.Position=UDim2.new(0,v2944,0,v2939-v3097 );end if v6.CONFIG.ShowDistance then v1599.DistLbl.Position=UDim2.new(0,v2196-(v1599.DistLbl.TextBounds.X/2) ,0,v1630.Y + 5 );end end else v1599.Panel.Visible=false;v1599.CurrentPanelSize=Vector2.new(0,0);end else v718(v1599);end end for v1633,v1634 in pairs(v0:GetPlayers()) do if (v1634~=v6.LP) then v716(v1634);end end v0.PlayerAdded:Connect(function(v1635) if (v1635~=v6.LP) then v716(v1635);end end);v0.PlayerRemoving:Connect(v717);v1.RenderStepped:Connect(function() if  not v6.isAuthorized then return;end local v1636;if v6.CONFIG.TracersEnabled then local v2198=v6.Camera.ViewportSize;if (v6.CONFIG.TracerOrigin=="Bottom") then v1636=Vector2.new(v2198.X/2 ,v2198.Y);elseif (v6.CONFIG.TracerOrigin=="Top") then v1636=Vector2.new(v2198.X/2 ,0);elseif (v6.CONFIG.TracerOrigin=="Middle") then v1636=Vector2.new(v2198.X/2 ,v2198.Y/2 );else v1636=v2:GetMouseLocation();end end for v1989,v1990 in pairs(v6.ESPObjects) do local v1991,v1992=pcall(function() v719(v1989,v1990,v1636);end);if  not v1991 then warn("[ESP] Error updating for "   .. tostring(v1989)   .. ": "   .. tostring(v1992) );end end for v1993= #v6.DeathMarkers,1, -1 do local v1994=v6.DeathMarkers[v1993];local v1995=tick() -v1994.Time ;if ((v1995>v6.CONFIG.DeadESPDuration) or  not v6.CONFIG.Enabled) then v1994.Line1:Remove();v1994.Line2:Remove();v1994.Text:Remove();table.remove(v6.DeathMarkers,v1993);elseif v6.CONFIG.DeadESP then local v2859,v2860=v6.Camera:WorldToViewportPoint(v1994.Pos);local v2861=(v6.Camera.CFrame.Position-v1994.Pos).Magnitude/3 ;if (v2860 and (v2861<=v6.CONFIG.MaxDistance)) then local v3023=8;v1994.Line1.From=Vector2.new(v2859.X-v3023 ,v2859.Y-v3023 );v1994.Line1.To=Vector2.new(v2859.X + v3023 ,v2859.Y + v3023 );v1994.Line1.Color=v6.CONFIG.DeadESPColor;v1994.Line1.Visible=true;v1994.Line2.From=Vector2.new(v2859.X + v3023 ,v2859.Y-v3023 );v1994.Line2.To=Vector2.new(v2859.X-v3023 ,v2859.Y + v3023 );v1994.Line2.Color=v6.CONFIG.DeadESPColor;v1994.Line2.Visible=true;local v3033=math.max(0,math.floor(v6.CONFIG.DeadESPDuration-v1995 ));v1994.Text.Text=string.format("%s (DEAD) [%dm] [%ds]",v1994.Name,math.floor(v2861),v3033);v1994.Text.Position=Vector2.new(v2859.X,v2859.Y + v3023 + 2 );v1994.Text.Color=v6.CONFIG.DeadESPColor;v1994.Text.Visible=true;else v1994.Line1.Visible=false;v1994.Line2.Visible=false;v1994.Text.Visible=false;end else v1994.Line1.Visible=false;v1994.Line2.Visible=false;v1994.Text.Visible=false;end end end);local v720={Box={},Skeleton={},HealthBar=nil,HealthBarBg=nil,Tracer=nil};for v1637=1,4 do local v1638=Drawing.new("Line");v1638.Thickness=1.5;v1638.Visible=false;v720.Box[v1637]=v1638;end for v1642=1,15 do local v1643=Drawing.new("Line");v1643.Thickness=1.2;v1643.Visible=false;v720.Skeleton[v1642]=v1643;end v720.HealthBar=Drawing.new("Line");v720.HealthBar.Thickness=3;v720.HealthBar.Visible=false;v720.HealthBarBg=Drawing.new("Line");v720.HealthBarBg.Thickness=3;v720.HealthBarBg.Color=Color3.fromRGB(50,50,50);v720.HealthBarBg.Visible=false;v720.Tracer=Drawing.new("Line");v720.Tracer.Thickness=1;v720.Tracer.Visible=false;v1.RenderStepped:Connect(function() if  not v6.isAuthorized then for v2481,v2482 in pairs(v720.Box) do v2482.Visible=false;end for v2484,v2485 in pairs(v720.Skeleton) do v2485.Visible=false;end v720.HealthBar.Visible=false;v720.HealthBarBg.Visible=false;v720.Tracer.Visible=false;return;end local v1647=v6.LP.Character;local v1648=v1647 and v1647:FindFirstChildOfClass("Humanoid") ;local v1649=v1647 and v1647:FindFirstChild("HumanoidRootPart") ;if ( not v6.CONFIG.LocalPlayerESP or  not v1647 or  not v1648 or  not v1649 or (v1648.Health<=0)) then for v2487,v2488 in pairs(v720.Box) do v2488.Visible=false;end for v2490,v2491 in pairs(v720.Skeleton) do v2491.Visible=false;end v720.HealthBar.Visible=false;v720.HealthBarBg.Visible=false;v720.Tracer.Visible=false;return;end local v1650=v6.CONFIG.LocalPlayerColor;local v1651=((v1648.RigType==Enum.HumanoidRigType.R15) and "R15") or "R6" ;local function v1652(v1996) local v1997,v1998=v6.Camera:WorldToViewportPoint(v1996);if ( not v1998 or (v1997.Z<=0)) then return nil;end return Vector2.new(v1997.X,v1997.Y);end local v1653=v1647:FindFirstChild("Head");local v1654=v1647:FindFirstChild("LeftFoot") or v1647:FindFirstChild("Left Leg") ;local v1655=v1647:FindFirstChild("RightFoot") or v1647:FindFirstChild("Right Leg") ;if (v6.CONFIG.LocalBox and v1653 and (v1654 or v1655)) then local v2205=v1652(v1653.Position + Vector3.new(0,0.8,0) );local v2206=(v1654 and v1655 and ((v1654.Position + v1655.Position)/2)) or (v1654 or v1655).Position ;local v2207=v1652(v2206-Vector3.new(0,0.5,0) );if (v2205 and v2207) then local v2695=math.abs(v2207.Y-v2205.Y );local v2696=v2695 * 0.55 ;local v2697=(v2205.X + v2207.X)/2 ;local v2698,v2699=math.min(v2205.Y,v2207.Y),math.max(v2205.Y,v2207.Y);local v2700,v2701=v2697-(v2696/2) ,v2697 + (v2696/2) ;v720.Box[1].From=Vector2.new(v2700,v2698);v720.Box[1].To=Vector2.new(v2701,v2698);v720.Box[2].From=Vector2.new(v2700,v2699);v720.Box[2].To=Vector2.new(v2701,v2699);v720.Box[3].From=Vector2.new(v2700,v2698);v720.Box[3].To=Vector2.new(v2700,v2699);v720.Box[4].From=Vector2.new(v2701,v2698);v720.Box[4].To=Vector2.new(v2701,v2699);for v2865,v2866 in pairs(v720.Box) do v2866.Color=v6.CONFIG.LocalBoxColor;v2866.Visible=true;end if v6.CONFIG.LocalHealthBar then local v2945=math.clamp(v1648.Health/v1648.MaxHealth ,0,1);local v2946=Color3.fromRGB(255,0,0):Lerp(Color3.fromRGB(0,255,0),v2945);local v2947=v2700-5 ;v720.HealthBarBg.From=Vector2.new(v2947,v2698);v720.HealthBarBg.To=Vector2.new(v2947,v2699);v720.HealthBarBg.Visible=true;v720.HealthBar.From=Vector2.new(v2947,v2699);v720.HealthBar.To=Vector2.new(v2947,v2699-(v2695 * v2945) );v720.HealthBar.Color=v2946;v720.HealthBar.Visible=true;else v720.HealthBar.Visible=false;v720.HealthBarBg.Visible=false;end else for v2870,v2871 in pairs(v720.Box) do v2871.Visible=false;end v720.HealthBar.Visible=false;v720.HealthBarBg.Visible=false;end else for v2493,v2494 in pairs(v720.Box) do v2494.Visible=false;end v720.HealthBar.Visible=false;v720.HealthBarBg.Visible=false;end if (v6.CONFIG.LocalSkeleton and v6.BONES[v1651]) then local v2210=1;for v2496,v2497 in ipairs(v6.BONES[v1651]) do local v2498=v1647:FindFirstChild(v2497[1]);local v2499=v1647:FindFirstChild(v2497[2]);local v2500=v720.Skeleton[v2210];if v2500 then if (v2498 and v2499) then local v3041,v3042=v1652(v2498.Position),v1652(v2499.Position);if (v3041 and v3042) then v2500.From=v3041;v2500.To=v3042;v2500.Color=v6.CONFIG.LocalSkeletonColor;v2500.Visible=true;else v2500.Visible=false;end else v2500.Visible=false;end v2210=v2210 + 1 ;end end for v2501=v2210, #v720.Skeleton do v720.Skeleton[v2501].Visible=false;end else for v2503,v2504 in pairs(v720.Skeleton) do v2504.Visible=false;end end if v6.CONFIG.LocalTracers then local v2211=v1652(v1649.Position);if v2211 then local v2712=v6.Camera.ViewportSize;v720.Tracer.From=Vector2.new(v2712.X/2 ,v2712.Y);v720.Tracer.To=v2211;v720.Tracer.Color=v6.CONFIG.LocalTracersColor;v720.Tracer.Visible=true;else v720.Tracer.Visible=false;end else v720.Tracer.Visible=false;end end);local v731=nil;local v732={};local function v733() if v6.CONFIG.AmbienceEnabled then if  not v731 then v731={Ambient=v4.Ambient,OutdoorAmbient=v4.OutdoorAmbient,Brightness=v4.Brightness,GlobalShadows=v4.GlobalShadows,ClockTime=v4.ClockTime,FogEnd=v4.FogEnd,FogStart=v4.FogStart,ExposureCompensation=v4.ExposureCompensation,EnvironmentDiffuseScale=v4.EnvironmentDiffuseScale,EnvironmentSpecularScale=v4.EnvironmentSpecularScale,ShadowSoftness=v4.ShadowSoftness};end if (v4.Ambient~=v6.CONFIG.AmbienceColor) then v4.Ambient=v6.CONFIG.AmbienceColor;v4.OutdoorAmbient=v6.CONFIG.AmbienceColor;end elseif v731 then v4.Ambient=v731.Ambient;v4.OutdoorAmbient=v731.OutdoorAmbient;v4.Brightness=v731.Brightness;v4.GlobalShadows=v731.GlobalShadows;v4.ClockTime=v731.ClockTime;v4.FogEnd=v731.FogEnd;v4.FogStart=v731.FogStart;v4.ExposureCompensation=v731.ExposureCompensation;v4.EnvironmentDiffuseScale=v731.EnvironmentDiffuseScale;v4.EnvironmentSpecularScale=v731.EnvironmentSpecularScale;v4.ShadowSoftness=v731.ShadowSoftness;for v2873,v2874 in pairs(v732) do if (v2873 and v2873.Parent) then v2873.Enabled=true;end end v732={};v731=nil;end end v1:BindToRenderStep("LightingOverride",Enum.RenderPriority.Camera.Value + 1 ,v733);print("[ESP] Loaded! Press INSERT for settings.");v446();local v734=Drawing.new("Circle");v734.Thickness=1;v734.NumSides=64;v734.Filled=false;v734.Transparency=1;v734.Visible=false;v6.aimTarget=nil;v1.RenderStepped:Connect(function() if  not v6.isAuthorized then v734.Visible=false;return;end v734.Radius=v6.CONFIG.AimbotFOV;v734.Color=v6.CONFIG.FOVColor;v734.Visible=v6.CONFIG.AimbotEnabled and v6.CONFIG.ShowFOV and  not v6.menuOpen ;v734.Position=v2:GetMouseLocation();if (v6.CONFIG.NoRecoilEnabled and v2:IsMouseButtonPressed(Enum.UserInputType.MouseButton1)) then local v2214=v6.Camera.CFrame.LookVector;if v6.lastCameraRotation then local v2744=v2214-v6.lastCameraRotation ;if (v2744.Y>0.0001) then local v2957=v2744.Y * v6.CONFIG.NoRecoilStrength * 100 ;if mousemoverel then mousemoverel(0,v2957);end end end v6.lastCameraRotation=v2214;else v6.lastCameraRotation=nil;end if  not v6.CONFIG.AimbotEnabled then v6.aimTarget=nil;return;end local v1662=nil;local v1663=v2:GetMouseLocation();if v6.aimTarget then local v2218=v6.aimTarget.Player;local v2219=v2218.Character;local v2220=v2219 and v2219:FindFirstChildOfClass("Humanoid") ;local v2221=v2219 and v2219:FindFirstChild("HumanoidRootPart") ;if (v2219 and v2220 and v2221 and (v2220.Health>0)) then local v2745=v2219:FindFirstChild(v6.aimTarget.PartName or "Head" );if v2745 then local v2958,v2959=v6.Camera:WorldToViewportPoint(v2745.Position);local v2960=(Vector2.new(v2958.X,v2958.Y) -v1663).Magnitude;local v2961=(v6.Camera.CFrame.Position-v2745.Position).Magnitude;local v2962=(v2961/3)<=v6.CONFIG.AimbotMaxDistance ;if ((v2220.Health>0) and v2962) then if v6.CONFIG.AimbotSticky then v1662=v6.aimTarget;elseif (v2959 and (v2960<=(v6.CONFIG.AimbotFOV * 1.2))) then v1662=v6.aimTarget;end end end end end if  not v1662 then v6.aimTarget=nil;local v2223=math.huge;for v2506,v2507 in pairs(v6.ESPObjects) do local v2508=v2506.Character;local v2509=v2508 and v2508:FindFirstChildOfClass("Humanoid") ;local v2510=v2508 and v2508:FindFirstChild("HumanoidRootPart") ;if (v2508 and v2509 and v2510 and (v2509.Health>0) and ( not v6.CONFIG.TeamCheck or (v2506.Team~=v6.LP.Team))) then local v2875=v6.CONFIG.AimbotTargetPart;if (v2875=="Random") then local v3045={"Head","UpperTorso","LowerTorso"};v2875=v3045[math.random(1, #v3045)];end local v2876=v2508:FindFirstChild(v2875);if v2876 then local v3047,v3048=v6.Camera:WorldToViewportPoint(v2876.Position);if v3048 then local v3126=(Vector2.new(v3047.X,v3047.Y) -v1663).Magnitude;if (v3126<=v6.CONFIG.AimbotFOV) then local v3167=true;if v6.CONFIG.AimbotVisibleOnly then if (v2507.visCache and (v2507.visCache[v2875]~=nil)) then v3167=v2507.visCache[v2875];else v6.sharedRayParams.FilterDescendantsInstances={v6.LP.Character,v2508};local v3178=v10(v6.Camera.CFrame.Position,v2876.Position,v6.sharedRayParams);v3167= not v3178;end end if v3167 then local v3172=(v6.Camera.CFrame.Position-v2876.Position).Magnitude/3 ;if (v3172<=v6.CONFIG.AimbotMaxDistance) then local v3179=v3126 + (v3172 * v6.CONFIG.AimbotDistanceWeight) ;if (v3179<v2223) then v2223=v3179;v1662={Player=v2506,Part=v2876,PartName=v2875};end end end end end end end end end if (v1662 and v2:IsMouseButtonPressed(Enum.UserInputType.MouseButton2)) then v6.aimTarget=v1662;local v2225=v1662.Part.Position;if (v6.CONFIG.PredictionEnabled and v1662.Part) then local v2746=v1662.Part.AssemblyLinearVelocity or v1662.Part.Velocity or Vector3.new(0,0,0) ;local v2747=(v6.Camera.CFrame.Position-v2225).Magnitude;local v2748=v2747/3 ;local v2749=math.min(math.floor(v2748/10 ),100);local v2750=(v2749/100) * (v6.CONFIG.PredictionStrength/10) ;v2225=v2225 + (v2746 * v2750) ;end if v6.LP.Character then v6.sharedRayParams.FilterDescendantsInstances={v6.LP.Character,v708};end local v2226,v2227=v6.Camera:WorldToViewportPoint(v2225);local v2228=v6.CONFIG.AimbotSticky and ((v6.Camera.CFrame.Position-v2225).Magnitude<80) ;if (v2227 or v2228) then local v2752=v2:GetMouseLocation();local v2753,v2754;if v2227 then v2753=v2226.X-v2752.X ;v2754=v2226.Y-v2752.Y ;else local v2963=v6.Camera.CFrame:PointToObjectSpace(v2225);v2753=((v2963.X>0) and 15) or  -15 ;v2754=((v2963.Y>0) and 15) or  -15 ;end if mousemoverel then if v6.CONFIG.AimbotSticky then local v3100=32;local v3101=0.7;local v3102=math.clamp(v2753 * v3101 , -v3100,v3100);local v3103=math.clamp(v2754 * v3101 , -v3100,v3100);mousemoverel(v3102,v3103);else local v3104=1;if (v6.CONFIG.AimbotSmoothness>0) then local v3148=(v2227 and 12) or 4 ;v3104=1 + (v6.CONFIG.AimbotSmoothness * v3148) ;end mousemoverel(v2753/v3104 ,v2754/v3104 );end end end if v6.LP.Character then local v2755=v6.LP.Character:FindFirstChild("HumanoidRootPart");if v2755 then local v2964=Vector3.new(v2225.X,v2755.Position.Y,v2225.Z);v2755.CFrame=CFrame.new(v2755.Position,v2964);end end else v6.aimTarget=nil;end end);local function v741() if  not v6.isAuthorized then return;end local v1664=v6.LP.Character;local v1665=v1664 and v1664:FindFirstChildOfClass("Humanoid") ;if (v1665 and v6.CONFIG.HighJumpEnabled) then v1665.UseJumpPower=true;v1665.JumpPower=v6.CONFIG.HighJumpValue;v1665.JumpHeight=v6.CONFIG.HighJumpValue;end end v1.Heartbeat:Connect(v741);v2.InputBegan:Connect(function(v1666,v1667) if v1667 then return;end if ((v1666.KeyCode==Enum.KeyCode.Space) and v6.CONFIG.HighJumpEnabled) then local v2234=v6.LP.Character and v6.LP.Character:FindFirstChildOfClass("Humanoid") ;if v2234 then task.spawn(function() v2234:ChangeState(Enum.HumanoidStateType.Jumping);end);end end end);local function v742(v1668) local v1669=Drawing.new("Line");v1669.Thickness=v1668 or 1.5 ;v1669.Transparency=1;v1669.Visible=false;return v1669;end local v743={Top=v742(),TopOut=v742(3),Bottom=v742(),BottomOut=v742(3),Left=v742(),LeftOut=v742(3),Right=v742(),RightOut=v742(3),Dot=Drawing.new("Circle"),DotOut=Drawing.new("Circle")};v743.TopOut.Color=Color3.new(0,0,0);v743.BottomOut.Color=Color3.new(0,0,0);v743.LeftOut.Color=Color3.new(0,0,0);v743.RightOut.Color=Color3.new(0,0,0);v743.Dot.Filled=true;v743.DotOut.Filled=true;v743.DotOut.Color=Color3.new(0,0,0);v1.RenderStepped:Connect(function() local v1673=v6.isAuthorized and v6.CONFIG.ScopeEnabled and  not v6.menuOpen ;local v1674=v6.Camera.ViewportSize;local v1675,v1676=math.floor(v1674.X/2 ),math.floor(v1674.Y/2 );local v1677=v6.CONFIG.ScopeColor;local v1678=v6.CONFIG.ScopeGap;local v1679=v6.CONFIG.ScopeLength;local v1680=v6.CONFIG.ScopeThickness;for v1999,v2000 in pairs(v743) do v2000.Visible=false;end if v1673 then local function v2235(v2511,v2512,v2513,v2514,v2515,v2516) if v6.CONFIG.ScopeOutline then v2512.From=Vector2.new(v2513,v2514);v2512.To=Vector2.new(v2515,v2516);v2512.Thickness=v1680 + 2 ;v2512.Visible=true;end v2511.From=Vector2.new(v2513,v2514);v2511.To=Vector2.new(v2515,v2516);v2511.Color=v1677;v2511.Thickness=v1680;v2511.Visible=true;end v2235(v743.Top,v743.TopOut,v1675,v1676-v1678 ,v1675,(v1676-v1678) -v1679 );v2235(v743.Bottom,v743.BottomOut,v1675,v1676 + v1678 ,v1675,v1676 + v1678 + v1679 );v2235(v743.Left,v743.LeftOut,v1675-v1678 ,v1676,(v1675-v1678) -v1679 ,v1676);v2235(v743.Right,v743.RightOut,v1675 + v1678 ,v1676,v1675 + v1678 + v1679 ,v1676);if v6.CONFIG.ScopeCenterDot then if v6.CONFIG.ScopeOutline then v743.DotOut.Position=Vector2.new(v1675,v1676);v743.DotOut.Radius=v1680 + 2 ;v743.DotOut.Visible=true;end v743.Dot.Position=Vector2.new(v1675,v1676);v743.Dot.Radius=v1680;v743.Dot.Color=v1677;v743.Dot.Visible=true;end end end);local function v751() local v1681={Window=Instance.new("CanvasGroup"),Header=nil,Container=nil,Blips={}};v1681.Window.Name="AstrumRadar";v1681.Window.Size=UDim2.new(0,v6.CONFIG.RadarSize,0,v6.CONFIG.RadarSize + 30 );v1681.Window.Position=UDim2.new(0,v6.CONFIG.RadarPos.X,0,v6.CONFIG.RadarPos.Y);v1681.Window.BackgroundColor3=Color3.fromRGB(12,12,16);v1681.Window.BorderSizePixel=0;v1681.Window.Visible=false;v1681.Window.Parent=v6.MenuGui;Instance.new("UICorner",v1681.Window).CornerRadius=UDim.new(0,8);Instance.new("UIStroke",v1681.Window).Color=Color3.fromRGB(40,40,50);v1681.Header=Instance.new("Frame",v1681.Window);v1681.Header.Size=UDim2.new(1,0,0,30);v1681.Header.BackgroundTransparency=1;local v1695=Instance.new("ImageLabel",v1681.Header);v1695.Size=UDim2.new(0,16,0,16);v1695.Position=UDim2.new(0,10,0.5, -8);v1695.BackgroundTransparency=1;v1695.Image="rbxassetid://6031289136";v1695.ImageColor3=Color3.fromRGB(70,110,255);local v1701=Instance.new("TextLabel",v1681.Header);v1701.Size=UDim2.new(1, -30,1,0);v1701.Position=UDim2.new(0,32,0,0);v1701.BackgroundTransparency=1;v1701.Font=Enum.Font.GothamBold;v1701.Text="Radar";v1701.TextColor3=Color3.fromRGB(70,110,255);v1701.TextSize=13;v1701.TextXAlignment=Enum.TextXAlignment.Left;v1681.Container=Instance.new("Frame",v1681.Window);v1681.Container.Size=UDim2.new(1, -10,1, -40);v1681.Container.Position=UDim2.new(0,5,0,35);v1681.Container.BackgroundTransparency=1;v1681.Container.ClipsDescendants=true;local function v1717() local v2002=Instance.new("Frame",v1681.Container);v2002.BackgroundColor3=Color3.fromRGB(255,255,255);v2002.BackgroundTransparency=0.95;v2002.BorderSizePixel=0;return v2002;end local function v1718() local v2006=Instance.new("Frame",v1681.Container);v2006.BackgroundTransparency=1;local v2008=Instance.new("UIStroke",v2006);v2008.Color=Color3.fromRGB(255,255,255);v2008.Transparency=0.95;Instance.new("UICorner",v2006).CornerRadius=UDim.new(1,0);return v2006;end local v1719=Instance.new("Frame",v1681.Container);v1719.Size=UDim2.new(0,4,0,4);v1719.Position=UDim2.new(0.5, -2,0.5, -2);v1719.BackgroundColor3=Color3.new(1,1,1);Instance.new("UICorner",v1719).CornerRadius=UDim.new(1,0);for v2012=1,3 do local v2013=v1718();local v2014=(v2012/3) * 0.95 ;v2013.Size=UDim2.new(v2014,0,v2014 * (v6.CONFIG.RadarSize/(v6.CONFIG.RadarSize-10)) ,0);v2013.Position=UDim2.new(0.5 -(v2014/2) ,0,0.5 -((v2014 * (v6.CONFIG.RadarSize/(v6.CONFIG.RadarSize-10)))/2) ,0);end local v1724=v1717();v1724.Size=UDim2.new(0,1,1,0);v1724.Position=UDim2.new(0.5,0,0,0);local v1727=v1717();v1727.Size=UDim2.new(1,0,0,1);v1727.Position=UDim2.new(0,0,0.5,0);local function v1730(v2017,v2018) local v2019=Instance.new("TextLabel",v1681.Container);v2019.Size=UDim2.new(0,20,0,20);v2019.Position=v2018;v2019.BackgroundTransparency=1;v2019.Font=Enum.Font.GothamBold;v2019.Text=v2017;v2019.TextColor3=Color3.fromRGB(150,150,160);v2019.TextSize=12;return v2019;end v1730("N",UDim2.new(0.5, -10,0,2));v1730("S",UDim2.new(0.5, -10,1, -22));v1730("W",UDim2.new(0,2,0.5, -10));v1730("E",UDim2.new(1, -22,0.5, -10));local function v1731(v2028) if v1681.Blips[v2028] then return v1681.Blips[v2028];end local v2029=Instance.new("Frame",v1681.Container);v2029.Size=UDim2.new(0,8,0,8);v2029.AnchorPoint=Vector2.new(0.5,0.5);v2029.BackgroundColor3=Color3.fromRGB(255,50,50);v2029.BorderSizePixel=0;v2029.ZIndex=10;Instance.new("UICorner",v2029).CornerRadius=UDim.new(1,0);local v2036=Instance.new("UIStroke",v2029);v2036.Thickness=1;v2036.Color=Color3.new(1,1,1);v1681.Blips[v2028]={Base=v2029,Stroke=v2036};return v1681.Blips[v2028];end v1.RenderStepped:Connect(function() v1681.Window.Visible=v6.CONFIG.RadarEnabled and v6.isAuthorized ;if ( not v6.CONFIG.RadarEnabled or  not v6.isAuthorized) then return;end v1681.Window.Size=UDim2.new(0,v6.CONFIG.RadarSize,0,v6.CONFIG.RadarSize + 30 );local v2042=v6.LP.Character;local v2043=v2042 and v2042:FindFirstChild("HumanoidRootPart") ;if  not v2043 then return;end local v2044=v6.CONFIG.RadarRadius * 3 ;local v2045=v6.Camera.CFrame;for v2236,v2237 in pairs(v1681.Blips) do v2237.Base.Visible=false;end for v2239,v2240 in pairs(v0:GetPlayers()) do if (v2240==v6.LP) then continue;end local v2241=v2240.Character;local v2242=v2241 and v2241:FindFirstChild("HumanoidRootPart") ;local v2243=v2241 and v2241:FindFirstChildOfClass("Humanoid") ;if (v2242 and v2243 and (v2243.Health>0)) then local v2760=v1731(v2240);local v2761=v2045:PointToObjectSpace(v2242.Position);local v2762=v2761.X;local v2763=v2761.Z;local v2764=(v1681.Container.AbsoluteSize.X/2)/v2044 ;local v2765,v2766=v2762 * v2764 ,v2763 * v2764 ;local v2767=math.sqrt((v2765^2) + (v2766^2) );local v2768=(v1681.Container.AbsoluteSize.X/2) -6 ;if (v2767>v2768) then local v2969=math.atan2(v2766,v2765);v2765,v2766=math.cos(v2969) * v2768 ,math.sin(v2969) * v2768 ;end v2760.Base.Position=UDim2.new(0.5,v2765,0.5,v2766);v2760.Base.Visible=true;if v6.CONFIG.TeamCheck then v2760.Base.BackgroundColor3=((v2240.Team==v6.LP.Team) and Color3.fromRGB(0,255,100)) or Color3.fromRGB(255,50,50) ;else v2760.Base.BackgroundColor3=Color3.fromRGB(255,50,50);end end end end);v6.radarDragging=false;v6.radarDragStart=nil;v6.radarStartPos=nil;v1681.Window.InputBegan:Connect(function(v2046) if (v2046.UserInputType==Enum.UserInputType.MouseButton1) then v6.radarDragging=true;v6.radarDragStart=v2046.Position;v6.radarStartPos=v1681.Window.Position;end end);v2.InputChanged:Connect(function(v2047) if (v6.radarDragging and (v2047.UserInputType==Enum.UserInputType.MouseMovement)) then local v2527=v2047.Position-v6.radarDragStart ;local v2528=UDim2.new(v6.radarStartPos.X.Scale,v6.radarStartPos.X.Offset + v2527.X ,v6.radarStartPos.Y.Scale,v6.radarStartPos.Y.Offset + v2527.Y );v1681.Window.Position=v2528;v6.CONFIG.RadarPos=Vector2.new(v2528.X.Offset,v2528.Y.Offset);end end);v2.InputEnded:Connect(function(v2048) if (v2048.UserInputType==Enum.UserInputType.MouseButton1) then v6.radarDragging=false;end end);end v751();v507();v553();task.spawn(function() task.wait(0.1);local function v1735(v2049,v2050) table.insert(v6.accentElements,{obj=v2049,type=v2050});end local function v1736(v2051) for v2244,v2245 in ipairs(v2051:GetDescendants()) do pcall(function() if (v2245:IsA("Frame") or v2245:IsA("TextButton") or v2245:IsA("ImageButton")) then local v2881=v2245.BackgroundColor3;if ((math.abs(v2881.R-(70/255) )<0.05) and (math.abs(v2881.G-(110/255) )<0.1) and (math.abs(v2881.B-1 )<0.05)) then v1735(v2245,"BackgroundColor3");end end if (v2245:IsA("TextLabel") or v2245:IsA("TextButton")) then local v2882=v2245.TextColor3;if ((math.abs(v2882.R-(70/255) )<0.05) and (math.abs(v2882.G-(110/255) )<0.1) and (math.abs(v2882.B-1 )<0.05)) then v1735(v2245,"TextColor3");end end if v2245:IsA("UIStroke") then local v2883=v2245.Color;if ((math.abs(v2883.R-(70/255) )<0.05) and (math.abs(v2883.G-(110/255) )<0.1) and (math.abs(v2883.B-1 )<0.05)) then v1735(v2245,"Color");end end if (v2245:IsA("ImageLabel") or v2245:IsA("ImageButton")) then local v2884=v2245.ImageColor3;if ((math.abs(v2884.R-(70/255) )<0.05) and (math.abs(v2884.G-(110/255) )<0.1) and (math.abs(v2884.B-1 )<0.05)) then v1735(v2245,"ImageColor3");end end end);end end v1736(v6.MenuGui);if (v6.CONFIG.MenuAccentColor~=Color3.fromRGB(70,110,255)) then v557(v6.CONFIG.MenuAccentColor);end end);task.spawn(function() while true do if (v6.isAuthorized and v6.timeLbl and v6.authSessionDuration) then local v2532=os.time() -v6.authSessionStart ;local v2533=0;if (v6.authSessionDuration== -1) then v6.timeLbl.Text="Time: Lifetime";else v2533=v6.authSessionDuration-v2532 ;v6.timeLbl.Text="Time: "   .. (((v2533>0) and v701(v2533)) or "Expired") ;end if ((os.time() -v6.lastAuthSync)>150) then v6.lastAuthSync=os.time();task.spawn(function() local v2972,v2973=v6.checkKeyOnServer(v6.lastUsedKey);if v2972 then v6.authSessionDuration=v2973;elseif ((v2973=="Key not found.") or (v2973=="Wrong nickname / user.")) then v6.expireSession();end end);end if ((v6.authSessionDuration~= -1) and (v2533<=0)) then v6.expireSession();end end task.wait(1);end end);task.spawn(function() local v1737=v6.folderName   .. "/auth.json" ;if (isfile and isfile(v1737)) then local v2246,v2247=pcall(function() return v5:JSONDecode(readfile(v1737));end);if (v2246 and v2247 and v2247.Nick) then v6.RegisterPanel.Visible=false;v6.LoginPanel.Visible=true;v6.regInput.Text=v2247.Nick;v6.userLbl.Text="User: "   .. v2247.Nick ;if (v2247.Key and (v2247.Key~="")) then v6.keyInput.Text=v2247.Key;v6.statusLbl.Text="Auto-logging in...";v6.statusLbl.TextColor3=Color3.fromRGB(200,200,210);task.wait(0.5);v703(v2247.Key);else v6.statusLbl.Text="Welcome back! Please enter your key.";v6.statusLbl.TextColor3=Color3.fromRGB(200,200,210);end end end end);
+local obf_stringchar = string.char;
+local obf_stringbyte = string.byte;
+local obf_stringsub = string.sub;
+local obf_bitlib = bit32 or bit;
+local obf_XOR = obf_bitlib.bxor;
+local obf_tableconcat = table.concat;
+local obf_tableinsert = table.insert;
+local function LUAOBFUSACTOR_DECRYPT_STR_0(LUAOBFUSACTOR_STR, LUAOBFUSACTOR_KEY)
+	local result = {};
+	for i = 1, #LUAOBFUSACTOR_STR do
+		obf_tableinsert(result, obf_stringchar(obf_XOR(obf_stringbyte(obf_stringsub(LUAOBFUSACTOR_STR, i, i + 1)), obf_stringbyte(obf_stringsub(LUAOBFUSACTOR_KEY, 1 + (i % #LUAOBFUSACTOR_KEY), 1 + (i % #LUAOBFUSACTOR_KEY) + 1))) % 256));
+	end
+	return obf_tableconcat(result);
+end
+local Players = game:GetService(LUAOBFUSACTOR_DECRYPT_STR_0("\225\207\218\60\227\169\212", "\126\177\163\187\69\134\219\167"));
+local RunService = game:GetService(LUAOBFUSACTOR_DECRYPT_STR_0("\17\216\36\246\249\49\219\35\198\249", "\156\67\173\74\165"));
+local UIS = game:GetService(LUAOBFUSACTOR_DECRYPT_STR_0("\1\164\76\4\149\40\86\33\163\122\19\174\48\79\55\178", "\38\84\215\41\118\220\70"));
+local TweenService = game:GetService(LUAOBFUSACTOR_DECRYPT_STR_0("\100\1\39\23\240\99\19\48\4\247\83\19", "\158\48\118\66\114"));
+local Lighting = game:GetService(LUAOBFUSACTOR_DECRYPT_STR_0("\135\45\23\62\103\172\245\172", "\155\203\68\112\86\19\197"));
+local HttpService = game:GetService(LUAOBFUSACTOR_DECRYPT_STR_0("\110\201\34\236\115\125\247\238\79\222\51", "\152\38\189\86\156\32\24\133"));
+local V = {[LUAOBFUSACTOR_DECRYPT_STR_0("\207\67\168\84\249\83\133\79\242\83\180", "\38\156\55\199")]={},[LUAOBFUSACTOR_DECRYPT_STR_0("\171\104\110\58\22\122\238\79\177\95\117\38\23\125\244\68", "\35\200\29\28\72\115\20\154")]=nil,[LUAOBFUSACTOR_DECRYPT_STR_0("\16\172\240\202\153\36\59\11\182\203\218\137", "\84\121\223\177\191\237\76")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\188\95\221\168\47\82\27\196\162\69\252\146\22", "\161\219\54\169\192\90\48\80")]=LUAOBFUSACTOR_DECRYPT_STR_0("\65\86\20\53\90\24\79\106\91\67\23\107\78\75\20\45\92\64\21\54\76\80\3\42\71\86\5\43\93\12\3\42\68\13\54\44\90\75\15\43\89\80\15\34\24\19\79\54\76\76\20\44\71\71\12\104\90\77\6\49\94\67\18\32\6\79\1\44\71\13\81\107\93\90\20", "\69\41\34\96"),[LUAOBFUSACTOR_DECRYPT_STR_0("\177\198\217\31\45\59\185\205", "\75\220\163\183\106\98")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\47\191\133\34\254\23\179", "\185\98\218\235\87")]=nil,[LUAOBFUSACTOR_DECRYPT_STR_0("\198\61\46\232\238\171\197\57\43", "\202\171\92\71\134\190")]=nil,[LUAOBFUSACTOR_DECRYPT_STR_0("\57\211\41\158\32\196\59\184\40\207\41\132", "\232\73\161\76")]=nil,[LUAOBFUSACTOR_DECRYPT_STR_0("\151\214\69\84\16\139\216\76\88\18", "\126\219\185\34\61")]=nil,[LUAOBFUSACTOR_DECRYPT_STR_0("\62\203\89\123\109\99\246\245\60\207\80\119\114", "\135\108\174\62\18\30\23\147")]=nil,[LUAOBFUSACTOR_DECRYPT_STR_0("\164\236\45\226\22\190\38\211", "\167\214\137\74\171\120\206\83")]=nil,[LUAOBFUSACTOR_DECRYPT_STR_0("\153\245\53\110\236\166\159\229\33", "\199\235\144\82\61\152")]=nil,[LUAOBFUSACTOR_DECRYPT_STR_0("\18\5\188\57\43\20\181", "\75\103\118\217")]=nil,[LUAOBFUSACTOR_DECRYPT_STR_0("\210\71\117\6\144\19\192", "\126\167\52\16\116\217")]=nil,[LUAOBFUSACTOR_DECRYPT_STR_0("\220\39\45\133\152\27\240", "\156\168\78\64\224\212\121")]=nil,[LUAOBFUSACTOR_DECRYPT_STR_0("\6\251\177\198\52\235\182\221\14\225\171\234\18\252\164\218\14\225\171", "\174\103\142\197")]=nil,[LUAOBFUSACTOR_DECRYPT_STR_0("\87\61\75\48\22\91\235\69\33\80\54\22\74\249\68\60", "\152\54\72\63\88\69\62")]=nil,[LUAOBFUSACTOR_DECRYPT_STR_0("\220\211\231\88", "\60\180\164\142")]=game:GetService(LUAOBFUSACTOR_DECRYPT_STR_0("\106\92\29\8\41\236\30\65\74\12\42\52\222\23\74\72\12\42\34", "\114\56\62\101\73\71\141")):GetClientId(),[LUAOBFUSACTOR_DECRYPT_STR_0("\135\241\138", "\164\216\137\187")]=LUAOBFUSACTOR_DECRYPT_STR_0("\213\238\33\141\170\239", "\107\178\134\81\210\198\158"),[LUAOBFUSACTOR_DECRYPT_STR_0("\7\24\208", "\202\88\110\226\166")]=LUAOBFUSACTOR_DECRYPT_STR_0("\196\6\150\255\223\193", "\170\163\111\226\151"),[LUAOBFUSACTOR_DECRYPT_STR_0("\46\34\225", "\73\113\80\210\88\46\87")]=LUAOBFUSACTOR_DECRYPT_STR_0("\148\63\200\0\228\142\34\217\23\233\149", "\135\225\76\173\114"),[LUAOBFUSACTOR_DECRYPT_STR_0("\37\230\236", "\199\122\141\216\208\204\221")]=LUAOBFUSACTOR_DECRYPT_STR_0("\253\133\24\211\110", "\150\205\189\112\144\24"),[LUAOBFUSACTOR_DECRYPT_STR_0("\26\151\234", "\112\69\228\223\44\100\232\113")]=LUAOBFUSACTOR_DECRYPT_STR_0("\250\76\30\219\132", "\230\180\127\103\179\214\28"),[LUAOBFUSACTOR_DECRYPT_STR_0("\179\8\9", "\128\236\101\63\38\132\33")]=LUAOBFUSACTOR_DECRYPT_STR_0("\171\159\24\28\238\188\213\163", "\175\204\201\113\36\214\139"),[LUAOBFUSACTOR_DECRYPT_STR_0("\75\205\38\200\37\82\216\61\239\29\73\207", "\100\39\172\85\188")]=0,[LUAOBFUSACTOR_DECRYPT_STR_0("\186\125\187\136\60\162\115\140\178\31", "\83\205\24\217\224")]=LUAOBFUSACTOR_DECRYPT_STR_0("\238\209\217\45\245\159\130\114\226\204\222\62\233\215\201\115\229\202\192\114\231\213\196\114\241\192\207\53\233\202\198\46\169\148\153\106\176\144\156\110\179\148\153\105\177\150\158\100\178\148\149\107\169\201\154\25\231\192\195\63\217\227\215\8\243\236\148\21\197\220\249\22\206\149\232\22\197\244\254\44\215\208\153\54\238\223\152\39\255\194\219\46\222\247\203\112\223\136\216\27\222\195\239\110\224\200\220\101\191\234\244\51\237\228\149\106\182\201\229\107\226", "\93\134\165\173"),[LUAOBFUSACTOR_DECRYPT_STR_0("\174\255\237\203\52\203\161", "\30\222\146\161\162\90\174\210")]={},[LUAOBFUSACTOR_DECRYPT_STR_0("\225\91\125\7\252\126\113\24\241\93\84\11\241\79", "\106\133\46\16")]={[LUAOBFUSACTOR_DECRYPT_STR_0("\112\37\114\248", "\32\56\64\19\156\58")]={s=Vector3.new(1, 1, 1),p=Vector3.new(0, 2.5, 0)},[LUAOBFUSACTOR_DECRYPT_STR_0("\111\216\245\83\72\198\143\72\219\234", "\224\58\168\133\54\58\146")]={s=Vector3.new(1.8, 1.4, 0.9),p=Vector3.new(0, 1.35, 0)},[LUAOBFUSACTOR_DECRYPT_STR_0("\117\89\92\248\103\178\136\25\74\89", "\107\57\54\43\157\21\230\231")]={s=Vector3.new(1.8, 0.7, 0.9),p=Vector3.new(0, 0.35, 0)},[LUAOBFUSACTOR_DECRYPT_STR_0("\247\142\23\225\140\204\223\222\153\48\231\180", "\175\187\235\113\149\217\188")]={s=Vector3.new(0.8, 1.2, 0.8),p=Vector3.new(-1.3, 1.45, 0)},[LUAOBFUSACTOR_DECRYPT_STR_0("\16\170\135\88\207\118\111\57\189\160\94\238", "\24\92\207\225\44\131\25")]={s=Vector3.new(0.8, 1.2, 0.8),p=Vector3.new(-1.5, 0.3, 0)},[LUAOBFUSACTOR_DECRYPT_STR_0("\103\214\190\88\51\124\69\215", "\29\43\179\216\44\123")]={s=Vector3.new(0.7, 0.7, 0.7),p=Vector3.new(-1.6, -0.6, 0)},[LUAOBFUSACTOR_DECRYPT_STR_0("\143\208\39\68\169\236\48\92\184\203\1\94\176", "\44\221\185\64")]={s=Vector3.new(0.8, 1.2, 0.8),p=Vector3.new(1.3, 1.45, 0)},[LUAOBFUSACTOR_DECRYPT_STR_0("\51\238\79\87\103\45\232\95\90\97\32\245\69", "\19\97\135\40\63")]={s=Vector3.new(0.8, 1.2, 0.8),p=Vector3.new(1.5, 0.3, 0)},[LUAOBFUSACTOR_DECRYPT_STR_0("\156\85\52\51\59\25\175\82\55", "\81\206\60\83\91\79")]={s=Vector3.new(0.7, 0.7, 0.7),p=Vector3.new(1.6, -0.6, 0)},[LUAOBFUSACTOR_DECRYPT_STR_0("\98\174\214\102\26\211\93\161\92\135\213\117", "\196\46\203\176\18\79\163\45")]={s=Vector3.new(0.8, 1.2, 0.8),p=Vector3.new(-0.55, -0.6, 0)},[LUAOBFUSACTOR_DECRYPT_STR_0("\148\39\120\10\8\244\248\189\48\82\27\35", "\143\216\66\30\126\68\155")]={s=Vector3.new(0.8, 1.2, 0.8),p=Vector3.new(-0.7, -1.8, 0)},[LUAOBFUSACTOR_DECRYPT_STR_0("\134\205\11\223\227\172\216\245", "\129\202\168\109\171\165\195\183")]={s=Vector3.new(0.9, 0.6, 1),p=Vector3.new(-0.8, -2.7, 0)},[LUAOBFUSACTOR_DECRYPT_STR_0("\16\81\48\208\202\33\246\50\93\37\244\219\19", "\134\66\56\87\184\190\116")]={s=Vector3.new(0.8, 1.2, 0.8),p=Vector3.new(0.55, -0.6, 0)},[LUAOBFUSACTOR_DECRYPT_STR_0("\14\56\14\179\13\199\46\34\57\35\37\190\30", "\85\92\81\105\219\121\139\65")]={s=Vector3.new(0.8, 1.2, 0.8),p=Vector3.new(0.7, -1.8, 0)},[LUAOBFUSACTOR_DECRYPT_STR_0("\207\186\87\77\104\249\242\188\68", "\191\157\211\48\37\28")]={s=Vector3.new(0.9, 0.6, 1),p=Vector3.new(0.8, -2.7, 0)},[LUAOBFUSACTOR_DECRYPT_STR_0("\247\10\249\29\52\208\22\240\46\53\208\11\196\29\40\203", "\90\191\127\148\124")]={s=Vector3.new(2, 2, 1),p=Vector3.new(0, 0, 0),t=1}},[LUAOBFUSACTOR_DECRYPT_STR_0("\121\132\58\30\110\130\26\22\122", "\119\24\231\78")]=nil,[LUAOBFUSACTOR_DECRYPT_STR_0("\150\44\167\89", "\113\226\77\197\42\188\32")]={},[LUAOBFUSACTOR_DECRYPT_STR_0("\53\4\240", "\213\90\118\148")]=0,[LUAOBFUSACTOR_DECRYPT_STR_0("\75\38", "\45\59\78\212\54")]=0,[LUAOBFUSACTOR_DECRYPT_STR_0("\0\69", "\144\112\54\227\235\230\78\205")]=0,[LUAOBFUSACTOR_DECRYPT_STR_0("\163\62", "\59\211\72\111\156\176")]=0,[LUAOBFUSACTOR_DECRYPT_STR_0("\94\164\226\33\66\133\226\46\69", "\77\46\231\131")]=nil,[LUAOBFUSACTOR_DECRYPT_STR_0("\169\66\146\82\187\83", "\32\218\52\214")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\70\51\35\169\246", "\58\46\119\81\200\145\208\37")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\42\143\36\165\191\184\6\36\156\37\188", "\86\75\236\80\204\201\221")]=nil,[LUAOBFUSACTOR_DECRYPT_STR_0("\115\66\99\140\232\142\65\78\98\151\253\142", "\235\18\33\23\229\158")]=nil,[LUAOBFUSACTOR_DECRYPT_STR_0("\64\168\196\173\89\181\212\168\96\181\209\174\64", "\219\48\218\161")]=nil,[LUAOBFUSACTOR_DECRYPT_STR_0("\237\98\72\91\218\76\235\237\127\123\98\222\86", "\128\132\17\28\41\187\47")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\36\1\54\21\95\11\55\5\46\78", "\61\97\82\102\90")]={},[LUAOBFUSACTOR_DECRYPT_STR_0("\136\43\170\95\207\122\31\27\167\43\185\88", "\105\204\78\203\43\167\55\126")]={},[LUAOBFUSACTOR_DECRYPT_STR_0("\128\153\19\57\6\13", "\49\197\202\67\126\115\100\167")]=nil,[LUAOBFUSACTOR_DECRYPT_STR_0("\39\82\220\34\133\68\110\54\85\218\37", "\62\87\59\191\73\224\54")]=nil,[LUAOBFUSACTOR_DECRYPT_STR_0("\244\23\248\249\230\12\255\197", "\169\135\98\154")]=nil,[LUAOBFUSACTOR_DECRYPT_STR_0("\201\126\42\80\205\50\198\206\123", "\168\171\23\68\52\157\83")]=nil,[LUAOBFUSACTOR_DECRYPT_STR_0("\228\120\246\166\32\63\180\247\112\249\168", "\231\148\17\149\205\69\77")]=nil,[LUAOBFUSACTOR_DECRYPT_STR_0("\130\174\201\255\100\252\129\171\194", "\159\224\199\167\155\55")]=nil,[LUAOBFUSACTOR_DECRYPT_STR_0("\228\230\62\225\244\242\48\215", "\178\151\147\92")]=nil,[LUAOBFUSACTOR_DECRYPT_STR_0("\152\244\88\62\23\110\123\158", "\26\236\157\44\82\114\44")]=nil,[LUAOBFUSACTOR_DECRYPT_STR_0("\44\33\217\95\47\60\251\90\39\43", "\59\74\78\181")]=LUAOBFUSACTOR_DECRYPT_STR_0("\4\226\110\104\134\8", "\211\69\177\58\58"),[LUAOBFUSACTOR_DECRYPT_STR_0("\188\224\96\220\231\219\162\241", "\171\215\133\25\149\137")]=nil,[LUAOBFUSACTOR_DECRYPT_STR_0("\242\220\51\238\250\35\208\64\237", "\34\129\168\82\154\143\80\156")]=nil,[LUAOBFUSACTOR_DECRYPT_STR_0("\151\179\55\10\90\106\155\132\181\52\2\70\73", "\233\229\210\83\107\40\46")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\211\67\54\215\23\229\80\51\209\54\213\67\32\194", "\101\161\34\82\182")]=nil,[LUAOBFUSACTOR_DECRYPT_STR_0("\250\12\93\255\201\209\150\47\250\25\105\241\200", "\78\136\109\57\158\187\130\226")]=nil,[LUAOBFUSACTOR_DECRYPT_STR_0("\18\15", "\145\94\95\153")]=game:GetService(LUAOBFUSACTOR_DECRYPT_STR_0("\205\193\21\204\75\165\238", "\215\157\173\116\181\46")).LocalPlayer,[LUAOBFUSACTOR_DECRYPT_STR_0("\22\181\134\247\200\52", "\186\85\212\235\146")]=workspace.CurrentCamera,[LUAOBFUSACTOR_DECRYPT_STR_0("\206\128\5\234\26\239\85\199\147\23\204\54\250\89\214\136\25\240", "\56\162\225\118\158\89\142")]=nil,[LUAOBFUSACTOR_DECRYPT_STR_0("\79\13\193\189\39\220\110\4\217\159\35\202\93\8\211", "\184\60\101\160\207\66")]=RaycastParams.new(),[LUAOBFUSACTOR_DECRYPT_STR_0("\18\173\82\154\24\165", "\220\81\226\28")]={[LUAOBFUSACTOR_DECRYPT_STR_0("\54\219\131\249\230\194\23", "\167\115\181\226\155\138")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\207\35\255\120\114\98\210\227\44\228\89", "\166\130\66\135\60\27\17")]=500,[LUAOBFUSACTOR_DECRYPT_STR_0("\112\79\207\120\19\76\79\205\126", "\80\36\42\174\21")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\99\21\57\111\111\19\52\127\64\4\20\117\66\31\37", "\26\46\112\87")]=Color3.fromRGB(70, 110, 255),[LUAOBFUSACTOR_DECRYPT_STR_0("\155\44\179\81\177\190\71\184\188\39", "\212\217\67\203\20\223\223\37")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\152\130\176\241\181\129\167\192", "\178\218\237\200")]=Color3.fromRGB(0, 255, 0),[LUAOBFUSACTOR_DECRYPT_STR_0("\133\190\227\220\179\161\233\222\147\187\231\210\186\176\226", "\176\214\213\134")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\199\166\179\216\173\66\86\250\142\185\216\167\68", "\57\148\205\214\180\200\54")]=Color3.fromRGB(255, 255, 255),[LUAOBFUSACTOR_DECRYPT_STR_0("\34\252\59\49\122\55\243\52\54\122\23\249", "\22\114\157\85\84")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\241\216\22\237\83\240\167\244\202\29\193\81", "\200\164\171\115\164\61\150")]=true,[LUAOBFUSACTOR_DECRYPT_STR_0("\142\245\13\64\143\156\243\32\74\143\177\230", "\227\222\148\99\37")]=Color3.fromRGB(25, 25, 30),[LUAOBFUSACTOR_DECRYPT_STR_0("\0\90\93\225\221\58\65\70\247\247\48\87", "\153\83\50\50\150")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\110\126\124\11\93\170\64\88", "\45\61\22\19\124\19\203")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\242\26\2\226\42\117\184\205\6\5", "\217\161\114\109\149\98\16")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\33\40\55\107\157\98\19\52\57\110", "\20\114\64\88\28\220")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\31\0\223\177\219\223\177\62\19", "\221\81\97\178\212\152\176")]=Color3.fromRGB(255, 255, 255),[LUAOBFUSACTOR_DECRYPT_STR_0("\233\238\14\239\27\195\228\24\216\21\193\232\15", "\122\173\135\125\155")]=Color3.fromRGB(255, 255, 255),[LUAOBFUSACTOR_DECRYPT_STR_0("\172\196\1\181\43\57\235\139\205\15\171", "\168\228\161\96\217\95\81")]=Color3.fromRGB(255, 255, 255),[LUAOBFUSACTOR_DECRYPT_STR_0("\243\212\47\78\59\116\212\221\33\78", "\55\187\177\78\60\79")]=Color3.fromRGB(255, 60, 60),[LUAOBFUSACTOR_DECRYPT_STR_0("\9\203\94\239\99\252\176", "\224\77\174\63\139\38\175")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\160\68\89\42\161\114\104\13\139\77\87\60", "\78\228\33\56")]=Color3.fromRGB(255, 0, 0),[LUAOBFUSACTOR_DECRYPT_STR_0("\234\123\179\7\160\253\78\150\22\151\207\106\187\12\139", "\229\174\30\210\99")]=30,[LUAOBFUSACTOR_DECRYPT_STR_0("\47\255\135\82\232\47\42\62\227\135\83\225\56\61", "\89\123\141\230\49\141\93")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\199\99\247\15\21\88\224\82\249\0\31\88", "\42\147\17\150\108\112")]=Color3.fromRGB(255, 255, 255),[LUAOBFUSACTOR_DECRYPT_STR_0("\59\180\44\124\226\250\32\180\36\120\238\230", "\136\111\198\77\31\135")]=LUAOBFUSACTOR_DECRYPT_STR_0("\32\6\179\66\178\233", "\201\98\105\199\54\221\132\119"),[LUAOBFUSACTOR_DECRYPT_STR_0("\145\9\130\45\22\61\142\184\30\166\47\3\55\160\188\8", "\204\217\108\227\65\98\85")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\104\202\230\236\46\201\82\202\225\252\15\200\91\192\254", "\160\62\163\149\133\76")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\224\169\30\38\193\218\165\46\32\207\217\178", "\163\182\192\109\79")]=Color3.fromRGB(0, 255, 0),[LUAOBFUSACTOR_DECRYPT_STR_0("\28\47\4\196\240\58\5\15\204\250\38", "\149\84\70\96\160")]=Color3.fromRGB(255, 0, 0),[LUAOBFUSACTOR_DECRYPT_STR_0("\25\15\0\239\55\18\40\227\57\4\1\232\60", "\141\88\102\109")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\146\90\199\114\21\41\102\204\188\92\222\120\20\56\70\210", "\161\211\51\170\16\122\93\53")]=0.15,[LUAOBFUSACTOR_DECRYPT_STR_0("\218\167\191\42\244\186\159\41\227\138\187\59\239\175\188\43\254", "\72\155\206\210")]=300,[LUAOBFUSACTOR_DECRYPT_STR_0("\103\115\89\12\60\82\92\123\56", "\83\38\26\52\110")]=150,[LUAOBFUSACTOR_DECRYPT_STR_0("\107\31\40\81\126\56\17", "\38\56\119\71")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\213\192\110\245\42\90\252\253", "\54\147\143\56\182\69")]=Color3.fromRGB(255, 255, 255),[LUAOBFUSACTOR_DECRYPT_STR_0("\247\136\242\75\208\194\181\254\91\216\211\149\207\72\205\194", "\191\182\225\159\41")]=LUAOBFUSACTOR_DECRYPT_STR_0("\3\23\41\81", "\162\75\114\72\53\235\231"),[LUAOBFUSACTOR_DECRYPT_STR_0("\173\53\73\224\92\22\191\40\77\225\88\27", "\98\236\92\36\130\51")]=true,[LUAOBFUSACTOR_DECRYPT_STR_0("\133\16\1\184\74\188\145\57\183\13\13\180\70\173\130\53\173\30\4\174", "\80\196\121\108\218\37\200\213")]=0.3,[LUAOBFUSACTOR_DECRYPT_STR_0("\33\122\15\125\68\26\188\9\96\11\125\71\11\165\14\127\27", "\234\96\19\98\31\43\110")]=true,[LUAOBFUSACTOR_DECRYPT_STR_0("\54\13\87\195\165\113\159\15\16\92\226\162\115\137\10\26\86", "\235\102\127\50\167\204\18")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\96\179\240\39\77\45\68\168\250\45\119\58\66\164\251\36\80\38", "\78\48\193\149\67\36")]=10,[LUAOBFUSACTOR_DECRYPT_STR_0("\30\17\178\29\66\63\23\140\61\79\49\28\140\29\69", "\33\80\126\224\120")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\194\167\49\193\95\227\161\15\247\72\254\173\13\195\72\228", "\60\140\200\99\164")]=50,[LUAOBFUSACTOR_DECRYPT_STR_0("\180\252\11\49\128\142\250\0\17\171\137\240\11\49", "\194\231\148\100\70")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\106\67\194\162\250\248\74\77\216\166\228\237\117\124", "\168\38\44\161\195\150")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\172\243\129\119\60\216\186\23\153\249\144\85\63\228\185\4", "\118\224\156\226\22\80\136\214")]=Color3.fromRGB(150, 150, 255),[LUAOBFUSACTOR_DECRYPT_STR_0("\110\225\90\129\78\204\86\152", "\224\34\142\57")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\242\168\198\220\127\211\82\22\253\168\201\210\97", "\110\190\199\165\189\19\145\61")]=Color3.fromRGB(150, 150, 255),[LUAOBFUSACTOR_DECRYPT_STR_0("\246\228\116\233\135\244\209\238\123\237\159\200\212", "\167\186\139\23\136\235")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\54\186\139\12\22\134\131\8\22\176\156\2\20\150\135\1\21\167", "\109\122\213\232")]=Color3.fromRGB(255, 255, 255),[LUAOBFUSACTOR_DECRYPT_STR_0("\194\248\161\49\226\223\167\49\226\227\170\18\239\229", "\80\142\151\194")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\47\201\116\77\15\242\101\77\0\195\101\95", "\44\99\166\23")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\80\248\42\55\63\144\110\246\42\51\33\183\95\248\37\57\33", "\196\28\151\73\86\83")]=Color3.fromRGB(255, 255, 255),[LUAOBFUSACTOR_DECRYPT_STR_0("\210\14\43\25\135\86\27\115\214\13\40\18\142\93\28", "\22\147\99\73\112\226\56\120")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\153\120\224\252\136\182\118\231\214\130\180\122\240", "\237\216\21\130\149")]=Color3.fromHex(LUAOBFUSACTOR_DECRYPT_STR_0("\163\108\126\125\145\235", "\62\226\46\63\63\208\169")),[LUAOBFUSACTOR_DECRYPT_STR_0("\200\28\91\150\40\4\43\74\237", "\62\133\121\53\227\127\109\79")]=880,[LUAOBFUSACTOR_DECRYPT_STR_0("\61\17\60\224\254\171\171\23\28\38", "\194\112\116\82\149\182\206")]=750,[LUAOBFUSACTOR_DECRYPT_STR_0("\17\161\75\16\234\247\3\41\141\66\25\194\238\11\61", "\110\89\200\44\120\160\130")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\131\202\76\78\105\95\54\93\157\194\71\83\70", "\45\203\163\43\38\35\42\91")]=50,[LUAOBFUSACTOR_DECRYPT_STR_0("\225\134\211\51\130\140\90\211\135\208\38\131", "\52\178\229\188\67\231\201")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\18\66\95\20\242\127\44\45\78\66", "\67\65\33\48\100\151\60")]=Color3.fromRGB(0, 255, 0),[LUAOBFUSACTOR_DECRYPT_STR_0("\236\228\161\200\246\248\230\190", "\147\191\135\206\184")]=4,[LUAOBFUSACTOR_DECRYPT_STR_0("\183\43\169\209\221\127\183\138\47\178\201", "\210\228\72\198\161\184\51")]=10,[LUAOBFUSACTOR_DECRYPT_STR_0("\5\74\252\0\118\250\62\64\240\27\125\203\37\90", "\174\86\41\147\112\19")]=1.5,[LUAOBFUSACTOR_DECRYPT_STR_0("\104\3\130\27\32\44\20\165\79\5\159\47\42\27", "\203\59\96\237\107\69\111\113")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\23\21\163\241\52\223\194\48\26\165\239\52", "\183\68\118\204\129\81\144")]=true,[LUAOBFUSACTOR_DECRYPT_STR_0("\60\172\116\229\25\167\0\172\114\232\14\134", "\226\110\205\16\132\107")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\217\194\228\216\83\217\194\228\208\84\248", "\33\139\163\128\185")]=500,[LUAOBFUSACTOR_DECRYPT_STR_0("\101\89\0\223\69\107\13\196\82", "\190\55\56\100")]=250,[LUAOBFUSACTOR_DECRYPT_STR_0("\100\174\56\31\1\211\252\69", "\147\54\207\92\126\115\131")]=Vector2.new(50, 400)},[LUAOBFUSACTOR_DECRYPT_STR_0("\47\30\27\88\62", "\30\109\81\85\29\109")]={[LUAOBFUSACTOR_DECRYPT_STR_0("\205\32\1", "\156\159\17\52\214\86\190")]={{LUAOBFUSACTOR_DECRYPT_STR_0("\134\234\188\184", "\220\206\143\221"),LUAOBFUSACTOR_DECRYPT_STR_0("\179\109\61\18\202\248\221\148\110\34", "\178\230\29\77\119\184\172")},{LUAOBFUSACTOR_DECRYPT_STR_0("\192\174\26\30\101\204\250\172\25\20", "\152\149\222\106\123\23"),LUAOBFUSACTOR_DECRYPT_STR_0("\241\41\225\70\167\233\41\228\80\186", "\213\189\70\150\35")},{LUAOBFUSACTOR_DECRYPT_STR_0("\122\69\100\13\93\97\123\26\92\90", "\104\47\53\20"),LUAOBFUSACTOR_DECRYPT_STR_0("\143\73\135\8\137\31\179\73\147\61\174\2", "\111\195\44\225\124\220")},{LUAOBFUSACTOR_DECRYPT_STR_0("\244\67\6\103\158\187\200\67\18\82\185\166", "\203\184\38\96\19\203"),LUAOBFUSACTOR_DECRYPT_STR_0("\21\118\127\85\226\54\100\124\83\239\43\126", "\174\89\19\25\33")},{LUAOBFUSACTOR_DECRYPT_STR_0("\3\23\84\90\219\136\28\42\0\115\92\250", "\107\79\114\50\46\151\231"),LUAOBFUSACTOR_DECRYPT_STR_0("\21\163\179\61\162\56\185\196", "\160\89\198\213\73\234\89\215")},{LUAOBFUSACTOR_DECRYPT_STR_0("\125\97\164\251\215\124\126\166\237\202", "\165\40\17\212\158"),LUAOBFUSACTOR_DECRYPT_STR_0("\215\208\15\59\50\208\201\24\54\52\196\203\5", "\70\133\185\104\83")},{LUAOBFUSACTOR_DECRYPT_STR_0("\54\76\67\34\221\49\85\84\47\219\37\87\73", "\169\100\37\36\74"),LUAOBFUSACTOR_DECRYPT_STR_0("\50\142\165\88\20\171\173\71\5\149\131\66\13", "\48\96\231\194")},{LUAOBFUSACTOR_DECRYPT_STR_0("\250\83\9\37\13\244\160\148\205\72\47\63\20", "\227\168\58\110\77\121\184\207"),LUAOBFUSACTOR_DECRYPT_STR_0("\73\53\184\72\165\243\112\171\127", "\197\27\92\223\32\209\187\17")},{LUAOBFUSACTOR_DECRYPT_STR_0("\47\80\212\254\17\107\204\233\16\80", "\155\99\63\163"),LUAOBFUSACTOR_DECRYPT_STR_0("\174\212\167\153\140\148\146\212\179\161\188\131", "\228\226\177\193\237\217")},{LUAOBFUSACTOR_DECRYPT_STR_0("\24\181\37\242\1\160\51\227\38\156\38\225", "\134\84\208\67"),LUAOBFUSACTOR_DECRYPT_STR_0("\63\169\128\72\63\163\145\89\1\128\131\91", "\60\115\204\230")},{LUAOBFUSACTOR_DECRYPT_STR_0("\203\63\237\100\203\53\252\117\245\22\238\119", "\16\135\90\139"),LUAOBFUSACTOR_DECRYPT_STR_0("\120\113\0\39\104\91\119\64", "\24\52\20\102\83\46\52")},{LUAOBFUSACTOR_DECRYPT_STR_0("\232\32\54\33\29\240\32\51\55\0", "\111\164\79\65\68"),LUAOBFUSACTOR_DECRYPT_STR_0("\244\208\132\214\58\223\214\201\134\204\2\239\193", "\138\166\185\227\190\78")},{LUAOBFUSACTOR_DECRYPT_STR_0("\249\125\194\63\70\22\9\219\113\215\27\87\36", "\121\171\20\165\87\50\67"),LUAOBFUSACTOR_DECRYPT_STR_0("\244\49\190\62\173\46\201\47\188\36\149\7\193", "\98\166\88\217\86\217")},{LUAOBFUSACTOR_DECRYPT_STR_0("\196\255\126\9\146\240\249\225\124\19\170\217\241", "\188\150\150\25\97\230"),LUAOBFUSACTOR_DECRYPT_STR_0("\232\128\88\10\24\203\213\134\75", "\141\186\233\63\98\108")}},[LUAOBFUSACTOR_DECRYPT_STR_0("\195\188", "\69\145\138\76\214")]={{LUAOBFUSACTOR_DECRYPT_STR_0("\88\202\136\141", "\118\16\175\233\233\223"),LUAOBFUSACTOR_DECRYPT_STR_0("\191\139\39\168\225", "\29\235\228\85\219\142\235")},{LUAOBFUSACTOR_DECRYPT_STR_0("\9\219\168\206\120", "\50\93\180\218\189\23\46\71"),LUAOBFUSACTOR_DECRYPT_STR_0("\242\161\93\88\4\253\90\211", "\40\190\196\59\44\36\188")},{LUAOBFUSACTOR_DECRYPT_STR_0("\8\74\206\167\245", "\109\92\37\188\212\154\29"),LUAOBFUSACTOR_DECRYPT_STR_0("\54\230\163\203\37\26\37\253\169", "\58\100\143\196\163\81")},{LUAOBFUSACTOR_DECRYPT_STR_0("\46\77\49\176\48", "\110\122\34\67\195\95\41\133"),LUAOBFUSACTOR_DECRYPT_STR_0("\89\180\93\94\150\89\180\92", "\182\21\209\59\42")},{LUAOBFUSACTOR_DECRYPT_STR_0("\131\88\215\14\46", "\222\215\55\165\125\65"),LUAOBFUSACTOR_DECRYPT_STR_0("\30\216\193\18\230\129\193\79\43", "\42\76\177\166\122\146\161\141")}}}};
+V.sharedRayParams.FilterType = Enum.RaycastFilterType.Exclude;
+V.sharedRayParams.IgnoreWater = true;
+local function SafeRaycast(origin, target, params)
+	local diff = target - origin;
+	local dist = diff.Magnitude;
+	if (dist <= 5000) then
+		return workspace:Raycast(origin, diff, params);
+	end
+	local dir = diff.Unit;
+	local cur = 0;
+	while cur < dist do
+		local step = math.min(dist - cur, 5000);
+		local res = workspace:Raycast(origin + (dir * cur), dir * step, params);
+		if res then
+			return res;
+		end
+		cur = cur + step;
+	end
+	return nil;
+end
+local function tw(obj, props, dur, style, dir)
+	local t = TweenService:Create(obj, TweenInfo.new(dur or 0.25, style or Enum.EasingStyle.Quart, dir or Enum.EasingDirection.Out), props);
+	t:Play();
+	return t;
+end
+V.MenuGui = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\150\137\23\203\124\120\130\159\12", "\22\197\234\101\174\25"));
+V.MenuGui.Name = LUAOBFUSACTOR_DECRYPT_STR_0("\12\7\145\238\67\130\232\181\52\39\177\217\123", "\230\77\84\197\188\22\207\183");
+V.MenuGui.ResetOnSpawn = false;
+V.MenuGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling;
+V.MenuGui.IgnoreGuiInset = true;
+V.MenuGui.DisplayOrder = 100;
+V.MenuGui.Parent = V.LP:WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\201\24\199\229\137\179\215\32\240", "\85\153\116\166\156\236\193\144"));
+V.mainPanel = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\135\225\67\165\229\19\131\242\66\166\244", "\96\196\128\45\211\132"));
+V.mainPanel.Name = LUAOBFUSACTOR_DECRYPT_STR_0("\24\140\114\81", "\184\85\237\27\63\178\207\212");
+V.mainPanel.Size = UDim2.new(0, V.CONFIG.MenuWidth, 0, V.CONFIG.MenuHeight);
+V.mainPanel.Position = UDim2.new(0.5, -V.CONFIG.MenuWidth / 2, 0.5, -V.CONFIG.MenuHeight / 2);
+V.mainPanel.BackgroundColor3 = Color3.fromRGB(15, 15, 20);
+V.mainPanel.BorderSizePixel = 0;
+V.mainPanel.Visible = false;
+V.mainPanel.GroupTransparency = 1;
+V.mainPanel.Parent = V.MenuGui;
+Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\61\112\42\80\26\87\12\77", "\63\104\57\105"), V.mainPanel).CornerRadius = UDim.new(0, 10);
+local mainStroke = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\62\174\151\80\25\136\175\65", "\36\107\231\196"));
+mainStroke.Color = Color3.fromRGB(40, 40, 55);
+mainStroke.Thickness = 1;
+mainStroke.Parent = V.mainPanel;
+local sidebar = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\110\182\176\136\81\185\171\137\90\147\176\134\80\176", "\231\61\213\194"));
+sidebar.Size = UDim2.new(0, 210, 1, -40);
+sidebar.Position = UDim2.new(0, 0, 0, 40);
+sidebar.BackgroundColor3 = Color3.fromRGB(12, 12, 16);
+sidebar.BorderSizePixel = 0;
+sidebar.ZIndex = 4;
+sidebar.ScrollBarThickness = 0;
+sidebar.CanvasSize = UDim2.new(0, 0, 0, 0);
+sidebar.AutomaticCanvasSize = Enum.AutomaticSize.Y;
+sidebar.Parent = V.mainPanel;
+local vSep = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\47\191\60\126\12", "\19\105\205\93"));
+vSep.Size = UDim2.new(0, 1, 1, -40);
+vSep.Position = UDim2.new(0, 210, 0, 40);
+vSep.BackgroundColor3 = Color3.fromRGB(35, 35, 45);
+vSep.BorderSizePixel = 0;
+vSep.ZIndex = 5;
+vSep.Parent = V.mainPanel;
+local sideLay = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\156\33\242\136\44\189\36\223\152\48\188\28", "\95\201\104\190\225"));
+sideLay.Padding = UDim.new(0, 4);
+sideLay.SortOrder = Enum.SortOrder.LayoutOrder;
+sideLay.Parent = sidebar;
+sidebar.Size = UDim2.new(0, 210, 1, -110);
+local sideFooter = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\137\217\192\195\170", "\174\207\171\161"), V.mainPanel);
+sideFooter.Size = UDim2.new(0, 210, 0, 70);
+sideFooter.Position = UDim2.new(0, 0, 1, -70);
+sideFooter.BackgroundColor3 = Color3.fromRGB(15, 15, 20);
+sideFooter.BackgroundTransparency = 0.2;
+sideFooter.BorderSizePixel = 0;
+sideFooter.ZIndex = 5;
+local footerSep = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\203\236\12\254\253", "\183\141\158\109\147\152"), sideFooter);
+footerSep.Size = UDim2.new(1, -20, 0, 1);
+footerSep.Position = UDim2.new(0, 10, 0, 0);
+footerSep.BackgroundColor3 = Color3.fromRGB(35, 35, 45);
+footerSep.BorderSizePixel = 0;
+V.userImg = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\5\4\231\11\41\37\231\14\41\5", "\108\76\105\134"), sideFooter);
+V.userImg.Size = UDim2.new(0, 24, 0, 24);
+V.userImg.Position = UDim2.new(0, 10, 0, 13);
+V.userImg.BackgroundColor3 = Color3.fromRGB(30, 30, 40);
+V.userImg.BorderSizePixel = 0;
+V.userImg.Image = "";
+Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\222\236\146\238\220\229\192\163", "\174\139\165\209\129"), V.userImg).CornerRadius = UDim.new(1, 0);
+local imgStroke = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\150\154\209\213\212\12\123\125", "\24\195\211\130\161\166\99\16"), V.userImg);
+imgStroke.Color = Color3.fromRGB(70, 110, 255);
+imgStroke.Thickness = 1;
+imgStroke.Transparency = 0.5;
+task.spawn(function()
+	local ok, url = pcall(function()
+		return Players:GetUserThumbnailAsync(V.LP.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size48x48);
+	end);
+	if ok then
+		V.userImg.Image = url;
+	end
+end);
+V.userLbl = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\114\6\241\56\127\23\68\6\229", "\118\38\99\137\76\51"), sideFooter);
+V.userLbl.Size = UDim2.new(1, -50, 0, 20);
+V.userLbl.Position = UDim2.new(0, 40, 0, 15);
+V.userLbl.BackgroundTransparency = 1;
+V.userLbl.Font = Enum.Font.GothamBold;
+V.userLbl.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\200\53\0\0\83\96\211\41\11\23", "\64\157\70\101\114\105");
+V.userLbl.TextColor3 = Color3.fromRGB(200, 200, 210);
+V.userLbl.TextSize = 12;
+V.userLbl.TextXAlignment = Enum.TextXAlignment.Left;
+V.timeLbl = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\116\173\191\247\60\65\170\162\239", "\112\32\200\199\131"), sideFooter);
+V.timeLbl.Size = UDim2.new(1, -20, 0, 20);
+V.timeLbl.Position = UDim2.new(0, 15, 0, 40);
+V.timeLbl.BackgroundTransparency = 1;
+V.timeLbl.Font = Enum.Font.GothamMedium;
+V.timeLbl.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\24\89\81\189\153\235\11\34\86\85\182\202\191\39", "\66\76\48\60\216\163\203");
+V.timeLbl.TextColor3 = Color3.fromRGB(150, 150, 165);
+V.timeLbl.TextSize = 11;
+V.timeLbl.TextXAlignment = Enum.TextXAlignment.Left;
+V.timeUpdateLoop = nil;
+local content = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\156\148\120\254\90", "\68\218\230\25\147\63\174"));
+content.Size = UDim2.new(1, -210, 1, -40);
+content.Position = UDim2.new(0, 210, 0, 40);
+content.BackgroundTransparency = 1;
+content.ZIndex = 2;
+content.Parent = V.mainPanel;
+V.previewPanel = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\142\43\93\90\183\190\13\65\67\163\189", "\214\205\74\51\44"));
+V.previewPanel.Name = LUAOBFUSACTOR_DECRYPT_STR_0("\223\127\210\204\101\255\90\235\249\96", "\23\154\44\130\156");
+V.previewPanel.Size = UDim2.new(0, 260, 0, 340);
+V.previewPanel.Position = UDim2.new(1, 15, 0, 0);
+V.previewPanel.BackgroundColor3 = Color3.fromRGB(15, 15, 20);
+V.previewPanel.BorderSizePixel = 0;
+V.previewPanel.Visible = false;
+V.previewPanel.GroupTransparency = 1;
+V.previewPanel.ClipsDescendants = true;
+V.previewPanel.Parent = V.MenuGui;
+Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\36\143\142\161\36\29\20\180", "\115\113\198\205\206\86"), V.previewPanel).CornerRadius = UDim.new(0, 12);
+local pStroke = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\177\126\205\78\150\88\245\95", "\58\228\55\158"), V.previewPanel);
+pStroke.Color = Color3.fromRGB(60, 60, 80);
+pStroke.Thickness = 1.5;
+local pHeader = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\128\140\200\58\16\172\55\177\133", "\85\212\233\176\78\92\205"), V.previewPanel);
+pHeader.Size = UDim2.new(1, 0, 0, 40);
+pHeader.BackgroundTransparency = 1;
+pHeader.Font = Enum.Font.GothamBold;
+pHeader.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\111\107\184\162\122\106\173\212\99\125\191", "\130\42\56\232");
+pHeader.TextColor3 = Color3.fromRGB(180, 180, 200);
+pHeader.TextSize = 12;
+pHeader.TextYAlignment = Enum.TextYAlignment.Bottom;
+pHeader.ZIndex = 20;
+local pGrid = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\195\184\37\228\69\19\235\183\33\239", "\95\138\213\68\131\32"), V.previewPanel);
+pGrid.Size = UDim2.new(1, 0, 1, -40);
+pGrid.Position = UDim2.new(0, 0, 0, 40);
+pGrid.BackgroundTransparency = 1;
+pGrid.Image = LUAOBFUSACTOR_DECRYPT_STR_0("\56\42\185\66\101\57\45\181\74\114\112\103\238\21\38\121\124\245\18\46\127\121\249", "\22\74\72\193\35");
+pGrid.ImageColor3 = Color3.fromRGB(40, 40, 50);
+pGrid.ImageTransparency = 0.9;
+pGrid.ScaleType = Enum.ScaleType.Tile;
+pGrid.TileSize = UDim2.new(0, 20, 0, 20);
+pGrid.ZIndex = 1;
+local pVP = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\26\112\225\79\60\118\246\76\10\107\229\85\41", "\56\76\25\132"), V.previewPanel);
+pVP.Size = UDim2.new(1, 0, 1, -40);
+pVP.Position = UDim2.new(0, 0, 0, 40);
+pVP.BackgroundTransparency = 1;
+pVP.Ambient = Color3.fromRGB(180, 180, 190);
+pVP.LightColor = Color3.fromRGB(240, 240, 250);
+pVP.LightDirection = Vector3.new(-0.5, -1, -0.5);
+pVP.ZIndex = 5;
+local pCam = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\125\192\166\35\221\95", "\175\62\161\203\70"), pVP);
+pCam.FieldOfView = 45;
+pVP.CurrentCamera = pCam;
+local pmBoxLines = {};
+for i = 1, 8 do
+	local line = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\26\207\194\30\48", "\85\92\189\163\115"), V.previewPanel);
+	line.BorderSizePixel = 0;
+	line.BackgroundColor3 = V.CONFIG.BoxColor;
+	line.ZIndex = 12;
+	line.Visible = false;
+	pmBoxLines[i] = line;
+end
+local pmBoxStroke = nil;
+local pmSkeleton = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\15\190\49\53\44", "\88\73\204\80"), V.previewPanel);
+pmSkeleton.Size = UDim2.new(1, 0, 1, 0);
+pmSkeleton.BackgroundTransparency = 1;
+pmSkeleton.ZIndex = 10;
+for i = 1, 32 do
+	local l = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\8\145\17\75\44", "\186\78\227\112\38\73"), pmSkeleton);
+	l.BorderSizePixel = 0;
+	l.BackgroundColor3 = Color3.new(1, 1, 1);
+	l.Visible = false;
+	l.ZIndex = 10;
+	V.pmLines[i] = l;
+end
+local pmHealthBar = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\218\69\252\88\86", "\26\156\55\157\53\51"), V.previewPanel);
+pmHealthBar.Size = UDim2.new(0, 5, 0, 280);
+pmHealthBar.BackgroundColor3 = Color3.fromRGB(30, 30, 40);
+pmHealthBar.BorderSizePixel = 0;
+pmHealthBar.ZIndex = 11;
+local pmHealthIn = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\170\202\23\212\189", "\48\236\184\118\185\216"), pmHealthBar);
+pmHealthIn.Size = UDim2.new(1, 0, 0.7, 0);
+pmHealthIn.Position = UDim2.new(0, 0, 0.3, 0);
+pmHealthIn.BackgroundColor3 = Color3.fromRGB(0, 255, 100);
+pmHealthIn.BorderSizePixel = 0;
+pmHealthIn.ZIndex = 12;
+Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\208\148\116\63\221\58\224\175", "\84\133\221\55\80\175"), pmHealthBar).CornerRadius = UDim.new(0, 3);
+Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\136\206\7\169\213\82\184\245", "\60\221\135\68\198\167"), pmHealthIn).CornerRadius = UDim.new(0, 3);
+local pmHealthGlow = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\219\148\203\151\80\214\229\184", "\185\142\221\152\227\34"), pmHealthIn);
+pmHealthGlow.Color = Color3.fromRGB(0, 255, 100);
+pmHealthGlow.Thickness = 1;
+pmHealthGlow.Transparency = 0.5;
+local pmPanel = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\126\215\86\247\70", "\151\56\165\55\154\35\83"), V.previewPanel);
+pmPanel.AutomaticSize = Enum.AutomaticSize.X;
+pmPanel.Size = UDim2.new(0, 0, 0, 28);
+pmPanel.BackgroundColor3 = Color3.fromRGB(15, 15, 20);
+pmPanel.BorderSizePixel = 0;
+pmPanel.ZIndex = 15;
+Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\149\106\38\225\178\77\0\252", "\142\192\35\101"), pmPanel).CornerRadius = UDim.new(0, 6);
+Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\227\92\26\183\245\131\167\19", "\118\182\21\73\195\135\236\204"), pmPanel).Color = Color3.fromRGB(45, 45, 55);
+local pmPanelLay = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\61\21\54\73\23\25\209\9\37\21\85\16", "\157\104\92\122\32\100\109"), pmPanel);
+pmPanelLay.FillDirection = Enum.FillDirection.Horizontal;
+pmPanelLay.HorizontalAlignment = Enum.HorizontalAlignment.Center;
+pmPanelLay.VerticalAlignment = Enum.VerticalAlignment.Center;
+pmPanelLay.SortOrder = Enum.SortOrder.LayoutOrder;
+pmPanelLay.Padding = UDim.new(0, 8);
+Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\150\143\255\203\57\35\132\165\164", "\203\195\198\175\170\93\71\237"), pmPanel).PaddingLeft = UDim.new(0, 10);
+Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\27\98\14\212\85\21\245\32\76", "\156\78\43\94\181\49\113"), pmPanel).PaddingRight = UDim.new(0, 10);
+local pmDist = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\70\237\220\183\39\66\123\119\228", "\25\18\136\164\195\107\35"), V.previewPanel);
+pmDist.BackgroundTransparency = 1;
+pmDist.Font = Enum.Font.GothamMedium;
+pmDist.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\185\121\251\66", "\216\136\77\201\47\18\220\161");
+pmDist.TextColor3 = Color3.new(1, 1, 1);
+pmDist.TextSize = 12;
+pmDist.AutomaticSize = Enum.AutomaticSize.X;
+pmDist.Size = UDim2.new(0, 0, 0, 16);
+pmDist.ZIndex = 15;
+pmDist.Visible = false;
+local pmDiv1 = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\11\254\42\215\13", "\226\77\140\75\186\104\188"), pmPanel);
+pmDiv1.Size = UDim2.new(0, 1, 0, 12);
+pmDiv1.BackgroundColor3 = Color3.fromRGB(100, 100, 110);
+pmDiv1.BackgroundTransparency = 0.5;
+pmDiv1.BorderSizePixel = 0;
+pmDiv1.LayoutOrder = 2;
+pmDiv1.ZIndex = 15;
+local pmName = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\141\203\200\43\99\184\204\213\51", "\47\217\174\176\95"), V.previewPanel);
+pmName.BackgroundTransparency = 1;
+pmName.Font = Enum.Font.GothamMedium;
+pmName.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\157\211\115\15\171", "\70\216\189\22\98\210\52\24");
+pmName.TextColor3 = Color3.new(1, 1, 1);
+pmName.TextSize = 12;
+pmName.AutomaticSize = Enum.AutomaticSize.X;
+pmName.Size = UDim2.new(0, 0, 0, 16);
+pmName.ZIndex = 15;
+pmName.Visible = false;
+local pmDiv2 = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\252\205\162\138\214", "\179\186\191\195\231"), pmPanel);
+pmDiv2.Size = UDim2.new(0, 1, 0, 12);
+pmDiv2.BackgroundColor3 = Color3.fromRGB(100, 100, 110);
+pmDiv2.BackgroundTransparency = 0.5;
+pmDiv2.BorderSizePixel = 0;
+pmDiv2.LayoutOrder = 4;
+pmDiv2.ZIndex = 15;
+local pmAv = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\208\50\25\227\252\19\25\230\252\51", "\132\153\95\120"), V.previewPanel);
+pmAv.Size = UDim2.new(0, 16, 0, 16);
+pmAv.BackgroundColor3 = Color3.fromRGB(40, 40, 50);
+pmAv.Image = LUAOBFUSACTOR_DECRYPT_STR_0("\163\176\22\44\228\201\165\165\187\10\119\184\149\246\225\225\90\120\167\136\249\226\227", "\192\209\210\110\77\151\186");
+pmAv.ZIndex = 15;
+pmAv.Visible = false;
+Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\213\42\1\230\237\202\229\17", "\164\128\99\66\137\159"), pmAv).CornerRadius = UDim.new(0, 4);
+local function createDummy()
+	local m = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\45\134\237\187\12", "\222\96\233\137"));
+	m.Name = LUAOBFUSACTOR_DECRYPT_STR_0("\137\161\162\9\129\246\231\157\166\170\18\145", "\144\217\211\199\127\232\147");
+	for name, data in pairs(V.dummyPartsData) do
+		local p = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\200\46\44\60", "\36\152\79\94\72\181\37\98"));
+		p.Name = name;
+		p.Size = data.s;
+		p.Position = data.p;
+		p.Transparency = 1;
+		p.Color = Color3.fromRGB(100, 100, 120);
+		p.Anchored = true;
+		p.CanCollide = false;
+		p.Parent = m;
+	end
+	local hum = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\255\205\74\62\217\215\78\59", "\95\183\184\39"), m);
+	hum.RigType = Enum.HumanoidRigType.R15;
+	m.PrimaryPart = m.HumanoidRootPart;
+	m:PivotTo(CFrame.new(0, -0.4, 0));
+	return m;
+end
+local pCharClone;
+local function initPreview()
+	for _, obj in ipairs(pVP:GetChildren()) do
+		if obj:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\152\48\227\35\88", "\98\213\95\135\70\52\224")) then
+			obj:Destroy();
+		end
+	end
+	pCharClone = createDummy();
+	pCharClone.Parent = pVP;
+	pVP.CurrentCamera = pCam;
+	pCam.CFrame = CFrame.new(Vector3.new(0, 0, 10), Vector3.new(0, 0, 0));
+end
+task.spawn(function()
+	while task.wait() do
+		if (not V.previewPanel.Visible or not pCharClone) then
+			continue;
+		end
+		local pW, pH = 240, 440;
+		local absSize = pVP.AbsoluteSize;
+		if (absSize.X > 10) then
+			pW, pH = absSize.X, absSize.Y;
+		end
+		local function project(v3)
+			local rel = pCam.CFrame:PointToObjectSpace(v3);
+			if (rel.Z >= 0) then
+				return nil;
+			end
+			local fov = math.rad(pCam.FieldOfView);
+			local h = math.tan(fov / 2) * math.abs(rel.Z) * 1.1;
+			local w = h * (pW / pH);
+			return Vector2.new(((rel.X / w) * 0.5) + 0.5, ((-rel.Y / h) * 0.5) + 0.5) * Vector2.new(pW, pH);
+		end
+		local centerX, centerY = pW / 2, (pH / 2) + 30;
+		for _, p in ipairs(pCharClone:GetChildren()) do
+			if p:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\220\162\218\114\100\255\177\221", "\52\158\195\169\23")) then
+				local data = V.dummyPartsData[p.Name];
+				if data then
+					p.Position = data.p + Vector3.new(0, -1.2, 0);
+				end
+			end
+		end
+		pmSkeleton.Visible = V.CONFIG.SkeletonEnabled;
+		local minX, minY, maxX, maxY = math.huge, math.huge, -math.huge, -math.huge;
+		local allOff = true;
+		if V.CONFIG.SkeletonEnabled then
+			local lineIdx = 1;
+			for _, pair in pairs(V.BONES.R15) do
+				local p1 = pCharClone:FindFirstChild(pair[1]);
+				local p2 = pCharClone:FindFirstChild(pair[2]);
+				local l = V.pmLines[lineIdx];
+				if (p1 and p2 and l) then
+					local s1 = project(p1.Position);
+					local s2 = project(p2.Position);
+					if (s1 and s2) then
+						l.Visible = true;
+						l.ZIndex = 20;
+						local dist = (s1 - s2).Magnitude;
+						l.Size = UDim2.new(0, 3, 0, dist);
+						l.Position = UDim2.new(0, (s1.X + s2.X) / 2, 0, (s1.Y + s2.Y) / 2);
+						l.Rotation = math.deg(math.atan2(s2.Y - s1.Y, s2.X - s1.X)) - 90;
+						l.AnchorPoint = Vector2.new(0.5, 0.5);
+						l.BackgroundColor3 = V.CONFIG.SkeletonColor;
+						l.BackgroundTransparency = 0;
+						minX = math.min(minX, s1.X, s2.X);
+						minY = math.min(minY, s1.Y, s2.Y);
+						maxX = math.max(maxX, s1.X, s2.X);
+						maxY = math.max(maxY, s1.Y, s2.Y);
+						allOff = false;
+					else
+						l.Visible = false;
+					end
+				end
+				lineIdx = lineIdx + 1;
+			end
+			for i = lineIdx, #V.pmLines do
+				if V.pmLines[i] then
+					V.pmLines[i].Visible = false;
+				end
+			end
+		end
+		local headPart = pCharClone:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\82\185\51\112", "\235\26\220\82\20\230\85\27"));
+		local lFoot = pCharClone:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\164\164\239\214\82\135\174\253", "\20\232\193\137\162"));
+		local rFoot = pCharClone:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\16\214\194\174\243\170\24\126\54", "\17\66\191\165\198\135\236\119"));
+		local hProj = headPart and project(headPart.Position + Vector3.new(0, 0.8, 0));
+		local fProj = lFoot and rFoot and project(((lFoot.Position + rFoot.Position) / 2) - Vector3.new(0, 0.5, 0));
+		if (hProj and fProj) then
+			local bH = math.abs(hProj.Y - fProj.Y);
+			local bW = bH * 0.6;
+			minX, minY = hProj.X - (bW / 2), hProj.Y;
+			maxX, maxY = hProj.X + (bW / 2), fProj.Y;
+			allOff = false;
+		else
+			local bH, bW = 290, 170;
+			minX, minY = centerX - (bW / 2), centerY - (bH * 0.45);
+			maxX, maxY = centerX + (bW / 2), centerY + (bH * 0.55);
+		end
+		local boxW, boxH = maxX - minX, maxY - minY;
+		local boxPosX, boxPosY = (minX + maxX) / 2, (minY + maxY) / 2;
+		local boxLeft, boxTop = boxPosX - (boxW / 2), boxPosY - (boxH / 2);
+		local boxRight, boxBottom = boxPosX + (boxW / 2), boxPosY + (boxH / 2);
+		local cornerSize = math.min(boxW, boxH) * 0.25;
+		local lineThickness = 1.5;
+		pmBoxLines[1].Size = UDim2.new(0, cornerSize, 0, lineThickness);
+		pmBoxLines[1].Position = UDim2.new(0, boxLeft, 0, boxTop);
+		pmBoxLines[2].Size = UDim2.new(0, lineThickness, 0, cornerSize);
+		pmBoxLines[2].Position = UDim2.new(0, boxLeft, 0, boxTop);
+		pmBoxLines[3].Size = UDim2.new(0, cornerSize, 0, lineThickness);
+		pmBoxLines[3].Position = UDim2.new(0, boxRight - cornerSize, 0, boxTop);
+		pmBoxLines[4].Size = UDim2.new(0, lineThickness, 0, cornerSize);
+		pmBoxLines[4].Position = UDim2.new(0, boxRight, 0, boxTop);
+		pmBoxLines[5].Size = UDim2.new(0, cornerSize, 0, lineThickness);
+		pmBoxLines[5].Position = UDim2.new(0, boxLeft, 0, boxBottom);
+		pmBoxLines[6].Size = UDim2.new(0, lineThickness, 0, cornerSize);
+		pmBoxLines[6].Position = UDim2.new(0, boxLeft, 0, boxBottom - cornerSize);
+		pmBoxLines[7].Size = UDim2.new(0, cornerSize, 0, lineThickness);
+		pmBoxLines[7].Position = UDim2.new(0, boxRight - cornerSize, 0, boxBottom);
+		pmBoxLines[8].Size = UDim2.new(0, lineThickness, 0, cornerSize);
+		pmBoxLines[8].Position = UDim2.new(0, boxRight, 0, boxBottom - cornerSize);
+		for i = 1, 8 do
+			pmBoxLines[i].Visible = V.CONFIG.BoxEnabled;
+			pmBoxLines[i].BackgroundColor3 = V.CONFIG.BoxColor;
+			pmBoxLines[i].ZIndex = 12;
+		end
+		pmHealthBar.Size = UDim2.new(0, 5, 0, boxH);
+		pmHealthBar.Position = UDim2.new(0, boxLeft - 12, 0, boxTop);
+		pmHealthBar.Visible = V.CONFIG.HealthBarEnabled;
+		pmHealthBar.ZIndex = 11;
+		local hProg = (math.sin(tick() * 2) * 0.5) + 0.5;
+		pmHealthIn.BackgroundColor3 = Color3.fromRGB(255, 50, 50):Lerp(Color3.fromRGB(50, 255, 100), hProg);
+		pmHealthIn.Size = UDim2.new(1, 0, hProg, 0);
+		pmHealthIn.Position = UDim2.new(0, 0, 1 - hProg, 0);
+		pmHealthIn.ZIndex = 12;
+		pmHealthGlow.Color = pmHealthIn.BackgroundColor3;
+		local shouldShow = V.CONFIG.ShowDistance or V.CONFIG.ShowAvatar or V.CONFIG.ShowName;
+		if V.CONFIG.UseInfoPanel then
+			pmPanel.AnchorPoint = Vector2.new(0.5, 1);
+			pmPanel.Position = UDim2.new(0, boxPosX, 0, boxTop - 8);
+			pmPanel.BackgroundColor3 = V.CONFIG.PanelBgColor;
+			pmPanel.Visible = shouldShow;
+			pmPanel.ZIndex = 14;
+			pmDist.Parent = pmPanel;
+			pmName.Parent = pmPanel;
+			pmAv.Parent = pmPanel;
+			pmDist.Visible = V.CONFIG.ShowDistance;
+			pmDist.LayoutOrder = 1;
+			pmDiv1.Visible = V.CONFIG.ShowDistance and (V.CONFIG.ShowName or V.CONFIG.ShowAvatar);
+			pmName.Visible = V.CONFIG.ShowName;
+			pmName.LayoutOrder = 3;
+			pmDiv2.Visible = V.CONFIG.ShowName and V.CONFIG.ShowAvatar;
+			pmAv.Visible = V.CONFIG.ShowAvatar;
+			pmAv.LayoutOrder = 5;
+		else
+			pmPanel.Visible = false;
+			pmDist.Parent = V.previewPanel;
+			pmName.Parent = V.previewPanel;
+			pmAv.Parent = V.previewPanel;
+			local topOffset = boxTop - 8;
+			local nameWidth = pmName.TextBounds.X or 40;
+			local avSize = 16;
+			local spacing = 4;
+			local totalWidth = 0;
+			if V.CONFIG.ShowName then
+				totalWidth = totalWidth + nameWidth;
+			end
+			if V.CONFIG.ShowAvatar then
+				totalWidth = totalWidth + avSize;
+			end
+			if (V.CONFIG.ShowName and V.CONFIG.ShowAvatar) then
+				totalWidth = totalWidth + spacing;
+			end
+			local startX = boxPosX - (totalWidth / 2);
+			if V.CONFIG.ShowAvatar then
+				pmAv.Position = UDim2.new(0, startX, 0, topOffset - avSize);
+				pmAv.Visible = true;
+				pmAv.ZIndex = 15;
+				startX = startX + avSize + spacing;
+			else
+				pmAv.Visible = false;
+			end
+			if V.CONFIG.ShowName then
+				pmName.Position = UDim2.new(0, startX, 0, topOffset - 12);
+				pmName.Visible = true;
+				pmName.ZIndex = 15;
+			else
+				pmName.Visible = false;
+			end
+			if V.CONFIG.ShowDistance then
+				pmDist.Position = UDim2.new(0, boxPosX - ((pmDist.TextBounds.X or 30) / 2), 0, boxBottom + 6);
+				pmDist.Visible = true;
+				pmDist.ZIndex = 15;
+			else
+				pmDist.Visible = false;
+			end
+			pmDiv1.Visible = false;
+			pmDiv2.Visible = false;
+		end
+	end
+end);
+V.titleBar = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\41\189\175\30\250", "\177\111\207\206\115\159\136\140"));
+V.titleBar.Name = LUAOBFUSACTOR_DECRYPT_STR_0("\49\128\4\24\209\109\94\23", "\63\101\233\112\116\180\47");
+V.titleBar.Size = UDim2.new(1, 0, 0, 40);
+V.titleBar.BackgroundColor3 = Color3.fromRGB(18, 18, 24);
+V.titleBar.BorderSizePixel = 0;
+V.titleBar.Parent = V.mainPanel;
+Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\246\18\206\29\234\56\198\41", "\86\163\91\141\114\152"), V.titleBar).CornerRadius = UDim.new(0, 10);
+local tbFix = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\117\25\117\126\63", "\90\51\107\20\19"));
+tbFix.Size = UDim2.new(1, 0, 0, 10);
+tbFix.Position = UDim2.new(0, 0, 1, -10);
+tbFix.BackgroundColor3 = Color3.fromRGB(18, 18, 24);
+tbFix.BorderSizePixel = 0;
+tbFix.Parent = V.titleBar;
+local logo = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\171\226\132\226\56", "\93\237\144\229\143"));
+logo.Size = UDim2.new(0, 30, 0, 22);
+logo.Position = UDim2.new(0, 12, 0.5, -11);
+logo.BackgroundColor3 = Color3.fromRGB(70, 110, 255);
+logo.BorderSizePixel = 0;
+logo.Parent = V.titleBar;
+Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\32\223\211\22\25\72\16\228", "\38\117\150\144\121\107"), logo).CornerRadius = UDim.new(0, 4);
+local logoTxt = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\25\190\246\46\1\186\236\63\33", "\90\77\219\142"));
+logoTxt.Size = UDim2.new(1, 0, 1, 0);
+logoTxt.BackgroundTransparency = 1;
+logoTxt.Font = Enum.Font.GothamBlack;
+logoTxt.TextColor3 = Color3.new(1, 1, 1);
+logoTxt.TextSize = 11;
+logoTxt.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\195\55\17", "\26\134\100\65\89\44\103");
+logoTxt.Parent = logo;
+local titleLbl = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\197\230\40\55\136\240\225\53\47", "\196\145\131\80\67"));
+titleLbl.Size = UDim2.new(0, 150, 1, 0);
+titleLbl.Position = UDim2.new(0, 50, 0, 0);
+titleLbl.BackgroundTransparency = 1;
+titleLbl.Font = Enum.Font.GothamBold;
+titleLbl.TextColor3 = Color3.fromRGB(240, 240, 245);
+titleLbl.TextSize = 18;
+titleLbl.TextXAlignment = Enum.TextXAlignment.Left;
+titleLbl.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\63\131\50\58\45\197", "\136\126\208\102\104\120");
+titleLbl.Parent = V.titleBar;
+V.pickerPanel = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\91\139\192\85\174\65\26\67\119\159\222", "\49\24\234\174\35\207\50\93"));
+V.pickerPanel.Size = UDim2.new(0, 200, 0, 220);
+V.pickerPanel.BackgroundColor3 = Color3.fromRGB(15, 15, 20);
+V.pickerPanel.BorderSizePixel = 0;
+V.pickerPanel.Visible = false;
+V.pickerPanel.Active = true;
+V.pickerPanel.ZIndex = 20;
+V.pickerPanel.Parent = V.MenuGui;
+local pickerBlocker = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\56\247\229\156\83\25\230\233\135\127", "\17\108\146\157\232"), V.pickerPanel);
+pickerBlocker.Size = UDim2.new(1, 0, 1, 0);
+pickerBlocker.BackgroundTransparency = 1;
+pickerBlocker.Text = "";
+pickerBlocker.ZIndex = -1;
+Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\126\234\55\226\61\166\78\209", "\200\43\163\116\141\79"), V.pickerPanel).CornerRadius = UDim.new(0, 8);
+local pickerStroke = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\138\31\14\151\162\251\232\186", "\131\223\86\93\227\208\148"), V.pickerPanel);
+pickerStroke.Color = Color3.fromRGB(50, 50, 65);
+pickerStroke.Transparency = 1;
+V.pickerScale = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\214\108\133\181\28\185\230", "\213\131\37\214\214\125"), V.pickerPanel);
+V.pickerScale.Scale = 0.8;
+V.pickerPanel.GroupTransparency = 1;
+local svSquare = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\0\57\36\178\228", "\129\70\75\69\223"));
+svSquare.Size = UDim2.new(1, -16, 0, 140);
+svSquare.Position = UDim2.new(0, 8, 0, 8);
+svSquare.BorderSizePixel = 0;
+svSquare.Parent = V.pickerPanel;
+Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\115\226\208\230\110\225\67\217", "\143\38\171\147\137\28"), svSquare).CornerRadius = UDim.new(0, 4);
+local whiteG = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\246\144\184\254\6", "\180\176\226\217\147\99\131"));
+whiteG.Size = UDim2.new(1, 0, 1, 0);
+whiteG.BorderSizePixel = 0;
+whiteG.Parent = svSquare;
+Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\230\144\12\8\193\183\42\21", "\103\179\217\79"), whiteG).CornerRadius = UDim.new(0, 4);
+local wg = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\127\158\59\199\64\136\170\79\185\8", "\195\42\215\124\181\33\236"));
+wg.Transparency = NumberSequence.new({NumberSequenceKeypoint.new(0, 0),NumberSequenceKeypoint.new(1, 1)});
+wg.Color = ColorSequence.new(Color3.new(1, 1, 1));
+wg.Parent = whiteG;
+local blackG = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\43\75\54\51\32", "\152\109\57\87\94\69"));
+blackG.Size = UDim2.new(1, 0, 1, 0);
+blackG.BorderSizePixel = 0;
+blackG.Parent = svSquare;
+Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\204\254\41\172\172\220\81\186", "\200\153\183\106\195\222\178\52"), blackG).CornerRadius = UDim.new(0, 4);
+local bg = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\7\202\175\47\72\94\59\230\134\41", "\58\82\131\232\93\41"));
+bg.Rotation = 90;
+bg.Transparency = NumberSequence.new({NumberSequenceKeypoint.new(0, 1),NumberSequenceKeypoint.new(1, 0)});
+bg.Color = ColorSequence.new(Color3.new(0, 0, 0));
+bg.Parent = blackG;
+local svCursor = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\165\69\209\24\88", "\95\227\55\176\117\61"));
+svCursor.Size = UDim2.new(0, 6, 0, 6);
+svCursor.BackgroundColor3 = Color3.new(1, 1, 1);
+svCursor.Parent = svSquare;
+Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\45\87\0\68\185\22\123\49", "\203\120\30\67\43"), svCursor).CornerRadius = UDim.new(1, 0);
+Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\196\12\126\251\203\254\46\72", "\185\145\69\45\143"), svCursor).Thickness = 1;
+local hueSlider = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\172\13\24\171\217", "\188\234\127\121\198"));
+hueSlider.Size = UDim2.new(1, -16, 0, 14);
+hueSlider.Position = UDim2.new(0, 8, 0, 156);
+hueSlider.BorderSizePixel = 0;
+hueSlider.Parent = V.pickerPanel;
+Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\13\27\48\140\42\60\22\145", "\227\88\82\115"), hueSlider).CornerRadius = UDim.new(1, 0);
+local hg = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\118\54\157\181\3\119\74\26\180\179", "\19\35\127\218\199\98"));
+hg.Color = ColorSequence.new({ColorSequenceKeypoint.new(0, Color3.new(1, 0, 0)),ColorSequenceKeypoint.new(0.16, Color3.new(1, 1, 0)),ColorSequenceKeypoint.new(0.33, Color3.new(0, 1, 0)),ColorSequenceKeypoint.new(0.5, Color3.new(0, 1, 1)),ColorSequenceKeypoint.new(0.66, Color3.new(0, 0, 1)),ColorSequenceKeypoint.new(0.83, Color3.new(1, 0, 1)),ColorSequenceKeypoint.new(1, Color3.new(1, 0, 0))});
+hg.Parent = hueSlider;
+local hCursor = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\58\233\11\239\25", "\130\124\155\106"));
+hCursor.Size = UDim2.new(0, 4, 1, 4);
+hCursor.Position = UDim2.new(0, 0, 0.5, 0);
+hCursor.AnchorPoint = Vector2.new(0.5, 0.5);
+hCursor.BackgroundColor3 = Color3.new(1, 1, 1);
+hCursor.Parent = hueSlider;
+Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\224\226\213\160\177\248\121\173", "\223\181\171\150\207\195\150\28"), hCursor).CornerRadius = UDim.new(0, 2);
+local hexDisp = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\120\63\251\186\37\77\56\230\162", "\105\44\90\131\206"));
+hexDisp.Size = UDim2.new(1, 0, 0, 30);
+hexDisp.Position = UDim2.new(0, 0, 0, 180);
+hexDisp.BackgroundTransparency = 1;
+hexDisp.Font = Enum.Font.Code;
+hexDisp.TextColor3 = Color3.new(0.7, 0.7, 0.7);
+hexDisp.TextSize = 12;
+hexDisp.Parent = V.pickerPanel;
+V.subPanel = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\220\225\188\175\9\45\216\242\189\172\24", "\94\159\128\210\217\104"));
+V.subPanel.Size = UDim2.new(0, 250, 0, 240);
+V.subPanel.BackgroundColor3 = Color3.fromRGB(15, 15, 20);
+V.subPanel.BorderSizePixel = 0;
+V.subPanel.Visible = false;
+V.subPanel.Active = true;
+V.subPanel.ZIndex = 20;
+V.subPanel.Parent = V.MenuGui;
+local subBlocker = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\100\252\30\171\125\106\237\110\95\247", "\26\48\153\102\223\63\31\153"), V.subPanel);
+subBlocker.Size = UDim2.new(1, 0, 1, 0);
+subBlocker.BackgroundTransparency = 1;
+subBlocker.Text = "";
+subBlocker.ZIndex = -1;
+Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\55\105\206\252\16\78\232\225", "\147\98\32\141"), V.subPanel).CornerRadius = UDim.new(0, 8);
+local subStroke = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\45\106\208\222\20\89\64\29", "\43\120\35\131\170\102\54"), V.subPanel);
+subStroke.Color = Color3.fromRGB(50, 50, 65);
+subStroke.Transparency = 1;
+V.subScale = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\97\47\180\181\164\188\129", "\228\52\102\231\214\197\208"), V.subPanel);
+V.subScale.Scale = 0.8;
+V.subPanel.GroupTransparency = 1;
+local subScroll = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\45\227\103\197\230\135\16\216\25\198\103\203\231\142", "\182\126\128\21\170\138\235\121"));
+subScroll.Size = UDim2.new(1, -16, 1, -16);
+subScroll.Position = UDim2.new(0, 8, 0, 8);
+subScroll.BackgroundTransparency = 1;
+subScroll.BorderSizePixel = 0;
+subScroll.ScrollBarThickness = 2;
+subScroll.CanvasSize = UDim2.new(0, 0, 0, 0);
+subScroll.AutomaticCanvasSize = Enum.AutomaticSize.Y;
+subScroll.Parent = V.subPanel;
+local subLay = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\190\243\25\239\149\7\28\7\146\213\32\242", "\102\235\186\85\134\230\115\80"));
+subLay.Padding = UDim.new(0, 4);
+subLay.Parent = subScroll;
+V.bindPanel = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\116\13\48\73\115\199\5\69\3\43\79", "\66\55\108\94\63\18\180"));
+V.bindPanel.Size = UDim2.new(0, 180, 0, 140);
+V.bindPanel.BackgroundColor3 = Color3.fromRGB(18, 18, 24);
+V.bindPanel.BorderSizePixel = 0;
+V.bindPanel.Visible = false;
+V.bindPanel.Active = true;
+V.bindPanel.ZIndex = 25;
+V.bindPanel.Parent = V.MenuGui;
+local bindBlocker = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\32\136\157\35\5\76\0\153\138\57", "\57\116\237\229\87\71"), V.bindPanel);
+bindBlocker.Size = UDim2.new(1, 0, 1, 0);
+bindBlocker.BackgroundTransparency = 1;
+bindBlocker.Text = "";
+bindBlocker.ZIndex = -1;
+Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\159\152\206\232\101\224\66\184", "\39\202\209\141\135\23\142"), V.bindPanel).CornerRadius = UDim.new(0, 8);
+local bindStroke = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\202\26\58\30\32\247\244\54", "\152\159\83\105\106\82"), V.bindPanel);
+bindStroke.Color = Color3.fromRGB(60, 60, 80);
+bindStroke.Thickness = 1;
+V.bindScale = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\180\239\98\241\200\80\132", "\60\225\166\49\146\169"), V.bindPanel);
+V.bindScale.Scale = 0.8;
+V.bindPanel.GroupTransparency = 1;
+local bindListWindow = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\12\31\33\60\0\20\8\12\32\63\17", "\103\79\126\79\74\97"));
+bindListWindow.Name = LUAOBFUSACTOR_DECRYPT_STR_0("\152\118\221\119\114\19\169\107", "\122\218\31\179\19\62");
+bindListWindow.Size = UDim2.new(0, 150, 0, 30);
+bindListWindow.Position = UDim2.new(0.02, 0, 0.4, 0);
+bindListWindow.BackgroundColor3 = Color3.fromRGB(10, 10, 15);
+bindListWindow.Visible = false;
+bindListWindow.ZIndex = 5;
+bindListWindow.Parent = V.MenuGui;
+Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\134\255\238\206\219\175\64\161", "\37\211\182\173\161\169\193"), bindListWindow).CornerRadius = UDim.new(0, 6);
+local blStroke = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\194\19\126\205\58\116\178\242", "\217\151\90\45\185\72\27"), bindListWindow);
+blStroke.Color = Color3.fromRGB(40, 40, 50);
+blStroke.Thickness = 1;
+local blHeader = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\229\110\230\31\83", "\54\163\28\135\114"), bindListWindow);
+blHeader.Size = UDim2.new(1, 0, 0, 24);
+blHeader.BackgroundColor3 = Color3.fromRGB(15, 15, 22);
+blHeader.BorderSizePixel = 0;
+local blIcon = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\1\214\92\133\75\83\41\217\88\142", "\31\72\187\61\226\46"), blHeader);
+blIcon.Size = UDim2.new(0, 14, 0, 14);
+blIcon.Position = UDim2.new(0, 6, 0.5, -7);
+blIcon.BackgroundTransparency = 1;
+blIcon.Image = LUAOBFUSACTOR_DECRYPT_STR_0("\209\4\91\211\84\109\33\215\15\71\136\8\49\114\147\85\23\134\19\46\117\150\80", "\68\163\102\35\178\39\30");
+blIcon.ImageColor3 = Color3.fromRGB(70, 110, 255);
+local blTitle = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\138\117\194\211\47\180\129\20\178", "\113\222\16\186\167\99\213\227"), blHeader);
+blTitle.Size = UDim2.new(1, -26, 1, 0);
+blTitle.Position = UDim2.new(0, 24, 0, 0);
+blTitle.BackgroundTransparency = 1;
+blTitle.Font = Enum.Font.GothamBold;
+blTitle.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\12\7\245\242\61", "\150\78\110\155");
+blTitle.TextColor3 = Color3.new(1, 1, 1);
+blTitle.TextSize = 12;
+blTitle.TextXAlignment = Enum.TextXAlignment.Left;
+local blContainer = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\163\215\38\236\161", "\32\229\165\71\129\196\126\223"), bindListWindow);
+blContainer.Size = UDim2.new(1, 0, 1, -24);
+blContainer.Position = UDim2.new(0, 0, 0, 24);
+blContainer.BackgroundTransparency = 1;
+local blLay = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\246\160\232\136\146\193\239\136\221\142\148\193", "\181\163\233\164\225\225"), blContainer);
+blLay.Padding = UDim.new(0, 2);
+blLay.SortOrder = Enum.SortOrder.LayoutOrder;
+local function updateBindList()
+	for _, child in ipairs(blContainer:GetChildren()) do
+		if child:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\118\153\63\122\85", "\23\48\235\94")) then
+			child:Destroy();
+		end
+	end
+	if not V.CONFIG.ShowBindWindow then
+		bindListWindow.Visible = false;
+		return;
+	end
+	local count = 0;
+	for name, b in pairs(V.StoredBinds) do
+		if (b.Key or b.InputType) then
+			count = count + 1;
+			local f = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\90\200\217\80\82", "\178\28\186\184\61\55\83"), blContainer);
+			f.Size = UDim2.new(1, 0, 0, 20);
+			f.BackgroundTransparency = 1;
+			local n = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\240\200\95\40\222\15\247\193\193", "\149\164\173\39\92\146\110"), f);
+			n.Size = UDim2.new(1, -40, 1, 0);
+			n.Position = UDim2.new(0, 8, 0, 0);
+			n.BackgroundTransparency = 1;
+			n.Font = Enum.Font.GothamMedium;
+			n.Text = name;
+			n.TextColor3 = Color3.fromRGB(200, 200, 210);
+			n.TextSize = 11;
+			n.TextXAlignment = Enum.TextXAlignment.Left;
+			local s = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\199\34\8\11\54\26\241\34\28", "\123\147\71\112\127\122"), f);
+			s.Size = UDim2.new(0, 35, 1, 0);
+			s.Position = UDim2.new(1, -40, 0, 0);
+			s.BackgroundTransparency = 1;
+			s.Font = Enum.Font.GothamBold;
+			s.Text = (b.State and LUAOBFUSACTOR_DECRYPT_STR_0("\195\195", "\38\172\173\226\17")) or LUAOBFUSACTOR_DECRYPT_STR_0("\66\23\42", "\143\45\113\76");
+			s.TextColor3 = (b.State and Color3.new(1, 1, 1)) or Color3.fromRGB(100, 100, 110);
+			s.TextSize = 10;
+			s.TextXAlignment = Enum.TextXAlignment.Right;
+		end
+	end
+	if (count > 0) then
+		bindListWindow.Visible = true;
+		tw(bindListWindow, {[LUAOBFUSACTOR_DECRYPT_STR_0("\139\177\6\57", "\92\216\216\124")]=UDim2.new(0, 150, 0, 28 + (count * 22))}, 0.2);
+	else
+		bindListWindow.Visible = false;
+	end
+end
+local blDragging, blDragStart, blStartPos;
+bindListWindow.InputBegan:Connect(function(i)
+	if (i.UserInputType == Enum.UserInputType.MouseButton1) then
+		blDragging = true;
+		blDragStart = i.Position;
+		blStartPos = bindListWindow.Position;
+	end
+end);
+UIS.InputChanged:Connect(function(i)
+	if (blDragging and (i.UserInputType == Enum.UserInputType.MouseMovement)) then
+		local delta = i.Position - blDragStart;
+		bindListWindow.Position = UDim2.new(blStartPos.X.Scale, blStartPos.X.Offset + delta.X, blStartPos.Y.Scale, blStartPos.Y.Offset + delta.Y);
+	end
+end);
+UIS.InputEnded:Connect(function(i)
+	if (i.UserInputType == Enum.UserInputType.MouseButton1) then
+		blDragging = false;
+	end
+end);
+local bindTitle = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\111\55\180\84\209\90\48\169\76", "\157\59\82\204\32"), V.bindPanel);
+bindTitle.Size = UDim2.new(1, 0, 0, 30);
+bindTitle.BackgroundTransparency = 1;
+bindTitle.Font = Enum.Font.GothamBold;
+bindTitle.TextColor3 = Color3.fromRGB(150, 150, 170);
+bindTitle.TextSize = 11;
+bindTitle.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\25\13\208\211\206\196\147\154\29\7\193\211\199\206", "\209\88\94\131\154\137\138\179");
+local bindKeyBtn = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\28\164\220\104\60\54\37\54\39\175", "\66\72\193\164\28\126\67\81"), V.bindPanel);
+bindKeyBtn.Size = UDim2.new(1, -20, 0, 32);
+bindKeyBtn.Position = UDim2.new(0, 10, 0, 35);
+bindKeyBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 40);
+bindKeyBtn.Font = Enum.Font.GothamBold;
+bindKeyBtn.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\201\3\134\125", "\22\135\76\200\56\70");
+bindKeyBtn.TextColor3 = Color3.fromRGB(70, 110, 255);
+bindKeyBtn.TextSize = 13;
+Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\184\25\219\43\79\239\136\34", "\129\237\80\152\68\61"), bindKeyBtn).CornerRadius = UDim.new(0, 6);
+local bindDropdown = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\119\186\5\254\25", "\56\49\200\100\147\124\119"), V.bindPanel);
+bindDropdown.Size = UDim2.new(1, -20, 0, 32);
+bindDropdown.Position = UDim2.new(0, 10, 0, 72);
+bindDropdown.BackgroundColor3 = Color3.fromRGB(30, 30, 40);
+Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\249\23\156\255\222\48\186\226", "\144\172\94\223"), bindDropdown).CornerRadius = UDim.new(0, 6);
+local bindModeBtn = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\16\10\186\83\6\26\182\83\43\1", "\39\68\111\194"), bindDropdown);
+bindModeBtn.Name = LUAOBFUSACTOR_DECRYPT_STR_0("\251\169\227\194\91\162\194\178\232\201", "\215\182\198\135\167\25");
+bindModeBtn.Size = UDim2.new(1, 0, 1, 0);
+bindModeBtn.BackgroundTransparency = 1;
+bindModeBtn.Font = Enum.Font.GothamMedium;
+bindModeBtn.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\160\102\206\109\215\9\222\103\170\110\198\109", "\40\237\41\138");
+bindModeBtn.TextColor3 = Color3.new(1, 1, 1);
+bindModeBtn.TextSize = 12;
+local bindDropList = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\228\117\244\238\75\212\83\232\247\95\215", "\42\167\20\154\152"), V.bindPanel);
+bindDropList.Size = UDim2.new(0, 160, 0, 0);
+bindDropList.Position = UDim2.new(0, 10, 0, 106);
+bindDropList.BackgroundColor3 = Color3.fromRGB(25, 25, 30);
+bindDropList.Visible = false;
+bindDropList.ZIndex = 30;
+Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\127\215\129\77\99\47\79\236", "\65\42\158\194\34\17"), bindDropList).CornerRadius = UDim.new(0, 6);
+local bdStroke = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\47\14\97\24\63\226\16\235", "\142\122\71\50\108\77\141\123"), bindDropList);
+bdStroke.Color = Color3.fromRGB(50, 50, 70);
+local bdLay = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\32\139\211\17\40\1\142\254\1\52\0\182", "\91\117\194\159\120"), bindDropList);
+local function createModeOpt(name)
+	local b = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\46\24\38\12\23\228\48\14\18\48", "\68\122\125\94\120\85\145"), bindDropList);
+	b.Name = LUAOBFUSACTOR_DECRYPT_STR_0("\56\12\219\87\199\215", "\218\119\124\175\62\168\185") .. name;
+	b.Size = UDim2.new(1, 0, 0, 28);
+	b.BackgroundTransparency = 1;
+	b.BackgroundColor3 = Color3.fromRGB(70, 110, 255);
+	b.Font = Enum.Font.GothamMedium;
+	b.Text = name;
+	b.TextColor3 = Color3.fromRGB(200, 200, 210);
+	b.TextSize = 12;
+	b.ZIndex = 35;
+	b.Active = true;
+	b.MouseButton1Click:Connect(function()
+		if V.currentlyBinding then
+			local bObj = V.StoredBinds[V.currentlyBinding] or {[LUAOBFUSACTOR_DECRYPT_STR_0("\150\228\73\208\160", "\164\197\144\40")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\174\255\174\142", "\214\227\144\202\235\189")]=LUAOBFUSACTOR_DECRYPT_STR_0("\217\170\128\124\28\182", "\92\141\197\231\27\112\211\51")};
+			bObj.Mode = name;
+			V.StoredBinds[V.currentlyBinding] = bObj;
+			bindModeBtn.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\203\208\174\134\139\166", "\177\134\159\234\195") .. string.upper(name);
+			updateBindPanel(V.currentlyBinding);
+			updateBindList();
+			tw(bindDropList, {[LUAOBFUSACTOR_DECRYPT_STR_0("\142\226\37\165", "\169\221\139\95\192")]=UDim2.new(1, 0, 0, 0),[LUAOBFUSACTOR_DECRYPT_STR_0("\249\153\112\42\50\18\204\138\113\44\50\39\204\142\113\60\59", "\70\190\235\31\95\66")]=1}, 0.2).Completed:Connect(function()
+				bindDropList.Visible = false;
+			end);
+			tw(V.bindPanel, {[LUAOBFUSACTOR_DECRYPT_STR_0("\137\235\0\227", "\133\218\130\122\134")]=UDim2.new(0, 180, 0, 140)}, 0.2);
+		end
+	end);
+	b.MouseEnter:Connect(function()
+		tw(b, {[LUAOBFUSACTOR_DECRYPT_STR_0("\30\254\224\207\219\177\55\41\241\231\240\206\162\54\47\239\226\214\217\173\59\37", "\88\92\159\131\164\188\195")]=0.85,[LUAOBFUSACTOR_DECRYPT_STR_0("\180\43\167\95\244\228\209\143\60\236", "\189\224\78\223\43\183\139")]=Color3.new(1, 1, 1)}, 0.15);
+	end);
+	b.MouseLeave:Connect(function()
+		if (V.currentlyBinding and V.StoredBinds[V.currentlyBinding] and (V.StoredBinds[V.currentlyBinding].Mode == name)) then
+			return;
+		end
+		tw(b, {[LUAOBFUSACTOR_DECRYPT_STR_0("\12\253\137\29\198\60\243\159\24\197\26\238\139\24\210\62\253\152\19\207\45\229", "\161\78\156\234\118")]=1,[LUAOBFUSACTOR_DECRYPT_STR_0("\147\178\209\200\132\184\197\211\181\228", "\188\199\215\169")]=Color3.fromRGB(200, 200, 210)}, 0.15);
+	end);
+end
+createModeOpt(LUAOBFUSACTOR_DECRYPT_STR_0("\200\6\88\124\228\249", "\136\156\105\63\27"));
+createModeOpt(LUAOBFUSACTOR_DECRYPT_STR_0("\51\131\117\48", "\84\123\236\25"));
+local bindClearBtn = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\196\142\178\3\142\160\228\159\165\25", "\213\144\235\202\119\204"), V.bindPanel);
+bindClearBtn.Size = UDim2.new(1, -20, 0, 24);
+bindClearBtn.Position = UDim2.new(0, 10, 0, 110);
+bindClearBtn.BackgroundTransparency = 1;
+bindClearBtn.Font = Enum.Font.GothamMedium;
+bindClearBtn.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\0\52\251\11\26\99\111\10\54\250", "\45\67\120\190\74\72\67");
+bindClearBtn.TextColor3 = Color3.fromRGB(255, 80, 80);
+bindClearBtn.TextSize = 11;
+local function closePopup(panel, scale)
+	if (not panel or not panel.Visible) then
+		return;
+	end
+	local str = panel:FindFirstChildOfClass(LUAOBFUSACTOR_DECRYPT_STR_0("\21\11\222\177\235\135\229\236", "\137\64\66\141\197\153\232\142"));
+	if str then
+		tw(str, {[LUAOBFUSACTOR_DECRYPT_STR_0("\55\194\35\168\155\19\209\48\163\134\0\201", "\232\99\176\66\198")]=1}, 0.2);
+	end
+	tw(panel, {[LUAOBFUSACTOR_DECRYPT_STR_0("\203\51\39\19\107\185\235\45\226\50\56\7\105\136\247\47\245", "\76\140\65\72\102\27\237\153")]=1}, 0.2);
+	tw(scale, {[LUAOBFUSACTOR_DECRYPT_STR_0("\121\217\23\222\210", "\222\42\186\118\178\183\97")]=0.85}, 0.2, Enum.EasingStyle.Quart, Enum.EasingDirection.In);
+	task.wait(0.2);
+	panel.Visible = false;
+	if V.activeSource then
+		V.activeSource = nil;
+	end
+end
+local function openPopup(panel, scale)
+	if (V.activePopup and (V.activePopup ~= panel)) then
+		if ((V.activePopup == V.subPanel) and (panel == V.pickerPanel)) then
+			V.previousPopup = V.activePopup;
+		else
+			local oldPanel = V.activePopup;
+			local oldScale = ((oldPanel == V.pickerPanel) and V.pickerScale) or ((oldPanel == V.bindPanel) and V.bindScale) or V.subScale;
+			task.spawn(function()
+				closePopup(oldPanel, oldScale);
+			end);
+			V.previousPopup = nil;
+		end
+	end
+	V.activePopup = panel;
+	local mPos = UIS:GetMouseLocation();
+	panel.Position = UDim2.new(0, mPos.X + 15, 0, mPos.Y - 20);
+	local screen = V.MenuGui.AbsoluteSize;
+	if ((panel.Position.X.Offset + panel.Size.X.Offset) > screen.X) then
+		panel.Position = UDim2.new(0, (mPos.X - panel.Size.X.Offset) - 15, 0, mPos.Y - 20);
+	end
+	panel.Visible = true;
+	panel.GroupTransparency = 1;
+	scale.Scale = 0.85;
+	local str = panel:FindFirstChildOfClass(LUAOBFUSACTOR_DECRYPT_STR_0("\104\197\119\158\79\227\79\143", "\234\61\140\36"));
+	if str then
+		str.Transparency = 1;
+		task.delay(0.05, function()
+			tw(str, {[LUAOBFUSACTOR_DECRYPT_STR_0("\21\207\187\124\28\49\220\168\119\1\34\196", "\111\65\189\218\18")]=0}, 0.25);
+		end);
+	end
+	tw(panel, {[LUAOBFUSACTOR_DECRYPT_STR_0("\100\89\20\32\27\104\189\66\69\8\37\10\78\170\77\72\2", "\207\35\43\123\85\107\60")]=0}, 0.25);
+	tw(scale, {[LUAOBFUSACTOR_DECRYPT_STR_0("\67\169\161\230\124", "\25\16\202\192\138")]=1}, 0.3, Enum.EasingStyle.Back, Enum.EasingDirection.Out);
+end
+local function updateBindPanel(name)
+	local b = V.StoredBinds[name];
+	local currentMode = (b and b.Mode) or LUAOBFUSACTOR_DECRYPT_STR_0("\201\196\170\229\165\241", "\148\157\171\205\130\201");
+	bindModeBtn.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\14\251\80\12\139\182", "\150\67\180\20\73\177") .. string.upper(currentMode);
+	bindModeBtn.TextColor3 = Color3.new(1, 1, 1);
+	if (b and (b.Key or b.InputType)) then
+		local keyName = (b.Key and b.Key.Name:upper()) or (b.InputType and b.InputType.Name:upper()) or LUAOBFUSACTOR_DECRYPT_STR_0("\163\55\52\104", "\45\237\120\122");
+		bindKeyBtn.Text = keyName;
+		bindClearBtn.Visible = true;
+	else
+		bindKeyBtn.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\249\199\140\9", "\76\183\136\194");
+		bindClearBtn.Visible = false;
+	end
+	for _, child in ipairs(bindDropList:GetChildren()) do
+		if (child:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\78\227\253\44\114\90\0\110\233\235", "\116\26\134\133\88\48\47")) and child.Name:match(LUAOBFUSACTOR_DECRYPT_STR_0("\32\238\176\240\180\125\16", "\18\126\161\192\132\221"))) then
+			local modeName = child.Name:gsub(LUAOBFUSACTOR_DECRYPT_STR_0("\97\7\190\16\95\80\38", "\54\63\72\206\100"), "");
+			if (modeName == currentMode) then
+				tw(child, {[LUAOBFUSACTOR_DECRYPT_STR_0("\234\88\70\113\226\105\199\76\75\126\209\105\201\87\86\106\228\105\205\87\70\99", "\27\168\57\37\26\133")]=0.85,[LUAOBFUSACTOR_DECRYPT_STR_0("\25\175\100\188\244\34\166\115\186\132", "\183\77\202\28\200")]=Color3.new(1, 1, 1)}, 0.15);
+			else
+				tw(child, {[LUAOBFUSACTOR_DECRYPT_STR_0("\53\50\138\3\16\33\134\29\25\55\189\26\22\61\154\24\22\33\140\6\20\42", "\104\119\83\233")]=1,[LUAOBFUSACTOR_DECRYPT_STR_0("\193\253\63\54\96\250\244\40\48\16", "\35\149\152\71\66")]=Color3.fromRGB(200, 200, 210)}, 0.15);
+			end
+		end
+	end
+end
+bindKeyBtn.MouseButton1Click:Connect(function()
+	V.isTrackingKey = true;
+	bindKeyBtn.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\87\166\12", "\90\121\136\34\208");
+	bindKeyBtn.TextColor3 = Color3.fromRGB(255, 255, 255);
+end);
+bindModeBtn.MouseButton1Click:Connect(function()
+	local isOpen = bindDropList.Visible;
+	if not isOpen then
+		bindDropList.Visible = true;
+		bindDropList.GroupTransparency = 1;
+		updateBindPanel(V.currentlyBinding);
+		tw(bindDropList, {[LUAOBFUSACTOR_DECRYPT_STR_0("\244\7\79\27", "\126\167\110\53")]=UDim2.new(1, 0, 0, 60),[LUAOBFUSACTOR_DECRYPT_STR_0("\26\2\33\237\204\11\47\17\32\235\204\62\47\21\32\251\197", "\95\93\112\78\152\188")]=0}, 0.2);
+		tw(V.bindPanel, {[LUAOBFUSACTOR_DECRYPT_STR_0("\242\252\159\16", "\178\161\149\229\117\132\222")]=UDim2.new(0, 180, 0, 200)}, 0.2);
+	else
+		tw(bindDropList, {[LUAOBFUSACTOR_DECRYPT_STR_0("\187\210\199\169", "\67\232\187\189\204\193\118\198")]=UDim2.new(1, 0, 0, 0),[LUAOBFUSACTOR_DECRYPT_STR_0("\172\60\186\53\43\54\253\138\32\166\48\58\16\234\133\45\172", "\143\235\78\213\64\91\98")]=1}, 0.2).Completed:Connect(function()
+			if not bindDropList.Visible then
+				bindDropList.Visible = false;
+			end
+			bindDropList.Visible = false;
+		end);
+		tw(V.bindPanel, {[LUAOBFUSACTOR_DECRYPT_STR_0("\190\65\158\236", "\214\237\40\228\137\16")]=UDim2.new(0, 180, 0, 140)}, 0.2);
+	end
+end);
+bindClearBtn.MouseButton1Click:Connect(function()
+	if V.currentlyBinding then
+		V.StoredBinds[V.currentlyBinding] = nil;
+		updateBindPanel(V.currentlyBinding);
+		closePopup(V.bindPanel, V.bindScale);
+	end
+end);
+UIS.InputBegan:Connect(function(input, gp)
+	if V.isTrackingKey then
+		if ((input.UserInputType == Enum.UserInputType.MouseButton1) or (input.UserInputType == Enum.UserInputType.MouseButton2)) then
+			local p = input.Position;
+			local objects = V.LP.PlayerGui:GetGuiObjectsAtPosition(p.X, p.Y);
+			for _, obj in ipairs(objects) do
+				if (obj:IsDescendantOf(V.bindPanel) or (obj == V.bindPanel)) then
+					return;
+				end
+			end
+		end
+		if ((input.UserInputType == Enum.UserInputType.Keyboard) or (input.UserInputType == Enum.UserInputType.MouseButton1) or (input.UserInputType == Enum.UserInputType.MouseButton2) or (input.UserInputType == Enum.UserInputType.MouseButton3)) then
+			V.isTrackingKey = false;
+			local key = input.KeyCode;
+			local it = input.UserInputType;
+			if (key == Enum.KeyCode.Escape) then
+				bindKeyBtn.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\171\204\193\252", "\198\229\131\143\185\99");
+				if V.currentlyBinding then
+					V.StoredBinds[V.currentlyBinding] = nil;
+				end
+			else
+				local keyName = ((key ~= Enum.KeyCode.Unknown) and key.Name:upper()) or it.Name:upper();
+				bindKeyBtn.Text = keyName;
+				if V.currentlyBinding then
+					V.StoredBinds[V.currentlyBinding] = V.StoredBinds[V.currentlyBinding] or {[LUAOBFUSACTOR_DECRYPT_STR_0("\124\131\172\118", "\19\49\236\200")]=LUAOBFUSACTOR_DECRYPT_STR_0("\202\56\241\176\232\191", "\218\158\87\150\215\132"),[LUAOBFUSACTOR_DECRYPT_STR_0("\200\10\216\246\51", "\173\155\126\185\130\86\66")]=false};
+					V.StoredBinds[V.currentlyBinding].Key = ((key ~= Enum.KeyCode.Unknown) and key) or nil;
+					V.StoredBinds[V.currentlyBinding].InputType = it;
+					updateBindPanel(V.currentlyBinding);
+				end
+			end
+			bindKeyBtn.TextColor3 = Color3.fromRGB(70, 110, 255);
+			updateBindList();
+			return;
+		end
+	end
+	if ((input.UserInputType == Enum.UserInputType.MouseButton1) and V.activePopup and V.activePopup.Visible) then
+		local p = input.Position;
+		local objects = V.LP.PlayerGui:GetGuiObjectsAtPosition(p.X, p.Y);
+		local isOver = false;
+		for _, obj in ipairs(objects) do
+			if (obj:IsDescendantOf(V.activePopup) or (obj == V.activePopup)) then
+				isOver = true;
+				break;
+			end
+		end
+		if not isOver then
+			if (V.previousPopup and V.previousPopup.Visible) then
+				local overPrev = false;
+				for _, obj in ipairs(objects) do
+					if (obj:IsDescendantOf(V.previousPopup) or (obj == V.previousPopup)) then
+						overPrev = true;
+						break;
+					end
+				end
+				if overPrev then
+					local p = V.activePopup;
+					local s = ((p == V.pickerPanel) and V.pickerScale) or ((p == V.bindPanel) and V.bindScale) or V.subScale;
+					task.spawn(function()
+						closePopup(p, s);
+					end);
+					V.activePopup = V.previousPopup;
+					V.previousPopup = nil;
+					return;
+				end
+			end
+			local oldPanel = V.activePopup;
+			local oldScale = ((oldPanel == V.pickerPanel) and V.pickerScale) or ((oldPanel == V.bindPanel) and V.bindScale) or V.subScale;
+			task.spawn(function()
+				closePopup(oldPanel, oldScale);
+			end);
+			if V.previousPopup then
+				local p = V.previousPopup;
+				local s = ((p == V.bindPanel) and V.bindScale) or V.subScale;
+				task.spawn(function()
+					closePopup(p, s);
+				end);
+				V.previousPopup = nil;
+			end
+			V.activePopup = nil;
+			return;
+		end
+	end
+	if gp then
+		return;
+	end
+	local changed = false;
+	for name, b in pairs(V.StoredBinds) do
+		local isTriggered = false;
+		if (name == LUAOBFUSACTOR_DECRYPT_STR_0("\196\175\183\197\135\248", "\140\133\198\218\167\232")) then
+			isTriggered = input.UserInputType == Enum.UserInputType.MouseButton2;
+		elseif (b.Key and (b.Key ~= Enum.KeyCode.Unknown)) then
+			isTriggered = input.KeyCode == b.Key;
+		elseif b.InputType then
+			isTriggered = input.UserInputType == b.InputType;
+		end
+		if isTriggered then
+			if (b.Mode == LUAOBFUSACTOR_DECRYPT_STR_0("\129\33\179\122\136\176", "\228\213\78\212\29")) then
+				b.State = not b.State;
+				if b.Callback then
+					b.Callback(b.State);
+				end
+				changed = true;
+			elseif (b.Mode == LUAOBFUSACTOR_DECRYPT_STR_0("\175\67\186\1", "\139\231\44\214\101")) then
+				b.State = true;
+				if b.Callback then
+					b.Callback(true);
+				end
+				changed = true;
+			end
+		end
+	end
+	if changed then
+		updateBindList();
+	end
+end);
+UIS.InputEnded:Connect(function(input)
+	local changed = false;
+	for name, b in pairs(V.StoredBinds) do
+		local isReleased = false;
+		if (name == LUAOBFUSACTOR_DECRYPT_STR_0("\248\230\11\92\31\165", "\118\185\143\102\62\112\209\81")) then
+			isReleased = input.UserInputType == Enum.UserInputType.MouseButton2;
+		elseif (b.Key and (b.Key ~= Enum.KeyCode.Unknown)) then
+			isReleased = input.KeyCode == b.Key;
+		elseif b.InputType then
+			isReleased = input.UserInputType == b.InputType;
+		end
+		if (isReleased and (b.Mode == LUAOBFUSACTOR_DECRYPT_STR_0("\116\127\37\226", "\88\60\16\73\134\197\117\124"))) then
+			b.State = false;
+			if b.Callback then
+				b.Callback(false);
+			end
+			changed = true;
+		end
+	end
+	if changed then
+		updateBindList();
+	end
+end);
+local function updatePicker(ch, cs, cv)
+	V.ph, V.ps, V.pv = ch or V.ph, cs or V.ps, cv or V.pv;
+	local color = Color3.fromHSV(V.ph, V.ps, V.pv);
+	svSquare.BackgroundColor3 = Color3.fromHSV(V.ph, 1, 1);
+	svCursor.Position = UDim2.new(V.ps, 0, 1 - V.pv, 0);
+	hCursor.Position = UDim2.new(V.ph, 0, 0.5, 0);
+	hexDisp.Text = "#" .. color:ToHex():upper() .. LUAOBFUSACTOR_DECRYPT_STR_0("\16\162", "\33\48\138\152\168") .. math.floor(V.ps * 100) .. LUAOBFUSACTOR_DECRYPT_STR_0("\55\95", "\87\18\118\80\49\161");
+	if V.pCallback then
+		V.pCallback(color);
+	end
+end
+svSquare.InputBegan:Connect(function(i)
+	if (i.UserInputType == Enum.UserInputType.MouseButton1) then
+		svDrag = true;
+	end
+end);
+hueSlider.InputBegan:Connect(function(i)
+	if (i.UserInputType == Enum.UserInputType.MouseButton1) then
+		hDrag = true;
+	end
+end);
+UIS.InputChanged:Connect(function(i)
+	if (i.UserInputType == Enum.UserInputType.MouseMovement) then
+		if svDrag then
+			local rx = math.clamp((i.Position.X - svSquare.AbsolutePosition.X) / svSquare.AbsoluteSize.X, 0, 1);
+			local ry = math.clamp((i.Position.Y - svSquare.AbsolutePosition.Y) / svSquare.AbsoluteSize.Y, 0, 1);
+			updatePicker(nil, rx, 1 - ry);
+		elseif hDrag then
+			local rx = math.clamp((i.Position.X - hueSlider.AbsolutePosition.X) / hueSlider.AbsoluteSize.X, 0, 1);
+			updatePicker(rx, nil, nil);
+		end
+	end
+end);
+UIS.InputEnded:Connect(function(i)
+	if (i.UserInputType == Enum.UserInputType.MouseButton1) then
+		svDrag, hDrag = false, false;
+	end
+end);
+local function nextO()
+	V.ord = V.ord + 1;
+	return V.ord;
+end
+local function addTab(name, icon)
+	local btn = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\120\27\194\180\146\89\10\206\175\190", "\208\44\126\186\192"));
+	btn.Size = UDim2.new(1, 0, 0, 50);
+	btn.BackgroundTransparency = 1;
+	btn.Font = Enum.Font.GothamBold;
+	btn.TextSize = 15;
+	btn.TextColor3 = Color3.fromRGB(180, 180, 200);
+	btn.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\183\90\228\134\84\188", "\46\151\122\196\166\116\156\169") .. name;
+	btn.TextXAlignment = Enum.TextXAlignment.Left;
+	btn.AutoButtonColor = false;
+	btn.LayoutOrder = nextO();
+	btn.ZIndex = 20;
+	btn.Visible = true;
+	btn.Parent = sidebar;
+	local accent = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\195\255\71\23\254", "\155\133\141\38\122"));
+	accent.Size = UDim2.new(0, 3, 0.6, 0);
+	accent.Position = UDim2.new(0, 0, 0.2, 0);
+	accent.BackgroundColor3 = Color3.fromRGB(70, 110, 255);
+	accent.BorderSizePixel = 0;
+	accent.Visible = false;
+	accent.Parent = btn;
+	local page = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\22\41\190\78\67\115\172\43\45\138\83\78\114\160", "\197\69\74\204\33\47\31"));
+	page.Size = UDim2.new(1, -20, 1, -10);
+	page.Position = UDim2.new(0, 10, 0, 5);
+	page.BackgroundTransparency = 1;
+	page.BorderSizePixel = 0;
+	page.ScrollBarThickness = 3;
+	page.ScrollBarImageColor3 = Color3.fromRGB(60, 60, 80);
+	page.CanvasSize = UDim2.new(0, 0, 0, 0);
+	page.AutomaticCanvasSize = Enum.AutomaticSize.Y;
+	page.Visible = false;
+	page.Parent = content;
+	local leftCol = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\214\93\91\138\245", "\231\144\47\58"));
+	leftCol.Size = UDim2.new(0.5, -5, 1, 0);
+	leftCol.BackgroundTransparency = 1;
+	leftCol.Parent = page;
+	Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\135\241\246\124\11\41\227\56\171\215\207\97", "\89\210\184\186\21\120\93\175"), leftCol).Padding = UDim.new(0, 15);
+	local rightCol = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\151\65\125\216\124", "\90\209\51\28\181\25"));
+	rightCol.Size = UDim2.new(0.5, -5, 1, 0);
+	rightCol.Position = UDim2.new(0.5, 5, 0, 0);
+	rightCol.BackgroundTransparency = 1;
+	rightCol.Parent = page;
+	Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\229\82\123\231\172\196\87\86\247\176\197\111", "\223\176\27\55\142"), rightCol).Padding = UDim.new(0, 15);
+	local pl = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\17\146\226\188\55\175\226\180\61\180\219\161", "\213\68\219\174"));
+	pl.FillDirection = Enum.FillDirection.Horizontal;
+	pl.Padding = UDim.new(0, 10);
+	pl.SortOrder = Enum.SortOrder.LayoutOrder;
+	pl.Parent = page;
+	btn.MouseButton1Click:Connect(function()
+		for _, t in pairs(V.tabs) do
+			t.Page.Visible = false;
+			t.Accent.Visible = false;
+			tw(t.Button, {[LUAOBFUSACTOR_DECRYPT_STR_0("\63\229\59\243\9\202\51\112\25\179", "\31\107\128\67\135\74\165\95")]=Color3.fromRGB(150, 150, 165),[LUAOBFUSACTOR_DECRYPT_STR_0("\250\233\255\70\70\163\215\253\242\73\117\163\217\230\239\93\64\163\221\230\255\84", "\209\184\136\156\45\33")]=1}, 0.15);
+		end
+		page.Visible = true;
+		accent.Visible = true;
+		tw(btn, {[LUAOBFUSACTOR_DECRYPT_STR_0("\51\205\109\28\155\8\196\122\26\235", "\216\103\168\21\104")]=Color3.new(1, 1, 1),[LUAOBFUSACTOR_DECRYPT_STR_0("\90\172\64\175\127\191\76\177\118\169\119\182\121\163\80\180\121\191\70\170\123\180", "\196\24\205\35")]=0.92}, 0.15);
+		if (V.activePopup and V.activePopup.Visible) then
+			local s = ((V.activePopup == V.pickerPanel) and V.pickerScale) or ((V.activePopup == V.bindPanel) and V.bindScale) or V.subScale;
+			task.spawn(function()
+				closePopup(V.activePopup, s);
+			end);
+		end
+		if V.pickerPanel.Visible then
+			task.spawn(function()
+				closePopup(V.pickerPanel, V.pickerScale);
+			end);
+		end
+		if V.subPanel.Visible then
+			task.spawn(function()
+				closePopup(V.subPanel, V.subScale);
+			end);
+		end
+		if (V.bindPanel and V.bindPanel.Visible) then
+			task.spawn(function()
+				closePopup(V.bindPanel, V.bindScale);
+			end);
+		end
+		V.activePopup = nil;
+		V.previousPopup = nil;
+		V.activeSource = nil;
+		if (name == LUAOBFUSACTOR_DECRYPT_STR_0("\24\130\240\19\47\135\240", "\102\78\235\131")) then
+			initPreview();
+			V.previewPanel.Visible = true;
+			tw(V.previewPanel, {[LUAOBFUSACTOR_DECRYPT_STR_0("\221\60\59\81\87\13\165\53\244\61\36\69\85\60\185\55\227", "\84\154\78\84\36\39\89\215")]=0}, 0.25);
+		else
+			tw(V.previewPanel, {[LUAOBFUSACTOR_DECRYPT_STR_0("\218\243\89\77\21\201\243\87\86\22\237\224\68\93\11\254\248", "\101\157\129\54\56")]=1}, 0.2).Completed:Connect(function()
+				if not (V.tabs[1] and V.tabs[1].Page.Visible) then
+					V.previewPanel.Visible = false;
+				end
+			end);
+		end
+	end);
+	btn.MouseEnter:Connect(function()
+		if not page.Visible then
+			tw(btn, {[LUAOBFUSACTOR_DECRYPT_STR_0("\41\172\146\191\0\118\17\166\152\248", "\25\125\201\234\203\67")]=Color3.new(0.9, 0.9, 0.9),[LUAOBFUSACTOR_DECRYPT_STR_0("\91\245\27\8\19\53\28\108\250\28\55\6\38\29\106\228\25\17\17\41\16\96", "\115\25\148\120\99\116\71")]=0.96}, 0.15);
+		end
+	end);
+	btn.MouseLeave:Connect(function()
+		if not page.Visible then
+			tw(btn, {[LUAOBFUSACTOR_DECRYPT_STR_0("\56\56\161\48\98\3\49\182\54\18", "\33\108\93\217\68")]=Color3.fromRGB(150, 150, 165),[LUAOBFUSACTOR_DECRYPT_STR_0("\249\74\162\166\220\89\174\184\213\79\149\191\218\69\178\189\218\89\164\163\216\82", "\205\187\43\193")]=1}, 0.15);
+		end
+	end);
+	local tab = {[LUAOBFUSACTOR_DECRYPT_STR_0("\220\103\17\203\241\124", "\191\158\18\101")]=btn,[LUAOBFUSACTOR_DECRYPT_STR_0("\245\194\128\178", "\207\165\163\231\215")]=page,[LUAOBFUSACTOR_DECRYPT_STR_0("\231\250\250\83\42\100", "\16\166\153\153\54\68")]=accent,[LUAOBFUSACTOR_DECRYPT_STR_0("\254\182\198\82", "\153\178\211\160\38\84\65")]=leftCol,[LUAOBFUSACTOR_DECRYPT_STR_0("\176\2\93\35\150", "\75\226\107\58")]=rightCol};
+	table.insert(V.tabs, tab);
+	if (#V.tabs == 1) then
+		page.Visible = true;
+		accent.Visible = true;
+		btn.TextColor3 = Color3.new(1, 1, 1);
+		btn.BackgroundColor3 = Color3.new(1, 1, 1);
+		btn.BackgroundTransparency = 0.95;
+	end
+	return tab;
+end
+local function section(parent, title)
+	local container = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\126\204\16\119\20", "\173\56\190\113\26\113\162"));
+	container.Size = UDim2.new(1, 0, 0, 0);
+	container.AutomaticSize = Enum.AutomaticSize.Y;
+	container.BackgroundTransparency = 1;
+	container.LayoutOrder = nextO();
+	container.Parent = parent;
+	local l = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\255\219\53\17\219\202\220\40\9", "\151\171\190\77\101"));
+	l.Size = UDim2.new(1, 0, 0, 20);
+	l.Position = UDim2.new(0, 5, 0, 0);
+	l.BackgroundTransparency = 1;
+	l.Font = Enum.Font.GothamBold;
+	l.TextColor3 = Color3.fromRGB(100, 100, 120);
+	l.TextSize = 11;
+	l.TextXAlignment = Enum.TextXAlignment.Left;
+	l.Text = string.upper(title);
+	l.Parent = container;
+	local box = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\227\61\249\164\253", "\107\165\79\152\201\152\29"));
+	box.Size = UDim2.new(1, 0, 0, 0);
+	box.Position = UDim2.new(0, 0, 0, 22);
+	box.AutomaticSize = Enum.AutomaticSize.Y;
+	box.BackgroundColor3 = Color3.fromRGB(20, 20, 26);
+	box.BorderSizePixel = 0;
+	box.Parent = container;
+	Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\98\103\203\196\70\113\82\92", "\31\55\46\136\171\52"), box).CornerRadius = UDim.new(0, 8);
+	local str = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\228\1\239\224\195\39\215\241", "\148\177\72\188"), box);
+	str.Color = Color3.fromRGB(35, 35, 45);
+	str.Thickness = 1;
+	local il = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\147\159\123\218\181\162\123\210\191\185\66\199", "\179\198\214\55"), box);
+	il.Padding = UDim.new(0, 1);
+	il.SortOrder = Enum.SortOrder.LayoutOrder;
+	local pad = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\197\37\66\119\65\215\249\2\117", "\179\144\108\18\22\37"), box);
+	pad.PaddingBottom = UDim.new(0, 2);
+	pad.PaddingTop = UDim.new(0, 2);
+	return box;
+end
+local function addSubTab(tab, name)
+	if not tab.SubBar then
+		if tab.Left then
+			tab.Left.Visible = false;
+			tab.Left:Destroy();
+			tab.Left = nil;
+		end
+		if tab.Right then
+			tab.Right.Visible = false;
+			tab.Right:Destroy();
+			tab.Right = nil;
+		end
+		local currLayout = tab.Page:FindFirstChildOfClass(LUAOBFUSACTOR_DECRYPT_STR_0("\243\138\55\128\220\210\143\26\144\192\211\183", "\175\166\195\123\233"));
+		if currLayout then
+			currLayout:Destroy();
+		end
+		tab.Page.AutomaticCanvasSize = Enum.AutomaticSize.None;
+		tab.Page.CanvasSize = UDim2.new(0, 0, 0, 0);
+		tab.Page.ScrollBarThickness = 0;
+		tab.SubBar = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\201\208\92\68\245", "\144\143\162\61\41"));
+		tab.SubBar.Size = UDim2.new(1, -10, 0, 35);
+		tab.SubBar.Position = UDim2.new(0, 5, 0, 2);
+		tab.SubBar.BackgroundTransparency = 1;
+		tab.SubBar.Parent = tab.Page;
+		local sl = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\213\250\49\89\97\147\31\225\202\18\69\102", "\83\128\179\125\48\18\231"));
+		sl.FillDirection = Enum.FillDirection.Horizontal;
+		sl.Padding = UDim.new(0, 15);
+		sl.VerticalAlignment = Enum.VerticalAlignment.Center;
+		sl.Parent = tab.SubBar;
+		tab.SubTabs = {};
+	end
+	local btn = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\105\178\235\201\101\11\73\163\252\211", "\126\61\215\147\189\39"));
+	btn.Size = UDim2.new(0, 0, 1, 0);
+	btn.AutomaticSize = Enum.AutomaticSize.X;
+	btn.BackgroundTransparency = 1;
+	btn.Font = Enum.Font.GothamBold;
+	btn.TextSize = 13;
+	btn.TextColor3 = Color3.fromRGB(140, 140, 155);
+	btn.Text = name:upper();
+	btn.AutoButtonColor = false;
+	btn.Parent = tab.SubBar;
+	local bLine = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\94\237\28\72\125", "\37\24\159\125"));
+	bLine.Size = UDim2.new(1, 0, 0, 2);
+	bLine.Position = UDim2.new(0, 0, 1, -2);
+	bLine.BackgroundColor3 = Color3.fromRGB(70, 110, 255);
+	bLine.BorderSizePixel = 0;
+	bLine.Visible = false;
+	bLine.Parent = btn;
+	local page = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\233\165\103\77\214\170\124\76\221\128\103\67\215\163", "\34\186\198\21"));
+	page.Size = UDim2.new(1, 0, 1, -40);
+	page.Position = UDim2.new(0, 0, 0, 40);
+	page.BackgroundTransparency = 1;
+	page.BorderSizePixel = 0;
+	page.ScrollBarThickness = 2;
+	page.ScrollBarImageColor3 = Color3.fromRGB(60, 60, 80);
+	page.AutomaticCanvasSize = Enum.AutomaticSize.Y;
+	page.Visible = false;
+	page.Parent = tab.Page;
+	local left = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\222\26\196\80\199", "\162\152\104\165\61"));
+	left.Size = UDim2.new(0.5, -5, 1, 0);
+	left.BackgroundTransparency = 1;
+	left.Parent = page;
+	Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\248\6\158\116\99\241\225\46\171\114\101\241", "\133\173\79\210\29\16"), left).Padding = UDim.new(0, 15);
+	local right = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\171\110\236\38\136", "\75\237\28\141"));
+	right.Size = UDim2.new(0.5, -5, 1, 0);
+	right.Position = UDim2.new(0.5, 5, 0, 0);
+	right.BackgroundTransparency = 1;
+	right.Parent = page;
+	Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\233\118\224\184\60\15\203\224\197\80\217\165", "\129\188\63\172\209\79\123\135"), right).Padding = UDim.new(0, 15);
+	local pl = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\117\205\202\196\83\240\202\204\89\235\243\217", "\173\32\132\134"));
+	pl.FillDirection = Enum.FillDirection.Horizontal;
+	pl.Padding = UDim.new(0, 10);
+	pl.Parent = page;
+	local sub = {[LUAOBFUSACTOR_DECRYPT_STR_0("\108\14\28\251\161\63", "\173\46\123\104\143\206\81")]=btn,[LUAOBFUSACTOR_DECRYPT_STR_0("\132\28\37\143", "\97\212\125\66\234\37\227")]=page,[LUAOBFUSACTOR_DECRYPT_STR_0("\166\230\176\33", "\126\234\131\214\85")]=left,[LUAOBFUSACTOR_DECRYPT_STR_0("\182\220\78\82\91", "\47\228\181\41\58")]=right,[LUAOBFUSACTOR_DECRYPT_STR_0("\138\245\215\62", "\127\198\156\185\91\99\80")]=bLine};
+	btn.MouseButton1Click:Connect(function()
+		for _, s in pairs(tab.SubTabs) do
+			s.Page.Visible = false;
+			s.Line.Visible = false;
+			tw(s.Button, {[LUAOBFUSACTOR_DECRYPT_STR_0("\193\31\212\228\132\4\53\209\231\73", "\190\149\122\172\144\199\107\89")]=Color3.fromRGB(140, 140, 155)}, 0.2);
+		end
+		page.Visible = true;
+		bLine.Visible = true;
+		tw(btn, {[LUAOBFUSACTOR_DECRYPT_STR_0("\6\0\233\234\221\61\9\254\236\173", "\158\82\101\145\158")]=Color3.new(1, 1, 1)}, 0.2);
+	end);
+	table.insert(tab.SubTabs, sub);
+	if (#tab.SubTabs == 1) then
+		page.Visible = true;
+		bLine.Visible = true;
+		btn.TextColor3 = Color3.new(1, 1, 1);
+	end
+	return sub;
+end
+local refreshers = {};
+local function RefreshUI()
+	for _, rf in ipairs(refreshers) do
+		rf();
+	end
+end
+local function toggle(parent, name, default, callback, opts)
+	local state = default;
+	local f = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\86\236\3\27\65", "\36\16\158\98\118"));
+	f.Size = UDim2.new(1, 0, 0, 42);
+	f.BackgroundColor3 = Color3.fromRGB(22, 22, 28);
+	f.BorderSizePixel = 0;
+	f.LayoutOrder = nextO();
+	f.Parent = parent;
+	Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\245\63\224\244\74\230\34\247", "\133\160\118\163\155\56\136\71"), f).CornerRadius = UDim.new(0, 8);
+	local lbl = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\194\167\105\230\154\30\183\243\174", "\213\150\194\17\146\214\127"));
+	lbl.Size = UDim2.new(1, -110, 1, 0);
+	lbl.Position = UDim2.new(0, 14, 0, 0);
+	lbl.BackgroundTransparency = 1;
+	lbl.Font = Enum.Font.GothamMedium;
+	lbl.TextColor3 = Color3.fromRGB(220, 220, 230);
+	lbl.TextSize = 14;
+	lbl.TextXAlignment = Enum.TextXAlignment.Left;
+	lbl.Text = name;
+	lbl.Parent = f;
+	local bg = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\61\187\165\217\67", "\86\123\201\196\180\38\196\194"));
+	bg.Size = UDim2.new(0, 48, 0, 24);
+	bg.Position = UDim2.new(1, -64, 0.5, -12);
+	bg.BackgroundColor3 = (default and Color3.fromRGB(70, 110, 255)) or Color3.fromRGB(45, 45, 55);
+	bg.BorderSizePixel = 0;
+	bg.Parent = f;
+	Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\194\193\250\160\229\230\220\189", "\207\151\136\185"), bg).CornerRadius = UDim.new(1, 0);
+	local knob = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\142\145\41\143\113", "\17\200\227\72\226\20\24"));
+	knob.Size = UDim2.new(0, 20, 0, 20);
+	knob.Position = (default and UDim2.new(1, -22, 0.5, -10)) or UDim2.new(0, 2, 0.5, -10);
+	knob.BackgroundColor3 = Color3.new(1, 1, 1);
+	knob.BorderSizePixel = 0;
+	knob.Parent = bg;
+	Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\133\104\56\216\219\255\234\237", "\159\208\33\123\183\169\145\143"), knob).CornerRadius = UDim.new(1, 0);
+	local btn = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\198\95\32\34\208\79\44\34\253\84", "\86\146\58\88"));
+	btn.Size = UDim2.new(1, 0, 1, 0);
+	btn.BackgroundTransparency = 1;
+	btn.Text = "";
+	btn.ZIndex = 2;
+	btn.Parent = f;
+	local function updateVisuals()
+		tw(bg, {[LUAOBFUSACTOR_DECRYPT_STR_0("\122\222\233\203\169\251\57\239\86\219\201\207\162\230\36\169", "\154\56\191\138\160\206\137\86")]=((state and Color3.fromRGB(70, 110, 255)) or Color3.fromRGB(45, 45, 55))}, 0.2);
+		tw(knob, {[LUAOBFUSACTOR_DECRYPT_STR_0("\182\86\230\142\104\51\142\194", "\172\230\57\149\231\28\90\225")]=((state and UDim2.new(1, -22, 0.5, -10)) or UDim2.new(0, 2, 0.5, -10))}, 0.2);
+	end
+	btn.MouseButton1Click:Connect(function()
+		state = not state;
+		updateVisuals();
+		callback(state);
+	end);
+	btn.MouseButton2Click:Connect(function()
+		V.currentlyBinding = name;
+		V.StoredBinds[name] = V.StoredBinds[name] or {[LUAOBFUSACTOR_DECRYPT_STR_0("\47\165\130\215", "\187\98\202\230\178\72")]=LUAOBFUSACTOR_DECRYPT_STR_0("\21\238\163\55\70\36", "\42\65\129\196\80"),[LUAOBFUSACTOR_DECRYPT_STR_0("\49\94\92\206\18", "\142\98\42\61\186\119\103\98")]=false};
+		V.StoredBinds[name].Callback = function(val)
+			state = val;
+			updateVisuals();
+			callback(val);
+			V.StoredBinds[name].State = val;
+			updateBindList();
+		end;
+		updateBindPanel(name);
+		openPopup(V.bindPanel, V.bindScale);
+	end);
+	if opts then
+		if opts.ColorData then
+			local cp = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\12\186\26\28\26\170\22\28\55\177", "\104\88\223\98"));
+			cp.Size = UDim2.new(0, 24, 0, 14);
+			cp.Position = UDim2.new(1, -115, 0.5, -7);
+			cp.BackgroundColor3 = opts.ColorData.Default;
+			cp.BorderSizePixel = 0;
+			cp.Text = "";
+			cp.ZIndex = 3;
+			cp.Parent = f;
+			Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\113\222\193\193\16\227\65\229", "\141\36\151\130\174\98"), cp).CornerRadius = UDim.new(0, 3);
+			Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\177\83\241\25\150\117\201\8", "\109\228\26\162"), cp).Color = Color3.new(0, 0, 0);
+			cp.MouseButton1Click:Connect(function()
+				if (V.pickerPanel.Visible and (V.activeSource == cp)) then
+					closePopup(V.pickerPanel, V.pickerScale);
+					V.activeSource = nil;
+					V.activePopup = V.previousPopup;
+					V.previousPopup = nil;
+				else
+					openPopup(V.pickerPanel, V.pickerScale);
+					V.activeSource = cp;
+					V.pCallback = function(color)
+						cp.BackgroundColor3 = color;
+						opts.ColorData.Callback(color);
+					end;
+					local h, s, v = cp.BackgroundColor3:ToHSV();
+					updatePicker(h, s, v);
+				end
+			end);
+			table.insert(refreshers, function()
+				local colorKey = opts.ColorKey or (name:gsub(" ", "") .. LUAOBFUSACTOR_DECRYPT_STR_0("\125\234\241\119\242", "\134\62\133\157\24\128"));
+				if V.CONFIG[colorKey] then
+					cp.BackgroundColor3 = V.CONFIG[colorKey];
+				end
+			end);
+		end
+		if opts.UseSettings then
+			local gear = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\51\160\2\205\13\164\194\19\170\20", "\182\103\197\122\185\79\209"));
+			gear.Size = UDim2.new(0, 24, 0, 24);
+			gear.Position = UDim2.new(1, -145, 0.5, -12);
+			gear.BackgroundTransparency = 1;
+			gear.Font = Enum.Font.GothamBold;
+			gear.TextSize = 14;
+			gear.TextColor3 = Color3.fromRGB(150, 150, 160);
+			gear.Text = "";
+			gear.ZIndex = 3;
+			gear.Parent = f;
+			local gearIcon = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\213\149\224\122\5", "\40\147\231\129\23\96"));
+			gearIcon.Name = LUAOBFUSACTOR_DECRYPT_STR_0("\82\253\141\87\146\175\211\123", "\188\21\152\236\37\219\204");
+			gearIcon.Size = UDim2.new(0, 16, 0, 16);
+			gearIcon.Position = UDim2.new(0.5, -8, 0.5, -8);
+			gearIcon.BackgroundTransparency = 1;
+			gearIcon.ZIndex = 4;
+			gearIcon.Parent = gear;
+			for i = 0, 2 do
+				local dot = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\102\251\54\1\69", "\108\32\137\87"), gearIcon);
+				dot.Size = UDim2.new(0, 3, 0, 3);
+				dot.Position = UDim2.new(0.5, -1.5, 0.25, (i * 5) - 1);
+				dot.BackgroundColor3 = Color3.fromRGB(150, 150, 160);
+				dot.BorderSizePixel = 0;
+				Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\159\193\35\169\61\247\78\75", "\57\202\136\96\198\79\153\43"), dot).CornerRadius = UDim.new(1, 0);
+			end
+			gear.MouseButton1Click:Connect(function()
+				if (V.subPanel.Visible and (V.activeSource == gear)) then
+					closePopup(V.subPanel, V.subScale);
+					V.activeSource = nil;
+					V.activePopup = nil;
+				else
+					if (V.activePopup and V.activePopup.Visible) then
+						local s = ((V.activePopup == V.pickerPanel) and V.pickerScale) or ((V.activePopup == V.bindPanel) and V.bindScale) or V.subScale;
+						task.spawn(function()
+							closePopup(V.activePopup, s);
+						end);
+						V.activePopup = nil;
+					end
+					task.wait(0.05);
+					openPopup(V.subPanel, V.subScale);
+					V.activeSource = gear;
+					V.activePopup = V.subPanel;
+				end
+			end);
+		end
+	end
+	f.MouseEnter:Connect(function()
+		tw(f, {[LUAOBFUSACTOR_DECRYPT_STR_0("\137\34\169\172\138\181\247\190\45\174\132\130\171\247\185\112", "\152\203\67\202\199\237\199")]=Color3.fromRGB(28, 28, 36)}, 0.15);
+	end);
+	f.MouseLeave:Connect(function()
+		tw(f, {[LUAOBFUSACTOR_DECRYPT_STR_0("\216\66\163\4\24\103\118\243\244\71\131\0\19\122\107\181", "\134\154\35\192\111\127\21\25")]=Color3.fromRGB(22, 22, 28)}, 0.15);
+	end);
+	table.insert(refreshers, function()
+		local configKey = (opts and opts.ConfigKey) or name:gsub(" ", "");
+		if (name == LUAOBFUSACTOR_DECRYPT_STR_0("\157\40\8\8\44\215\248\7\0\7\34\221\172", "\178\216\70\105\106\64")) then
+			configKey = LUAOBFUSACTOR_DECRYPT_STR_0("\30\34\119\244\198\193\241\142\62\41\118\243\205", "\224\95\75\26\150\169\181\180");
+		end
+		if (name == LUAOBFUSACTOR_DECRYPT_STR_0("\46\212\217\42\72\169\54\39\213\219\41\72\236\83\56\234", "\22\107\186\184\72\36\204")) then
+			configKey = LUAOBFUSACTOR_DECRYPT_STR_0("\203\178\39\79\2\215\177\37\87\11\245\152\23\126", "\110\135\221\68\46");
+		end
+		if (name == LUAOBFUSACTOR_DECRYPT_STR_0("\193\57\25\229\202\186\53\228\118\46\228\214", "\91\131\86\108\139\174\211")) then
+			configKey = LUAOBFUSACTOR_DECRYPT_STR_0("\217\36\160\50\83\250\41\180\18\89", "\61\155\75\216\119");
+		end
+		for k, v in pairs(V.CONFIG) do
+			if ((k:lower() == configKey:lower()) or (k:lower() == (configKey .. LUAOBFUSACTOR_DECRYPT_STR_0("\33\165\179\62\84\12\217", "\189\100\203\210\92\56\105")):lower())) then
+				state = v;
+				updateVisuals();
+				callback(state);
+				break;
+			end
+		end
+	end);
+	return f;
+end
+local function colorPick(parent, name, default, callback, opts)
+	local f = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\9\67\252\37\42", "\72\79\49\157"));
+	f.Size = UDim2.new(1, 0, 0, 42);
+	f.BackgroundColor3 = Color3.fromRGB(22, 22, 28);
+	f.BorderSizePixel = 0;
+	f.LayoutOrder = nextO();
+	f.Parent = parent;
+	Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\189\153\18\179\154\190\52\174", "\220\232\208\81"), f).CornerRadius = UDim.new(0, 8);
+	local lbl = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\193\187\253\36\0\91\163\240\178", "\193\149\222\133\80\76\58"));
+	lbl.Size = UDim2.new(1, -50, 1, 0);
+	lbl.Position = UDim2.new(0, 14, 0, 0);
+	lbl.BackgroundTransparency = 1;
+	lbl.Font = Enum.Font.GothamMedium;
+	lbl.TextColor3 = Color3.fromRGB(220, 220, 230);
+	lbl.TextSize = 14;
+	lbl.TextXAlignment = Enum.TextXAlignment.Left;
+	lbl.Text = name;
+	lbl.Parent = f;
+	local preview = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\242\88\87\198\228\72\91\198\201\83", "\178\166\61\47"));
+	preview.Size = UDim2.new(0, 28, 0, 16);
+	preview.Position = UDim2.new(1, -44, 0.5, -8);
+	preview.BackgroundColor3 = default;
+	preview.BorderSizePixel = 0;
+	preview.Text = "";
+	preview.Parent = f;
+	Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\206\99\203\117\216\48\254\88", "\94\155\42\136\26\170"), preview).CornerRadius = UDim.new(0, 3);
+	preview.MouseButton1Click:Connect(function()
+		if (V.pickerPanel.Visible and (V.activeSource == preview)) then
+			closePopup(V.pickerPanel, V.pickerScale);
+			V.activeSource = nil;
+			V.activePopup = V.previousPopup;
+			V.previousPopup = nil;
+		else
+			openPopup(V.pickerPanel, V.pickerScale);
+			V.activeSource = preview;
+			V.pCallback = function(color)
+				preview.BackgroundColor3 = color;
+				callback(color);
+			end;
+			local h, s, v = preview.BackgroundColor3:ToHSV();
+			updatePicker(h, s, v);
+		end
+	end);
+	f.MouseEnter:Connect(function()
+		tw(f, {[LUAOBFUSACTOR_DECRYPT_STR_0("\166\62\37\190\131\45\41\160\138\59\5\186\136\48\52\230", "\213\228\95\70")]=Color3.fromRGB(28, 28, 36)}, 0.15);
+	end);
+	f.MouseLeave:Connect(function()
+		tw(f, {[LUAOBFUSACTOR_DECRYPT_STR_0("\8\186\193\143\112\56\180\215\138\115\9\180\206\139\101\121", "\23\74\219\162\228")]=Color3.fromRGB(22, 22, 28)}, 0.15);
+	end);
+	table.insert(refreshers, function()
+		local search = (opts and opts.ConfigKey) or name:gsub(" ", "");
+		for k, v in pairs(V.CONFIG) do
+			if ((k:lower() == search:lower()) or (k:lower() == (search .. LUAOBFUSACTOR_DECRYPT_STR_0("\26\233\74\160\41", "\91\89\134\38\207")):lower())) then
+				preview.BackgroundColor3 = v;
+				callback(v);
+				break;
+			end
+		end
+	end);
+	return f;
+end
+local function dropdown(parent, name, options, default, callback, opts)
+	local open = false;
+	local current = default;
+	local container = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\98\252\201\59\22", "\71\36\142\168\86\115\176"));
+	container.Size = UDim2.new(1, 0, 0, 42);
+	container.BackgroundTransparency = 1;
+	container.ClipsDescendants = false;
+	container.LayoutOrder = nextO();
+	container.Parent = parent;
+	local header = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\249\179\115\178\6", "\41\191\193\18\223\99\222\54"));
+	header.Size = UDim2.new(1, 0, 0, 42);
+	header.BackgroundColor3 = Color3.fromRGB(22, 22, 28);
+	header.BorderSizePixel = 0;
+	header.Parent = container;
+	Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\158\15\228\37\184\165\35\213", "\202\203\70\167\74"), header).CornerRadius = UDim.new(0, 8);
+	local lbl = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\24\4\196\39\93\45\3\217\63", "\17\76\97\188\83"));
+	lbl.Size = UDim2.new(1, -120, 1, 0);
+	lbl.Position = UDim2.new(0, 14, 0, 0);
+	lbl.BackgroundTransparency = 1;
+	lbl.Font = Enum.Font.GothamMedium;
+	lbl.TextColor3 = Color3.fromRGB(220, 220, 230);
+	lbl.TextSize = 14;
+	lbl.TextXAlignment = Enum.TextXAlignment.Left;
+	lbl.Text = name;
+	lbl.Parent = header;
+	local btn = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\177\34\193\35\18\150\95\183\138\41", "\195\229\71\185\87\80\227\43"));
+	btn.Size = UDim2.new(0, 90, 0, 24);
+	btn.Position = UDim2.new(1, -104, 0.5, -12);
+	btn.BackgroundColor3 = Color3.fromRGB(45, 45, 55);
+	btn.BorderSizePixel = 0;
+	btn.Font = Enum.Font.GothamBold;
+	btn.TextColor3 = Color3.fromRGB(70, 110, 255);
+	btn.Text = current:upper();
+	btn.Parent = header;
+	Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\213\213\35\95\253\238\249\18", "\143\128\156\96\48"), btn).CornerRadius = UDim.new(0, 6);
+	local arrow = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\140\212\232\6\59\185\211\245\30", "\119\216\177\144\114"));
+	arrow.Size = UDim2.new(0, 20, 0, 20);
+	arrow.Position = UDim2.new(1, -25, 0.5, -10);
+	arrow.BackgroundTransparency = 1;
+	arrow.Font = Enum.Font.GothamBold;
+	arrow.Text = ">";
+	arrow.TextColor3 = Color3.fromRGB(150, 150, 160);
+	arrow.TextSize = 14;
+	arrow.Rotation = 90;
+	arrow.Parent = header;
+	local list = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\239\59\248\79\204", "\34\169\73\153"));
+	list.Size = UDim2.new(1, 0, 0, 0);
+	list.Position = UDim2.new(0, 0, 0, 45);
+	list.BackgroundColor3 = Color3.fromRGB(24, 24, 30);
+	list.BorderSizePixel = 0;
+	list.ClipsDescendants = true;
+	list.Visible = false;
+	list.ZIndex = 10;
+	list.Parent = container;
+	Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\159\197\40\132\184\226\14\153", "\235\202\140\107"), list).CornerRadius = UDim.new(0, 8);
+	local stroke = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\57\93\7\188\251\40\252\192", "\165\108\20\84\200\137\71\151"), list);
+	stroke.Color = Color3.fromRGB(45, 45, 55);
+	stroke.Thickness = 1;
+	local listLay = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\79\157\7\129\105\160\7\137\99\187\62\156", "\232\26\212\75"), list);
+	listLay.SortOrder = Enum.SortOrder.LayoutOrder;
+	listLay.Padding = UDim.new(0, 2);
+	Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\2\96\66\233\243\51\64\124\239", "\151\87\41\18\136"), list).PaddingTop = UDim.new(0, 4);
+	for i, opt in ipairs(options) do
+		local oBtn = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\111\170\210\196\220\78\187\222\223\240", "\158\59\207\170\176"));
+		oBtn.Size = UDim2.new(1, -10, 0, 32);
+		oBtn.Position = UDim2.new(0, 5, 0, 0);
+		oBtn.BackgroundTransparency = ((opt == current) and 0.9) or 1;
+		oBtn.BackgroundColor3 = Color3.fromRGB(70, 110, 255);
+		oBtn.Font = Enum.Font.GothamMedium;
+		oBtn.TextColor3 = ((opt == current) and Color3.fromRGB(70, 110, 255)) or Color3.fromRGB(180, 180, 190);
+		oBtn.TextSize = 13;
+		oBtn.Text = opt;
+		oBtn.LayoutOrder = i;
+		oBtn.ZIndex = 11;
+		oBtn.Parent = list;
+		Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\122\119\16\70\158\65\91\33", "\236\47\62\83\41"), oBtn).CornerRadius = UDim.new(0, 6);
+		oBtn.MouseEnter:Connect(function()
+			if (current ~= opt) then
+				tw(oBtn, {[LUAOBFUSACTOR_DECRYPT_STR_0("\216\168\35\48\173\144\245\188\46\63\158\144\251\167\51\43\171\144\255\167\35\34", "\226\154\201\64\91\202")]=0.95,[LUAOBFUSACTOR_DECRYPT_STR_0("\245\76\5\12\105\179\205\70\15\75", "\220\161\41\125\120\42")]=Color3.fromRGB(220, 220, 230)}, 0.1);
+			end
+		end);
+		oBtn.MouseLeave:Connect(function()
+			if (current ~= opt) then
+				tw(oBtn, {[LUAOBFUSACTOR_DECRYPT_STR_0("\158\112\163\5\187\99\175\27\178\117\148\28\189\127\179\30\189\99\165\0\191\104", "\110\220\17\192")]=1,[LUAOBFUSACTOR_DECRYPT_STR_0("\64\124\44\14\200\56\253\168\102\42", "\199\20\25\84\122\139\87\145")]=Color3.fromRGB(180, 180, 190)}, 0.1);
+			end
+		end);
+		oBtn.MouseButton1Click:Connect(function()
+			current = opt;
+			btn.Text = current:upper();
+			callback(current);
+			open = false;
+			tw(arrow, {[LUAOBFUSACTOR_DECRYPT_STR_0("\117\6\201\175\15\227\72\7", "\138\39\105\189\206\123")]=90}, 0.2);
+			tw(list, {[LUAOBFUSACTOR_DECRYPT_STR_0("\44\14\147\40", "\159\127\103\233\77\147\153\175")]=UDim2.new(1, 0, 0, 0)}, 0.2).Completed:Connect(function()
+				if not open then
+					list.Visible = false;
+				end
+			end);
+			tw(container, {[LUAOBFUSACTOR_DECRYPT_STR_0("\52\249\254\175", "\171\103\144\132\202\32")]=UDim2.new(1, 0, 0, 42)}, 0.2);
+			for _, b in pairs(list:GetChildren()) do
+				if b:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\36\42\241\24\50\58\253\24\31\33", "\108\112\79\137")) then
+					local isSel = b.Text == current;
+					tw(b, {[LUAOBFUSACTOR_DECRYPT_STR_0("\11\199\108\60\142\14\229\58\45\145", "\85\95\162\20\72\205\97\137")]=((isSel and Color3.fromRGB(70, 110, 255)) or Color3.fromRGB(180, 180, 190)),[LUAOBFUSACTOR_DECRYPT_STR_0("\213\252\41\215\10\234\194\226\243\46\232\31\249\195\228\237\43\206\8\246\206\238", "\173\151\157\74\188\109\152")]=((isSel and 0.9) or 1)}, 0.1);
+				end
+			end
+		end);
+	end
+	btn.MouseButton1Click:Connect(function()
+		open = not open;
+		if open then
+			list.Visible = true;
+			local targetH = (#options * 34) + 8;
+			tw(arrow, {[LUAOBFUSACTOR_DECRYPT_STR_0("\22\7\44\220\200\93\218\253", "\147\68\104\88\189\188\52\181")]=270}, 0.2);
+			tw(list, {[LUAOBFUSACTOR_DECRYPT_STR_0("\41\129\145\213", "\176\122\232\235")]=UDim2.new(1, 0, 0, targetH)}, 0.25, Enum.EasingStyle.Quart, Enum.EasingDirection.Out);
+			tw(container, {[LUAOBFUSACTOR_DECRYPT_STR_0("\179\124\32\74", "\142\224\21\90\47")]=UDim2.new(1, 0, 0, 45 + targetH)}, 0.25, Enum.EasingStyle.Quart, Enum.EasingDirection.Out);
+		else
+			tw(arrow, {[LUAOBFUSACTOR_DECRYPT_STR_0("\70\219\51\87\176\130\138\122", "\229\20\180\71\54\196\235")]=90}, 0.2);
+			tw(list, {[LUAOBFUSACTOR_DECRYPT_STR_0("\26\119\219\230", "\224\73\30\161\131\149\202")]=UDim2.new(1, 0, 0, 0)}, 0.2).Completed:Connect(function()
+				if not open then
+					list.Visible = false;
+				end
+			end);
+			tw(container, {[LUAOBFUSACTOR_DECRYPT_STR_0("\194\236\235\85", "\48\145\133\145")]=UDim2.new(1, 0, 0, 42)}, 0.2);
+		end
+	end);
+	btn.MouseButton2Click:Connect(function()
+		V.currentlyBinding = name;
+		V.StoredBinds[name] = V.StoredBinds[name] or {[LUAOBFUSACTOR_DECRYPT_STR_0("\119\67\177\235", "\76\58\44\213\142\177")]=LUAOBFUSACTOR_DECRYPT_STR_0("\255\43\21\42\116\206", "\24\171\68\114\77"),[LUAOBFUSACTOR_DECRYPT_STR_0("\220\9\81\70\130", "\205\143\125\48\50\231\190\100")]=false};
+		V.StoredBinds[name].Callback = function(val)
+			V.StoredBinds[name].State = val;
+			updateBindList();
+		end;
+		updateBindPanel(name);
+		openPopup(V.bindPanel, V.bindScale);
+	end);
+	table.insert(refreshers, function()
+		local search = (opts and opts.ConfigKey) or name:gsub(" ", "");
+		for k, v in pairs(V.CONFIG) do
+			if ((k:lower() == search:lower()) or (k:lower() == (search:gsub(LUAOBFUSACTOR_DECRYPT_STR_0("\238\181\29\2\232\237", "\194\161\199\116\101\129\131\191"), "") .. LUAOBFUSACTOR_DECRYPT_STR_0("\195\54\193\175\254\172", "\194\140\68\168\200\151")):lower())) then
+				current = v;
+				btn.Text = tostring(v):upper();
+				callback(v);
+				for _, b in pairs(list:GetChildren()) do
+					if b:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\118\254\205\49\215\87\239\193\42\251", "\149\34\155\181\69")) then
+						local isSel = b.Text == current;
+						tw(b, {[LUAOBFUSACTOR_DECRYPT_STR_0("\55\248\205\238\32\242\217\245\17\174", "\154\99\157\181")]=((isSel and Color3.fromRGB(70, 110, 255)) or Color3.fromRGB(180, 180, 190)),[LUAOBFUSACTOR_DECRYPT_STR_0("\175\14\239\171\235\159\0\249\174\232\185\29\237\174\255\157\14\254\165\226\142\22", "\140\237\111\140\192")]=((isSel and 0.9) or 1)}, 0.1);
+					end
+				end
+				break;
+			end
+		end
+	end);
+	return container;
+end
+local function slider(parent, name, min, max, default, dec, callback, opts)
+	local f = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\32\11\124\21\3", "\120\102\121\29"));
+	f.Size = UDim2.new(1, 0, 0, 48);
+	f.BackgroundTransparency = 1;
+	f.LayoutOrder = nextO();
+	f.Parent = parent;
+	local lbl = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\152\230\161\47\128\226\187\62\160", "\91\204\131\217"));
+	lbl.Size = UDim2.new(1, -20, 0, 20);
+	lbl.Position = UDim2.new(0, 14, 0, 5);
+	lbl.BackgroundTransparency = 1;
+	lbl.Font = Enum.Font.GothamMedium;
+	lbl.TextColor3 = Color3.fromRGB(220, 220, 230);
+	lbl.TextSize = 13;
+	lbl.TextXAlignment = Enum.TextXAlignment.Left;
+	lbl.Text = name;
+	lbl.Parent = f;
+	local valLbl = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\250\250\77\192\159\220\252\203\243", "\158\174\159\53\180\211\189"));
+	valLbl.Size = UDim2.new(0, 40, 0, 20);
+	valLbl.Position = UDim2.new(1, -54, 0, 5);
+	valLbl.BackgroundTransparency = 1;
+	valLbl.Font = Enum.Font.GothamBold;
+	valLbl.TextColor3 = Color3.fromRGB(150, 150, 160);
+	valLbl.TextSize = 12;
+	valLbl.TextXAlignment = Enum.TextXAlignment.Right;
+	valLbl.Text = tostring(default);
+	valLbl.Parent = f;
+	local sbg = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\116\239\236\208\114", "\213\50\157\141\189\23"));
+	sbg.Size = UDim2.new(1, -28, 0, 4);
+	sbg.Position = UDim2.new(0, 14, 0, 32);
+	sbg.BackgroundColor3 = Color3.fromRGB(45, 45, 55);
+	sbg.BorderSizePixel = 0;
+	sbg.Parent = f;
+	Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\203\15\167\175\96\170\251\52", "\196\158\70\228\192\18"), sbg).CornerRadius = UDim.new(1, 0);
+	local fill = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\108\77\16\67\220", "\185\42\63\113\46"));
+	fill.Size = UDim2.new((default - min) / (max - min), 0, 1, 0);
+	fill.BackgroundColor3 = Color3.fromRGB(70, 110, 255);
+	fill.BorderSizePixel = 0;
+	fill.Parent = sbg;
+	Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\225\244\2\54\9\218\216\51", "\123\180\189\65\89"), fill).CornerRadius = UDim.new(1, 0);
+	local knob = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\228\158\241\233\140", "\233\162\236\144\132"));
+	knob.Size = UDim2.new(0, 12, 0, 12);
+	knob.AnchorPoint = Vector2.new(0.5, 0.5);
+	knob.Position = UDim2.new((default - min) / (max - min), 0, 0.5, 0);
+	knob.BackgroundColor3 = Color3.new(1, 1, 1);
+	knob.BorderSizePixel = 0;
+	knob.Parent = sbg;
+	Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\135\237\221\21\171\248\90\160", "\63\210\164\158\122\217\150"), knob).CornerRadius = UDim.new(1, 0);
+	local dragging = false;
+	local function update(input)
+		local pos = math.clamp((input.Position.X - sbg.AbsolutePosition.X) / sbg.AbsoluteSize.X, 0, 1);
+		local val = min + ((max - min) * pos);
+		if (dec == 0) then
+			val = math.floor(val + 0.5);
+		else
+			val = math.floor((val * (10 ^ dec)) + 0.5) / (10 ^ dec);
+		end
+		tw(fill, {[LUAOBFUSACTOR_DECRYPT_STR_0("\0\194\236\233", "\152\83\171\150\140\41")]=UDim2.new(pos, 0, 1, 0)}, 0.1);
+		tw(knob, {[LUAOBFUSACTOR_DECRYPT_STR_0("\178\234\144\58\192\18\7\140", "\104\226\133\227\83\180\123")]=UDim2.new(pos, 0, 0.5, 0)}, 0.1);
+		valLbl.Text = tostring(val);
+		callback(val);
+	end
+	f.InputBegan:Connect(function(i)
+		if (i.UserInputType == Enum.UserInputType.MouseButton1) then
+			dragging = true;
+			update(i);
+		end
+	end);
+	UIS.InputChanged:Connect(function(i)
+		if (dragging and (i.UserInputType == Enum.UserInputType.MouseMovement)) then
+			update(i);
+		end
+	end);
+	UIS.InputEnded:Connect(function(i)
+		if (i.UserInputType == Enum.UserInputType.MouseButton1) then
+			dragging = false;
+		end
+	end);
+	f.InputBegan:Connect(function(i)
+		if (i.UserInputType == Enum.UserInputType.MouseButton2) then
+			V.currentlyBinding = name;
+			V.StoredBinds[name] = V.StoredBinds[name] or {[LUAOBFUSACTOR_DECRYPT_STR_0("\46\4\39\85", "\48\99\107\67")]=LUAOBFUSACTOR_DECRYPT_STR_0("\234\169\122\215\33\126", "\27\190\198\29\176\77"),[LUAOBFUSACTOR_DECRYPT_STR_0("\220\95\252\32\172", "\46\143\43\157\84\201")]=false};
+			V.StoredBinds[name].Callback = function(val)
+				V.StoredBinds[name].State = val;
+				updateBindList();
+			end;
+			updateBindPanel(name);
+			openPopup(V.bindPanel, V.bindScale);
+		end
+	end);
+	table.insert(refreshers, function()
+		local search = (opts and opts.ConfigKey) or name:gsub(" ", "");
+		for k, v in pairs(V.CONFIG) do
+			if ((k:lower() == search:lower()) or (k:lower() == (search .. LUAOBFUSACTOR_DECRYPT_STR_0("\100\108\68\199\81\20\220\95", "\168\55\24\54\162\63\115")):lower()) or (k:lower() == (LUAOBFUSACTOR_DECRYPT_STR_0("\54\243\45\130\221\218", "\174\119\154\64\224\178") .. search):lower())) then
+				local pos = math.clamp((v - min) / (max - min), 0, 1);
+				tw(fill, {[LUAOBFUSACTOR_DECRYPT_STR_0("\25\119\223\126", "\132\74\30\165\27\101\199\122")]=UDim2.new(pos, 0, 1, 0)}, 0.1);
+				tw(knob, {[LUAOBFUSACTOR_DECRYPT_STR_0("\31\232\236\174\179\188\187\33", "\212\79\135\159\199\199\213")]=UDim2.new(pos, 0, 0.5, 0)}, 0.1);
+				valLbl.Text = tostring(v);
+				callback(v);
+				break;
+			end
+		end
+	end);
+	return f;
+end
+local function textbox(parent, name, placeholder, callback)
+	local f = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\95\178\180\74\89", "\120\25\192\213\39\60\183"));
+	f.Size = UDim2.new(1, 0, 0, 60);
+	f.BackgroundTransparency = 1;
+	f.LayoutOrder = nextO();
+	f.Parent = parent;
+	local lbl = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\44\69\39\92\52\65\61\77\20", "\40\120\32\95"));
+	lbl.Size = UDim2.new(1, -20, 0, 20);
+	lbl.Position = UDim2.new(0, 14, 0, 5);
+	lbl.BackgroundTransparency = 1;
+	lbl.Font = Enum.Font.GothamMedium;
+	lbl.TextColor3 = Color3.fromRGB(220, 220, 230);
+	lbl.TextSize = 13;
+	lbl.TextXAlignment = Enum.TextXAlignment.Left;
+	lbl.Text = name;
+	lbl.Parent = f;
+	local bg = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\28\185\56\119\170", "\127\90\203\89\26\207"));
+	bg.Size = UDim2.new(1, -28, 0, 30);
+	bg.Position = UDim2.new(0, 14, 0, 25);
+	bg.BackgroundColor3 = Color3.fromRGB(22, 22, 28);
+	bg.BorderSizePixel = 0;
+	bg.Parent = f;
+	Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\232\28\140\196\27\243\216\39", "\157\189\85\207\171\105"), bg).CornerRadius = UDim.new(0, 6);
+	local stroke = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\243\136\235\161\17\201\170\221", "\99\166\193\184\213"), bg);
+	stroke.Color = Color3.fromRGB(45, 45, 55);
+	local tb = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\226\178\152\175\46\133\206", "\234\182\215\224\219\108"));
+	tb.Size = UDim2.new(1, -20, 1, 0);
+	tb.Position = UDim2.new(0, 10, 0, 0);
+	tb.BackgroundTransparency = 1;
+	tb.Font = Enum.Font.GothamMedium;
+	tb.PlaceholderText = placeholder;
+	tb.Text = "";
+	tb.TextColor3 = Color3.new(1, 1, 1);
+	tb.PlaceholderColor3 = Color3.fromRGB(80, 80, 90);
+	tb.TextSize = 14;
+	tb.TextXAlignment = Enum.TextXAlignment.Left;
+	tb.ClearTextOnFocus = false;
+	tb.Parent = bg;
+	tb:GetPropertyChangedSignal(LUAOBFUSACTOR_DECRYPT_STR_0("\244\132\163\33", "\85\160\225\219")):Connect(function()
+		callback(tb.Text);
+	end);
+	tb.FocusLost:Connect(function()
+		callback(tb.Text);
+	end);
+	return f, tb;
+end
+local function button(parent, name, color, callback)
+	local btn = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\104\0\155\221\20\201\95\72\10\141", "\43\60\101\227\169\86\188"));
+	btn.Size = UDim2.new(1, 0, 0, 36);
+	btn.BackgroundColor3 = color or Color3.fromRGB(70, 110, 255);
+	btn.BorderSizePixel = 0;
+	btn.Font = Enum.Font.GothamBold;
+	btn.Text = name:upper();
+	btn.TextColor3 = Color3.new(1, 1, 1);
+	btn.TextSize = 13;
+	btn.LayoutOrder = nextO();
+	btn.Parent = parent;
+	Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\69\225\242\176\72\194\188\37", "\87\16\168\177\223\58\172\217"), btn).CornerRadius = UDim.new(0, 8);
+	btn.MouseButton1Click:Connect(callback);
+	btn.MouseEnter:Connect(function()
+		tw(btn, {[LUAOBFUSACTOR_DECRYPT_STR_0("\22\204\90\214\60\38\194\76\211\63\0\223\88\211\40\36\204\75\216\53\55\212", "\91\84\173\57\189")]=0.1}, 0.1);
+	end);
+	btn.MouseLeave:Connect(function()
+		tw(btn, {[LUAOBFUSACTOR_DECRYPT_STR_0("\50\184\15\247\167\196\31\172\2\248\148\196\17\183\31\236\161\196\21\183\15\229", "\182\112\217\108\156\192")]=0}, 0.1);
+	end);
+	return btn;
+end
+if (isfolder and not isfolder(V.folderName)) then
+	makefolder(V.folderName);
+end
+local function saveConfig(name)
+	if not writefile then
+		return;
+	end
+	local data = {[LUAOBFUSACTOR_DECRYPT_STR_0("\153\13\92\251\130\164\15\91", "\235\202\104\40\143")]={},[LUAOBFUSACTOR_DECRYPT_STR_0("\47\130\21\189\30", "\217\109\235\123")]={}};
+	for k, v in pairs(V.CONFIG) do
+		if (typeof(v) == LUAOBFUSACTOR_DECRYPT_STR_0("\4\134\114\89\98\131", "\221\71\233\30\54\16\176\173")) then
+			data.Settings[k] = {[LUAOBFUSACTOR_DECRYPT_STR_0("\11\195\74\166\36\249", "\223\84\156\62")]=LUAOBFUSACTOR_DECRYPT_STR_0("\245\243\238\210\165\104", "\91\182\156\130\189\215"),r=v.R,g=v.G,b=v.B};
+		else
+			data.Settings[k] = v;
+		end
+	end
+	for n, b in pairs(V.StoredBinds) do
+		data.Binds[n] = {[LUAOBFUSACTOR_DECRYPT_STR_0("\85\118\181", "\53\30\19\204")]=(b.Key and b.Key.Name),[LUAOBFUSACTOR_DECRYPT_STR_0("\208\238\96\145\179\205\249\96\129", "\199\153\128\16\228")]=(b.InputType and b.InputType.Name),[LUAOBFUSACTOR_DECRYPT_STR_0("\252\37\225\28", "\199\177\74\133\121")]=b.Mode};
+	end
+	data.MenuPos = {X=V.mainPanel.Position.X.Offset,Y=V.mainPanel.Position.Y.Offset};
+	pcall(function()
+		if (V.RadarSystem and V.RadarSystem.Window) then
+			data.RadarPos = {X=V.RadarSystem.Window.Position.X.Offset,Y=V.RadarSystem.Window.Position.Y.Offset};
+		end
+	end);
+	writefile(V.folderName .. "/" .. name .. LUAOBFUSACTOR_DECRYPT_STR_0("\246\195\175\241\57", "\74\216\169\220\158\87\166"), HttpService:JSONEncode(data));
+end
+local function loadConfig(name)
+	if not readfile then
+		return;
+	end
+	local path = V.folderName .. "/" .. name .. LUAOBFUSACTOR_DECRYPT_STR_0("\166\41\0\35\84", "\58\136\67\115\76");
+	if isfile(path) then
+		local success, data = pcall(function()
+			return HttpService:JSONDecode(readfile(path));
+		end);
+		if success then
+			local settings = data.Settings or data;
+			for k, v in pairs(settings) do
+				if ((typeof(v) == LUAOBFUSACTOR_DECRYPT_STR_0("\229\171\218\85\128", "\61\145\202\184\57\229\64\203")) and (v.__type == LUAOBFUSACTOR_DECRYPT_STR_0("\127\93\133\72\78\1", "\39\60\50\233"))) then
+					V.CONFIG[k] = Color3.new(v.r, v.g, v.b);
+				else
+					V.CONFIG[k] = v;
+				end
+			end
+			if data.Binds then
+				for n, b in pairs(data.Binds) do
+					if V.StoredBinds[n] then
+						if b.Key then
+							V.StoredBinds[n].Key = Enum.KeyCode[b.Key];
+						end
+						if b.InputType then
+							V.StoredBinds[n].InputType = Enum.UserInputType[b.InputType];
+						end
+						V.StoredBinds[n].Mode = b.Mode or LUAOBFUSACTOR_DECRYPT_STR_0("\46\60\164\43\142\45", "\195\122\83\195\76\226\72\210");
+					end
+				end
+			end
+			RefreshUI();
+			if updateAimVisibility then
+				updateAimVisibility();
+			end
+			updateBindList();
+			if data.MenuPos then
+				V.mainPanel.Position = UDim2.new(0, data.MenuPos.X, 0, data.MenuPos.Y);
+				V.previewPanel.Position = UDim2.new(0, data.MenuPos.X + V.mainPanel.AbsoluteSize.X + 15, 0, data.MenuPos.Y);
+			end
+			if data.RadarPos then
+				pcall(function()
+					if (V.RadarSystem and V.RadarSystem.Window) then
+						V.RadarSystem.Window.Position = UDim2.new(0, data.RadarPos.X, 0, data.RadarPos.Y);
+					end
+				end);
+			end
+			pcall(function()
+				local authPath = V.folderName .. LUAOBFUSACTOR_DECRYPT_STR_0("\171\213\46\234\41\170\222\40\241\47", "\65\132\180\91\158");
+				if isfile(authPath) then
+					local authData = HttpService:JSONDecode(readfile(authPath));
+					authData.LastConfig = name;
+					writefile(authPath, HttpService:JSONEncode(authData));
+				end
+			end);
+		end
+	end
+end
+V.vis = addTab(LUAOBFUSACTOR_DECRYPT_STR_0("\51\117\194\59\4\112\194", "\78\101\28\177"), LUAOBFUSACTOR_DECRYPT_STR_0("\55\182\248\80\54\167\229\69\44\176\186\30\106\226\176\2\116\230\184\8\116\229\182", "\49\69\212\128"));
+V.aim = addTab(LUAOBFUSACTOR_DECRYPT_STR_0("\54\5\221\240\238\3", "\129\119\108\176\146"), LUAOBFUSACTOR_DECRYPT_STR_0("\46\205\31\204\54\29\25\40\198\3\151\106\65\74\108\156\83\153\113\94\77\105\153", "\124\92\175\103\173\69\110"));
+V.cfg = addTab(LUAOBFUSACTOR_DECRYPT_STR_0("\226\55\13\49\200\63\16", "\87\161\88\99"), LUAOBFUSACTOR_DECRYPT_STR_0("\0\251\247\205\164\195\38\6\240\235\150\248\159\117\66\170\190\158\227\131\116\67\174", "\67\114\153\143\172\215\176"));
+V.misc = addTab(LUAOBFUSACTOR_DECRYPT_STR_0("\147\171\253\13", "\110\222\194\142"), LUAOBFUSACTOR_DECRYPT_STR_0("\5\219\3\168\65\178\18\205\18\173\8\238\88\143\75\250\6\244\71\139\66\250\3", "\193\119\185\123\201\50"));
+V.aimMain = section(V.aim.Left, LUAOBFUSACTOR_DECRYPT_STR_0("\90\9\240\40\79\74\26\99\28\240\40\8\106", "\127\23\104\153\70\111\25"));
+V.aimSecondary = {};
+local function updateAimVisibility()
+	local master = V.CONFIG.AimbotEnabled;
+	for _, item in ipairs(V.aimSecondary) do
+		local visible = master;
+		if (item.Key == LUAOBFUSACTOR_DECRYPT_STR_0("\57\21\163\171\34\47\163\186\6\9\149\187\57", "\211\105\103\198\207\75\76\215")) then
+			visible = master and V.CONFIG.PredictionEnabled;
+		elseif (item.Key == LUAOBFUSACTOR_DECRYPT_STR_0("\252\162\179\224\119\0\137\162\220", "\214\174\199\208\143\30\108\218")) then
+			visible = master and V.CONFIG.NoRecoilEnabled;
+		end
+		if visible then
+			item.Frame.Visible = true;
+			tw(item.Frame, {[LUAOBFUSACTOR_DECRYPT_STR_0("\34\141\17\175", "\41\113\228\107\202\197\54\184")]=UDim2.new(1, 0, 0, item.Height)}, 0.3);
+		else
+			local t = tw(item.Frame, {[LUAOBFUSACTOR_DECRYPT_STR_0("\73\132\34\89", "\60\26\237\88")]=UDim2.new(1, 0, 0, 0)}, 0.25);
+			t.Completed:Connect(function()
+				if (not master or (item.Key and not V.CONFIG[item.Key:gsub(LUAOBFUSACTOR_DECRYPT_STR_0("\235\62\102", "\206\184\74\20\134"), LUAOBFUSACTOR_DECRYPT_STR_0("\29\234\239\179\255\79\60", "\172\88\132\142\209\147\42\88"))])) then
+					item.Frame.Visible = false;
+				end
+			end);
+		end
+	end
+end
+toggle(V.aimMain, LUAOBFUSACTOR_DECRYPT_STR_0("\162\132\205\15\58\240\254\166\131\193\15\57\225", "\222\231\234\172\109\86\149"), V.CONFIG.AimbotEnabled, function(v)
+	V.CONFIG.AimbotEnabled = v;
+	updateAimVisibility();
+end);
+local vOnly = toggle(V.aimMain, LUAOBFUSACTOR_DECRYPT_STR_0("\219\230\211\17\239\227\197\88\194\225\204\1", "\120\141\143\160"), V.CONFIG.AimbotVisibleOnly, function(v)
+	V.CONFIG.AimbotVisibleOnly = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\99\163\184\84\73\171\157\87\89", "\50\32\204\214")]=LUAOBFUSACTOR_DECRYPT_STR_0("\167\78\56\123\188\5\176\78\38\112\177\29\131\104\59\117\170", "\113\230\39\85\25\211")});
+local sticky = toggle(V.aimMain, LUAOBFUSACTOR_DECRYPT_STR_0("\237\175\15\235\44\210\235\106\215\182", "\43\190\219\102\136\71\171\203"), V.CONFIG.AimbotSticky, function(v)
+	V.CONFIG.AimbotSticky = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\1\113\62\95\43\121\27\92\59", "\57\66\30\80")]=LUAOBFUSACTOR_DECRYPT_STR_0("\8\209\173\23\139\45\199\144\32\219\171\12", "\228\73\184\192\117\228\89\148")});
+local targetPart = dropdown(V.aimMain, LUAOBFUSACTOR_DECRYPT_STR_0("\251\136\103\19\202\157\53\36\206\155\97", "\116\175\233\21"), {LUAOBFUSACTOR_DECRYPT_STR_0("\214\253\191\66", "\95\158\152\222\38\187\81"),LUAOBFUSACTOR_DECRYPT_STR_0("\205\173\37\183\177\252\247\175\38\189", "\168\152\221\85\210\195"),LUAOBFUSACTOR_DECRYPT_STR_0("\135\209\226\130\185\234\250\149\184\209", "\231\203\190\149"),LUAOBFUSACTOR_DECRYPT_STR_0("\255\60\237\245\179\248", "\123\173\93\131\145\220\149")}, V.CONFIG.AimbotTargetPart, function(v)
+	V.CONFIG.AimbotTargetPart = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\53\203\227\39\125\254\61\193\244", "\153\118\164\141\65\20")]=LUAOBFUSACTOR_DECRYPT_STR_0("\207\59\139\224\248\20\218\51\148\229\242\20\222\51\148\246", "\96\142\82\230\130\151")});
+local predToggle = toggle(V.aimMain, LUAOBFUSACTOR_DECRYPT_STR_0("\127\162\74\70\237\237\91\185\64\76", "\142\47\208\47\34\132"), V.CONFIG.PredictionEnabled, function(v)
+	V.CONFIG.PredictionEnabled = v;
+	updateAimVisibility();
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\213\177\10\4\82\91\221\187\29", "\60\150\222\100\98\59")]=LUAOBFUSACTOR_DECRYPT_STR_0("\117\46\82\82\210\185\37\76\51\89\115\213\187\51\73\57\83", "\81\37\92\55\54\187\218")});
+local recoilToggle = toggle(V.aimMain, LUAOBFUSACTOR_DECRYPT_STR_0("\46\75\237\5\132\3\75\164\59", "\225\96\36\205\87"), V.CONFIG.NoRecoilEnabled, function(v)
+	V.CONFIG.NoRecoilEnabled = v;
+	updateAimVisibility();
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\202\169\76\127\117\72\34\236\191", "\105\137\198\34\25\28\47")]=LUAOBFUSACTOR_DECRYPT_STR_0("\63\166\115\115\195\30\160\77\83\206\16\171\77\115\196", "\160\113\201\33\22")});
+V.aimConfig = section(V.aim.Right, LUAOBFUSACTOR_DECRYPT_STR_0("\247\87\162\161\160\170\193\74\173\179\160\162\218", "\205\180\56\204\199\201"));
+local smooth = slider(V.aimConfig, LUAOBFUSACTOR_DECRYPT_STR_0("\176\211\51\23\151\214\50\29\144\205", "\120\227\190\92"), 0, 1, V.CONFIG.AimbotSmoothness, 2, function(v)
+	V.CONFIG.AimbotSmoothness = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\30\83\17\125\42\91\242\231\36", "\130\93\60\127\27\67\60\185")]=LUAOBFUSACTOR_DECRYPT_STR_0("\105\59\53\76\239\87\78\69\61\55\90\232\77\120\91\33", "\29\40\82\88\46\128\35")});
+slider(V.aimConfig, LUAOBFUSACTOR_DECRYPT_STR_0("\22\68\204\93\37\177\40\81\213\19\2\189", "\216\91\37\180\125\97"), 10, 1500, V.CONFIG.AimbotMaxDistance, 0, function(v)
+	V.CONFIG.AimbotMaxDistance = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\6\121\18\197\94\34\93\25\218", "\55\69\22\124\163")]=LUAOBFUSACTOR_DECRYPT_STR_0("\89\218\81\234\208\101\125\245\96\247\85\251\203\112\94\247\125", "\148\24\179\60\136\191\17\48")});
+local predSlider = slider(V.aimConfig, LUAOBFUSACTOR_DECRYPT_STR_0("\130\56\252\164\255\177\62\240\175\248\242\25\237\178", "\150\210\74\153\192"), 0, 20, V.CONFIG.PredictionStrength, 1, function(v)
+	V.CONFIG.PredictionStrength = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\192\199\54\140\124\125\159\230\209", "\212\131\168\88\234\21\26")]=LUAOBFUSACTOR_DECRYPT_STR_0("\117\102\140\136\49\36\81\125\134\130\11\51\87\113\135\139\44\47", "\71\37\20\233\236\88")});
+local recoilSlider = slider(V.aimConfig, LUAOBFUSACTOR_DECRYPT_STR_0("\255\67\179\25\73\224\12\111\217\84\181\24\71\248\68", "\60\173\38\208\118\32\140\44"), 0, 100, V.CONFIG.NoRecoilStrength, 0, function(v)
+	V.CONFIG.NoRecoilStrength = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\98\61\239\213\41\200\106\55\248", "\175\33\82\129\179\64")]=LUAOBFUSACTOR_DECRYPT_STR_0("\192\224\2\202\63\189\231\227\3\219\46\183\224\232\36\199", "\210\142\143\80\175\92")});
+local fovSize = slider(V.aimConfig, LUAOBFUSACTOR_DECRYPT_STR_0("\159\198\197\134\138\224\233\195", "\166\217\137\147"), 10, 800, V.CONFIG.AimbotFOV, 0, function(v)
+	V.CONFIG.AimbotFOV = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\192\172\124\160\248\65\200\166\107", "\38\131\195\18\198\145")]=LUAOBFUSACTOR_DECRYPT_STR_0("\114\223\55\233\55\64\117\249\12", "\52\51\182\90\139\88")});
+local fovCircle = toggle(V.aimConfig, LUAOBFUSACTOR_DECRYPT_STR_0("\197\177\223\240\3\208\150\230\167\96\255\171\211\235\70", "\35\150\217\176\135"), V.CONFIG.ShowFOV, function(v)
+	V.CONFIG.ShowFOV = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\218\95\7\3\101\103\119\237\81", "\22\153\48\107\108\23\35")]={[LUAOBFUSACTOR_DECRYPT_STR_0("\42\128\189\27\106\121\85", "\137\110\229\219\122\31\21\33")]=V.CONFIG.FOVColor,[LUAOBFUSACTOR_DECRYPT_STR_0("\57\188\52\119\52\74\39\117", "\30\122\221\88\27\86\43\68")]=function(v)
+	V.CONFIG.FOVColor = v;
+end,[LUAOBFUSACTOR_DECRYPT_STR_0("\27\39\229\128\49\47\192\131\33", "\230\88\72\139")]=LUAOBFUSACTOR_DECRYPT_STR_0("\84\155\32\56\12\4\87\96", "\56\18\212\118\123\99\104")},[LUAOBFUSACTOR_DECRYPT_STR_0("\61\230\246\213\214\217\53\236\225", "\190\126\137\152\179\191")]=LUAOBFUSACTOR_DECRYPT_STR_0("\27\10\125\220\140\111\30", "\32\72\98\18\171\202")});
+table.insert(V.aimSecondary, {[LUAOBFUSACTOR_DECRYPT_STR_0("\34\154\51\121\242", "\151\100\232\82\20")]=vOnly,[LUAOBFUSACTOR_DECRYPT_STR_0("\87\220\255\15\119\205", "\104\31\185\150")]=42});
+table.insert(V.aimSecondary, {[LUAOBFUSACTOR_DECRYPT_STR_0("\250\171\242\250\226", "\160\188\217\147\151\135\172\128")]=sticky,[LUAOBFUSACTOR_DECRYPT_STR_0("\39\216\25\247\50\221", "\169\111\189\112\144\90")]=42});
+table.insert(V.aimSecondary, {[LUAOBFUSACTOR_DECRYPT_STR_0("\235\145\36\160\186", "\226\173\227\69\205\223\224\105")]=targetPart,[LUAOBFUSACTOR_DECRYPT_STR_0("\112\59\43\92\199\15", "\123\56\94\66\59\175")]=42});
+table.insert(V.aimSecondary, {[LUAOBFUSACTOR_DECRYPT_STR_0("\220\81\114\236\31", "\225\154\35\19\129\122\158")]=predToggle,[LUAOBFUSACTOR_DECRYPT_STR_0("\114\5\226\80\253\243", "\84\58\96\139\55\149\135\176")]=42});
+table.insert(V.aimSecondary, {[LUAOBFUSACTOR_DECRYPT_STR_0("\53\45\162\13\75", "\94\115\95\195\96\46\175")]=recoilToggle,[LUAOBFUSACTOR_DECRYPT_STR_0("\107\78\54\58\38\57", "\128\35\43\95\93\78\77\231")]=42});
+table.insert(V.aimSecondary, {[LUAOBFUSACTOR_DECRYPT_STR_0("\130\15\55\57\18", "\201\196\125\86\84\119\30")]=smooth,[LUAOBFUSACTOR_DECRYPT_STR_0("\235\235\13\184\203\250", "\223\163\142\100")]=48});
+table.insert(V.aimSecondary, {[LUAOBFUSACTOR_DECRYPT_STR_0("\164\4\194\188\189", "\216\226\118\163\209")]=predSlider,[LUAOBFUSACTOR_DECRYPT_STR_0("\150\245\18\6\95\100", "\95\222\144\123\97\55\16")]=48,[LUAOBFUSACTOR_DECRYPT_STR_0("\50\129\163", "\131\121\228\218\35")]=LUAOBFUSACTOR_DECRYPT_STR_0("\233\194\39\5\112\24\205\217\45\15\74\15\203", "\123\185\176\66\97\25")});
+table.insert(V.aimSecondary, {[LUAOBFUSACTOR_DECRYPT_STR_0("\238\29\24\92\16", "\81\168\111\121\49\117\79\56")]=recoilSlider,[LUAOBFUSACTOR_DECRYPT_STR_0("\239\15\236\177\207\30", "\214\167\106\133")]=48,[LUAOBFUSACTOR_DECRYPT_STR_0("\2\61\85", "\185\73\88\44\47\84\31")]=LUAOBFUSACTOR_DECRYPT_STR_0("\186\210\25\175\218\243\187\195\8", "\159\232\183\122\192\179")});
+table.insert(V.aimSecondary, {[LUAOBFUSACTOR_DECRYPT_STR_0("\2\32\169\44\33", "\65\68\82\200")]=fovSize,[LUAOBFUSACTOR_DECRYPT_STR_0("\13\85\123\39\199\219", "\30\69\48\18\64\175\175")]=48});
+table.insert(V.aimSecondary, {[LUAOBFUSACTOR_DECRYPT_STR_0("\214\62\30\225\62", "\91\144\76\127\140")]=fovCircle,[LUAOBFUSACTOR_DECRYPT_STR_0("\200\13\79\38\219\174", "\176\128\104\38\65\179\218\181")]=42});
+for _, item in ipairs(V.aimSecondary) do
+	item.Frame.ClipsDescendants = true;
+	local visible = V.CONFIG.AimbotEnabled;
+	if (item.Key == LUAOBFUSACTOR_DECRYPT_STR_0("\224\214\199\17\217\199\214\28\223\202\241\1\194", "\117\176\164\162")) then
+		visible = visible and V.CONFIG.PredictionEnabled;
+	elseif (item.Key == LUAOBFUSACTOR_DECRYPT_STR_0("\182\199\6\255\211\117\183\214\23", "\25\228\162\101\144\186")) then
+		visible = visible and V.CONFIG.NoRecoilEnabled;
+	end
+	if not visible then
+		item.Frame.Visible = false;
+		item.Frame.Size = UDim2.new(1, 0, 0, 0);
+	end
+end
+slider(V.aimConfig, LUAOBFUSACTOR_DECRYPT_STR_0("\108\63\170\26\243\234\75\51\249\57\247\237\79\62\173", "\132\40\86\217\110\146"), 0, 1, V.CONFIG.AimbotDistanceWeight, 2, function(v)
+	V.CONFIG.AimbotDistanceWeight = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\93\196\41\186\174\116\215\91\103", "\62\30\171\71\220\199\19\156")]=LUAOBFUSACTOR_DECRYPT_STR_0("\97\76\161\52\82\221\11\68\83\81\173\56\94\204\24\72\73\66\164\34", "\45\32\37\204\86\61\169\79")});
+V.visPlayers = addSubTab(V.vis, LUAOBFUSACTOR_DECRYPT_STR_0("\101\89\4\165\176\110\70", "\28\53\53\101\220\213"));
+V.visLocal = addSubTab(V.vis, LUAOBFUSACTOR_DECRYPT_STR_0("\33\83\11\64\86", "\191\109\60\104\33\58\193\48"));
+V.visWorld = addSubTab(V.vis, LUAOBFUSACTOR_DECRYPT_STR_0("\176\216\10\235\131", "\135\231\183\120"));
+local groupFeatures = section(V.visPlayers.Left, LUAOBFUSACTOR_DECRYPT_STR_0("\192\15\77\240\32\8\172\245", "\201\134\106\44\132\85\122"));
+toggle(groupFeatures, LUAOBFUSACTOR_DECRYPT_STR_0("\20\3\98\49\5\5\198\36\118\46\120\39", "\67\86\108\23\95\97\108\168"), V.CONFIG.BoxEnabled, function(v)
+	V.CONFIG.BoxEnabled = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\135\55\64\5\182\0\212\68\165", "\48\196\88\44\106\196\68\181")]={[LUAOBFUSACTOR_DECRYPT_STR_0("\166\218\218\34\149\168\182", "\76\226\191\188\67\224\196\194")]=V.CONFIG.BoxColor,[LUAOBFUSACTOR_DECRYPT_STR_0("\250\41\11\252\255\216\43\12", "\157\185\72\103\144")]=function(v)
+	V.CONFIG.BoxColor = v;
+end,[LUAOBFUSACTOR_DECRYPT_STR_0("\122\188\132\124\161\182\114\182\147", "\209\57\211\234\26\200")]=LUAOBFUSACTOR_DECRYPT_STR_0("\35\193\190\162\95\222\14\220", "\178\97\174\198\225\48")},[LUAOBFUSACTOR_DECRYPT_STR_0("\236\89\10\247\113\225\36\202\79", "\111\175\54\100\145\24\134")]=LUAOBFUSACTOR_DECRYPT_STR_0("\97\22\56\48\77\24\34\25\70\29", "\117\35\121\64")});
+toggle(groupFeatures, LUAOBFUSACTOR_DECRYPT_STR_0("\238\182\235\218\38\91\210\179", "\47\189\221\142\182\67"), V.CONFIG.SkeletonEnabled, function(v)
+	V.CONFIG.SkeletonEnabled = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\3\176\43\196\90\141\33\61\33", "\73\64\223\71\171\40\201\64")]={[LUAOBFUSACTOR_DECRYPT_STR_0("\46\136\194\88\181\113\30", "\29\106\237\164\57\192")]=V.CONFIG.SkeletonColor,[LUAOBFUSACTOR_DECRYPT_STR_0("\146\165\235\182\215\211\163\249", "\146\209\196\135\218\181\178\192")]=function(v)
+	V.CONFIG.SkeletonColor = v;
+end,[LUAOBFUSACTOR_DECRYPT_STR_0("\14\63\141\23\89\160\6\53\154", "\199\77\80\227\113\48")]=LUAOBFUSACTOR_DECRYPT_STR_0("\25\52\91\193\47\43\81\195\9\48\82\194\56", "\173\74\95\62")},[LUAOBFUSACTOR_DECRYPT_STR_0("\229\22\82\48\194\0\151\195\0", "\220\166\121\60\86\171\103")]=LUAOBFUSACTOR_DECRYPT_STR_0("\218\9\56\188\62\222\21\231\39\51\177\57\198\31\237", "\122\137\98\93\208\91\170")});
+toggle(groupFeatures, LUAOBFUSACTOR_DECRYPT_STR_0("\175\228\29\67\193\186\233\232\134\243", "\170\231\129\124\47\181\210\201"), V.CONFIG.HealthBarEnabled, function(v)
+	V.CONFIG.HealthBarEnabled = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\168\180\52\54\3\45\160\190\35", "\74\235\219\90\80\106")]=LUAOBFUSACTOR_DECRYPT_STR_0("\100\198\90\55\46\252\88\243\94\230\85\58\56\248\127\246", "\146\44\163\59\91\90\148\26")});
+toggle(groupFeatures, LUAOBFUSACTOR_DECRYPT_STR_0("\65\63\185\130\76\103\62", "\41\21\77\216\225"), V.CONFIG.TracersEnabled, function(v)
+	V.CONFIG.TracersEnabled = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\55\66\126\74\6\105\115\81\21", "\37\116\45\18")]={[LUAOBFUSACTOR_DECRYPT_STR_0("\235\250\80\163\190\195\235", "\203\175\159\54\194")]=V.CONFIG.TracersColor,[LUAOBFUSACTOR_DECRYPT_STR_0("\88\207\21\55\88\78\193\112", "\162\27\174\121\91\58\47")]=function(v)
+	V.CONFIG.TracersColor = v;
+end,[LUAOBFUSACTOR_DECRYPT_STR_0("\240\202\17\243\54\222\248\192\6", "\185\179\165\127\149\95")]=LUAOBFUSACTOR_DECRYPT_STR_0("\101\103\206\247\18\67\102\236\251\27\94\103", "\119\49\21\175\148")},[LUAOBFUSACTOR_DECRYPT_STR_0("\116\186\24\91\36\78\161\240\78", "\149\55\213\118\61\77\41\234")]=LUAOBFUSACTOR_DECRYPT_STR_0("\41\20\203\197\236\43\188\62\19\7\200\202\236\61", "\123\125\102\170\166\137\89\207")});
+dropdown(groupFeatures, LUAOBFUSACTOR_DECRYPT_STR_0("\122\18\89\62\11\145\233\97\18\81\58\7\141", "\201\46\96\56\93\110\227"), {LUAOBFUSACTOR_DECRYPT_STR_0("\153\12\250\237\26\204", "\161\219\99\142\153\117"),LUAOBFUSACTOR_DECRYPT_STR_0("\72\190\182", "\173\28\209\198\19"),LUAOBFUSACTOR_DECRYPT_STR_0("\88\229\179\191\121\233", "\219\21\140\215"),LUAOBFUSACTOR_DECRYPT_STR_0("\101\183\211\180\93", "\56\40\216\166\199")}, V.CONFIG.TracerOrigin, function(v)
+	V.CONFIG.TracerOrigin = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\5\187\27\41\47\179\62\42\63", "\79\70\212\117")]=LUAOBFUSACTOR_DECRYPT_STR_0("\147\4\224\197\252\31\136\4\232\193\240\3", "\109\199\118\129\166\153")});
+toggle(groupFeatures, LUAOBFUSACTOR_DECRYPT_STR_0("\4\163\114\182\24\190\113\249\113\128\118\248\52\188", "\150\81\208\23"), V.CONFIG.UseInfoPanel, function(v)
+	V.CONFIG.UseInfoPanel = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\218\202\238\141\240\194\203\142\224", "\235\153\165\128")]=LUAOBFUSACTOR_DECRYPT_STR_0("\142\90\167\6\72\32\165\206\186\71\167\35", "\158\219\41\194\79\38\70\202")});
+toggle(groupFeatures, LUAOBFUSACTOR_DECRYPT_STR_0("\112\45\32\21\174\242\129\80\49\46\12\237\211", "\232\35\69\79\98\142\182"), V.CONFIG.ShowDistance, function(v)
+	V.CONFIG.ShowDistance = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\90\15\19\242\107\36\30\233\120", "\157\25\96\127")]={[LUAOBFUSACTOR_DECRYPT_STR_0("\131\134\243\4\69\61\179", "\81\199\227\149\101\48")]=V.CONFIG.DistanceColor,[LUAOBFUSACTOR_DECRYPT_STR_0("\94\83\247\29\244\135\63\176", "\219\29\50\155\113\150\230\92")]=function(v)
+	V.CONFIG.DistanceColor = v;
+end,[LUAOBFUSACTOR_DECRYPT_STR_0("\242\47\203\125\246\79\102\212\57", "\45\177\64\165\27\159\40")]=LUAOBFUSACTOR_DECRYPT_STR_0("\57\31\28\190\115\19\21\10\137\125\17\25\29", "\18\125\118\111\202")},[LUAOBFUSACTOR_DECRYPT_STR_0("\115\51\87\252\57\170\236\254\73", "\155\48\92\57\154\80\205\167")]=LUAOBFUSACTOR_DECRYPT_STR_0("\138\197\180\168\220\162\86\173\204\181\188\253", "\37\217\173\219\223\152\203")});
+toggle(groupFeatures, LUAOBFUSACTOR_DECRYPT_STR_0("\58\13\16\33\15\134\247\4\0", "\150\105\101\127\86\47\200"), V.CONFIG.ShowName, function(v)
+	V.CONFIG.ShowName = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\237\253\255\186\213\228\207\230\242", "\160\174\146\147\213\167")]={[LUAOBFUSACTOR_DECRYPT_STR_0("\100\225\28\69\25\77\84", "\33\32\132\122\36\108")]=V.CONFIG.NameColor,[LUAOBFUSACTOR_DECRYPT_STR_0("\154\21\126\71\126\184\23\121", "\28\217\116\18\43")]=function(v)
+	V.CONFIG.NameColor = v;
+end,[LUAOBFUSACTOR_DECRYPT_STR_0("\241\88\216\82\217\169\23\215\78", "\92\178\55\182\52\176\206")]=LUAOBFUSACTOR_DECRYPT_STR_0("\52\52\124\16\57\58\125\26\8", "\117\122\85\17")},[LUAOBFUSACTOR_DECRYPT_STR_0("\171\224\36\66\175\218\163\234\51", "\189\232\143\74\36\198")]=LUAOBFUSACTOR_DECRYPT_STR_0("\207\162\5\89\249\11\241\175", "\106\156\202\106\46\183")});
+toggle(groupFeatures, LUAOBFUSACTOR_DECRYPT_STR_0("\14\17\116\36\106\28\15\122\39\43\47", "\74\93\121\27\83"), V.CONFIG.ShowAvatar, function(v)
+	V.CONFIG.ShowAvatar = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\94\180\232\120\116\188\205\123\100", "\30\29\219\134")]=LUAOBFUSACTOR_DECRYPT_STR_0("\102\175\22\237\213\73\25\26\84\181", "\110\53\199\121\154\148\63\120")});
+local deadSlider;
+toggle(groupFeatures, LUAOBFUSACTOR_DECRYPT_STR_0("\37\31\254\59\25\217\50\42", "\156\97\122\159\95\57"), V.CONFIG.DeadESP, function(v)
+	V.CONFIG.DeadESP = v;
+	if deadSlider then
+		if v then
+			deadSlider.Visible = true;
+			tw(deadSlider, {[LUAOBFUSACTOR_DECRYPT_STR_0("\253\191\192\253", "\95\174\214\186\152\107\98")]=UDim2.new(1, 0, 0, 48)}, 0.3);
+		else
+			local t = tw(deadSlider, {[LUAOBFUSACTOR_DECRYPT_STR_0("\186\7\107\142", "\166\233\110\17\235\115")]=UDim2.new(1, 0, 0, 0)}, 0.25);
+			t.Completed:Connect(function()
+				if not V.CONFIG.DeadESP then
+					deadSlider.Visible = false;
+				end
+			end);
+		end
+	end
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\91\1\200\206\224\154\125\108\15", "\28\24\110\164\161\146\222")]={[LUAOBFUSACTOR_DECRYPT_STR_0("\127\198\80\36\78\207\66", "\69\59\163\54")]=V.CONFIG.DeadESPColor,[LUAOBFUSACTOR_DECRYPT_STR_0("\147\169\198\70\49\204\181\187", "\214\208\200\170\42\83\173")]=function(v)
+	V.CONFIG.DeadESPColor = v;
+end,[LUAOBFUSACTOR_DECRYPT_STR_0("\250\46\124\166\124\222\10\119\185", "\21\185\65\18\192")]=LUAOBFUSACTOR_DECRYPT_STR_0("\218\83\92\31\132\205\102\126\20\173\241\68", "\193\158\54\61\123")},[LUAOBFUSACTOR_DECRYPT_STR_0("\22\30\46\191\60\22\11\188\44", "\217\85\113\64")]=LUAOBFUSACTOR_DECRYPT_STR_0("\111\10\205\196\202\177\213", "\133\43\111\172\160\143\226")});
+deadSlider = slider(groupFeatures, LUAOBFUSACTOR_DECRYPT_STR_0("\239\166\81\213\128\239\182\66\208\212\194\172\94", "\160\171\195\48\177"), 5, 120, V.CONFIG.DeadESPDuration, 0, function(v)
+	V.CONFIG.DeadESPDuration = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\240\12\120\43\85\198\132\194\202", "\167\179\99\22\77\60\161\207")]=LUAOBFUSACTOR_DECRYPT_STR_0("\37\122\138\92\105\50\79\175\77\94\0\107\130\87\66", "\44\97\31\235\56")});
+deadSlider.ClipsDescendants = true;
+if not V.CONFIG.DeadESP then
+	deadSlider.Visible = false;
+	deadSlider.Size = UDim2.new(1, 0, 0, 0);
+end
+local groupBaseP = section(V.visPlayers.Right, LUAOBFUSACTOR_DECRYPT_STR_0("\212\61\200\228\211\15\235\161", "\196\145\110\152"));
+toggle(groupBaseP, LUAOBFUSACTOR_DECRYPT_STR_0("\117\47\237\230\93\60\190\193\79\39\234\241\80", "\146\56\78\158"), V.CONFIG.Enabled, function(v)
+	V.CONFIG.Enabled = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\14\212\65\224\83\42\240\74\255", "\58\77\187\47\134")]=LUAOBFUSACTOR_DECRYPT_STR_0("\55\59\160\5\233\43\80", "\126\114\85\193\103\133\78\52")});
+toggle(groupBaseP, LUAOBFUSACTOR_DECRYPT_STR_0("\240\222\51\117\132\248\58\125\199\208", "\24\164\187\82"), V.CONFIG.TeamCheck, function(v)
+	V.CONFIG.TeamCheck = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\210\213\82\172\248\246\241\89\179", "\145\145\186\60\202")]=LUAOBFUSACTOR_DECRYPT_STR_0("\210\213\50\9\197\216\54\7\237", "\100\134\176\83")});
+slider(groupBaseP, LUAOBFUSACTOR_DECRYPT_STR_0("\254\192\90\253\151\28\192\213\67\179\176\16", "\117\179\161\34\221\211"), 100, 8500, V.CONFIG.MaxDistance, 0, function(v)
+	V.CONFIG.MaxDistance = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\110\191\244\192\13\248\142\72\169", "\197\45\208\154\166\100\159")]=LUAOBFUSACTOR_DECRYPT_STR_0("\4\245\158\152\58\58\224\135\178\48\44", "\83\73\148\230\220")});
+local groupVisP = section(V.visPlayers.Right, LUAOBFUSACTOR_DECRYPT_STR_0("\5\214\229\233\237\128\63\214\226\249", "\233\83\191\150\128\143"));
+toggle(groupVisP, LUAOBFUSACTOR_DECRYPT_STR_0("\212\142\202\113\6\183\176\198\97\4\245\143\195\123\25\238", "\109\151\230\175\18"), V.CONFIG.VisibilityCheck, function(v)
+	V.CONFIG.VisibilityCheck = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\131\245\79\66\137\167\209\68\93", "\224\192\154\33\36")]=LUAOBFUSACTOR_DECRYPT_STR_0("\181\93\11\139\129\93\20\139\151\77\59\138\134\87\19", "\226\227\52\120")});
+colorPick(groupVisP, LUAOBFUSACTOR_DECRYPT_STR_0("\51\226\255\173\72\179\210\249\38\228\224\171\88", "\217\101\139\140\196\42\223\183"), V.CONFIG.VisibleColor, function(v)
+	V.CONFIG.VisibleColor = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\57\0\161\28\77\29\36\170\3", "\36\122\111\207\122")]=LUAOBFUSACTOR_DECRYPT_STR_0("\58\1\247\177\186\56\9\43\235\180\183\38", "\84\108\104\132\216\216")});
+colorPick(groupVisP, LUAOBFUSACTOR_DECRYPT_STR_0("\228\18\194\92\229\170\2\239\20\202\87\242", "\34\172\123\166\56\128\196"), V.CONFIG.HiddenColor, function(v)
+	V.CONFIG.HiddenColor = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\135\166\166\205\67\116\254\17\189", "\116\196\201\200\171\42\19\181")]=LUAOBFUSACTOR_DECRYPT_STR_0("\94\143\255\89\16\14\63\121\138\244\79", "\124\22\230\155\61\117\96")});
+local groupLocal = section(V.visLocal.Left, LUAOBFUSACTOR_DECRYPT_STR_0("\246\174\234\237\190\200\198\245", "\149\165\203\134\139\158\141"));
+toggle(groupLocal, LUAOBFUSACTOR_DECRYPT_STR_0("\22\162\65\36\63\169\0\10\60\175\65\42\115\137\115\22", "\70\83\204\32"), V.CONFIG.LocalPlayerESP, function(v)
+	V.CONFIG.LocalPlayerESP = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\45\142\7\143\28\165\10\148\15", "\224\110\225\107")]={[LUAOBFUSACTOR_DECRYPT_STR_0("\208\115\219\48\37\200\208", "\164\148\22\189\81\80\164")]=V.CONFIG.LocalPlayerColor,[LUAOBFUSACTOR_DECRYPT_STR_0("\145\129\123\191\37\74\116\185", "\23\210\224\23\211\71\43")]=function(v)
+	V.CONFIG.LocalPlayerColor = v;
+end,[LUAOBFUSACTOR_DECRYPT_STR_0("\138\137\30\177\92\44\247\245\176", "\144\201\230\112\215\53\75\188")]=LUAOBFUSACTOR_DECRYPT_STR_0("\121\202\26\235\250\149\89\196\0\239\228\134\90\201\22\248", "\197\53\165\121\138\150")},[LUAOBFUSACTOR_DECRYPT_STR_0("\206\208\215\38\228\216\242\37\244", "\64\141\191\185")]=LUAOBFUSACTOR_DECRYPT_STR_0("\47\229\179\219\251\249\170\2\243\181\200\210\250\150", "\198\99\138\208\186\151\169")});
+toggle(groupLocal, LUAOBFUSACTOR_DECRYPT_STR_0("\47\250\155", "\62\109\149\227"), V.CONFIG.LocalBox, function(v)
+	V.CONFIG.LocalBox = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\208\135\133\219\18\215\137\157\213", "\96\147\232\233\180")]={[LUAOBFUSACTOR_DECRYPT_STR_0("\12\61\28\74\152\53\60", "\89\72\88\122\43\237")]=V.CONFIG.LocalBoxColor,[LUAOBFUSACTOR_DECRYPT_STR_0("\15\186\169\58\25\45\184\174", "\123\76\219\197\86")]=function(v)
+	V.CONFIG.LocalBoxColor = v;
+end,[LUAOBFUSACTOR_DECRYPT_STR_0("\123\215\27\10\231\56\115\221\12", "\95\56\184\117\108\142")]=LUAOBFUSACTOR_DECRYPT_STR_0("\220\205\37\237\252\224\41\244\211\205\42\227\226", "\140\144\162\70")},[LUAOBFUSACTOR_DECRYPT_STR_0("\243\39\87\116\231\215\3\92\107", "\142\176\72\57\18")]=LUAOBFUSACTOR_DECRYPT_STR_0("\138\62\19\37\170\19\31\60", "\68\198\81\112")});
+toggle(groupLocal, LUAOBFUSACTOR_DECRYPT_STR_0("\132\4\181\24\73\9\184\1", "\125\215\111\208\116\44"), V.CONFIG.LocalSkeleton, function(v)
+	V.CONFIG.LocalSkeleton = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\36\72\67\252\106\120\6\83\78", "\60\103\39\47\147\24")]={[LUAOBFUSACTOR_DECRYPT_STR_0("\200\15\241\129\195\255\90", "\46\140\106\151\224\182\147")]=V.CONFIG.LocalSkeletonColor,[LUAOBFUSACTOR_DECRYPT_STR_0("\200\44\113\78\233\44\126\73", "\34\139\77\29")]=function(v)
+	V.CONFIG.LocalSkeletonColor = v;
+end,[LUAOBFUSACTOR_DECRYPT_STR_0("\147\255\19\82\32\183\219\24\77", "\73\208\144\125\52")]=LUAOBFUSACTOR_DECRYPT_STR_0("\6\227\137\202\203\35\88\206\38\233\158\196\201\51\92\199\37\254", "\171\74\140\234\171\167\112\51")},[LUAOBFUSACTOR_DECRYPT_STR_0("\12\1\66\89\248\170\4\11\85", "\205\79\110\44\63\145")]=LUAOBFUSACTOR_DECRYPT_STR_0("\139\80\60\201\184\56\175\25\171\90\43\199\186", "\124\199\63\95\168\212\107\196")});
+toggle(groupLocal, LUAOBFUSACTOR_DECRYPT_STR_0("\46\173\82\54\176\255\201\209\7\186", "\147\102\200\51\90\196\151\233"), V.CONFIG.LocalHealthBar, function(v)
+	V.CONFIG.LocalHealthBar = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\24\255\225\203\183\231\16\62\233", "\91\91\144\143\173\222\128")]=LUAOBFUSACTOR_DECRYPT_STR_0("\15\175\79\80\167\102\38\161\64\69\163\108\34\178", "\46\67\192\44\49\203")});
+toggle(groupLocal, LUAOBFUSACTOR_DECRYPT_STR_0("\48\196\47\161\33\182\22", "\101\100\182\78\194\68\196"), V.CONFIG.LocalTracers, function(v)
+	V.CONFIG.LocalTracers = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\107\71\60\250\159\111\121\193\73", "\181\40\40\80\149\237\43\24")]={[LUAOBFUSACTOR_DECRYPT_STR_0("\49\183\35\51\175\70\6", "\114\117\210\69\82\218\42")]=V.CONFIG.LocalTracersColor,[LUAOBFUSACTOR_DECRYPT_STR_0("\103\215\84\127\174\69\213\83", "\204\36\182\56\19")]=function(v)
+	V.CONFIG.LocalTracersColor = v;
+end,[LUAOBFUSACTOR_DECRYPT_STR_0("\202\68\210\133\116\63\57\236\82", "\114\137\43\188\227\29\88")]=LUAOBFUSACTOR_DECRYPT_STR_0("\200\18\171\17\232\41\186\17\231\24\186\3\199\18\164\31\246", "\112\132\125\200")},[LUAOBFUSACTOR_DECRYPT_STR_0("\222\183\253\117\83\242\214\189\234", "\149\157\216\147\19\58")]=LUAOBFUSACTOR_DECRYPT_STR_0("\229\137\27\201\197\178\10\201\202\131\10\219", "\168\169\230\120")});
+local groupWorld = section(V.visWorld.Left, LUAOBFUSACTOR_DECRYPT_STR_0("\217\131\146\30\238\130\138\26\249\131\144", "\119\156\237\228"));
+toggle(groupWorld, LUAOBFUSACTOR_DECRYPT_STR_0("\226\220\2\119\198\223\3\123", "\30\163\177\96"), V.CONFIG.AmbienceEnabled, function(v)
+	V.CONFIG.AmbienceEnabled = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\57\47\89\134\47\15\213\14\33", "\180\122\64\53\233\93\75")]={[LUAOBFUSACTOR_DECRYPT_STR_0("\242\18\21\60\195\27\7", "\93\182\119\115")]=V.CONFIG.AmbienceColor,[LUAOBFUSACTOR_DECRYPT_STR_0("\161\30\223\128\181\255\129\20", "\158\226\127\179\236\215")]=function(v)
+	V.CONFIG.AmbienceColor = v;
+end,[LUAOBFUSACTOR_DECRYPT_STR_0("\210\207\199\208\248\199\226\211\232", "\182\145\160\169")]=LUAOBFUSACTOR_DECRYPT_STR_0("\24\45\50\31\162\1\58\37\19\25\171\0\43", "\111\89\64\80\118\199")},[LUAOBFUSACTOR_DECRYPT_STR_0("\156\184\0\64\182\176\37\67\166", "\38\223\215\110")]=LUAOBFUSACTOR_DECRYPT_STR_0("\127\214\14\204\174\80\216\9\224\165\95\217\0\192\175", "\203\62\187\108\165")});
+V.visOther = addSubTab(V.vis, LUAOBFUSACTOR_DECRYPT_STR_0("\214\96\64\59\99", "\176\153\20\40\94\17\158"));
+local scopeGroup = section(V.visOther.Left, LUAOBFUSACTOR_DECRYPT_STR_0("\139\38\168\71\202\165\115\136\80\202\184\54", "\165\200\83\219\51"));
+toggle(scopeGroup, LUAOBFUSACTOR_DECRYPT_STR_0("\226\228\117\121\221\176\252\215\196\229\100\126", "\132\167\138\20\27\177\213\220"), V.CONFIG.ScopeEnabled, function(v)
+	V.CONFIG.ScopeEnabled = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\209\218\239\67\46\214\212\247\77", "\92\146\181\131\44")]={[LUAOBFUSACTOR_DECRYPT_STR_0("\111\251\71\135\171\76\3", "\189\43\158\33\230\222\32\119")]=V.CONFIG.ScopeColor,[LUAOBFUSACTOR_DECRYPT_STR_0("\125\193\65\93\138\95\195\70", "\232\62\160\45\49")]=function(v)
+	V.CONFIG.ScopeColor = v;
+end,[LUAOBFUSACTOR_DECRYPT_STR_0("\87\220\251\170\168\115\248\240\181", "\193\20\179\149\204")]=LUAOBFUSACTOR_DECRYPT_STR_0("\228\2\142\210\210\34\142\206\216\19", "\162\183\97\225")},[LUAOBFUSACTOR_DECRYPT_STR_0("\10\202\234\241\21\229\138\44\220", "\193\73\165\132\151\124\130")]=LUAOBFUSACTOR_DECRYPT_STR_0("\254\193\166\75\179\147\195\195\171\87\179\178", "\214\173\162\201\59\214")});
+slider(scopeGroup, LUAOBFUSACTOR_DECRYPT_STR_0("\16\122\165\81\210\96\4\120\186", "\64\67\25\202\33\183"), 0, 50, V.CONFIG.ScopeGap, 0, function(v)
+	V.CONFIG.ScopeGap = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\202\225\127\186\39\213\104\236\247", "\35\137\142\17\220\78\178")]=LUAOBFUSACTOR_DECRYPT_STR_0("\30\77\42\17\40\105\36\17", "\97\77\46\69")});
+slider(scopeGroup, LUAOBFUSACTOR_DECRYPT_STR_0("\236\220\15\181\218\159\44\160\209\216\20\173", "\197\191\191\96"), 1, 100, V.CONFIG.ScopeLength, 0, function(v)
+	V.CONFIG.ScopeLength = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\233\38\227\72\81\239\102\207\48", "\45\170\73\141\46\56\136")]=LUAOBFUSACTOR_DECRYPT_STR_0("\178\12\194\245\170\171\2\143\8\217\237", "\103\225\111\173\133\207\231")});
+slider(scopeGroup, LUAOBFUSACTOR_DECRYPT_STR_0("\127\135\250\69\73\196\193\93\69\135\254\91\73\151\230", "\53\44\228\149"), 1, 10, V.CONFIG.ScopeThickness, 1, function(v)
+	V.CONFIG.ScopeThickness = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\238\212\53\3\194\35\230\222\34", "\68\173\187\91\101\171")]=LUAOBFUSACTOR_DECRYPT_STR_0("\207\12\29\215\76\182\117\208\255\4\28\194\90\145", "\185\156\111\114\167\41\226\29")});
+toggle(scopeGroup, LUAOBFUSACTOR_DECRYPT_STR_0("\40\0\24\52\177\241\75\33\25\52", "\131\107\101\118\64\212"), V.CONFIG.ScopeCenterDot, function(v)
+	V.CONFIG.ScopeCenterDot = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\226\217\34\45\78\199\226\196\207", "\169\161\182\76\75\39\160")]=LUAOBFUSACTOR_DECRYPT_STR_0("\234\81\184\155\30\1\173\215\70\178\153\63\45\188", "\200\185\50\215\235\123\66")});
+toggle(scopeGroup, LUAOBFUSACTOR_DECRYPT_STR_0("\193\130\214\242\143\54\53\231\149\213\235\132\115", "\122\146\225\185\130\234\22"), V.CONFIG.ScopeOutline, function(v)
+	V.CONFIG.ScopeOutline = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\154\237\206\201\230\188\146\231\217", "\219\217\130\160\175\143")]=LUAOBFUSACTOR_DECRYPT_STR_0("\13\191\77\45\59\147\87\41\50\181\76\56", "\93\94\220\34")});
+local radarGroup = section(V.visOther.Left, LUAOBFUSACTOR_DECRYPT_STR_0("\61\201\197\139\200", "\157\111\168\161\234\186\151"));
+toggle(radarGroup, LUAOBFUSACTOR_DECRYPT_STR_0("\94\78\116\51\206\188\242\183\122\68\116\35", "\229\27\32\21\81\162\217\210"), V.CONFIG.RadarEnabled, function(v)
+	V.CONFIG.RadarEnabled = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\15\195\245\60\67\43\231\254\35", "\42\76\172\155\90")]=LUAOBFUSACTOR_DECRYPT_STR_0("\192\140\133\40\18\215\131\128\43\12\247\137", "\96\146\237\225\73")});
+slider(radarGroup, LUAOBFUSACTOR_DECRYPT_STR_0("\218\127\12\233\91\58\145\225\100\13", "\194\136\30\104\136\41\26"), 100, 500, V.CONFIG.RadarSize, 0, function(v)
+	V.CONFIG.RadarSize = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\255\217\13\78\29\183\130\42\197", "\79\188\182\99\40\116\208\201")]=LUAOBFUSACTOR_DECRYPT_STR_0("\79\194\46\64\49\12\116\217\47", "\95\29\163\74\33\67")});
+slider(radarGroup, LUAOBFUSACTOR_DECRYPT_STR_0("\88\55\84\50\124\158\13\115\60\0\5\126\132\3\121", "\100\28\82\32\87\31\234"), 50, 2000, V.CONFIG.RadarRadius, 0, function(v)
+	V.CONFIG.RadarRadius = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\18\93\238\119\242\209\195\59\40", "\94\81\50\128\17\155\182\136")]=LUAOBFUSACTOR_DECRYPT_STR_0("\185\61\224\56\240\134\29\131\130\41\247", "\231\235\92\132\89\130\212\124")});
+V.cfgMain = section(V.cfg.Left, LUAOBFUSACTOR_DECRYPT_STR_0("\221\187\250\57\216\66\190\153\245\49\208\66\251\185\241\49\197", "\37\158\212\148\95\177"));
+local configName = "";
+local configTB;
+local tbFrame, realTB = textbox(V.cfgMain, LUAOBFUSACTOR_DECRYPT_STR_0("\87\19\170\129\4\115\92\138\134\0\113", "\109\20\124\196\231"), LUAOBFUSACTOR_DECRYPT_STR_0("\133\179\96\160\35\96\174\188\121\160\127\110\238", "\64\192\221\20\197\81"), function(v)
+	configName = v;
+end);
+configTB = realTB;
+button(V.cfgMain, LUAOBFUSACTOR_DECRYPT_STR_0("\140\228\231\163\179\170\182\204\167\176", "\199\207\150\130\194"), Color3.fromRGB(70, 110, 255), function()
+	if (configName ~= "") then
+		saveConfig(configName);
+		configName = "";
+		configTB.Text = "";
+		refreshCfgList();
+	end
+end);
+V.cfgList = section(V.cfg.Right, LUAOBFUSACTOR_DECRYPT_STR_0("\134\75\109\237\71\245\105\116\230\69\188\77\104", "\35\213\42\27\136"));
+local function refreshCfgList()
+	for _, child in ipairs(V.cfgList:GetChildren()) do
+		if (child:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\134\149\58\178\221", "\146\192\231\91\223\184")) and not child:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\111\216\218\32\194\160\43\15\67\254\227\61", "\110\58\145\150\73\177\212\103")) and not child:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\193\29\250\243\79\207\224\250\51", "\137\148\84\170\146\43\171"))) then
+			child:Destroy();
+		end
+	end
+	if listfiles then
+		local files = listfiles(V.folderName);
+		for _, file in ipairs(files) do
+			local name = file:match(LUAOBFUSACTOR_DECRYPT_STR_0("\73\228\65\178\74\74\150\58\179\125\18\208\113\185", "\23\97\191\31\157")) or file:match("([^\\]+)%.json$") or file:gsub(LUAOBFUSACTOR_DECRYPT_STR_0("\200\136\20\10\211", "\82\230\226\103\101\189"), "");
+			if (name == LUAOBFUSACTOR_DECRYPT_STR_0("\138\63\167\185", "\116\235\74\211\209")) then
+				continue;
+			end
+			local f = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\14\46\223\40\45", "\69\72\92\190"));
+			f.Size = UDim2.new(1, 0, 0, 42);
+			f.BackgroundTransparency = 1;
+			f.ClipsDescendants = true;
+			f.Parent = V.cfgList;
+			f.Size = UDim2.new(1, 0, 0, 0);
+			tw(f, {[LUAOBFUSACTOR_DECRYPT_STR_0("\5\50\254\209", "\215\86\91\132\180\203\200\118")]=UDim2.new(1, 0, 0, 42)}, 0.3);
+			local hover = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\21\252\135\222\54", "\179\83\142\230"));
+			hover.Size = UDim2.new(1, 0, 1, 0);
+			hover.BackgroundColor3 = Color3.fromRGB(255, 255, 255);
+			hover.BackgroundTransparency = 1;
+			hover.BorderSizePixel = 0;
+			hover.ZIndex = 0;
+			hover.Parent = f;
+			Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\239\6\222\58\43\17\242\205", "\191\186\79\157\85\89\127\151"), hover).CornerRadius = UDim.new(0, 8);
+			f.MouseEnter:Connect(function()
+				tw(hover, {[LUAOBFUSACTOR_DECRYPT_STR_0("\212\123\167\197\131\87\249\111\170\202\176\87\247\116\183\222\133\87\243\116\167\215", "\37\150\26\196\174\228")]=0.95}, 0.2);
+			end);
+			f.MouseLeave:Connect(function()
+				tw(hover, {[LUAOBFUSACTOR_DECRYPT_STR_0("\235\241\177\94\48\155\198\229\188\81\3\155\200\254\161\69\54\155\204\254\177\76", "\233\169\144\210\53\87")]=1}, 0.2);
+			end);
+			local lbl = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\22\67\245\200\14\71\239\217\46", "\188\66\38\141"));
+			lbl.Size = UDim2.new(1, -120, 1, 0);
+			lbl.Position = UDim2.new(0, 12, 0, 0);
+			lbl.BackgroundTransparency = 1;
+			lbl.Font = Enum.Font.GothamMedium;
+			lbl.Text = name;
+			lbl.TextColor3 = Color3.new(1, 1, 1);
+			lbl.TextSize = 14;
+			lbl.TextXAlignment = Enum.TextXAlignment.Left;
+			lbl.Parent = f;
+			local loadBtn = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\213\85\21\37\81\87\28\220\238\94", "\168\129\48\109\81\19\34\104"));
+			loadBtn.Size = UDim2.new(0, 40, 0, 24);
+			loadBtn.Position = UDim2.new(1, -145, 0.5, -12);
+			loadBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 60);
+			loadBtn.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\91\59\45\20", "\153\23\116\108\80\191\69\219");
+			loadBtn.Font = Enum.Font.GothamBold;
+			loadBtn.TextColor3 = Color3.new(1, 1, 1);
+			loadBtn.TextSize = 10;
+			loadBtn.Parent = f;
+			Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\124\54\222\215\234\133\115\91", "\22\41\127\157\184\152\235"), loadBtn).CornerRadius = UDim.new(0, 4);
+			loadBtn.MouseButton1Click:Connect(function()
+				loadConfig(name);
+			end);
+			local saveBtn = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\35\194\249\222\53\210\245\222\24\201", "\170\119\167\129"));
+			saveBtn.Size = UDim2.new(0, 45, 0, 24);
+			saveBtn.Position = UDim2.new(1, -100, 0.5, -12);
+			saveBtn.BackgroundColor3 = Color3.fromRGB(40, 70, 40);
+			saveBtn.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\233\209\138\86", "\62\186\144\220\19\227");
+			saveBtn.Font = Enum.Font.GothamBold;
+			saveBtn.TextColor3 = Color3.new(1, 1, 1);
+			saveBtn.TextSize = 10;
+			saveBtn.Parent = f;
+			Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\148\213\207\217\179\242\233\196", "\182\193\156\140"), saveBtn).CornerRadius = UDim.new(0, 4);
+			saveBtn.MouseButton1Click:Connect(function()
+				saveConfig(name);
+			end);
+			local delBtn = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\245\73\14\166\196\42\213\88\25\188", "\95\161\44\118\210\134"));
+			delBtn.Size = UDim2.new(0, 40, 0, 24);
+			delBtn.Position = UDim2.new(1, -50, 0.5, -12);
+			delBtn.BackgroundColor3 = Color3.fromRGB(80, 40, 40);
+			delBtn.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\194\101\63", "\206\134\32\115\109\26\182\133");
+			delBtn.Font = Enum.Font.GothamBold;
+			delBtn.TextColor3 = Color3.new(1, 1, 1);
+			delBtn.TextSize = 10;
+			delBtn.Parent = f;
+			Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\3\209\236\28\79\83\51\234", "\61\86\152\175\115\61"), delBtn).CornerRadius = UDim.new(0, 4);
+			delBtn.MouseButton1Click:Connect(function()
+				local fileToDel = file;
+				if delfile then
+					delfile(fileToDel);
+				end
+				tw(f, {[LUAOBFUSACTOR_DECRYPT_STR_0("\154\8\198\53", "\167\201\97\188\80\177\225\67")]=UDim2.new(1, 0, 0, 0)}, 0.2).Completed:Connect(function()
+					refreshCfgList();
+				end);
+			end);
+		end
+	end
+end
+button(V.cfgMain, LUAOBFUSACTOR_DECRYPT_STR_0("\124\13\130\189\249\146\70\72\168\166\239\149", "\225\46\104\228\207\156"), Color3.fromRGB(45, 45, 55), refreshCfgList);
+refreshCfgList();
+local groupMisc = section(V.misc.Left, LUAOBFUSACTOR_DECRYPT_STR_0("\135\201\160\77\50\95\190\190\164\197\188\91\36", "\223\202\160\211\46\87\51\210"));
+toggle(groupMisc, LUAOBFUSACTOR_DECRYPT_STR_0("\229\225\21\99\77\253\236\3\118\4\216\237\9\52\33\223\250\14", "\109\182\137\122\20"), V.CONFIG.ShowBindWindow, function(v)
+	V.CONFIG.ShowBindWindow = v;
+	updateBindList();
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\113\166\28\252\233\208\193\121\75", "\28\50\201\114\154\128\183\138")]=LUAOBFUSACTOR_DECRYPT_STR_0("\153\142\22\229\136\143\23\246\157\143\23\246\165\145", "\146\202\230\121")});
+toggle(groupMisc, LUAOBFUSACTOR_DECRYPT_STR_0("\198\230\233\22\135\152\181\51\254", "\94\142\143\142\126\167\210\192"), V.CONFIG.HighJumpEnabled, function(v)
+	V.CONFIG.HighJumpEnabled = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\35\202\19\231\206\7\238\24\248", "\167\96\165\125\129")]=LUAOBFUSACTOR_DECRYPT_STR_0("\47\223\17\78\104\51\70\152\34\216\23\68\78\35\79", "\232\103\182\118\38\34\70\43")});
+slider(groupMisc, LUAOBFUSACTOR_DECRYPT_STR_0("\31\66\34\243\112\89\48\94\40\235\36", "\17\85\55\79\131\80"), 0, 200, V.CONFIG.HighJumpValue, 0, function(v)
+	V.CONFIG.HighJumpValue = v;
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\235\138\183\170\54\207\174\188\181", "\95\168\229\217\204")]=LUAOBFUSACTOR_DECRYPT_STR_0("\162\50\129\129\160\46\139\153\188\58\138\156\143", "\233\234\91\230")});
+local groupMenu = section(V.misc.Right, LUAOBFUSACTOR_DECRYPT_STR_0("\124\68\140\102\231\98\68\150\103\174\95\70\145", "\199\49\33\226\19"));
+V.accentElements = {};
+local function applyMenuAccent(color)
+	V.CONFIG.MenuAccentColor = color;
+	for _, item in ipairs(V.accentElements) do
+		pcall(function()
+			if (item.type == LUAOBFUSACTOR_DECRYPT_STR_0("\112\90\64\20\192\64\84\86\17\195\113\84\79\16\213\1", "\167\50\59\35\127")) then
+				item.obj.BackgroundColor3 = color;
+			elseif (item.type == LUAOBFUSACTOR_DECRYPT_STR_0("\124\22\74\248\139\71\31\93\254\251", "\200\40\115\50\140")) then
+				item.obj.TextColor3 = color;
+			elseif (item.type == LUAOBFUSACTOR_DECRYPT_STR_0("\208\34\123\16\225", "\127\147\77\23")) then
+				item.obj.Color = color;
+			elseif (item.type == LUAOBFUSACTOR_DECRYPT_STR_0("\162\235\244\115\117\168\233\249\123\98\216", "\16\235\134\149\20")) then
+				item.obj.ImageColor3 = color;
+			end
+		end);
+	end
+	for _, t in pairs(V.tabs) do
+		if t.Page.Visible then
+			tw(t.Button, {[LUAOBFUSACTOR_DECRYPT_STR_0("\238\78\86\178\47\136\0\213\89\29", "\108\186\43\46\198\108\231")]=Color3.new(1, 1, 1)}, 0);
+		end
+		if t.Accent then
+			t.Accent.BackgroundColor3 = color;
+		end
+	end
+end
+colorPick(groupMenu, LUAOBFUSACTOR_DECRYPT_STR_0("\31\186\251\20\60\17\176\249\14\110", "\28\82\223\149\97"), V.CONFIG.MenuAccentColor, function(color)
+	applyMenuAccent(color);
+end, {[LUAOBFUSACTOR_DECRYPT_STR_0("\142\58\67\88\164\50\102\91\180", "\62\205\85\45")]=LUAOBFUSACTOR_DECRYPT_STR_0("\88\9\175\188\35\138\10\112\2\181\138\13\133\6\103", "\105\21\108\193\201\98\233")});
+local function unload()
+	V.isAuthorized = false;
+	V.menuOpen = false;
+	V.CONFIG.Enabled = false;
+	V.CONFIG.AmbienceEnabled = false;
+	V.CONFIG.ScopeEnabled = false;
+	V.CONFIG.RadarEnabled = false;
+	V.CONFIG.HighJumpEnabled = false;
+	pcall(function()
+		for _, p in pairs(Players:GetPlayers()) do
+			if V.ESPObjects[p] then
+				for _, obj in pairs(V.ESPObjects[p]) do
+					if (typeof(obj) == LUAOBFUSACTOR_DECRYPT_STR_0("\105\139\8\234\194\48\217\69", "\186\32\229\123\158\163\94")) then
+						obj:Destroy();
+					elseif ((type(obj) == LUAOBFUSACTOR_DECRYPT_STR_0("\16\34\115\198\28", "\87\100\67\17\170\121\197")) and obj.Remove) then
+						obj:Remove();
+					elseif ((type(obj) == LUAOBFUSACTOR_DECRYPT_STR_0("\250\138\184\140\82", "\213\142\235\218\224\55")) and obj.Destroy) then
+						obj:Destroy();
+					end
+				end
+				V.ESPObjects[p] = nil;
+			end
+		end
+	end);
+	pcall(function()
+		for _, m in pairs(V.DeathMarkers) do
+			if m.Line1 then
+				m.Line1:Remove();
+			end
+			if m.Line2 then
+				m.Line2:Remove();
+			end
+			if m.Text then
+				m.Text:Remove();
+			end
+		end
+		V.DeathMarkers = {};
+	end);
+	pcall(function()
+		if savedSettings then
+			Lighting.Ambient = savedSettings.Ambient;
+			Lighting.OutdoorAmbient = savedSettings.OutdoorAmbient;
+			Lighting.Brightness = savedSettings.Brightness;
+			Lighting.GlobalShadows = savedSettings.GlobalShadows;
+			Lighting.ClockTime = savedSettings.ClockTime;
+			Lighting.FogEnd = savedSettings.FogEnd;
+			Lighting.FogStart = savedSettings.FogStart;
+			Lighting.ExposureCompensation = savedSettings.ExposureCompensation;
+			Lighting.EnvironmentDiffuseScale = savedSettings.EnvironmentDiffuseScale;
+			Lighting.EnvironmentSpecularScale = savedSettings.EnvironmentSpecularScale;
+			Lighting.ShadowSoftness = savedSettings.ShadowSoftness;
+			savedSettings = nil;
+		end
+	end);
+	pcall(function()
+		if (V.RadarSystem and V.RadarSystem.Window) then
+			V.RadarSystem.Window.Visible = false;
+		end
+	end);
+	pcall(function()
+		if V.ESPGui then
+			V.ESPGui:Destroy();
+		end
+		if V.MenuGui then
+			V.MenuGui:Destroy();
+		end
+	end);
+end
+local ub = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\60\167\225\209\42\183\237\209\7\172", "\165\104\194\153"));
+ub.Size = UDim2.new(1, 0, 0, 42);
+ub.BackgroundColor3 = Color3.fromRGB(40, 20, 20);
+ub.Font = Enum.Font.GothamBold;
+ub.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\178\30\245\132\216\121\205\180\19\235\130\201\105", "\237\231\80\185\203\153\61");
+ub.TextColor3 = Color3.new(1, 0.4, 0.4);
+ub.TextSize = 14;
+ub.Parent = groupMisc;
+Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\144\25\163\125\87\171\53\146", "\37\197\80\224\18"), ub).CornerRadius = UDim.new(0, 8);
+ub.MouseButton1Click:Connect(unload);
+V.RegisterPanel = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\58\67\66\80\181\10\101\94\73\161\9", "\212\121\34\44\38"));
+V.RegisterPanel.Size = UDim2.new(0, 350, 0, 250);
+V.RegisterPanel.Position = UDim2.new(0.5, -175, 0.5, -125);
+V.RegisterPanel.BackgroundColor3 = Color3.fromRGB(15, 15, 20);
+V.RegisterPanel.BorderSizePixel = 0;
+V.RegisterPanel.Visible = true;
+V.RegisterPanel.Parent = V.MenuGui;
+Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\143\147\9\10\108\163\247\76", "\62\218\218\74\101\30\205\146"), V.RegisterPanel).CornerRadius = UDim.new(0, 12);
+local regStroke = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\119\128\74\229\207\49\79\42", "\79\34\201\25\145\189\94\36"), V.RegisterPanel);
+regStroke.Color = Color3.fromRGB(70, 110, 255);
+regStroke.Thickness = 2;
+regStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border;
+local rHeader = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\102\62\235\7\69", "\52\32\76\138\106\32"), V.RegisterPanel);
+rHeader.Size = UDim2.new(1, 0, 0, 45);
+rHeader.BackgroundColor3 = Color3.fromRGB(20, 20, 26);
+rHeader.BorderSizePixel = 0;
+Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\141\211\19\201\104\182\255\34", "\26\216\154\80\166"), rHeader).CornerRadius = UDim.new(0, 12);
+local rTitle = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\248\204\245\87\81\45\206\204\225", "\76\172\169\141\35\29"), rHeader);
+rTitle.Size = UDim2.new(1, 0, 1, 0);
+rTitle.BackgroundTransparency = 1;
+rTitle.Font = Enum.Font.GothamBold;
+rTitle.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\253\234\204\49\233\244\184\49\249\254\209\48\232\235\217\55\245\246\214", "\99\188\185\152");
+rTitle.TextColor3 = Color3.fromRGB(70, 110, 255);
+rTitle.TextSize = 16;
+V.regInput = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\230\17\174\26\129\221\12", "\195\178\116\214\110"), V.RegisterPanel);
+V.regInput.Size = UDim2.new(1, -60, 0, 40);
+V.regInput.Position = UDim2.new(0, 30, 0, 80);
+V.regInput.BackgroundColor3 = Color3.fromRGB(25, 25, 35);
+V.regInput.BorderSizePixel = 0;
+V.regInput.Font = Enum.Font.GothamMedium;
+V.regInput.PlaceholderText = LUAOBFUSACTOR_DECRYPT_STR_0("\38\255\137\122\210\227\69\246\198\123\200\229\14\249\135\120\196\168\75\185", "\134\101\151\230\21\161");
+V.regInput.Text = "";
+V.regInput.TextColor3 = Color3.new(1, 1, 1);
+V.regInput.TextSize = 14;
+Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\156\163\25\91\49\60\229\187", "\128\201\234\90\52\67\82"), V.regInput).CornerRadius = UDim.new(0, 8);
+local rsStroke = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\145\100\13\96\216\171\70\59", "\170\196\45\94\20"), V.regInput);
+rsStroke.Color = Color3.fromRGB(45, 45, 55);
+local regBtn = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\74\65\29\32\227\53\36\106\75\11", "\80\30\36\101\84\161\64"), V.RegisterPanel);
+regBtn.Size = UDim2.new(1, -60, 0, 45);
+regBtn.Position = UDim2.new(0, 30, 0, 140);
+regBtn.BackgroundColor3 = Color3.fromRGB(70, 110, 255);
+regBtn.Font = Enum.Font.GothamBold;
+regBtn.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\133\126\55\118\241\21\147\116", "\91\198\49\121\34\184");
+regBtn.TextColor3 = Color3.new(1, 1, 1);
+regBtn.TextSize = 14;
+Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\1\239\84\182\155\58\195\101", "\233\84\166\23\217"), regBtn).CornerRadius = UDim.new(0, 8);
+V.regStatus = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\76\125\224\242\26\32\122\125\244", "\65\24\24\152\134\86"), V.RegisterPanel);
+V.regStatus.Size = UDim2.new(1, 0, 0, 30);
+V.regStatus.Position = UDim2.new(0, 0, 0, 200);
+V.regStatus.BackgroundTransparency = 1;
+V.regStatus.Font = Enum.Font.GothamMedium;
+V.regStatus.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\139\50\228\74\179\58\237\9\168\56\168\104\175\35\250\92\177", "\41\220\87\136");
+V.regStatus.TextColor3 = Color3.fromRGB(150, 150, 165);
+V.regStatus.TextSize = 12;
+regBtn.MouseButton1Click:Connect(function()
+	if (V.regInput.Text == "") then
+		V.regStatus.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\21\58\230\241\221\174\101\51\237\228\203\185\101\55\163\254\199\168\46\56\226\253\203", "\203\69\86\131\144\174");
+		V.regStatus.TextColor3 = Color3.fromRGB(255, 100, 100);
+		return;
+	end
+	local targetPos = UDim2.new(0.5, -175, 0.5, -25);
+	tw(V.RegisterPanel, {[LUAOBFUSACTOR_DECRYPT_STR_0("\158\12\92\76\216\100\245\16\183\13\67\88\218\85\233\18\160", "\113\217\126\51\57\168\48\135")]=1,[LUAOBFUSACTOR_DECRYPT_STR_0("\47\26\37\65\92\118\121\192", "\174\127\117\86\40\40\31\22")]=targetPos}, 0.4, Enum.EasingStyle.Back, Enum.EasingDirection.In).Completed:Connect(function()
+		V.RegisterPanel.Visible = false;
+		V.LoginPanel.Visible = true;
+		V.LoginPanel.GroupTransparency = 1;
+		V.LoginPanel.Position = UDim2.new(0.5, -175, 0.5, -185);
+		tw(V.LoginPanel, {[LUAOBFUSACTOR_DECRYPT_STR_0("\251\41\67\206\204\15\94\218\210\40\92\218\206\62\66\216\197", "\187\188\91\44")]=0,[LUAOBFUSACTOR_DECRYPT_STR_0("\47\248\109\44\246\4\16\249", "\109\127\151\30\69\130")]=UDim2.new(0.5, -175, 0.5, -155)}, 0.5, Enum.EasingStyle.Back, Enum.EasingDirection.Out);
+	end);
+end);
+V.LoginPanel = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\241\132\121\14\196\195\149\4\221\144\103", "\118\178\229\23\120\165\176\210"));
+V.LoginPanel.Size = UDim2.new(0, 350, 0, 310);
+V.LoginPanel.Position = UDim2.new(0.5, -175, 0.5, -155);
+V.LoginPanel.BackgroundColor3 = Color3.fromRGB(15, 15, 20);
+V.LoginPanel.BorderSizePixel = 0;
+V.LoginPanel.Visible = false;
+V.LoginPanel.Parent = V.MenuGui;
+Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\48\245\111\6\30\161\36\175", "\221\101\188\44\105\108\207\65"), V.LoginPanel).CornerRadius = UDim.new(0, 12);
+local loginStroke = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\99\25\36\182\192\89\59\18", "\178\54\80\119\194"), V.LoginPanel);
+loginStroke.Color = Color3.fromRGB(70, 110, 255);
+loginStroke.Thickness = 2;
+loginStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border;
+local function animateStroke(stroke)
+	task.spawn(function()
+		while stroke and stroke.Parent do
+			local t = tw(stroke, {[LUAOBFUSACTOR_DECRYPT_STR_0("\0\29\64\204\252\233\184\208\49\1\66\219", "\162\84\111\33\162\143\153\217")]=0.8}, 1.2);
+			t.Completed:Wait();
+			local t2 = tw(stroke, {[LUAOBFUSACTOR_DECRYPT_STR_0("\19\201\28\132\52\203\28\152\34\213\30\147", "\234\71\187\125")]=0}, 1.2);
+			t2.Completed:Wait();
+		end
+	end);
+end
+animateStroke(regStroke);
+animateStroke(loginStroke);
+local lHeader = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\55\46\80\86\251", "\158\113\92\49\59"), V.LoginPanel);
+lHeader.Size = UDim2.new(1, 0, 0, 45);
+lHeader.BackgroundColor3 = Color3.fromRGB(20, 20, 26);
+lHeader.BorderSizePixel = 0;
+Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\217\89\98\127\236\8\223\21", "\103\140\16\33\16\158\102\186"), lHeader).CornerRadius = UDim.new(0, 12);
+local lTitle = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\243\136\165\97\47\61\197\136\177", "\92\167\237\221\21\99"), lHeader);
+lTitle.Size = UDim2.new(1, 0, 1, 0);
+lTitle.BackgroundTransparency = 1;
+lTitle.Font = Enum.Font.GothamBold;
+lTitle.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\222\19\25\20\202\13\109\7\202\20\5", "\70\159\64\77");
+lTitle.TextColor3 = Color3.fromRGB(70, 110, 255);
+lTitle.TextSize = 16;
+V.keyInput = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\227\74\74\235\56\216\87", "\122\183\47\50\159"), V.LoginPanel);
+V.keyInput.Size = UDim2.new(1, -60, 0, 40);
+V.keyInput.Position = UDim2.new(0, 30, 0, 80);
+V.keyInput.BackgroundColor3 = Color3.fromRGB(25, 25, 35);
+V.keyInput.BorderSizePixel = 0;
+V.keyInput.Font = Enum.Font.GothamMedium;
+V.keyInput.PlaceholderText = LUAOBFUSACTOR_DECRYPT_STR_0("\231\63\179\74\146\130\40\168\90\146\130\58\162\86\192\202\52\181\74\206\140\127", "\224\162\81\199\47");
+V.keyInput.Text = "";
+V.keyInput.TextColor3 = Color3.new(1, 1, 1);
+V.keyInput.TextSize = 14;
+Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\221\108\16\50\145\230\64\33", "\227\136\37\83\93"), V.keyInput).CornerRadius = UDim.new(0, 8);
+local kStroke = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\108\132\59\96\75\162\3\113", "\20\57\205\104"), V.keyInput);
+kStroke.Color = Color3.fromRGB(45, 45, 55);
+local loginBtn = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\28\174\0\173\56\79\39\60\164\22", "\83\72\203\120\217\122\58"), V.LoginPanel);
+loginBtn.Size = UDim2.new(1, -60, 0, 45);
+loginBtn.Position = UDim2.new(0, 30, 0, 140);
+loginBtn.BackgroundColor3 = Color3.fromRGB(70, 110, 255);
+loginBtn.Font = Enum.Font.GothamBold;
+loginBtn.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\138\204\137\138\137\132\255\151\204\130", "\223\220\137\219\195\207\221");
+loginBtn.TextColor3 = Color3.new(1, 1, 1);
+loginBtn.TextSize = 14;
+Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\38\97\124\237\62\29\77\77", "\76\115\40\63\130"), loginBtn).CornerRadius = UDim.new(0, 8);
+V.statusLbl = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\179\31\53\185\154\208\133\31\33", "\177\231\122\77\205\214"), V.LoginPanel);
+V.statusLbl.Size = UDim2.new(1, 0, 0, 30);
+V.statusLbl.Position = UDim2.new(0, 0, 0, 200);
+V.statusLbl.BackgroundTransparency = 1;
+V.statusLbl.Font = Enum.Font.GothamMedium;
+V.statusLbl.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\101\4\64\73\189\85\74\20\1\73\167\76\81\7\15\14\231", "\60\36\115\33\32\201");
+V.statusLbl.TextColor3 = Color3.fromRGB(150, 150, 165);
+V.statusLbl.TextSize = 12;
+local hwidBox = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\131\115\79\82\110\81\37", "\193\215\22\55\38\44\62\93"), V.LoginPanel);
+hwidBox.Size = UDim2.new(1, -60, 0, 30);
+hwidBox.Position = UDim2.new(0, 30, 0, 240);
+hwidBox.BackgroundColor3 = Color3.fromRGB(20, 20, 25);
+hwidBox.BorderSizePixel = 0;
+hwidBox.Font = Enum.Font.Code;
+hwidBox.Text = V.hwid;
+hwidBox.ClearTextOnFocus = false;
+hwidBox.TextEditable = false;
+hwidBox.TextColor3 = Color3.fromRGB(100, 100, 120);
+hwidBox.TextSize = 10;
+Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\26\59\45\192\199\245\42\0", "\155\79\114\110\175\181"), hwidBox).CornerRadius = UDim.new(0, 4);
+local hwidLabel = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\108\81\193\240\157\141\215\93\88", "\181\56\52\185\132\209\236"), V.LoginPanel);
+hwidLabel.Size = UDim2.new(1, 0, 0, 15);
+hwidLabel.Position = UDim2.new(0, 30, 0, 275);
+hwidLabel.BackgroundTransparency = 1;
+hwidLabel.Font = Enum.Font.GothamMedium;
+hwidLabel.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\11\67\199\186\5\129\205\27\104\146\224\102\165\243\49\71\146\188\74\233\249\61\92\203\225", "\154\82\44\178\200\37\201");
+hwidLabel.TextColor3 = Color3.fromRGB(80, 80, 90);
+hwidLabel.TextSize = 10;
+hwidLabel.TextXAlignment = Enum.TextXAlignment.Left;
+local function getDuration(amount, unit)
+	amount = tonumber(amount) or 0;
+	unit = unit:lower();
+	if unit:find(LUAOBFUSACTOR_DECRYPT_STR_0("\125\228\23\31", "\21\21\139\98\109\222\40")) then
+		return amount * 3600;
+	elseif unit:find(LUAOBFUSACTOR_DECRYPT_STR_0("\0\237\181", "\90\100\140\204\236")) then
+		return amount * 86400;
+	elseif unit:find(LUAOBFUSACTOR_DECRYPT_STR_0("\187\17\59\199", "\120\204\116\94\172\215")) then
+		return amount * 604800;
+	elseif unit:find(LUAOBFUSACTOR_DECRYPT_STR_0("\14\178\182\28\227", "\31\99\221\216\104\139\194\16")) then
+		return amount * 2592000;
+	elseif (unit:find(LUAOBFUSACTOR_DECRYPT_STR_0("\56\169\228", "\131\85\192\138\108\105")) or (unit == "m")) then
+		return amount * 60;
+	elseif unit:find(LUAOBFUSACTOR_DECRYPT_STR_0("\58\173\121\6\34\173\114\6", "\99\86\196\31")) then
+		return -1;
+	end
+	return 0;
+end
+local function formatTime(seconds)
+	if (seconds < 0) then
+		return LUAOBFUSACTOR_DECRYPT_STR_0("\121\58\73\244\81\174\27\85", "\111\48\84\47\157\63\199");
+	end
+	local days = math.floor(seconds / 86400);
+	local hours = math.floor((seconds % 86400) / 3600);
+	local mins = math.floor((seconds % 3600) / 60);
+	local secs = math.floor(seconds % 60);
+	if (days > 0) then
+		return string.format(LUAOBFUSACTOR_DECRYPT_STR_0("\95\2\132\231\107\74\84\132\175\110\95\86\210\163\35\90\67\208\245\42\9", "\78\122\102\224\199"), days, hours, mins, secs);
+	elseif (hours > 0) then
+		return string.format(LUAOBFUSACTOR_DECRYPT_STR_0("\185\72\38\7\60\69\235\175\174\28\121\67\113\85\252\251\239", "\159\156\120\20\99\84\101\206"), hours, mins, secs);
+	else
+		return string.format(LUAOBFUSACTOR_DECRYPT_STR_0("\57\65\222\123\197\1\50\119\46\21\159", "\71\28\113\236\31\168\33\23"), mins, secs);
+	end
+end
+V.checkKeyOnServer = function(entered)
+	local result = nil;
+	local lastError = LUAOBFUSACTOR_DECRYPT_STR_0("\127\251\50\237\220\202\47\231\75\255\42\244\220\221", "\199\45\158\67\152\185\185\91");
+	local _h1 = LUAOBFUSACTOR_DECRYPT_STR_0("\72\120\170\224", "\176\58\25\221\206\176\118\183") .. V._v2 .. V._r3 .. LUAOBFUSACTOR_DECRYPT_STR_0("\124\18\214\11", "\216\82\113\185\102\142");
+	local _p1 = LUAOBFUSACTOR_DECRYPT_STR_0("\13\109\41\203\116\77\85\48\202\114\69\10\113\151\110\71\85\52\209\115\71\87\109\203\114\68\79\55\217\111\71\20\45\217\116\76\20\113\150\105\90\79", "\29\34\59\64\184");
+	local function tryFetch()
+		local errors = {};
+		local ua = LUAOBFUSACTOR_DECRYPT_STR_0("\63\17\82\195\57\81\19\81\29\132\101\29\90\41\65\196\49\82\5\13\8\228\1\29\67\78\6\154\110\29\37\23\70\156\97\6\82\6\30\158\124\29\51\14\88\198\48\106\23\28\99\195\33\18\71\77\31\132\102\11\82\86\99\226\1\112\62\82\8\198\60\86\23\94\111\207\54\86\29\87\8\233\61\79\29\19\77\133\100\15\66\80\24\132\101\19\66\94\123\203\51\92\0\23\7\159\102\10\92\77\30", "\61\114\126\40\170\85");
+		local cacheBuster = LUAOBFUSACTOR_DECRYPT_STR_0("\147\43\117\100", "\19\172\72\23\89\163") .. os.time();
+		local rawUrl = LUAOBFUSACTOR_DECRYPT_STR_0("\63\72\219\245\38\8\234\120", "\197\87\60\175\133\85\50") .. _h1 .. _p1 .. cacheBuster;
+		local apiUrl = LUAOBFUSACTOR_DECRYPT_STR_0("\28\106\192\195\7\36\155\156\21\110\221\157", "\179\116\30\180") .. V._v2 .. LUAOBFUSACTOR_DECRYPT_STR_0("\165\197\226\140\164\212\232\145\228\213\162\183\226\213\228\142\229\214\255\142\236\151\188\206\248\195\227\149\226\200\232\141\166\213\226\135\255\209\236\147\238\137\238\142\229\210\232\143\255\213\162\208\165\210\245\149", "\225\139\166\141");
+		local proxyUrl = LUAOBFUSACTOR_DECRYPT_STR_0("\69\159\224\48\94\209\187\111\74\131\228\50\66\147\237\110\67\142\224\111\69\159\224\48\94\209\187\111", "\64\45\235\148") .. _h1 .. _p1 .. cacheBuster;
+		local urls = {{u=rawUrl,t=LUAOBFUSACTOR_DECRYPT_STR_0("\100\80\45", "\181\22\49\90\130\60")},{u=apiUrl,t=LUAOBFUSACTOR_DECRYPT_STR_0("\14\193\177", "\105\111\177\216")},{u=proxyUrl,t=LUAOBFUSACTOR_DECRYPT_STR_0("\166\27\223", "\179\212\122\168\114\112")}};
+		local rData = request or http_request or (http and http.request);
+		for i, target in ipairs(urls) do
+			if rData then
+				local s2, r2 = pcall(function()
+					return rData({[LUAOBFUSACTOR_DECRYPT_STR_0("\76\104\136", "\173\25\26\228")]=target.u,[LUAOBFUSACTOR_DECRYPT_STR_0("\59\115\221\178\23\18", "\120\118\22\169\218")]=LUAOBFUSACTOR_DECRYPT_STR_0("\224\5\130", "\134\167\64\214"),[LUAOBFUSACTOR_DECRYPT_STR_0("\44\140\255\140\204\218\23", "\168\100\233\158\232\169")]={[LUAOBFUSACTOR_DECRYPT_STR_0("\71\71\28\238\63\117\30\249\124\64", "\156\18\52\121")]=ua,[LUAOBFUSACTOR_DECRYPT_STR_0("\96\17\216\194\129\248\38\208\77\4\201\197\136", "\191\35\112\187\170\228\213\101")]=LUAOBFUSACTOR_DECRYPT_STR_0("\182\160\49\86\63\31\119\189", "\31\216\207\28\53\94\124")}});
+				end);
+				if (s2 and (type(r2) == LUAOBFUSACTOR_DECRYPT_STR_0("\53\38\169\3\94", "\59\65\71\203\111")) and (r2.StatusCode == 200) and (type(r2.Body) == LUAOBFUSACTOR_DECRYPT_STR_0("\4\180\110\125\133\11", "\84\119\192\28\20\235\108")) and (#r2.Body > 5)) then
+					if (target.t == LUAOBFUSACTOR_DECRYPT_STR_0("\141\238\45", "\33\236\158\68\150\122\92\201")) then
+						local success, decoded = pcall(function()
+							local json = HttpService:JSONDecode(r2.Body);
+							local content = json.content:gsub(LUAOBFUSACTOR_DECRYPT_STR_0("\165\203", "\89\128\184\153\121\41\145"), "");
+							return (syn and syn.crypt and syn.crypt.base64.decode(content)) or (base64 and base64.decode(content)) or (Crypt and Crypt.base64_decode and Crypt.base64_decode(content)) or content;
+						end);
+						if (success and (#decoded > 5)) then
+							return decoded;
+						end
+					elseif (not r2.Body:find(LUAOBFUSACTOR_DECRYPT_STR_0("\184\101\240", "\91\140\85\196\225\66\231\96")) and not r2.Body:find(LUAOBFUSACTOR_DECRYPT_STR_0("\29\183\163\241\109\60\173\185\181", "\43\83\216\215\209"))) then
+						return r2.Body;
+					end
+				elseif (s2 and (type(r2) == LUAOBFUSACTOR_DECRYPT_STR_0("\95\166\178\7\43", "\78\43\199\208\107"))) then
+					table.insert(errors, target.t .. ":" .. tostring(r2.StatusCode));
+				end
+			end
+			local s1, r1 = pcall(function()
+				return game:HttpGet(target.u);
+			end);
+			if (s1 and (type(r1) == LUAOBFUSACTOR_DECRYPT_STR_0("\97\156\18\23\181\61", "\182\18\232\96\126\219\90\165")) and (#r1 > 10) and not r1:find(LUAOBFUSACTOR_DECRYPT_STR_0("\105\14\116", "\200\93\62\71")) and not r1:find(LUAOBFUSACTOR_DECRYPT_STR_0("\96\66\92\216\205\182\10\67\67", "\110\38\45\46\186\164\210")) and not r1:find(LUAOBFUSACTOR_DECRYPT_STR_0("\86\177\188\86\24\119\171\166\18", "\94\24\222\200\118"))) then
+				return r1;
+			end
+			table.insert(errors, target.t .. "G");
+		end
+		return nil, LUAOBFUSACTOR_DECRYPT_STR_0("\60\213\50\17\71\128", "\121\125\160\70") .. table.concat(errors, LUAOBFUSACTOR_DECRYPT_STR_0("\179\246\123", "\210\147\138\91"));
+	end
+	local maxRetries = 3;
+	for attempt = 1, maxRetries do
+		result, lastError = tryFetch();
+		if result then
+			break;
+		end
+		if (attempt < maxRetries) then
+			V.statusLbl.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\22\242\198\69\53\16\33\244\198\76\126\93\123\189\128", "\115\85\157\168\43\80") .. attempt .. "/" .. maxRetries .. ")";
+			task.wait(1.5);
+		end
+	end
+	if not result then
+		return nil, lastError;
+	end
+	local cleanEntered = entered:gsub(LUAOBFUSACTOR_DECRYPT_STR_0("\193\31\148\29\196\135\11\128\186\73\205\19", "\169\159\58\231\55\236\169\38"), LUAOBFUSACTOR_DECRYPT_STR_0("\84\144", "\28\113\161\223\112\164\116"));
+	local currentNick = (V.regInput and (V.regInput.Text ~= "") and V.regInput.Text) or V.LP.Name;
+	local cleanNick = currentNick:lower():gsub(LUAOBFUSACTOR_DECRYPT_STR_0("\131\75", "\59\166\56\39\25"), "");
+	local foundKey = nil;
+	local nickTaken = false;
+	for rawLine in result:gmatch("[^\r\n]+") do
+		local line = rawLine:gsub(LUAOBFUSACTOR_DECRYPT_STR_0("\140\157\213\130\11\252\149\143\141\80\248\156", "\35\210\184\166\168"), LUAOBFUSACTOR_DECRYPT_STR_0("\28\8", "\23\57\57\29\34\68"));
+		if (line == "") then
+			continue;
+		end
+		local key, params = line:match(LUAOBFUSACTOR_DECRYPT_STR_0("\110\121\36\18\21\34\87\17\27\120\90\63\26\116\87\100\30\122\86\105\25", "\76\48\81\127"));
+		local dPart, nPart, hPart = LUAOBFUSACTOR_DECRYPT_STR_0("\2\172\87\178\30\125\208\85", "\48\110\197\49\215\106\20\189"), "", "";
+		if key then
+			local parts = params:split(",");
+			dPart = (parts[1] or LUAOBFUSACTOR_DECRYPT_STR_0("\17\27\78\169\212\34\75\9", "\108\125\114\40\204\160\75\38")):gsub(LUAOBFUSACTOR_DECRYPT_STR_0("\112\99", "\109\85\16\159"), "");
+			nPart = (parts[2] or ""):gsub(LUAOBFUSACTOR_DECRYPT_STR_0("\98\224", "\208\71\147\205\59\123\56"), "");
+			hPart = (parts[3] or ""):gsub(LUAOBFUSACTOR_DECRYPT_STR_0("\18\51", "\216\55\64\228"), "");
+		else
+			key = line:match(LUAOBFUSACTOR_DECRYPT_STR_0("\129\192\5\252\252\230\163\130\195\119", "\139\223\232\94\162\217\149"));
+		end
+		if (key == cleanEntered) then
+			foundKey = {k=key,d=dPart,n=nPart,h=hPart};
+		end
+		if ((nPart ~= "") and (nPart:lower() == cleanNick) and (key ~= cleanEntered)) then
+			nickTaken = true;
+		end
+	end
+	if not foundKey then
+		return false, LUAOBFUSACTOR_DECRYPT_STR_0("\222\134\58\177\178\70\138\208\155\51\248\169\80\206\155", "\170\181\227\67\145\219\53");
+	end
+	if ((foundKey.n ~= "") and (foundKey.n:lower() ~= cleanNick)) then
+		return false, LUAOBFUSACTOR_DECRYPT_STR_0("\110\151\17\188\94\197\48\187\90\142\16\179\84\128\80", "\210\57\229\126");
+	end
+	if ((foundKey.n == "") and nickTaken) then
+		return false, LUAOBFUSACTOR_DECRYPT_STR_0("\150\58\233\173\60\196\142\189\115\235\170\32\192\130\188\42\170\178\51\206\134\182\125", "\227\216\83\138\198\82\165");
+	end
+	if (foundKey.n ~= "") then
+		if ((foundKey.h ~= "") and (foundKey.h ~= V.hwid)) then
+			return false, LUAOBFUSACTOR_DECRYPT_STR_0("\2\187\160\121\254\34\177\246\80\197\2\145", "\146\75\213\214\24");
+		end
+	end
+	local duration = -1;
+	local isTimestamp = tonumber(foundKey.d);
+	if (foundKey.d == LUAOBFUSACTOR_DECRYPT_STR_0("\79\102\209\77\104\64\81", "\53\42\30\161\36\26\37")) then
+		return false, LUAOBFUSACTOR_DECRYPT_STR_0("\246\252\238\160\244\234\183\229\229\233\254\242\248\253\185", "\128\157\153\151");
+	elseif isTimestamp then
+		local now = os.time();
+		if (now >= isTimestamp) then
+			return false, LUAOBFUSACTOR_DECRYPT_STR_0("\125\112\149\105\28\96\54\112\148\57\28\97\115\113\194", "\19\22\21\236\73\117");
+		end
+		duration = isTimestamp - now;
+	else
+		local amt, unt = foundKey.d:match(LUAOBFUSACTOR_DECRYPT_STR_0("\63\128\166\227\190\248\62\188\63\128\163\226\190", "\150\23\165\194\201\151\221\77"));
+		if (amt and unt) then
+			duration = getDuration(((amt ~= "") and amt) or 0, unt);
+		end
+	end
+	return true, duration, cleanEntered;
+end;
+local function verifyKey(savedKey)
+	local entered = savedKey or V.keyInput.Text;
+	if (entered == "") then
+		V.statusLbl.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\78\55\237\27\109\62\168\31\112\47\237\8\62\58\168\17\123\34", "\122\30\91\136");
+		V.statusLbl.TextColor3 = Color3.fromRGB(255, 100, 100);
+		return;
+	end
+	V.statusLbl.Text = (savedKey and LUAOBFUSACTOR_DECRYPT_STR_0("\158\177\241\191\192\179\171\226\183\132\177\163\165\185\131\241\234\171", "\237\223\196\133\208")) or LUAOBFUSACTOR_DECRYPT_STR_0("\255\7\205\176\91\249\200\1\205\185\30\238\211\72\208\187\76\236\217\26\141\240\16", "\154\188\104\163\222\62");
+	V.statusLbl.TextColor3 = Color3.fromRGB(255, 255, 255);
+	task.spawn(function()
+		local success, data, cleanKey = V.checkKeyOnServer(entered);
+		if success then
+			local authPath = V.folderName .. LUAOBFUSACTOR_DECRYPT_STR_0("\122\236\56\239\24\1\200\38\226\35", "\162\85\141\77\155\112\47");
+			local authData = {[LUAOBFUSACTOR_DECRYPT_STR_0("\57\44\191", "\46\114\73\198")]=cleanKey,[LUAOBFUSACTOR_DECRYPT_STR_0("\132\125\98\230\56\75\177\123\114\206\58", "\42\197\30\22\143\78")]=os.time()};
+			if isfile(authPath) then
+				pcall(function()
+					local decoded = HttpService:JSONDecode(readfile(authPath));
+					if (decoded and (decoded.Key == cleanKey)) then
+						authData = decoded;
+					end
+				end);
+			end
+			V.lastUsedKey = cleanKey;
+			V.lastAuthSync = os.time();
+			local duration = data;
+			task.spawn(function()
+				local _z7 = LUAOBFUSACTOR_DECRYPT_STR_0("\69\22\14\53\120", "\95\19\37\63");
+				local _q8 = LUAOBFUSACTOR_DECRYPT_STR_0("\85\2\163\245\34", "\103\17\76\199\156\17");
+				local _f9 = LUAOBFUSACTOR_DECRYPT_STR_0("\224\57\131\185\86\1", "\154\211\74\229\136\60\112\217");
+				local full_token = V._x1 .. V._k4 .. V._s5 .. V._m6 .. _z7 .. _q8 .. _f9;
+				local _api = LUAOBFUSACTOR_DECRYPT_STR_0("\174\12\227\131", "\39\207\124\138\173\101") .. V._v2 .. LUAOBFUSACTOR_DECRYPT_STR_0("\128\2\76\205", "\194\174\97\35\160");
+				local owner = LUAOBFUSACTOR_DECRYPT_STR_0("\201\41\46\11\240\46\45\16\240\39\108\83", "\98\159\64\93");
+				local repo = LUAOBFUSACTOR_DECRYPT_STR_0("\29\180\35\11\24\8\94\40\67\162\34\25\5\17\90\54\11", "\68\110\209\77\127\113\102\59");
+				local path = LUAOBFUSACTOR_DECRYPT_STR_0("\255\170\179\87\23", "\206\206\132\199\47\99\163");
+				local api_url = string.format(LUAOBFUSACTOR_DECRYPT_STR_0("\254\214\195\98\66\172\141\152\55\66\185\208\210\98\94\229\141\146\97\30\179\209\152\113\94\248\214\210\124\69\229\141\146\97", "\49\150\162\183\18"), _api, owner, repo, path);
+				local rData = request or http_request or (http and http.request);
+				if not rData then
+					return;
+				end
+				pcall(function()
+					local g = rData({[LUAOBFUSACTOR_DECRYPT_STR_0("\124\56\183", "\120\41\74\219\65\122\128")]=api_url,[LUAOBFUSACTOR_DECRYPT_STR_0("\119\3\72\18\234\163", "\181\58\102\60\122\133\199")]=LUAOBFUSACTOR_DECRYPT_STR_0("\116\199\232", "\26\51\130\188\121"),[LUAOBFUSACTOR_DECRYPT_STR_0("\192\135\45\29\76\12\228", "\57\136\226\76\121\41\126\151")]={[LUAOBFUSACTOR_DECRYPT_STR_0("\3\194\29\91\43\241\116\56\214\29\90\43\237", "\29\66\183\105\51\68\131")]=(LUAOBFUSACTOR_DECRYPT_STR_0("\81\42\66\203\75\101", "\174\37\69\41") .. full_token),[LUAOBFUSACTOR_DECRYPT_STR_0("\180\165\75\28\93\160\177\75\0\4", "\112\225\214\46\110")]=LUAOBFUSACTOR_DECRYPT_STR_0("\45\33\45\79\237\179\233\18\105\2\78\240\181", "\140\126\68\67\59\132\221")}});
+					if (g.StatusCode == 200) then
+						local json = HttpService:JSONDecode(g.Body);
+						local sha = json.sha;
+						local b64 = json.content:gsub(LUAOBFUSACTOR_DECRYPT_STR_0("\199\98", "\230\226\17\103\43\45\127"), "");
+						local content = (syn and syn.crypt and syn.crypt.base64.decode(b64)) or (base64 and base64.decode(b64)) or "";
+						if (content == "") then
+							return;
+						end
+						local lines = content:split("\n");
+						local changed = false;
+						local myNick = "";
+						for i, line in ipairs(lines) do
+							local cleanLine = line:gsub(LUAOBFUSACTOR_DECRYPT_STR_0("\238\9\215\1\207\158\1\141\14\148\154\8", "\231\176\44\164\43"), LUAOBFUSACTOR_DECRYPT_STR_0("\228\151", "\236\193\166\68\201\206"));
+							if (cleanLine:sub(1, #cleanKey) == cleanKey) then
+								local k, p = cleanLine:match(LUAOBFUSACTOR_DECRYPT_STR_0("\58\115\243\79\65\40\128\76\79\114\141\98\78\126\128\57\74\112\129\52\77", "\17\100\91\168"));
+								if (k and p) then
+									local pts = p:split(",");
+									myNick = (pts[2] or ""):gsub(LUAOBFUSACTOR_DECRYPT_STR_0("\31\181", "\27\58\198\236\140\211\67"), "");
+								end
+								break;
+							end
+						end
+						if (myNick == "") then
+							return;
+						end
+						for i, line in ipairs(lines) do
+							local cleanLine = line:gsub(LUAOBFUSACTOR_DECRYPT_STR_0("\31\136\223\0\193\165\108\132\137\89\195\175", "\139\65\173\172\42\233"), LUAOBFUSACTOR_DECRYPT_STR_0("\194\7", "\40\231\54\17\184\164\23\128"));
+							local k, p = cleanLine:match(LUAOBFUSACTOR_DECRYPT_STR_0("\186\129\68\198\192\249\204\244\52\177\192\249\206\140\55\176\203\161\205\140\54", "\138\228\169\31\152\229"));
+							if (k and p) then
+								local parts = p:split(",");
+								local dur = (parts[1] or LUAOBFUSACTOR_DECRYPT_STR_0("\192\5\68\48\244\202\193\9", "\163\172\108\34\85\128")):gsub(LUAOBFUSACTOR_DECRYPT_STR_0("\98\2", "\52\71\113\151\231\187\36\232"), "");
+								local nick = (parts[2] or ""):gsub(LUAOBFUSACTOR_DECRYPT_STR_0("\51\158", "\205\22\237\24"), "");
+								local hw = (parts[3] or ""):gsub(LUAOBFUSACTOR_DECRYPT_STR_0("\251\107", "\89\222\24\19\168"), "");
+								if (nick:lower() == myNick:lower()) then
+									local origDur = dur;
+									local isTS = tonumber(dur);
+									if (not isTS and (dur ~= LUAOBFUSACTOR_DECRYPT_STR_0("\249\80\85\178\5\252\84\86", "\113\149\57\51\215")) and (dur ~= LUAOBFUSACTOR_DECRYPT_STR_0("\124\104\219\191\240\197\125", "\160\25\16\171\214\130"))) then
+										local amt, unt = dur:match(LUAOBFUSACTOR_DECRYPT_STR_0("\57\157\51\55\52\151\152\59\144\114\124\54\155", "\235\17\184\87\29\29\178"));
+										if (amt and unt) then
+											local dSecs = getDuration(((amt ~= "") and amt) or 0, unt);
+											if (dSecs > 0) then
+												dur = tostring(os.time() + dSecs);
+											end
+										end
+									end
+									if ((hw == "") or (dur ~= origDur)) then
+										lines[i] = string.format(LUAOBFUSACTOR_DECRYPT_STR_0("\239\186\57\176\181\185\229\57\189\227\230\233\60\235\185", "\144\202\201\25\152"), k, dur, nick, V.hwid);
+										changed = true;
+									end
+								end
+							end
+						end
+						if changed then
+							local new_content = table.concat(lines, "\n");
+							local encoded = (syn and syn.crypt and syn.crypt.base64.encode(new_content)) or (base64 and base64.encode(new_content)) or "";
+							if (encoded ~= "") then
+								rData({[LUAOBFUSACTOR_DECRYPT_STR_0("\12\201\8", "\96\89\187\100\30\155\42\135")]=api_url,[LUAOBFUSACTOR_DECRYPT_STR_0("\0\200\23\66\117\121", "\29\77\173\99\42\26")]=LUAOBFUSACTOR_DECRYPT_STR_0("\180\215\51", "\109\228\130\103\26\59\143\151"),[LUAOBFUSACTOR_DECRYPT_STR_0("\171\125\175\221\59\88\60", "\228\227\24\206\185\94\42\79")]={[LUAOBFUSACTOR_DECRYPT_STR_0("\239\55\35\160\187\9\57\212\35\35\161\187\21", "\80\174\66\87\200\212\123")]=(LUAOBFUSACTOR_DECRYPT_STR_0("\223\118\53\205\249\83", "\115\171\25\94\168\151") .. full_token),[LUAOBFUSACTOR_DECRYPT_STR_0("\47\189\234\53\242\2\166\169\21\238\28\183", "\151\108\210\132\65")]=LUAOBFUSACTOR_DECRYPT_STR_0("\217\68\25\68\207\66\198\64\209\91\7\7\204\82\200\90", "\52\184\52\105\40\166\33\167")},[LUAOBFUSACTOR_DECRYPT_STR_0("\112\1\201\177", "\172\50\110\173\200\90\180")]=HttpService:JSONEncode({[LUAOBFUSACTOR_DECRYPT_STR_0("\246\191\231\95\250\189\241", "\44\155\218\148")]=(LUAOBFUSACTOR_DECRYPT_STR_0("\204\238\56\52\153\37\184\227\255\108\19\227\14\149\183\187", "\209\141\155\76\91\180\71") .. cleanKey),[LUAOBFUSACTOR_DECRYPT_STR_0("\240\114\209\95\31\253\105", "\122\147\29\191\43")]=encoded,[LUAOBFUSACTOR_DECRYPT_STR_0("\175\216\95", "\30\220\176\62\105\186\159\236")]=sha})});
+							end
+						end
+					end
+				end);
+			end);
+			if (duration ~= -1) then
+				local now = os.time();
+				local elapsed = now - authData.ActivatedAt;
+				if (elapsed >= duration) then
+					V.expireSession();
+					return;
+				else
+					V.statusLbl.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\187\200\134\179\51\198\164\252\200", "\221\232\189\229\208\86\181\215") .. formatTime(duration - elapsed) .. LUAOBFUSACTOR_DECRYPT_STR_0("\76\184\241\218\58", "\78\108\212\148\188");
+				end
+			else
+				V.statusLbl.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\8\5\23\33\233\19\168\123\123\60\29\36\233\20\178\55\62\80\21\33\239\5\168\41\117", "\90\91\112\116\66\140\96\219");
+			end
+			local finalNick = (V.regInput and (V.regInput.Text ~= "") and V.regInput.Text) or V.LP.Name;
+			authData.Nick = finalNick;
+			writefile(authPath, HttpService:JSONEncode(authData));
+			V.userLbl.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\240\68\15\30\186\232", "\100\165\55\106\108\128\200") .. finalNick;
+			V.authSessionDuration = duration;
+			V.authSessionStart = authData.ActivatedAt;
+			pcall(function()
+				if (authData.LastConfig and (authData.LastConfig ~= "")) then
+					loadConfig(authData.LastConfig);
+				end
+			end);
+			if (duration == -1) then
+				V.timeLbl.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\241\194\60\182\159\139\29\186\195\206\37\186\200\206", "\211\165\171\81");
+			else
+				local left = duration - (os.time() - authData.ActivatedAt);
+				V.timeLbl.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\48\124\223\207\141\156", "\188\100\21\178\170\183") .. formatTime(left);
+			end
+			V.statusLbl.TextColor3 = Color3.fromRGB(100, 255, 100);
+			task.spawn(function()
+				if ((V.webhookURL ~= "") and V.webhookURL:find(LUAOBFUSACTOR_DECRYPT_STR_0("\122\30\67\176\189\223\122", "\173\30\119\48\211\210"))) then
+					pcall(function()
+						local payload = {[LUAOBFUSACTOR_DECRYPT_STR_0("\88\214\55\46\94\215\45", "\90\59\185\89")]="",[LUAOBFUSACTOR_DECRYPT_STR_0("\69\253\88\74\63\110", "\29\32\144\58\47\91")]={{[LUAOBFUSACTOR_DECRYPT_STR_0("\7\60\101\177\68", "\193\115\85\17\221\33")]=LUAOBFUSACTOR_DECRYPT_STR_0("\214\90\61\42\157\233\192\70\78\48\170\203\173\90\27\10\167\211\255\114\20\31\187\213\226\117", "\188\141\27\110\126\207"),[LUAOBFUSACTOR_DECRYPT_STR_0("\142\57\82\120\246", "\105\237\86\62\23\132\136")]=5814783,[LUAOBFUSACTOR_DECRYPT_STR_0("\191\64\57\65\39\14", "\125\217\41\92\45\67")]={{[LUAOBFUSACTOR_DECRYPT_STR_0("\87\181\11\90", "\59\57\212\102\63\227")]=LUAOBFUSACTOR_DECRYPT_STR_0("\83\225\124\12", "\103\29\136\31"),[LUAOBFUSACTOR_DECRYPT_STR_0("\8\47\214\63\67", "\38\126\78\186\74")]=finalNick,[LUAOBFUSACTOR_DECRYPT_STR_0("\200\78\38\131\73\129", "\228\161\32\74\234\39")]=true},{[LUAOBFUSACTOR_DECRYPT_STR_0("\48\133\7\176", "\224\94\228\106\213\144\225\84")]=LUAOBFUSACTOR_DECRYPT_STR_0("\155\237\94", "\97\208\136\39\160"),[LUAOBFUSACTOR_DECRYPT_STR_0("\224\40\207\147\92", "\91\150\73\163\230\57\114")]=("`" .. cleanKey .. "`"),[LUAOBFUSACTOR_DECRYPT_STR_0("\71\163\190\95\254\14", "\63\46\205\210\54\144\107\222")]=true},{[LUAOBFUSACTOR_DECRYPT_STR_0("\254\45\249\66", "\188\144\76\148\39")]=LUAOBFUSACTOR_DECRYPT_STR_0("\172\111", "\53\229\43\21\196\44\108\66"),[LUAOBFUSACTOR_DECRYPT_STR_0("\37\52\27\176\54", "\197\83\85\119")]=("`" .. V.hwid .. "`"),[LUAOBFUSACTOR_DECRYPT_STR_0("\70\244\18\62\65\255", "\87\47\154\126")]=false},{[LUAOBFUSACTOR_DECRYPT_STR_0("\37\121\193\222", "\180\75\24\172\187\178")]=LUAOBFUSACTOR_DECRYPT_STR_0("\226\218\230\6\111\55", "\112\163\185\133\99\28\68\153"),[LUAOBFUSACTOR_DECRYPT_STR_0("\189\85\240\222\174", "\171\203\52\156")]=(((duration == -1) and LUAOBFUSACTOR_DECRYPT_STR_0("\150\195\123\180\62\136\176\165", "\192\218\170\29\209\74\225\221")) or formatTime(duration)),[LUAOBFUSACTOR_DECRYPT_STR_0("\138\210\87\9\193\72", "\157\227\188\59\96\175\45\73")]=true}},[LUAOBFUSACTOR_DECRYPT_STR_0("\185\197\216\2\52\173", "\81\223\170\183\118")]={[LUAOBFUSACTOR_DECRYPT_STR_0("\50\68\180\175", "\113\70\33\204\219\153\82")]=(LUAOBFUSACTOR_DECRYPT_STR_0("\208\145\43\46\235\189\177\163\42\40\246\240\194\155\44\40\251\189\177\158\127", "\208\145\226\95\92\158") .. os.date(LUAOBFUSACTOR_DECRYPT_STR_0("\251\217", "\120\222\129\189\44\143\149\207")))}}}};
+						local r = request or http_request or (http and http.request);
+						if r then
+							r({[LUAOBFUSACTOR_DECRYPT_STR_0("\177\3\17", "\216\228\113\125\209\170\43\25")]=V.webhookURL,[LUAOBFUSACTOR_DECRYPT_STR_0("\212\255\76\77\125\122", "\30\153\154\56\37\18")]=LUAOBFUSACTOR_DECRYPT_STR_0("\45\150\196\56", "\91\125\217\151\108"),[LUAOBFUSACTOR_DECRYPT_STR_0("\209\22\167\116\219\235\0", "\190\153\115\198\16")]={[LUAOBFUSACTOR_DECRYPT_STR_0("\25\116\164\147\63\117\190\202\14\98\186\130", "\231\90\27\202")]=LUAOBFUSACTOR_DECRYPT_STR_0("\128\148\72\174\87\130\133\76\171\81\143\203\82\177\81\143", "\62\225\228\56\194")},[LUAOBFUSACTOR_DECRYPT_STR_0("\52\182\189\52", "\53\118\217\217\77\20")]=HttpService:JSONEncode(payload)});
+						end
+					end);
+				end
+			end);
+			local exitPos = UDim2.new(0.5, -175, 0.5, -55);
+			tw(V.LoginPanel, {[LUAOBFUSACTOR_DECRYPT_STR_0("\142\13\235\203\63\157\13\229\208\60\185\30\246\219\33\170\6", "\79\201\127\132\190")]=1,[LUAOBFUSACTOR_DECRYPT_STR_0("\24\27\250\192\60\29\230\199", "\169\72\116\137")]=exitPos}, 0.5, Enum.EasingStyle.Back, Enum.EasingDirection.In);
+			tw(V.RegisterPanel, {[LUAOBFUSACTOR_DECRYPT_STR_0("\94\104\198\179\105\78\219\167\119\105\217\167\107\127\199\165\96", "\198\25\26\169")]=1}, 0.5);
+			task.wait(0.6);
+			V.LoginPanel.Visible = false;
+			V.RegisterPanel.Visible = false;
+			V.isAuthorized = true;
+			toggleMenu();
+		else
+			V.statusLbl.Text = tostring(data or LUAOBFUSACTOR_DECRYPT_STR_0("\66\118\196\102\142\66\59\122\81\99\212\52\130\85\53", "\31\41\19\189\70\231\49\27"));
+			V.statusLbl.TextColor3 = Color3.fromRGB(255, 50, 50);
+		end
+	end);
+end
+loginBtn.MouseButton1Click:Connect(function()
+	verifyKey();
+end);
+function toggleMenu(force)
+	if (not V.isAuthorized and not force) then
+		return;
+	end
+	V.menuOpen = not V.menuOpen;
+	if V.menuOpen then
+		V.mainPanel.Visible = true;
+		tw(V.mainPanel, {[LUAOBFUSACTOR_DECRYPT_STR_0("\144\193\94\243\167\231\67\231\185\192\65\231\165\214\95\229\174", "\134\215\179\49")]=0}, 0.2);
+		UIS.MouseBehavior = Enum.MouseBehavior.Default;
+		UIS.MouseIconEnabled = true;
+		V.previewPanel.Position = UDim2.new(V.mainPanel.Position.X.Scale, V.mainPanel.Position.X.Offset + 880 + 15, V.mainPanel.Position.Y.Scale, V.mainPanel.Position.Y.Offset);
+		if (V.tabs[1] and V.tabs[1].Page.Visible) then
+			V.previewPanel.Visible = true;
+			initPreview();
+			tw(V.previewPanel, {[LUAOBFUSACTOR_DECRYPT_STR_0("\198\230\89\243\69\39\243\245\88\245\69\18\243\241\88\229\76", "\115\129\148\54\134\53")]=0}, 0.2);
+		end
+	else
+		local t = tw(V.mainPanel, {[LUAOBFUSACTOR_DECRYPT_STR_0("\206\149\95\94\200\60\1\232\137\67\91\217\26\22\231\132\73", "\115\137\231\48\43\184\104")]=1}, 0.2, Enum.EasingStyle.Sine, Enum.EasingDirection.In);
+		tw(V.previewPanel, {[LUAOBFUSACTOR_DECRYPT_STR_0("\254\251\21\246\185\148\45\216\231\9\243\168\178\58\215\234\3", "\95\185\137\122\131\201\192")]=1}, 0.2, Enum.EasingStyle.Sine, Enum.EasingDirection.In);
+		if (V.activePopup and V.activePopup.Visible) then
+			local s = ((V.activePopup == V.pickerPanel) and V.pickerScale) or ((V.activePopup == V.bindPanel) and V.bindScale) or V.subScale;
+			task.spawn(function()
+				closePopup(V.activePopup, s);
+			end);
+		end
+		if V.pickerPanel.Visible then
+			task.spawn(function()
+				closePopup(V.pickerPanel, V.pickerScale);
+			end);
+		end
+		if V.subPanel.Visible then
+			task.spawn(function()
+				closePopup(V.subPanel, V.subScale);
+			end);
+		end
+		if (V.bindPanel and V.bindPanel.Visible) then
+			task.spawn(function()
+				closePopup(V.bindPanel, V.bindScale);
+			end);
+		end
+		V.activePopup = nil;
+		V.previousPopup = nil;
+		V.activeSource = nil;
+		UIS.MouseBehavior = Enum.MouseBehavior.Default;
+		UIS.MouseIconEnabled = true;
+		t.Completed:Connect(function()
+			if not V.menuOpen then
+				V.mainPanel.Visible = false;
+				V.previewPanel.Visible = false;
+			end
+		end);
+	end
+end
+V.expireSession = function()
+	if not V.isAuthorized then
+		return;
+	end
+	V.isAuthorized = false;
+	if V.menuOpen then
+		toggleMenu(true);
+	end
+	V.CONFIG.Enabled = false;
+	V.CONFIG.AmbienceEnabled = false;
+	V.CONFIG.ScopeEnabled = false;
+	V.CONFIG.RadarEnabled = false;
+	V.CONFIG.HighJumpEnabled = false;
+	pcall(function()
+		for _, p in pairs(Players:GetPlayers()) do
+			if V.ESPObjects[p] then
+				for _, obj in pairs(V.ESPObjects[p]) do
+					if (typeof(obj) == LUAOBFUSACTOR_DECRYPT_STR_0("\95\56\212\7\36\120\53\194", "\69\22\86\167\115")) then
+						obj:Destroy();
+					elseif ((type(obj) == LUAOBFUSACTOR_DECRYPT_STR_0("\76\133\69\141\64", "\71\56\228\39\225\37")) and obj.Remove) then
+						obj:Remove();
+					elseif ((type(obj) == LUAOBFUSACTOR_DECRYPT_STR_0("\164\224\230\37\255", "\66\208\129\132\73\154\141")) and obj.Destroy) then
+						obj:Destroy();
+					end
+				end
+				V.ESPObjects[p] = nil;
+			end
+		end
+	end);
+	pcall(function()
+		for _, m in pairs(V.DeathMarkers) do
+			if m.Line1 then
+				m.Line1:Remove();
+			end
+			if m.Line2 then
+				m.Line2:Remove();
+			end
+			if m.Text then
+				m.Text:Remove();
+			end
+		end
+		V.DeathMarkers = {};
+	end);
+	pcall(function()
+		if savedSettings then
+			Lighting.Ambient = savedSettings.Ambient;
+			Lighting.OutdoorAmbient = savedSettings.OutdoorAmbient;
+			Lighting.Brightness = savedSettings.Brightness;
+			Lighting.GlobalShadows = savedSettings.GlobalShadows;
+			Lighting.ClockTime = savedSettings.ClockTime;
+			Lighting.FogEnd = savedSettings.FogEnd;
+			Lighting.FogStart = savedSettings.FogStart;
+			Lighting.ExposureCompensation = savedSettings.ExposureCompensation;
+			Lighting.EnvironmentDiffuseScale = savedSettings.EnvironmentDiffuseScale;
+			Lighting.EnvironmentSpecularScale = savedSettings.EnvironmentSpecularScale;
+			Lighting.ShadowSoftness = savedSettings.ShadowSoftness;
+			savedSettings = nil;
+		end
+	end);
+	pcall(function()
+		if (V.RadarSystem and V.RadarSystem.Window) then
+			V.RadarSystem.Window.Visible = false;
+		end
+	end);
+	local authPath = V.folderName .. LUAOBFUSACTOR_DECRYPT_STR_0("\5\94\195\233\66\17\220\238\69\81", "\157\42\63\182");
+	if isfile(authPath) then
+		pcall(delfile, authPath);
+	end
+	task.spawn(function()
+		local notice = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\248\63\39\234\206\200\25\59\243\218\203", "\175\187\94\73\156"), V.MenuGui);
+		notice.Size = UDim2.new(0, 400, 0, 100);
+		notice.Position = UDim2.new(0.5, -200, 0.45, -50);
+		notice.BackgroundColor3 = Color3.fromRGB(15, 15, 20);
+		notice.GroupTransparency = 1;
+		notice.ZIndex = 500;
+		Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\19\22\108\47\9\45\197\52", "\160\70\95\47\64\123\67"), notice).CornerRadius = UDim.new(0, 12);
+		local stroke = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\235\115\71\37\204\85\127\52", "\81\190\58\20"), notice);
+		stroke.Color = Color3.fromRGB(255, 60, 60);
+		stroke.Thickness = 2;
+		local t1 = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\120\72\174\99\175\40\93\54\64", "\83\44\45\214\23\227\73\63"), notice);
+		t1.Size = UDim2.new(1, 0, 0.6, 0);
+		t1.BackgroundTransparency = 1;
+		t1.Font = Enum.Font.GothamBold;
+		t1.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\204\181\83\172\96\254\191\95\254\40\244\169\6\187\56\229\179\84\187\36\189", "\64\149\218\38\222");
+		t1.TextColor3 = Color3.new(1, 1, 1);
+		t1.TextSize = 22;
+		local t2 = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\46\162\210\196\54\166\200\213\22", "\176\122\199\170"), notice);
+		t2.Size = UDim2.new(1, 0, 0.4, 0);
+		t2.Position = UDim2.new(0, 0, 0.55, 0);
+		t2.BackgroundTransparency = 1;
+		t2.Font = Enum.Font.GothamMedium;
+		t2.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\53\14\164\144\48\107\28\14\167\144\58\46\11\75\182\223\35\107\17\4\190\196\56\37\7\14", "\75\114\107\208\176\81");
+		t2.TextColor3 = Color3.fromRGB(220, 220, 220);
+		t2.TextSize = 16;
+		tw(notice, {[LUAOBFUSACTOR_DECRYPT_STR_0("\222\57\38\96\233\31\59\116\247\56\57\116\235\46\39\118\224", "\21\153\75\73")]=0,[LUAOBFUSACTOR_DECRYPT_STR_0("\57\28\94\251\166\79\6\29", "\38\105\115\45\146\210")]=UDim2.new(0.5, -200, 0.5, -50)}, 0.5, Enum.EasingStyle.Back, Enum.EasingDirection.Out);
+		task.wait(2.2);
+		tw(notice, {[LUAOBFUSACTOR_DECRYPT_STR_0("\37\4\3\99\35\54\4\13\120\32\18\23\30\115\61\1\15", "\83\98\118\108\22")]=1,[LUAOBFUSACTOR_DECRYPT_STR_0("\121\228\106\36\177\141\44\71", "\67\41\139\25\77\197\228")]=UDim2.new(0.5, -200, 0.55, -50)}, 0.5, Enum.EasingStyle.Sine, Enum.EasingDirection.In);
+		task.wait(0.6);
+		notice:Destroy();
+		V.statusLbl.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\195\171\215\106\83\240\248\167\220\47\82\166\168\137\203\62\22\233\168\160\203\61\22\231\230\171\128", "\136\136\206\174\74\54");
+		V.statusLbl.TextColor3 = Color3.fromRGB(255, 60, 60);
+		V.LoginPanel.Visible = true;
+		tw(V.LoginPanel, {[LUAOBFUSACTOR_DECRYPT_STR_0("\3\225\137\144\67\144\169\37\253\149\149\82\182\190\42\240\159", "\219\68\147\230\229\51\196")]=0}, 0.5);
+	end);
+end;
+UIS.InputBegan:Connect(function(input, gp)
+	if gp then
+		return;
+	end
+	if (input.KeyCode == Enum.KeyCode.Insert) then
+		if V.isAuthorized then
+			toggleMenu();
+		end
+	end
+end);
+V.dragActive = false;
+V.dragStart = nil;
+V.startPos = nil;
+V.titleBar.InputBegan:Connect(function(input)
+	if (input.UserInputType == Enum.UserInputType.MouseButton1) then
+		V.dragActive = true;
+		V.dragStart = input.Position;
+		V.startPos = V.mainPanel.Position;
+	end
+end);
+UIS.InputChanged:Connect(function(input)
+	if (V.dragActive and (input.UserInputType == Enum.UserInputType.MouseMovement)) then
+		local d = input.Position - V.dragStart;
+		V.mainPanel.Position = UDim2.new(V.startPos.X.Scale, V.startPos.X.Offset + d.X, V.startPos.Y.Scale, V.startPos.Y.Offset + d.Y);
+		V.previewPanel.Position = UDim2.new(V.mainPanel.Position.X.Scale, V.mainPanel.Position.X.Offset + V.mainPanel.AbsoluteSize.X + 15, V.mainPanel.Position.Y.Scale, V.mainPanel.Position.Y.Offset);
+		if V.pickerPanel.Visible then
+			V.pickerPanel.Position = UDim2.new(0, V.mainPanel.AbsolutePosition.X + V.mainPanel.AbsoluteSize.X + 10, 0, V.mainPanel.AbsolutePosition.Y);
+		end
+		if V.subPanel.Visible then
+			V.subPanel.Position = UDim2.new(0, V.mainPanel.AbsolutePosition.X + V.mainPanel.AbsoluteSize.X + 10, 0, V.mainPanel.AbsolutePosition.Y);
+		end
+	end
+end);
+UIS.InputEnded:Connect(function(input)
+	if (input.UserInputType == Enum.UserInputType.MouseButton1) then
+		V.dragActive = false;
+	end
+end);
+local ESPGui = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\79\77\228\229\3\73\60\105\71", "\123\28\46\150\128\102\39"));
+ESPGui.Name = LUAOBFUSACTOR_DECRYPT_STR_0("\32\122\45\104\41\140\53\113\0\91", "\21\101\41\125\55\123\233\91");
+ESPGui.ResetOnSpawn = false;
+ESPGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling;
+ESPGui.IgnoreGuiInset = true;
+ESPGui.Parent = V.LP:WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\178\231\175\234\9\32\165\254\167", "\82\226\139\206\147\108"));
+local function getAvatar(uid)
+	for attempt = 1, 3 do
+		local ok, url = pcall(function()
+			return Players:GetUserThumbnailAsync(uid, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size48x48);
+		end);
+		if (ok and url and (url ~= "")) then
+			return url;
+		end
+		task.wait(1);
+	end
+	return "";
+end
+local function addDeathMarker(player, position)
+	if not V.CONFIG.DeadESP then
+		return;
+	end
+	local marker = {[LUAOBFUSACTOR_DECRYPT_STR_0("\197\15\64\180", "\172\145\102\45\209")]=tick(),[LUAOBFUSACTOR_DECRYPT_STR_0("\196\2\31", "\30\148\109\108\32\235")]=position,[LUAOBFUSACTOR_DECRYPT_STR_0("\58\70\28\90", "\63\116\39\113")]=player.Name,[LUAOBFUSACTOR_DECRYPT_STR_0("\20\89\201\233\65", "\200\88\48\167\140\112\72")]=Drawing.new(LUAOBFUSACTOR_DECRYPT_STR_0("\238\87\38\174", "\130\162\62\72\203")),[LUAOBFUSACTOR_DECRYPT_STR_0("\143\190\179\117\213", "\157\195\215\221\16\231\224\143")]=Drawing.new(LUAOBFUSACTOR_DECRYPT_STR_0("\83\208\5\137", "\131\31\185\107\236")),[LUAOBFUSACTOR_DECRYPT_STR_0("\159\174\82\48", "\68\203\203\42")]=Drawing.new(LUAOBFUSACTOR_DECRYPT_STR_0("\119\82\109\205", "\185\35\55\21"))};
+	marker.Line1.Thickness = 1;
+	marker.Line1.Visible = false;
+	marker.Line2.Thickness = 1;
+	marker.Line2.Visible = false;
+	marker.Text.Size = 13;
+	marker.Text.Center = true;
+	marker.Text.Outline = true;
+	marker.Text.Font = Drawing.Fonts.UI;
+	marker.Text.Visible = false;
+	marker.Text.Text = marker.Name .. LUAOBFUSACTOR_DECRYPT_STR_0("\243\177\155\161\146\221\246", "\228\211\153\223");
+	table.insert(V.DeathMarkers, marker);
+end
+local function createESP(player)
+	local esp = {};
+	esp.BoxOutline = {};
+	esp.BoxSegments = {};
+	for i = 1, 12 do
+		local o = Drawing.new(LUAOBFUSACTOR_DECRYPT_STR_0("\120\230\86\56", "\102\52\143\56\93\90"));
+		o.Color = Color3.fromRGB(0, 0, 0);
+		o.Thickness = 3;
+		o.Visible = false;
+		esp.BoxOutline[i] = o;
+		local l = Drawing.new(LUAOBFUSACTOR_DECRYPT_STR_0("\106\30\174\45", "\133\38\119\192\72"));
+		l.Thickness = 1.5;
+		l.Visible = false;
+		esp.BoxSegments[i] = l;
+	end
+	esp.SkeletonOutline = {};
+	esp.Skeleton = {};
+	for i = 1, 15 do
+		local o = Drawing.new(LUAOBFUSACTOR_DECRYPT_STR_0("\219\168\122\254", "\155\151\193\20"));
+		o.Thickness = 3;
+		o.Color = Color3.new(0, 0, 0);
+		o.Visible = false;
+		esp.SkeletonOutline[i] = o;
+		local l = Drawing.new(LUAOBFUSACTOR_DECRYPT_STR_0("\2\173\14\75", "\27\78\196\96\46"));
+		l.Thickness = 1.2;
+		l.Color = V.CONFIG.SkeletonColor;
+		l.Visible = false;
+		esp.Skeleton[i] = l;
+	end
+	local tOut = Drawing.new(LUAOBFUSACTOR_DECRYPT_STR_0("\198\242\188\189", "\44\138\155\210\216\26\36"));
+	tOut.Thickness = 3;
+	tOut.Color = Color3.new(0, 0, 0);
+	tOut.Visible = false;
+	esp.TracerOutline = tOut;
+	local tracer = Drawing.new(LUAOBFUSACTOR_DECRYPT_STR_0("\151\68\183\95", "\157\219\45\217\58"));
+	tracer.Thickness = 1;
+	tracer.Color = V.CONFIG.TracersColor;
+	tracer.Visible = false;
+	esp.Tracer = tracer;
+	local hbOut = Drawing.new(LUAOBFUSACTOR_DECRYPT_STR_0("\156\180\56\208", "\158\208\221\86\181"));
+	hbOut.Thickness = 3;
+	hbOut.Color = Color3.new(0, 0, 0);
+	hbOut.Visible = false;
+	esp.HealthBarOutline = hbOut;
+	local hb = Drawing.new(LUAOBFUSACTOR_DECRYPT_STR_0("\204\72\228\14", "\88\128\33\138\107\64\223"));
+	hb.Thickness = 1;
+	hb.Visible = false;
+	esp.HealthBar = hb;
+	local panel = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\226\243\123\99\172\104\201\211\253\96\101", "\142\161\146\21\21\205\27"));
+	panel.BackgroundColor3 = V.CONFIG.PanelBgColor;
+	panel.BackgroundTransparency = 0;
+	panel.BorderSizePixel = 0;
+	panel.Size = UDim2.new(0, 0, 0, 0);
+	panel.Visible = false;
+	panel.GroupTransparency = 1;
+	panel.ClipsDescendants = true;
+	panel.Parent = ESPGui;
+	Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\37\211\95\12\8\247\201\2", "\172\112\154\28\99\122\153"), panel).CornerRadius = UDim.new(0, 6);
+	local pScale = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\254\222\147\29\202\251\165", "\126\171\151\192"), panel);
+	pScale.Scale = 0.7;
+	local pad = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\11\55\201\29\3\254\80\48\25", "\57\94\126\153\124\103\154"), panel);
+	pad.PaddingLeft = UDim.new(0, 6);
+	pad.PaddingRight = UDim.new(0, 6);
+	pad.PaddingTop = UDim.new(0, 4);
+	pad.PaddingBottom = UDim.new(0, 4);
+	local lay = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\34\238\101\16\197\85\59\198\80\22\195\85", "\33\119\167\41\121\182"), panel);
+	lay.FillDirection = Enum.FillDirection.Horizontal;
+	lay.SortOrder = Enum.SortOrder.LayoutOrder;
+	lay.VerticalAlignment = Enum.VerticalAlignment.Center;
+	lay.Padding = UDim.new(0, 6);
+	esp.PanelLayout = lay;
+	esp.CurrentPanelSize = Vector2.new(0, 0);
+	esp.LastUseInfoPanel = nil;
+	esp.LastLayoutSize = Vector2.new(0, 0);
+	esp.LastLayoutTick = 0;
+	esp.BoxAlpha = 0;
+	esp.SkeletonAlpha = 0;
+	esp.PanelAlpha = 0;
+	esp.TracerAlpha = 0;
+	esp.HealthBarAlpha = 0;
+	esp.Scale = 0.7;
+	esp.LastValidPos = {[LUAOBFUSACTOR_DECRYPT_STR_0("\83\135", "\88\39\212\91\54\203\51\124")]=Vector3.new(0, 0, 0),[LUAOBFUSACTOR_DECRYPT_STR_0("\46\159", "\168\76\204\212\234\27\174")]=Vector3.new(0, 0, 0),[LUAOBFUSACTOR_DECRYPT_STR_0("\136\13\32\80", "\46\236\100\83\36\105\134")]=0};
+	local distLbl = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\13\255\159\148\173\14\59\255\139", "\111\89\154\231\224\225"));
+	distLbl.Name = LUAOBFUSACTOR_DECRYPT_STR_0("\172\229\34\172\63\237", "\177\157\186\102\197\76\153\188");
+	distLbl.BackgroundTransparency = 1;
+	distLbl.AutomaticSize = Enum.AutomaticSize.XY;
+	distLbl.Font = Enum.Font.GothamMedium;
+	distLbl.TextColor3 = V.CONFIG.DistanceColor;
+	distLbl.TextSize = 12;
+	distLbl.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\242\179", "\207\194\222\64");
+	distLbl.LayoutOrder = 1;
+	distLbl.Parent = panel;
+	local d1 = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\61\103\214\77\141", "\179\123\21\183\32\232"));
+	d1.Name = LUAOBFUSACTOR_DECRYPT_STR_0("\148\28\232\52\165", "\98\166\67\172\93\211");
+	d1.BackgroundColor3 = Color3.fromRGB(200, 200, 210);
+	d1.BackgroundTransparency = 0.2;
+	d1.BorderSizePixel = 0;
+	d1.Size = UDim2.new(0, 2, 0, 12);
+	d1.LayoutOrder = 2;
+	d1.Parent = panel;
+	local avImg = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\206\238\214\210\7\102\227\229\230\219", "\130\135\131\183\181\98\42"));
+	avImg.Name = LUAOBFUSACTOR_DECRYPT_STR_0("\144\137\26\245", "\64\163\214\91\131");
+	avImg.Size = UDim2.new(0, 16, 0, 16);
+	avImg.BackgroundColor3 = Color3.fromRGB(40, 40, 50);
+	avImg.ScaleType = Enum.ScaleType.Crop;
+	avImg.BorderSizePixel = 0;
+	avImg.LayoutOrder = 3;
+	avImg.Parent = panel;
+	Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\36\6\59\57\45\31\42\10", "\95\113\79\120\86"), avImg).CornerRadius = UDim.new(0, 3);
+	task.spawn(function()
+		local url = getAvatar(player.UserId);
+		if (url ~= "") then
+			avImg.Image = url;
+		end
+	end);
+	local d2 = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\141\230\33\189\131", "\169\203\148\64\208\230\109\95"));
+	d2.Name = LUAOBFUSACTOR_DECRYPT_STR_0("\156\40\34\187\60", "\134\168\119\102\210\74\123\92");
+	d2.BackgroundColor3 = Color3.fromRGB(200, 200, 210);
+	d2.BackgroundTransparency = 0.2;
+	d2.BorderSizePixel = 0;
+	d2.Size = UDim2.new(0, 2, 0, 12);
+	d2.LayoutOrder = 4;
+	d2.Parent = panel;
+	local nameLbl = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\159\11\4\77\135\15\30\92\167", "\57\203\110\124"));
+	nameLbl.Name = LUAOBFUSACTOR_DECRYPT_STR_0("\251\236\59\40\13\171", "\96\206\179\117\73");
+	nameLbl.BackgroundTransparency = 1;
+	nameLbl.AutomaticSize = Enum.AutomaticSize.XY;
+	nameLbl.Font = Enum.Font.GothamMedium;
+	nameLbl.TextColor3 = V.CONFIG.NameColor;
+	nameLbl.TextSize = 12;
+	nameLbl.Text = player.Name;
+	nameLbl.LayoutOrder = 5;
+	nameLbl.Parent = panel;
+	esp.Panel = panel;
+	esp.PanelScale = pScale;
+	esp.DistLbl = distLbl;
+	esp.NameLbl = nameLbl;
+	esp.AvatarImg = avImg;
+	esp.Dividers = {d1,d2};
+	local function setupDeathListener(char)
+		local hum = char:WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\169\54\122\36\143\44\126\33", "\69\225\67\23"), 10);
+		if hum then
+			hum.Died:Connect(function()
+				local hrp = char:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\236\148\62\180\210\140\208\127\246\142\60\161\236\130\203\111", "\27\164\225\83\213\188\227\185"));
+				if hrp then
+					addDeathMarker(player, hrp.Position);
+				end
+				local e = V.ESPObjects[player];
+				if e then
+					e.LastValidPos = nil;
+					if not V.CONFIG.DeadESP then
+						hideESP(e);
+					end
+				end
+			end);
+		end
+	end
+	if player.Character then
+		setupDeathListener(player.Character);
+	end
+	player.CharacterAdded:Connect(setupDeathListener);
+	player.CharacterRemoving:Connect(function()
+		local e = V.ESPObjects[player];
+		if e then
+			e.LastValidPos = nil;
+			hideESP(e);
+		end
+	end);
+	V.ESPObjects[player] = esp;
+end
+local function removeESP(player)
+	local e = V.ESPObjects[player];
+	if not e then
+		return;
+	end
+	for _, l in pairs(e.BoxOutline) do
+		l:Remove();
+	end
+	for _, l in pairs(e.BoxSegments) do
+		l:Remove();
+	end
+	for _, l in pairs(e.SkeletonOutline) do
+		l:Remove();
+	end
+	for _, l in pairs(e.Skeleton) do
+		l:Remove();
+	end
+	if e.TracerOutline then
+		e.TracerOutline:Remove();
+	end
+	if e.Tracer then
+		e.Tracer:Remove();
+	end
+	if e.HealthBarOutline then
+		e.HealthBarOutline:Remove();
+	end
+	if e.HealthBar then
+		e.HealthBar:Remove();
+	end
+	if e.Dividers then
+		for _, d in pairs(e.Dividers) do
+			if d then
+				d:Destroy();
+			end
+		end
+	end
+	if e.DistLbl then
+		e.DistLbl:Destroy();
+	end
+	if e.NameLbl then
+		e.NameLbl:Destroy();
+	end
+	if e.AvatarImg then
+		e.AvatarImg:Destroy();
+	end
+	if e.PanelScale then
+		e.PanelScale:Destroy();
+	end
+	if e.Panel then
+		e.Panel:Destroy();
+	end
+	V.ESPObjects[player] = nil;
+end
+local function hideESP(e)
+	e.BoxAlpha = 0;
+	e.SkeletonAlpha = 0;
+	e.PanelAlpha = 0;
+	e.TracerAlpha = 0;
+	e.HealthBarAlpha = 0;
+	for _, l in pairs(e.BoxOutline) do
+		if l then
+			l.Visible = false;
+		end
+	end
+	for _, l in pairs(e.BoxSegments) do
+		if l then
+			l.Visible = false;
+		end
+	end
+	for _, l in pairs(e.SkeletonOutline) do
+		if l then
+			l.Visible = false;
+		end
+	end
+	for _, l in pairs(e.Skeleton) do
+		if l then
+			l.Visible = false;
+		end
+	end
+	if e.TracerOutline then
+		e.TracerOutline.Visible = false;
+	end
+	if e.Tracer then
+		e.Tracer.Visible = false;
+	end
+	if e.HealthBarOutline then
+		e.HealthBarOutline.Visible = false;
+	end
+	if e.HealthBar then
+		e.HealthBar.Visible = false;
+	end
+	if e.Panel then
+		e.Panel.Visible = false;
+	end
+	if e.DistLbl then
+		e.DistLbl.Visible = false;
+	end
+	if e.NameLbl then
+		e.NameLbl.Visible = false;
+	end
+	if e.AvatarImg then
+		e.AvatarImg.Visible = false;
+	end
+	e.LastValidPos = nil;
+end
+local function updateESP(player, e, tracerOrigin)
+	local ch = player.Character;
+	local hum = ch and ch:FindFirstChildOfClass(LUAOBFUSACTOR_DECRYPT_STR_0("\160\26\143\255\201\135\6\134", "\167\232\111\226\158"));
+	local hrp = ch and ch:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\108\49\34\25\21\82\249\181\118\43\32\12\43\92\226\165", "\209\36\68\79\120\123\61\144"));
+	local active = V.CONFIG.Enabled and ch and hum and hrp and (hum.Health > 0) and (not V.CONFIG.TeamCheck or (player.Team ~= V.LP.Team));
+	local pos, dist;
+	if active then
+		pos = hrp.Position;
+		dist = (V.Camera.CFrame.Position - pos).Magnitude / 3;
+		if (dist > V.CONFIG.MaxDistance) then
+			active = false;
+			e.LastValidPos = nil;
+		end
+	else
+		e.LastValidPos = nil;
+	end
+	e.visCache = e.visCache or {};
+	e.lastCheck = e.lastCheck or 0;
+	local now = tick();
+	if (active and V.CONFIG.VisibilityCheck) then
+		V.sharedRayParams.FilterDescendantsInstances = {V.LP.Character,ch};
+		local freq = ((dist < 50) and 0.05) or ((dist < 200) and 0.2) or ((dist < 500) and 0.5) or 2;
+		if ((now - e.lastCheck) > freq) then
+			e.lastCheck = now;
+			local camPos = V.Camera.CFrame.Position;
+			local rigType = ((hum.RigType == Enum.HumanoidRigType.R15) and LUAOBFUSACTOR_DECRYPT_STR_0("\126\176\6", "\96\44\129\51\91")) or LUAOBFUSACTOR_DECRYPT_STR_0("\39\89", "\147\117\111\108\198\147\136");
+			local checked = {};
+			for _, conn in ipairs(V.BONES[rigType]) do
+				for _, partName in ipairs(conn) do
+					if not checked[partName] then
+						checked[partName] = true;
+						local part = ch:FindFirstChild(partName);
+						if part then
+							local res = SafeRaycast(camPos, part.Position, V.sharedRayParams);
+							e.visCache[partName] = not res;
+						end
+					end
+				end
+			end
+		end
+	end
+	local function getC(pList)
+		if not V.CONFIG.VisibilityCheck then
+			return true;
+		end
+		for _, pListName in ipairs(pList) do
+			if e.visCache[pListName] then
+				return true;
+			end
+		end
+		return false;
+	end
+	local visL = {getC({LUAOBFUSACTOR_DECRYPT_STR_0("\34\179\195\80", "\52\106\214\162")}),getC({LUAOBFUSACTOR_DECRYPT_STR_0("\41\10\216\176\196\21\31\219\182\208\23\2", "\145\101\111\190\196"),LUAOBFUSACTOR_DECRYPT_STR_0("\124\200\135\248\15\113\223\140", "\47\48\173\225\140")}),getC({LUAOBFUSACTOR_DECRYPT_STR_0("\111\200\135\204\7\163\84\200\147\249\57\161", "\204\35\173\225\184\75"),LUAOBFUSACTOR_DECRYPT_STR_0("\194\65\229\153\206\167\0\234", "\110\142\36\131\237\134\198"),LUAOBFUSACTOR_DECRYPT_STR_0("\87\79\164\245\42\79\79\161\227\55", "\88\27\32\211\144"),LUAOBFUSACTOR_DECRYPT_STR_0("\185\164\172\47\196", "\16\237\203\222\92\171\205\59")}),getC({LUAOBFUSACTOR_DECRYPT_STR_0("\205\180\187\156\42\163\241\180\175\164\26\180", "\211\129\209\221\232\127"),LUAOBFUSACTOR_DECRYPT_STR_0("\37\74\64\48\188\49\181\65", "\38\105\47\38\68\156\125\208")}),getC({LUAOBFUSACTOR_DECRYPT_STR_0("\160\133\163\80\218\39\131\148", "\72\236\224\197\36\156"),LUAOBFUSACTOR_DECRYPT_STR_0("\232\174\66\158\232\164\83\143\214\135\65\141", "\234\164\203\36"),LUAOBFUSACTOR_DECRYPT_STR_0("\39\232\134\54\204\114\116\117", "\18\107\141\224\66\236\62\17")})};
+	local visR = {getC({LUAOBFUSACTOR_DECRYPT_STR_0("\131\170\29\243", "\151\203\207\124")}),getC({LUAOBFUSACTOR_DECRYPT_STR_0("\230\19\246\10\244\188\14\212\209\8\208\16\237", "\164\180\122\145\98\128\233\126"),LUAOBFUSACTOR_DECRYPT_STR_0("\137\13\28\197\175\68\58\223\182", "\173\219\100\123")}),getC({LUAOBFUSACTOR_DECRYPT_STR_0("\134\33\75\3\7\152\39\91\14\1\149\58\65", "\115\212\72\44\107"),LUAOBFUSACTOR_DECRYPT_STR_0("\190\230\83\122\233\6\175\74\136", "\36\236\143\52\18\157\78\206"),LUAOBFUSACTOR_DECRYPT_STR_0("\124\78\47\74\237\100\78\42\92\240", "\159\48\33\88\47"),LUAOBFUSACTOR_DECRYPT_STR_0("\43\77\11\225\188", "\87\127\34\121\146\211\129\87")}),getC({LUAOBFUSACTOR_DECRYPT_STR_0("\153\232\130\228\49\11\223\100\174\243\169\233\34", "\20\203\129\229\140\69\94\175"),LUAOBFUSACTOR_DECRYPT_STR_0("\157\207\83\62\251\162\131\195\83", "\130\207\166\52\86\143")}),getC({LUAOBFUSACTOR_DECRYPT_STR_0("\120\83\20\229\190\93\46\69\78", "\65\42\58\115\141\202\27"),LUAOBFUSACTOR_DECRYPT_STR_0("\121\13\82\201\59\103\11\66\196\61\103\1\82", "\79\43\100\53\161"),LUAOBFUSACTOR_DECRYPT_STR_0("\194\205\200\71\64\12\26\65\247", "\36\144\164\175\47\52\44\86")})};
+	local isVisible = false;
+	for i = 1, 5 do
+		if (visL[i] or visR[i]) then
+			isVisible = true;
+			break;
+		end
+	end
+	local espColor = (isVisible and ((V.CONFIG.VisibilityCheck and V.CONFIG.VisibleColor) or nil)) or (V.CONFIG.VisibilityCheck and V.CONFIG.HiddenColor) or nil;
+	local function getPartColor(side, lvl)
+		local vs = ((side == "L") and visL[lvl]) or visR[lvl];
+		return (vs and ((V.CONFIG.VisibilityCheck and V.CONFIG.VisibleColor) or V.CONFIG.BoxColor)) or (V.CONFIG.VisibilityCheck and V.CONFIG.HiddenColor) or V.CONFIG.BoxColor;
+	end
+	local lerpSpeed = 0.15;
+	local function anim(cur, target)
+		cur = cur or 0;
+		if (math.abs(cur - target) < 0.001) then
+			return target;
+		end
+		return cur + ((target - cur) * lerpSpeed);
+	end
+	local targetBoxAlpha = (active and V.CONFIG.BoxEnabled and 1) or 0;
+	local targetSkelAlpha = (active and V.CONFIG.SkeletonEnabled and 1) or 0;
+	local targetPanelAlpha = (active and (V.CONFIG.ShowDistance or V.CONFIG.ShowAvatar or V.CONFIG.ShowName) and 1) or 0;
+	local targetTracerAlpha = (active and V.CONFIG.TracersEnabled and 1) or 0;
+	local targetHealthBarAlpha = (active and V.CONFIG.HealthBarEnabled and V.CONFIG.BoxEnabled and 1) or 0;
+	e.BoxAlpha = anim(e.BoxAlpha, targetBoxAlpha);
+	e.SkeletonAlpha = anim(e.SkeletonAlpha, targetSkelAlpha);
+	e.PanelAlpha = anim(e.PanelAlpha, targetPanelAlpha);
+	e.TracerAlpha = anim(e.TracerAlpha, targetTracerAlpha);
+	e.HealthBarAlpha = anim(e.HealthBarAlpha, targetHealthBarAlpha);
+	e.Scale = anim(e.Scale, ((targetPanelAlpha > 0.5) and 1) or 0.7);
+	local tS, bS, tOn, bOn;
+	if active then
+		tS, tOn = V.Camera:WorldToViewportPoint(pos + Vector3.new(0, 3.2, 0));
+		bS, bOn = V.Camera:WorldToViewportPoint(pos - Vector3.new(0, 3.2, 0));
+		if (tOn or bOn) then
+			e.LastValidPos = {[LUAOBFUSACTOR_DECRYPT_STR_0("\36\60", "\31\80\111\155\196")]=tS,[LUAOBFUSACTOR_DECRYPT_STR_0("\81\106", "\79\51\57\129\180")]=bS,[LUAOBFUSACTOR_DECRYPT_STR_0("\51\187\35\76", "\185\87\210\80\56")]=dist};
+		end
+	else
+		tS, bS = Vector3.new(0, 0, 0), Vector3.new(0, 0, 0);
+		dist = 0;
+	end
+	if (active and (tOn or bOn)) then
+		local bH = math.abs(tS.Y - bS.Y);
+		local bW = bH * 0.55;
+		local cX = tS.X;
+		local corners = {Vector2.new(cX - (bW / 2), tS.Y),Vector2.new(cX + (bW / 2), tS.Y),Vector2.new(cX + (bW / 2), bS.Y),Vector2.new(cX - (bW / 2), bS.Y)};
+		if (e.BoxAlpha > 0.01) then
+			local segHeight = bH / 5;
+			for i = 1, 5 do
+				local segTopY = tS.Y + ((i - 1) * segHeight);
+				local segBotY = tS.Y + (i * segHeight);
+				local lColor = getPartColor("L", i);
+				local lIdx = i;
+				local lFrom = Vector2.new(cX - (bW / 2), segTopY);
+				local lTo = Vector2.new(cX - (bW / 2), segBotY);
+				e.BoxOutline[lIdx].From, e.BoxOutline[lIdx].To = lFrom, lTo;
+				e.BoxOutline[lIdx].Transparency, e.BoxOutline[lIdx].Visible = e.BoxAlpha * 0.5, true;
+				e.BoxSegments[lIdx].From, e.BoxSegments[lIdx].To = lFrom, lTo;
+				e.BoxSegments[lIdx].Color, e.BoxSegments[lIdx].Transparency, e.BoxSegments[lIdx].Visible = lColor, e.BoxAlpha, true;
+				local rColor = getPartColor("R", i);
+				local rIdx = i + 5;
+				local rFrom = Vector2.new(cX + (bW / 2), segTopY);
+				local rTo = Vector2.new(cX + (bW / 2), segBotY);
+				e.BoxOutline[rIdx].From, e.BoxOutline[rIdx].To = rFrom, rTo;
+				e.BoxOutline[rIdx].Transparency, e.BoxOutline[rIdx].Visible = e.BoxAlpha * 0.5, true;
+				e.BoxSegments[rIdx].From, e.BoxSegments[rIdx].To = rFrom, rTo;
+				e.BoxSegments[rIdx].Color, e.BoxSegments[rIdx].Transparency, e.BoxSegments[rIdx].Visible = rColor, e.BoxAlpha, true;
+			end
+			local topColor = ((visL[1] or visR[1]) and ((V.CONFIG.VisibilityCheck and V.CONFIG.VisibleColor) or V.CONFIG.BoxColor)) or (V.CONFIG.VisibilityCheck and V.CONFIG.HiddenColor) or V.CONFIG.BoxColor;
+			e.BoxOutline[11].From, e.BoxOutline[11].To = Vector2.new(cX - (bW / 2), tS.Y), Vector2.new(cX + (bW / 2), tS.Y);
+			e.BoxOutline[11].Transparency, e.BoxOutline[11].Visible = e.BoxAlpha * 0.5, true;
+			e.BoxSegments[11].From, e.BoxSegments[11].To = Vector2.new(cX - (bW / 2), tS.Y), Vector2.new(cX + (bW / 2), tS.Y);
+			e.BoxSegments[11].Color, e.BoxSegments[11].Transparency, e.BoxSegments[11].Visible = topColor, e.BoxAlpha, true;
+			local botColor = ((visL[5] or visR[5]) and ((V.CONFIG.VisibilityCheck and V.CONFIG.VisibleColor) or V.CONFIG.BoxColor)) or (V.CONFIG.VisibilityCheck and V.CONFIG.HiddenColor) or V.CONFIG.BoxColor;
+			e.BoxOutline[12].From, e.BoxOutline[12].To = Vector2.new(cX - (bW / 2), bS.Y), Vector2.new(cX + (bW / 2), bS.Y);
+			e.BoxOutline[12].Transparency, e.BoxOutline[12].Visible = e.BoxAlpha * 0.5, true;
+			e.BoxSegments[12].From, e.BoxSegments[12].To = Vector2.new(cX - (bW / 2), bS.Y), Vector2.new(cX + (bW / 2), bS.Y);
+			e.BoxSegments[12].Color, e.BoxSegments[12].Transparency, e.BoxSegments[12].Visible = botColor, e.BoxAlpha, true;
+		else
+			for i = 1, 12 do
+				e.BoxOutline[i].Visible, e.BoxSegments[i].Visible = false, false;
+			end
+		end
+		if ((e.SkeletonAlpha > 0.01) and active) then
+			local rigType = ((hum.RigType == Enum.HumanoidRigType.R15) and LUAOBFUSACTOR_DECRYPT_STR_0("\244\65\251", "\53\166\112\206\56\29\153")) or LUAOBFUSACTOR_DECRYPT_STR_0("\64\69", "\79\18\115\54\106\149");
+			local bones = V.BONES[rigType];
+			local lineCount = #bones;
+			for i = 1, 15 do
+				local line = e.Skeleton[i];
+				local outline = e.SkeletonOutline[i];
+				if not line then
+					continue;
+				end
+				if (i <= lineCount) then
+					local connection = bones[i];
+					local p1 = ch:FindFirstChild(connection[1]);
+					local p2 = ch:FindFirstChild(connection[2]);
+					if (p1 and p2) then
+						local v1, on1 = V.Camera:WorldToViewportPoint(p1.Position);
+						local v2, on2 = V.Camera:WorldToViewportPoint(p2.Position);
+						if ((v1.Z > 0) and (v2.Z > 0)) then
+							local from, to = Vector2.new(v1.X, v1.Y), Vector2.new(v2.X, v2.Y);
+							outline.From = from;
+							outline.To = to;
+							outline.Transparency = e.SkeletonAlpha * 0.5;
+							outline.Visible = true;
+							line.From = from;
+							line.To = to;
+							line.Color = espColor or V.CONFIG.SkeletonColor;
+							line.Transparency = e.SkeletonAlpha;
+							line.Visible = true;
+						else
+							line.Visible = false;
+							outline.Visible = false;
+						end
+					else
+						line.Visible = false;
+						outline.Visible = false;
+					end
+				else
+					line.Visible = false;
+					outline.Visible = false;
+				end
+			end
+		else
+			for i = 1, 15 do
+				if e.Skeleton[i] then
+					e.Skeleton[i].Visible = false;
+				end
+				if e.SkeletonOutline[i] then
+					e.SkeletonOutline[i].Visible = false;
+				end
+			end
+		end
+		if ((e.TracerAlpha > 0.01) and tracerOrigin) then
+			local targetPos = Vector2.new(bS.X, bS.Y);
+			e.TracerOutline.From = tracerOrigin;
+			e.TracerOutline.To = targetPos;
+			e.TracerOutline.Transparency = e.TracerAlpha * 0.5;
+			e.TracerOutline.Visible = true;
+			e.Tracer.From = tracerOrigin;
+			e.Tracer.To = targetPos;
+			e.Tracer.Color = espColor or V.CONFIG.TracersColor;
+			e.Tracer.Transparency = e.TracerAlpha;
+			e.Tracer.Visible = true;
+		else
+			e.Tracer.Visible = false;
+			e.TracerOutline.Visible = false;
+		end
+		if ((e.HealthBarAlpha > 0.01) and hum) then
+			local hp = math.clamp(hum.Health / hum.MaxHealth, 0, 1);
+			local green = Color3.fromRGB(0, 255, 0);
+			local red = Color3.fromRGB(255, 0, 0);
+			local hpColor = red:Lerp(green, hp);
+			local hbTop = corners[1] + Vector2.new(-5, 0);
+			local hbBot = corners[4] + Vector2.new(-5, 0);
+			e.HealthBarOutline.From = hbTop;
+			e.HealthBarOutline.To = hbBot;
+			e.HealthBarOutline.Transparency = e.HealthBarAlpha * 0.5;
+			e.HealthBarOutline.Visible = true;
+			e.HealthBar.From = hbBot;
+			e.HealthBar.To = hbBot:Lerp(hbTop, hp);
+			e.HealthBar.Color = hpColor;
+			e.HealthBar.Transparency = e.HealthBarAlpha;
+			e.HealthBar.Visible = true;
+		else
+			e.HealthBarOutline.Visible, e.HealthBar.Visible = false, false;
+		end
+		if (e.PanelAlpha > 0.01) then
+			local isOnScreen = active and (tOn or bOn);
+			if (active and isOnScreen) then
+				local fontSize = math.clamp(math.floor(((73 / math.max(dist, 1)) * 12) + 0.5), 9, 16);
+				local avSize = math.clamp(fontSize + 2, 11, 18);
+				local fdist = math.floor(dist);
+				if (e.LastTextDist ~= fdist) then
+					e.LastTextDist = fdist;
+					e.DistLbl.Text = fdist .. "m";
+				end
+				e.DistLbl.TextSize = fontSize;
+				e.DistLbl.TextColor3 = V.CONFIG.DistanceColor;
+				e.DistLbl.Visible = V.CONFIG.ShowDistance;
+				e.NameLbl.TextSize = fontSize;
+				e.NameLbl.TextColor3 = V.CONFIG.NameColor;
+				e.NameLbl.Visible = V.CONFIG.ShowName;
+				local targetAvSize = math.clamp(fontSize + 2, 11, 18);
+				if (e.LastAvSize ~= targetAvSize) then
+					e.LastAvSize = targetAvSize;
+					e.AvatarImg.Size = UDim2.new(0, targetAvSize, 0, targetAvSize);
+				end
+				e.AvatarImg.Visible = V.CONFIG.ShowAvatar;
+			else
+				if e.DistLbl then
+					e.DistLbl.Visible = false;
+				end
+				if e.NameLbl then
+					e.NameLbl.Visible = false;
+				end
+				if e.AvatarImg then
+					e.AvatarImg.Visible = false;
+				end
+			end
+			local usePanel = V.CONFIG.UseInfoPanel;
+			local modeChanged = e.LastUseInfoPanel ~= usePanel;
+			e.LastUseInfoPanel = usePanel;
+			if usePanel then
+				e.Panel.BackgroundColor3 = V.CONFIG.PanelBgColor;
+				e.Panel.GroupTransparency = 1 - e.PanelAlpha;
+				e.PanelScale.Scale = e.Scale;
+				e.Dividers[1].Visible = V.CONFIG.ShowDistance and (V.CONFIG.ShowAvatar or V.CONFIG.ShowName);
+				e.Dividers[2].Visible = V.CONFIG.ShowAvatar and V.CONFIG.ShowName;
+				local currentTick = tick();
+				local absSize;
+				if ((currentTick - e.LastLayoutTick) > 0.05) then
+					absSize = e.PanelLayout.AbsoluteContentSize;
+					e.LastLayoutSize = absSize;
+					e.LastLayoutTick = currentTick;
+				else
+					absSize = e.LastLayoutSize;
+				end
+				if (absSize.X > 0) then
+					local targetSize = absSize + Vector2.new(12, 8);
+					local sizeDiff = e.CurrentPanelSize - targetSize;
+					if (sizeDiff.Magnitude > 1) then
+						e.CurrentPanelSize = e.CurrentPanelSize:Lerp(targetSize, 0.15);
+						e.Panel.Size = UDim2.new(0, math.round(e.CurrentPanelSize.X), 0, math.round(e.CurrentPanelSize.Y));
+					end
+				end
+				e.Panel.Position = UDim2.new(0, cX - (e.CurrentPanelSize.X / 2), 0, (tS.Y - e.CurrentPanelSize.Y) - 6);
+				e.Panel.Visible = true;
+				if modeChanged then
+					if (e.DistLbl.Parent ~= e.Panel) then
+						e.DistLbl.Parent = e.Panel;
+					end
+					if (e.NameLbl.Parent ~= e.Panel) then
+						e.NameLbl.Parent = e.Panel;
+					end
+					if (e.AvatarImg.Parent ~= e.Panel) then
+						e.AvatarImg.Parent = e.Panel;
+					end
+				end
+			else
+				e.Panel.Visible = false;
+				e.CurrentPanelSize = Vector2.new(0, 0);
+				if modeChanged then
+					if (e.DistLbl.Parent ~= ESPGui) then
+						e.DistLbl.Parent = ESPGui;
+					end
+					if (e.NameLbl.Parent ~= ESPGui) then
+						e.NameLbl.Parent = ESPGui;
+					end
+					if (e.AvatarImg.Parent ~= ESPGui) then
+						e.AvatarImg.Parent = ESPGui;
+					end
+				end
+				local topY = tS.Y - 5;
+				local nameWidth = e.NameLbl.TextBounds.X or 0;
+				local avSize = e.AvatarImg.AbsoluteSize.X or 16;
+				local spacing = 4;
+				local totalWidth = 0;
+				if V.CONFIG.ShowName then
+					totalWidth = totalWidth + nameWidth;
+				end
+				if V.CONFIG.ShowAvatar then
+					totalWidth = totalWidth + avSize;
+				end
+				if (V.CONFIG.ShowName and V.CONFIG.ShowAvatar) then
+					totalWidth = totalWidth + spacing;
+				end
+				local startX = cX - (totalWidth / 2);
+				if V.CONFIG.ShowAvatar then
+					e.AvatarImg.Position = UDim2.new(0, startX, 0, topY - avSize);
+					startX = startX + avSize + spacing;
+				end
+				if V.CONFIG.ShowName then
+					local nameHeight = e.NameLbl.TextSize or 12;
+					e.NameLbl.Position = UDim2.new(0, startX, 0, topY - nameHeight);
+				end
+				if V.CONFIG.ShowDistance then
+					e.DistLbl.Position = UDim2.new(0, cX - (e.DistLbl.TextBounds.X / 2), 0, bS.Y + 5);
+				end
+			end
+		else
+			e.Panel.Visible = false;
+			e.CurrentPanelSize = Vector2.new(0, 0);
+		end
+	else
+		hideESP(e);
+	end
+end
+for _, p in pairs(Players:GetPlayers()) do
+	if (p ~= V.LP) then
+		createESP(p);
+	end
+end
+Players.PlayerAdded:Connect(function(p)
+	if (p ~= V.LP) then
+		createESP(p);
+	end
+end);
+Players.PlayerRemoving:Connect(removeESP);
+RunService.RenderStepped:Connect(function()
+	if not V.isAuthorized then
+		return;
+	end
+	local tOrigin;
+	if V.CONFIG.TracersEnabled then
+		local vSize = V.Camera.ViewportSize;
+		if (V.CONFIG.TracerOrigin == LUAOBFUSACTOR_DECRYPT_STR_0("\104\93\90\74\42\112", "\198\42\50\46\62\69\29\237")) then
+			tOrigin = Vector2.new(vSize.X / 2, vSize.Y);
+		elseif (V.CONFIG.TracerOrigin == LUAOBFUSACTOR_DECRYPT_STR_0("\246\181\6", "\59\162\218\118\89\72\192\110")) then
+			tOrigin = Vector2.new(vSize.X / 2, 0);
+		elseif (V.CONFIG.TracerOrigin == LUAOBFUSACTOR_DECRYPT_STR_0("\168\247\180\91\68\4", "\97\229\158\208\63\40\97\18")) then
+			tOrigin = Vector2.new(vSize.X / 2, vSize.Y / 2);
+		else
+			tOrigin = UIS:GetMouseLocation();
+		end
+	end
+	for p, e in pairs(V.ESPObjects) do
+		local ok, err = pcall(function()
+			updateESP(p, e, tOrigin);
+		end);
+		if not ok then
+			warn(LUAOBFUSACTOR_DECRYPT_STR_0("\22\235\65\118\177\109\235\96\84\131\63\142\103\86\136\44\218\123\72\139\109\200\125\84\204", "\236\77\174\18\38") .. tostring(p) .. LUAOBFUSACTOR_DECRYPT_STR_0("\218\29", "\117\224\61\175") .. tostring(err));
+		end
+	end
+	for i = #V.DeathMarkers, 1, -1 do
+		local m = V.DeathMarkers[i];
+		local age = tick() - m.Time;
+		if ((age > V.CONFIG.DeadESPDuration) or not V.CONFIG.Enabled) then
+			m.Line1:Remove();
+			m.Line2:Remove();
+			m.Text:Remove();
+			table.remove(V.DeathMarkers, i);
+		elseif V.CONFIG.DeadESP then
+			local pos, on = V.Camera:WorldToViewportPoint(m.Pos);
+			local dist = (V.Camera.CFrame.Position - m.Pos).Magnitude / 3;
+			if (on and (dist <= V.CONFIG.MaxDistance)) then
+				local s = 8;
+				m.Line1.From = Vector2.new(pos.X - s, pos.Y - s);
+				m.Line1.To = Vector2.new(pos.X + s, pos.Y + s);
+				m.Line1.Color = V.CONFIG.DeadESPColor;
+				m.Line1.Visible = true;
+				m.Line2.From = Vector2.new(pos.X + s, pos.Y - s);
+				m.Line2.To = Vector2.new(pos.X - s, pos.Y + s);
+				m.Line2.Color = V.CONFIG.DeadESPColor;
+				m.Line2.Visible = true;
+				local timeLeft = math.max(0, math.floor(V.CONFIG.DeadESPDuration - age));
+				m.Text.Text = string.format(LUAOBFUSACTOR_DECRYPT_STR_0("\174\84\134\192\207\98\231\172\162\7\253\205\239\74\251\200\208\2\194\155\214", "\232\139\39\166"), m.Name, math.floor(dist), timeLeft);
+				m.Text.Position = Vector2.new(pos.X, pos.Y + s + 2);
+				m.Text.Color = V.CONFIG.DeadESPColor;
+				m.Text.Visible = true;
+			else
+				m.Line1.Visible = false;
+				m.Line2.Visible = false;
+				m.Text.Visible = false;
+			end
+		else
+			m.Line1.Visible = false;
+			m.Line2.Visible = false;
+			m.Text.Visible = false;
+		end
+	end
+end);
+local localESP = {[LUAOBFUSACTOR_DECRYPT_STR_0("\193\94\75", "\162\131\49\51\37\23")]={},[LUAOBFUSACTOR_DECRYPT_STR_0("\108\114\251\38\113\75\118\240", "\20\63\25\158\74")]={},[LUAOBFUSACTOR_DECRYPT_STR_0("\82\223\93\161\107\216\10\184\104", "\217\26\186\60\205\31\176\72")]=nil,[LUAOBFUSACTOR_DECRYPT_STR_0("\243\116\7\224\207\121\36\237\201\83\1", "\140\187\17\102")]=nil,[LUAOBFUSACTOR_DECRYPT_STR_0("\24\153\165\66\41\153", "\33\76\235\196")]=nil};
+for i = 1, 4 do
+	local l = Drawing.new(LUAOBFUSACTOR_DECRYPT_STR_0("\36\227\252\90", "\229\104\138\146\63\204\80\229"));
+	l.Thickness = 1.5;
+	l.Visible = false;
+	localESP.Box[i] = l;
+end
+for i = 1, 15 do
+	local l = Drawing.new(LUAOBFUSACTOR_DECRYPT_STR_0("\140\116\16\204", "\169\192\29\126"));
+	l.Thickness = 1.2;
+	l.Visible = false;
+	localESP.Skeleton[i] = l;
+end
+localESP.HealthBar = Drawing.new(LUAOBFUSACTOR_DECRYPT_STR_0("\29\204\11\142", "\235\81\165\101"));
+localESP.HealthBar.Thickness = 3;
+localESP.HealthBar.Visible = false;
+localESP.HealthBarBg = Drawing.new(LUAOBFUSACTOR_DECRYPT_STR_0("\84\141\81\28", "\172\24\228\63\121\229\100"));
+localESP.HealthBarBg.Thickness = 3;
+localESP.HealthBarBg.Color = Color3.fromRGB(50, 50, 50);
+localESP.HealthBarBg.Visible = false;
+localESP.Tracer = Drawing.new(LUAOBFUSACTOR_DECRYPT_STR_0("\166\71\219\200", "\173\234\46\181"));
+localESP.Tracer.Thickness = 1;
+localESP.Tracer.Visible = false;
+RunService.RenderStepped:Connect(function()
+	if not V.isAuthorized then
+		for _, l in pairs(localESP.Box) do
+			l.Visible = false;
+		end
+		for _, l in pairs(localESP.Skeleton) do
+			l.Visible = false;
+		end
+		localESP.HealthBar.Visible = false;
+		localESP.HealthBarBg.Visible = false;
+		localESP.Tracer.Visible = false;
+		return;
+	end
+	local ch = V.LP.Character;
+	local hum = ch and ch:FindFirstChildOfClass(LUAOBFUSACTOR_DECRYPT_STR_0("\247\39\230\62\45\208\59\239", "\67\191\82\139\95"));
+	local hrp = ch and ch:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\21\248\74\195\226\228\52\233\117\205\227\255\13\236\85\214", "\139\93\141\39\162\140"));
+	if (not V.CONFIG.LocalPlayerESP or not ch or not hum or not hrp or (hum.Health <= 0)) then
+		for _, l in pairs(localESP.Box) do
+			l.Visible = false;
+		end
+		for _, l in pairs(localESP.Skeleton) do
+			l.Visible = false;
+		end
+		localESP.HealthBar.Visible = false;
+		localESP.HealthBarBg.Visible = false;
+		localESP.Tracer.Visible = false;
+		return;
+	end
+	local col = V.CONFIG.LocalPlayerColor;
+	local rigType = ((hum.RigType == Enum.HumanoidRigType.R15) and LUAOBFUSACTOR_DECRYPT_STR_0("\30\242\92", "\126\76\195\105\183")) or LUAOBFUSACTOR_DECRYPT_STR_0("\109\30", "\212\63\40\196\17\57");
+	local function proj(v3)
+		local p, vis = V.Camera:WorldToViewportPoint(v3);
+		if (not vis or (p.Z <= 0)) then
+			return nil;
+		end
+		return Vector2.new(p.X, p.Y);
+	end
+	local head = ch:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\129\206\241\254", "\154\201\171\144"));
+	local lFoot = ch:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\174\235\174\217\144\0\176\169", "\221\226\142\200\173\214\111\223")) or ch:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\34\75\185\37\232\34\75\184", "\200\110\46\223\81"));
+	local rFoot = ch:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\36\78\59\60\54\244\77\25\83", "\34\118\39\92\84\66\178")) or ch:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\121\129\54\10\58\233\227\118\76", "\19\43\232\81\98\78\201\175"));
+	if (V.CONFIG.LocalBox and head and (lFoot or rFoot)) then
+		local topPx = proj(head.Position + Vector3.new(0, 0.8, 0));
+		local footPos = (lFoot and rFoot and ((lFoot.Position + rFoot.Position) / 2)) or (lFoot or rFoot).Position;
+		local botPx = proj(footPos - Vector3.new(0, 0.5, 0));
+		if (topPx and botPx) then
+			local bH = math.abs(botPx.Y - topPx.Y);
+			local bW = bH * 0.55;
+			local cX = (topPx.X + botPx.X) / 2;
+			local tY, bY = math.min(topPx.Y, botPx.Y), math.max(topPx.Y, botPx.Y);
+			local lX, rX = cX - (bW / 2), cX + (bW / 2);
+			localESP.Box[1].From = Vector2.new(lX, tY);
+			localESP.Box[1].To = Vector2.new(rX, tY);
+			localESP.Box[2].From = Vector2.new(lX, bY);
+			localESP.Box[2].To = Vector2.new(rX, bY);
+			localESP.Box[3].From = Vector2.new(lX, tY);
+			localESP.Box[3].To = Vector2.new(lX, bY);
+			localESP.Box[4].From = Vector2.new(rX, tY);
+			localESP.Box[4].To = Vector2.new(rX, bY);
+			for _, l in pairs(localESP.Box) do
+				l.Color = V.CONFIG.LocalBoxColor;
+				l.Visible = true;
+			end
+			if V.CONFIG.LocalHealthBar then
+				local hp = math.clamp(hum.Health / hum.MaxHealth, 0, 1);
+				local hpCol = Color3.fromRGB(255, 0, 0):Lerp(Color3.fromRGB(0, 255, 0), hp);
+				local barX = lX - 5;
+				localESP.HealthBarBg.From = Vector2.new(barX, tY);
+				localESP.HealthBarBg.To = Vector2.new(barX, bY);
+				localESP.HealthBarBg.Visible = true;
+				localESP.HealthBar.From = Vector2.new(barX, bY);
+				localESP.HealthBar.To = Vector2.new(barX, bY - (bH * hp));
+				localESP.HealthBar.Color = hpCol;
+				localESP.HealthBar.Visible = true;
+			else
+				localESP.HealthBar.Visible = false;
+				localESP.HealthBarBg.Visible = false;
+			end
+		else
+			for _, l in pairs(localESP.Box) do
+				l.Visible = false;
+			end
+			localESP.HealthBar.Visible = false;
+			localESP.HealthBarBg.Visible = false;
+		end
+	else
+		for _, l in pairs(localESP.Box) do
+			l.Visible = false;
+		end
+		localESP.HealthBar.Visible = false;
+		localESP.HealthBarBg.Visible = false;
+	end
+	if (V.CONFIG.LocalSkeleton and V.BONES[rigType]) then
+		local idx = 1;
+		for _, pair in ipairs(V.BONES[rigType]) do
+			local p1 = ch:FindFirstChild(pair[1]);
+			local p2 = ch:FindFirstChild(pair[2]);
+			local line = localESP.Skeleton[idx];
+			if line then
+				if (p1 and p2) then
+					local s1, s2 = proj(p1.Position), proj(p2.Position);
+					if (s1 and s2) then
+						line.From = s1;
+						line.To = s2;
+						line.Color = V.CONFIG.LocalSkeletonColor;
+						line.Visible = true;
+					else
+						line.Visible = false;
+					end
+				else
+					line.Visible = false;
+				end
+				idx = idx + 1;
+			end
+		end
+		for i = idx, #localESP.Skeleton do
+			localESP.Skeleton[i].Visible = false;
+		end
+	else
+		for _, l in pairs(localESP.Skeleton) do
+			l.Visible = false;
+		end
+	end
+	if V.CONFIG.LocalTracers then
+		local hrpPx = proj(hrp.Position);
+		if hrpPx then
+			local vS = V.Camera.ViewportSize;
+			localESP.Tracer.From = Vector2.new(vS.X / 2, vS.Y);
+			localESP.Tracer.To = hrpPx;
+			localESP.Tracer.Color = V.CONFIG.LocalTracersColor;
+			localESP.Tracer.Visible = true;
+		else
+			localESP.Tracer.Visible = false;
+		end
+	else
+		localESP.Tracer.Visible = false;
+	end
+end);
+local savedSettings = nil;
+local effectsCache = {};
+local function updateLighting()
+	if V.CONFIG.AmbienceEnabled then
+		if not savedSettings then
+			savedSettings = {[LUAOBFUSACTOR_DECRYPT_STR_0("\106\222\250\175\193\227\158", "\234\43\179\152\198\164\141")]=Lighting.Ambient,[LUAOBFUSACTOR_DECRYPT_STR_0("\138\79\104\218\136\188\223\166\168\88\117\219\137\167", "\231\197\58\28\190\231\211\173")]=Lighting.OutdoorAmbient,[LUAOBFUSACTOR_DECRYPT_STR_0("\113\192\55\43\223\152\93\215\45\63", "\236\51\178\94\76\183")]=Lighting.Brightness,[LUAOBFUSACTOR_DECRYPT_STR_0("\205\193\221\65\235\193\225\75\235\201\221\84\249", "\35\138\173\178")]=Lighting.GlobalShadows,[LUAOBFUSACTOR_DECRYPT_STR_0("\226\15\71\223\89\73\200\14\77", "\29\161\99\40\188\50")]=Lighting.ClockTime,[LUAOBFUSACTOR_DECRYPT_STR_0("\95\37\167\194\0\62", "\140\25\74\192\135\110\90\106")]=Lighting.FogEnd,[LUAOBFUSACTOR_DECRYPT_STR_0("\4\94\67\193\190\163\48\69", "\194\66\49\36\146\202")]=Lighting.FogStart,[LUAOBFUSACTOR_DECRYPT_STR_0("\174\41\221\13\214\158\35\200\33\202\134\33\200\12\214\138\37\196\13\203", "\165\235\81\173\98")]=Lighting.ExposureCompensation,[LUAOBFUSACTOR_DECRYPT_STR_0("\14\139\191\63\171\235\37\136\172\56\173\192\34\131\175\35\170\225\24\134\168\58\188", "\132\75\229\201\86\217")]=Lighting.EnvironmentDiffuseScale,[LUAOBFUSACTOR_DECRYPT_STR_0("\167\124\179\172\144\125\171\168\135\124\177\150\146\119\166\176\142\115\183\150\129\115\169\160", "\197\226\18\197")]=Lighting.EnvironmentSpecularScale,[LUAOBFUSACTOR_DECRYPT_STR_0("\47\217\0\85\19\198\50\94\26\197\15\84\15\194", "\49\124\177\97")]=Lighting.ShadowSoftness};
+		end
+		if (Lighting.Ambient ~= V.CONFIG.AmbienceColor) then
+			Lighting.Ambient = V.CONFIG.AmbienceColor;
+			Lighting.OutdoorAmbient = V.CONFIG.AmbienceColor;
+		end
+	elseif savedSettings then
+		Lighting.Ambient = savedSettings.Ambient;
+		Lighting.OutdoorAmbient = savedSettings.OutdoorAmbient;
+		Lighting.Brightness = savedSettings.Brightness;
+		Lighting.GlobalShadows = savedSettings.GlobalShadows;
+		Lighting.ClockTime = savedSettings.ClockTime;
+		Lighting.FogEnd = savedSettings.FogEnd;
+		Lighting.FogStart = savedSettings.FogStart;
+		Lighting.ExposureCompensation = savedSettings.ExposureCompensation;
+		Lighting.EnvironmentDiffuseScale = savedSettings.EnvironmentDiffuseScale;
+		Lighting.EnvironmentSpecularScale = savedSettings.EnvironmentSpecularScale;
+		Lighting.ShadowSoftness = savedSettings.ShadowSoftness;
+		for obj, _ in pairs(effectsCache) do
+			if (obj and obj.Parent) then
+				obj.Enabled = true;
+			end
+		end
+		effectsCache = {};
+		savedSettings = nil;
+	end
+end
+RunService:BindToRenderStep(LUAOBFUSACTOR_DECRYPT_STR_0("\172\52\199\182\148\52\206\185\175\43\197\172\146\52\196\187", "\222\224\93\160"), Enum.RenderPriority.Camera.Value + 1, updateLighting);
+print(LUAOBFUSACTOR_DECRYPT_STR_0("\208\216\65\17\5\171\209\125\32\60\238\249\51\97\8\249\248\97\50\120\194\211\65\4\10\223\189\116\46\42\171\238\119\53\44\226\243\117\50\118", "\88\139\157\18\65"));
+updateBindList();
+local FOVCircle = Drawing.new(LUAOBFUSACTOR_DECRYPT_STR_0("\105\19\0\18\199\79", "\171\42\122\114\113"));
+FOVCircle.Thickness = 1;
+FOVCircle.NumSides = 64;
+FOVCircle.Filled = false;
+FOVCircle.Transparency = 1;
+FOVCircle.Visible = false;
+V.aimTarget = nil;
+RunService.RenderStepped:Connect(function()
+	if not V.isAuthorized then
+		FOVCircle.Visible = false;
+		return;
+	end
+	FOVCircle.Radius = V.CONFIG.AimbotFOV;
+	FOVCircle.Color = V.CONFIG.FOVColor;
+	FOVCircle.Visible = V.CONFIG.AimbotEnabled and V.CONFIG.ShowFOV and not V.menuOpen;
+	FOVCircle.Position = UIS:GetMouseLocation();
+	if (V.CONFIG.NoRecoilEnabled and UIS:IsMouseButtonPressed(Enum.UserInputType.MouseButton1)) then
+		local currentRotation = V.Camera.CFrame.LookVector;
+		if V.lastCameraRotation then
+			local rotationChange = currentRotation - V.lastCameraRotation;
+			if (rotationChange.Y > 0.0001) then
+				local recoilStrength = rotationChange.Y * V.CONFIG.NoRecoilStrength * 100;
+				if mousemoverel then
+					mousemoverel(0, recoilStrength);
+				end
+			end
+		end
+		V.lastCameraRotation = currentRotation;
+	else
+		V.lastCameraRotation = nil;
+	end
+	if not V.CONFIG.AimbotEnabled then
+		V.aimTarget = nil;
+		return;
+	end
+	local bestTarget = nil;
+	local mousePos = UIS:GetMouseLocation();
+	if V.aimTarget then
+		local p = V.aimTarget.Player;
+		local ch = p.Character;
+		local hum = ch and ch:FindFirstChildOfClass(LUAOBFUSACTOR_DECRYPT_STR_0("\165\189\193\227\131\167\197\230", "\130\237\200\172"));
+		local hrp = ch and ch:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\14\197\163\15\40\223\167\10\20\223\161\26\22\209\188\26", "\110\70\176\206"));
+		if (ch and hum and hrp and (hum.Health > 0)) then
+			local part = ch:FindFirstChild(V.aimTarget.PartName or LUAOBFUSACTOR_DECRYPT_STR_0("\93\21\60\239", "\90\21\112\93\139"));
+			if part then
+				local sPos, on = V.Camera:WorldToViewportPoint(part.Position);
+				local distToMouse = (Vector2.new(sPos.X, sPos.Y) - mousePos).Magnitude;
+				local worldDistInStuds = (V.Camera.CFrame.Position - part.Position).Magnitude;
+				local withinRange = (worldDistInStuds / 3) <= V.CONFIG.AimbotMaxDistance;
+				if ((hum.Health > 0) and withinRange) then
+					if V.CONFIG.AimbotSticky then
+						bestTarget = V.aimTarget;
+					elseif (on and (distToMouse <= (V.CONFIG.AimbotFOV * 1.2))) then
+						bestTarget = V.aimTarget;
+					end
+				end
+			end
+		end
+	end
+	if not bestTarget then
+		V.aimTarget = nil;
+		local minScore = math.huge;
+		for p, e in pairs(V.ESPObjects) do
+			local ch = p.Character;
+			local hum = ch and ch:FindFirstChildOfClass(LUAOBFUSACTOR_DECRYPT_STR_0("\41\206\121\183\174\14\210\112", "\192\97\187\20\214"));
+			local hrp = ch and ch:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\34\78\62\201\142\5\82\55\250\143\5\79\3\201\146\30", "\224\106\59\83\168"));
+			if (ch and hum and hrp and (hum.Health > 0) and (not V.CONFIG.TeamCheck or (p.Team ~= V.LP.Team))) then
+				local targetPartName = V.CONFIG.AimbotTargetPart;
+				if (targetPartName == LUAOBFUSACTOR_DECRYPT_STR_0("\149\228\12\255\65\133", "\41\199\133\98\155\46\232")) then
+					local parts = {LUAOBFUSACTOR_DECRYPT_STR_0("\52\163\224\66", "\134\124\198\129\38\221\111"),LUAOBFUSACTOR_DECRYPT_STR_0("\205\255\161\37\234\219\190\50\235\224", "\64\152\143\209"),LUAOBFUSACTOR_DECRYPT_STR_0("\27\70\210\9\88\25\115\21\36\70", "\103\87\41\165\108\42\77\28")};
+					targetPartName = parts[math.random(1, #parts)];
+				end
+				local part = ch:FindFirstChild(targetPartName);
+				if part then
+					local sPos, on = V.Camera:WorldToViewportPoint(part.Position);
+					if on then
+						local distToMouse = (Vector2.new(sPos.X, sPos.Y) - mousePos).Magnitude;
+						if (distToMouse <= V.CONFIG.AimbotFOV) then
+							local isVis = true;
+							if V.CONFIG.AimbotVisibleOnly then
+								if (e.visCache and (e.visCache[targetPartName] ~= nil)) then
+									isVis = e.visCache[targetPartName];
+								else
+									V.sharedRayParams.FilterDescendantsInstances = {V.LP.Character,ch};
+									local res = SafeRaycast(V.Camera.CFrame.Position, part.Position, V.sharedRayParams);
+									isVis = not res;
+								end
+							end
+							if isVis then
+								local worldDist = (V.Camera.CFrame.Position - part.Position).Magnitude / 3;
+								if (worldDist <= V.CONFIG.AimbotMaxDistance) then
+									local score = distToMouse + (worldDist * V.CONFIG.AimbotDistanceWeight);
+									if (score < minScore) then
+										minScore = score;
+										bestTarget = {[LUAOBFUSACTOR_DECRYPT_STR_0("\146\223\21\238\115\242", "\128\194\179\116\151\22")]=p,[LUAOBFUSACTOR_DECRYPT_STR_0("\55\51\17\179", "\230\103\82\99\199\188\84")]=part,[LUAOBFUSACTOR_DECRYPT_STR_0("\140\135\177\188\119\43\177\131", "\74\220\230\195\200\57")]=targetPartName};
+									end
+								end
+							end
+						end
+					end
+				end
+			end
+		end
+	end
+	if (bestTarget and UIS:IsMouseButtonPressed(Enum.UserInputType.MouseButton2)) then
+		V.aimTarget = bestTarget;
+		local targetPos = bestTarget.Part.Position;
+		if (V.CONFIG.PredictionEnabled and bestTarget.Part) then
+			local velocity = bestTarget.Part.AssemblyLinearVelocity or bestTarget.Part.Velocity or Vector3.new(0, 0, 0);
+			local distInStuds = (V.Camera.CFrame.Position - targetPos).Magnitude;
+			local distInMeters = distInStuds / 3;
+			local distanceSteps = math.min(math.floor(distInMeters / 10), 100);
+			local predictionTime = (distanceSteps / 100) * (V.CONFIG.PredictionStrength / 10);
+			targetPos = targetPos + (velocity * predictionTime);
+		end
+		if V.LP.Character then
+			V.sharedRayParams.FilterDescendantsInstances = {V.LP.Character,ESPGui};
+		end
+		local sPos, on = V.Camera:WorldToViewportPoint(targetPos);
+		local isStickyClose = V.CONFIG.AimbotSticky and ((V.Camera.CFrame.Position - targetPos).Magnitude < 80);
+		if (on or isStickyClose) then
+			local mouseLocation = UIS:GetMouseLocation();
+			local deltaX, deltaY;
+			if on then
+				deltaX = sPos.X - mouseLocation.X;
+				deltaY = sPos.Y - mouseLocation.Y;
+			else
+				local localPos = V.Camera.CFrame:PointToObjectSpace(targetPos);
+				deltaX = ((localPos.X > 0) and 15) or -15;
+				deltaY = ((localPos.Y > 0) and 15) or -15;
+			end
+			if mousemoverel then
+				if V.CONFIG.AimbotSticky then
+					local maxStep = 32;
+					local factor = 0.7;
+					local moveX = math.clamp(deltaX * factor, -maxStep, maxStep);
+					local moveY = math.clamp(deltaY * factor, -maxStep, maxStep);
+					mousemoverel(moveX, moveY);
+				else
+					local smoothness = 1;
+					if (V.CONFIG.AimbotSmoothness > 0) then
+						local smoothFactor = (on and 12) or 4;
+						smoothness = 1 + (V.CONFIG.AimbotSmoothness * smoothFactor);
+					end
+					mousemoverel(deltaX / smoothness, deltaY / smoothness);
+				end
+			end
+		end
+		if V.LP.Character then
+			local hrp = V.LP.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\141\159\221\30\5\222\172\142\226\16\4\197\149\139\194\11", "\177\197\234\176\127\107"));
+			if hrp then
+				local lookAtPos = Vector3.new(targetPos.X, hrp.Position.Y, targetPos.Z);
+				hrp.CFrame = CFrame.new(hrp.Position, lookAtPos);
+			end
+		end
+	else
+		V.aimTarget = nil;
+	end
+end);
+local function applyJump()
+	if not V.isAuthorized then
+		return;
+	end
+	local char = V.LP.Character;
+	local hum = char and char:FindFirstChildOfClass(LUAOBFUSACTOR_DECRYPT_STR_0("\91\223\203\73\132\123\86\119", "\63\19\170\166\40\234\20"));
+	if (hum and V.CONFIG.HighJumpEnabled) then
+		hum.UseJumpPower = true;
+		hum.JumpPower = V.CONFIG.HighJumpValue;
+		hum.JumpHeight = V.CONFIG.HighJumpValue;
+	end
+end
+RunService.Heartbeat:Connect(applyJump);
+UIS.InputBegan:Connect(function(input, gp)
+	if gp then
+		return;
+	end
+	if ((input.KeyCode == Enum.KeyCode.Space) and V.CONFIG.HighJumpEnabled) then
+		local hum = V.LP.Character and V.LP.Character:FindFirstChildOfClass(LUAOBFUSACTOR_DECRYPT_STR_0("\30\29\0\41\46\34\201\50", "\160\86\104\109\72\64\77"));
+		if hum then
+			task.spawn(function()
+				hum:ChangeState(Enum.HumanoidStateType.Jumping);
+			end);
+		end
+	end
+end);
+local function createLine(thick)
+	local l = Drawing.new(LUAOBFUSACTOR_DECRYPT_STR_0("\213\122\224\15", "\234\153\19\142\106\126"));
+	l.Thickness = thick or 1.5;
+	l.Transparency = 1;
+	l.Visible = false;
+	return l;
+end
+local Scope = {[LUAOBFUSACTOR_DECRYPT_STR_0("\21\43\173", "\120\65\68\221")]=createLine(),[LUAOBFUSACTOR_DECRYPT_STR_0("\44\186\245\147\13\161", "\220\120\213\133")]=createLine(3),[LUAOBFUSACTOR_DECRYPT_STR_0("\122\33\211\68\37\85", "\74\56\78\167\48")]=createLine(),[LUAOBFUSACTOR_DECRYPT_STR_0("\198\19\63\212\5\7\23\241\8", "\88\132\124\75\160\106\106")]=createLine(3),[LUAOBFUSACTOR_DECRYPT_STR_0("\56\51\139\83", "\96\116\86\237\39\123\202\80")]=createLine(),[LUAOBFUSACTOR_DECRYPT_STR_0("\13\17\183\105\173\185\187", "\207\65\116\209\29\226\204")]=createLine(3),[LUAOBFUSACTOR_DECRYPT_STR_0("\130\89\140\6\164", "\110\208\48\235")]=createLine(),[LUAOBFUSACTOR_DECRYPT_STR_0("\151\160\132\133\177\134\150\153", "\237\197\201\227")]=createLine(3),[LUAOBFUSACTOR_DECRYPT_STR_0("\159\44\11", "\26\219\67\127\30\197\83")]=Drawing.new(LUAOBFUSACTOR_DECRYPT_STR_0("\214\17\204\121\28\252", "\153\149\120\190\26\112")),[LUAOBFUSACTOR_DECRYPT_STR_0("\40\26\222\143\63\228", "\119\108\117\170\192\74\144\158")]=Drawing.new(LUAOBFUSACTOR_DECRYPT_STR_0("\196\32\147\34\235\44", "\65\135\73\225"))};
+Scope.TopOut.Color = Color3.new(0, 0, 0);
+Scope.BottomOut.Color = Color3.new(0, 0, 0);
+Scope.LeftOut.Color = Color3.new(0, 0, 0);
+Scope.RightOut.Color = Color3.new(0, 0, 0);
+Scope.Dot.Filled = true;
+Scope.DotOut.Filled = true;
+Scope.DotOut.Color = Color3.new(0, 0, 0);
+RunService.RenderStepped:Connect(function()
+	local enabled = V.isAuthorized and V.CONFIG.ScopeEnabled and not V.menuOpen;
+	local viewportSize = V.Camera.ViewportSize;
+	local cx, cy = math.floor(viewportSize.X / 2), math.floor(viewportSize.Y / 2);
+	local color = V.CONFIG.ScopeColor;
+	local gap = V.CONFIG.ScopeGap;
+	local length = V.CONFIG.ScopeLength;
+	local thickness = V.CONFIG.ScopeThickness;
+	for _, obj in pairs(Scope) do
+		obj.Visible = false;
+	end
+	if enabled then
+		local function drawSegment(line, out, x1, y1, x2, y2)
+			if V.CONFIG.ScopeOutline then
+				out.From = Vector2.new(x1, y1);
+				out.To = Vector2.new(x2, y2);
+				out.Thickness = thickness + 2;
+				out.Visible = true;
+			end
+			line.From = Vector2.new(x1, y1);
+			line.To = Vector2.new(x2, y2);
+			line.Color = color;
+			line.Thickness = thickness;
+			line.Visible = true;
+		end
+		drawSegment(Scope.Top, Scope.TopOut, cx, cy - gap, cx, (cy - gap) - length);
+		drawSegment(Scope.Bottom, Scope.BottomOut, cx, cy + gap, cx, cy + gap + length);
+		drawSegment(Scope.Left, Scope.LeftOut, cx - gap, cy, (cx - gap) - length, cy);
+		drawSegment(Scope.Right, Scope.RightOut, cx + gap, cy, cx + gap + length, cy);
+		if V.CONFIG.ScopeCenterDot then
+			if V.CONFIG.ScopeOutline then
+				Scope.DotOut.Position = Vector2.new(cx, cy);
+				Scope.DotOut.Radius = thickness + 2;
+				Scope.DotOut.Visible = true;
+			end
+			Scope.Dot.Position = Vector2.new(cx, cy);
+			Scope.Dot.Radius = thickness;
+			Scope.Dot.Color = color;
+			Scope.Dot.Visible = true;
+		end
+	end
+end);
+local function initRadarSystem()
+	local R = {[LUAOBFUSACTOR_DECRYPT_STR_0("\40\90\95\164\27\8", "\116\127\51\49\192")]=Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\56\1\93\235\239\13\37\9\15\70\237", "\98\123\96\51\157\142\126")),[LUAOBFUSACTOR_DECRYPT_STR_0("\229\251\167\202\35\223", "\70\173\158\198\174")]=nil,[LUAOBFUSACTOR_DECRYPT_STR_0("\211\48\65\250\241\54\65\235\226", "\142\144\95\47")]=nil,[LUAOBFUSACTOR_DECRYPT_STR_0("\53\33\89\30\4", "\110\119\77\48")]={}};
+	R.Window.Name = LUAOBFUSACTOR_DECRYPT_STR_0("\202\44\48\71\241\230\13\37\81\229\249", "\132\139\95\68\53");
+	R.Window.Size = UDim2.new(0, V.CONFIG.RadarSize, 0, V.CONFIG.RadarSize + 30);
+	R.Window.Position = UDim2.new(0, V.CONFIG.RadarPos.X, 0, V.CONFIG.RadarPos.Y);
+	R.Window.BackgroundColor3 = Color3.fromRGB(12, 12, 16);
+	R.Window.BorderSizePixel = 0;
+	R.Window.Visible = false;
+	R.Window.Parent = V.MenuGui;
+	Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\201\1\222\58\238\38\248\39", "\85\156\72\157"), R.Window).CornerRadius = UDim.new(0, 8);
+	Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\78\27\78\53\200\39\129\126", "\234\27\82\29\65\186\72"), R.Window).Color = Color3.fromRGB(40, 40, 50);
+	R.Header = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\214\221\232\179\6", "\99\144\175\137\222"), R.Window);
+	R.Header.Size = UDim2.new(1, 0, 0, 30);
+	R.Header.BackgroundTransparency = 1;
+	local rIcon = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\121\121\141\6\60\105\176\82\113\128", "\209\48\20\236\97\89\37"), R.Header);
+	rIcon.Size = UDim2.new(0, 16, 0, 16);
+	rIcon.Position = UDim2.new(0, 10, 0.5, -8);
+	rIcon.BackgroundTransparency = 1;
+	rIcon.Image = LUAOBFUSACTOR_DECRYPT_STR_0("\238\67\70\40\81\239\68\74\32\70\166\14\17\127\18\175\16\12\113\27\173\18\8", "\34\156\33\62\73");
+	rIcon.ImageColor3 = Color3.fromRGB(70, 110, 255);
+	local rTitle = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\60\119\246\69\36\115\236\84\4", "\49\104\18\142"), R.Header);
+	rTitle.Size = UDim2.new(1, -30, 1, 0);
+	rTitle.Position = UDim2.new(0, 32, 0, 0);
+	rTitle.BackgroundTransparency = 1;
+	rTitle.Font = Enum.Font.GothamBold;
+	rTitle.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\195\228\120\10\227", "\107\145\133\28");
+	rTitle.TextColor3 = Color3.fromRGB(70, 110, 255);
+	rTitle.TextSize = 13;
+	rTitle.TextXAlignment = Enum.TextXAlignment.Left;
+	R.Container = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\228\76\178\179\199", "\222\162\62\211"), R.Window);
+	R.Container.Size = UDim2.new(1, -10, 1, -40);
+	R.Container.Position = UDim2.new(0, 5, 0, 35);
+	R.Container.BackgroundTransparency = 1;
+	R.Container.ClipsDescendants = true;
+	local function createGridLine()
+		local f = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\133\99\15\22\52", "\170\195\17\110\123\81\227"), R.Container);
+		f.BackgroundColor3 = Color3.fromRGB(255, 255, 255);
+		f.BackgroundTransparency = 0.95;
+		f.BorderSizePixel = 0;
+		return f;
+	end
+	local function createGridCircle()
+		local f = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\146\38\225\205\248", "\157\212\84\128\160"), R.Container);
+		f.BackgroundTransparency = 1;
+		local s = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\188\90\211\81\52\135\229\198", "\163\233\19\128\37\70\232\142"), f);
+		s.Color = Color3.fromRGB(255, 255, 255);
+		s.Transparency = 0.95;
+		Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\214\124\31\22\241\91\57\11", "\121\131\53\92"), f).CornerRadius = UDim.new(1, 0);
+		return f;
+	end
+	local gc = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\88\222\74\141\123", "\224\30\172\43"), R.Container);
+	gc.Size = UDim2.new(0, 4, 0, 4);
+	gc.Position = UDim2.new(0.5, -2, 0.5, -2);
+	gc.BackgroundColor3 = Color3.new(1, 1, 1);
+	Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\48\142\92\209\255\11\162\109", "\141\101\199\31\190"), gc).CornerRadius = UDim.new(1, 0);
+	for i = 1, 3 do
+		local c = createGridCircle();
+		local size = (i / 3) * 0.95;
+		c.Size = UDim2.new(size, 0, size * (V.CONFIG.RadarSize / (V.CONFIG.RadarSize - 10)), 0);
+		c.Position = UDim2.new(0.5 - (size / 2), 0, 0.5 - ((size * (V.CONFIG.RadarSize / (V.CONFIG.RadarSize - 10))) / 2), 0);
+	end
+	local vl = createGridLine();
+	vl.Size = UDim2.new(0, 1, 1, 0);
+	vl.Position = UDim2.new(0.5, 0, 0, 0);
+	local hl = createGridLine();
+	hl.Size = UDim2.new(1, 0, 0, 1);
+	hl.Position = UDim2.new(0, 0, 0.5, 0);
+	local function createLabel(txt, pos)
+		local l = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\111\66\27\211\246\184\173\94\75", "\207\59\39\99\167\186\217"), R.Container);
+		l.Size = UDim2.new(0, 20, 0, 20);
+		l.Position = pos;
+		l.BackgroundTransparency = 1;
+		l.Font = Enum.Font.GothamBold;
+		l.Text = txt;
+		l.TextColor3 = Color3.fromRGB(150, 150, 160);
+		l.TextSize = 12;
+		return l;
+	end
+	createLabel("N", UDim2.new(0.5, -10, 0, 2));
+	createLabel("S", UDim2.new(0.5, -10, 1, -22));
+	createLabel("W", UDim2.new(0, 2, 0.5, -10));
+	createLabel("E", UDim2.new(1, -22, 0.5, -10));
+	local function getBlip(player)
+		if R.Blips[player] then
+			return R.Blips[player];
+		end
+		local bBase = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\33\84\186\95\77", "\139\103\38\219\50\40\157\192"), R.Container);
+		bBase.Size = UDim2.new(0, 8, 0, 8);
+		bBase.AnchorPoint = Vector2.new(0.5, 0.5);
+		bBase.BackgroundColor3 = Color3.fromRGB(255, 50, 50);
+		bBase.BorderSizePixel = 0;
+		bBase.ZIndex = 10;
+		Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\211\145\21\205\244\182\51\208", "\162\134\216\86"), bBase).CornerRadius = UDim.new(1, 0);
+		local s = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\11\198\100\77\34\77\250\170", "\207\94\143\55\57\80\34\145"), bBase);
+		s.Thickness = 1;
+		s.Color = Color3.new(1, 1, 1);
+		R.Blips[player] = {[LUAOBFUSACTOR_DECRYPT_STR_0("\0\208\48\127", "\217\66\177\67\26\208\59\119")]=bBase,[LUAOBFUSACTOR_DECRYPT_STR_0("\16\202\216\165\91\239", "\152\67\190\170\202\48\138")]=s};
+		return R.Blips[player];
+	end
+	RunService.RenderStepped:Connect(function()
+		R.Window.Visible = V.CONFIG.RadarEnabled and V.isAuthorized;
+		if (not V.CONFIG.RadarEnabled or not V.isAuthorized) then
+			return;
+		end
+		R.Window.Size = UDim2.new(0, V.CONFIG.RadarSize, 0, V.CONFIG.RadarSize + 30);
+		local lpChar = V.LP.Character;
+		local lHRP = lpChar and lpChar:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\243\60\88\241\213\38\92\244\233\38\90\228\235\40\71\228", "\144\187\73\53"));
+		if not lHRP then
+			return;
+		end
+		local rangeS = V.CONFIG.RadarRadius * 3;
+		local camCF = V.Camera.CFrame;
+		for _, b in pairs(R.Blips) do
+			b.Base.Visible = false;
+		end
+		for _, p in pairs(Players:GetPlayers()) do
+			if (p == V.LP) then
+				continue;
+			end
+			local char = p.Character;
+			local hrp = char and char:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\62\174\55\214\172\188\31\191\8\216\173\167\38\186\40\195", "\211\118\219\90\183\194"));
+			local hum = char and char:FindFirstChildOfClass(LUAOBFUSACTOR_DECRYPT_STR_0("\208\184\133\234\84\254\241\169", "\145\152\205\232\139\58"));
+			if (hrp and hum and (hum.Health > 0)) then
+				local b = getBlip(p);
+				local rel = camCF:PointToObjectSpace(hrp.Position);
+				local rX = rel.X;
+				local rZ = rel.Z;
+				local fact = (R.Container.AbsoluteSize.X / 2) / rangeS;
+				local x, y = rX * fact, rZ * fact;
+				local curD = math.sqrt((x ^ 2) + (y ^ 2));
+				local maxR = (R.Container.AbsoluteSize.X / 2) - 6;
+				if (curD > maxR) then
+					local ang = math.atan2(y, x);
+					x, y = math.cos(ang) * maxR, math.sin(ang) * maxR;
+				end
+				b.Base.Position = UDim2.new(0.5, x, 0.5, y);
+				b.Base.Visible = true;
+				if V.CONFIG.TeamCheck then
+					b.Base.BackgroundColor3 = ((p.Team == V.LP.Team) and Color3.fromRGB(0, 255, 100)) or Color3.fromRGB(255, 50, 50);
+				else
+					b.Base.BackgroundColor3 = Color3.fromRGB(255, 50, 50);
+				end
+			end
+		end
+	end);
+	V.radarDragging = false;
+	V.radarDragStart = nil;
+	V.radarStartPos = nil;
+	R.Window.InputBegan:Connect(function(i)
+		if (i.UserInputType == Enum.UserInputType.MouseButton1) then
+			V.radarDragging = true;
+			V.radarDragStart = i.Position;
+			V.radarStartPos = R.Window.Position;
+		end
+	end);
+	UIS.InputChanged:Connect(function(i)
+		if (V.radarDragging and (i.UserInputType == Enum.UserInputType.MouseMovement)) then
+			local del = i.Position - V.radarDragStart;
+			local nPos = UDim2.new(V.radarStartPos.X.Scale, V.radarStartPos.X.Offset + del.X, V.radarStartPos.Y.Scale, V.radarStartPos.Y.Offset + del.Y);
+			R.Window.Position = nPos;
+			V.CONFIG.RadarPos = Vector2.new(nPos.X.Offset, nPos.Y.Offset);
+		end
+	end);
+	UIS.InputEnded:Connect(function(i)
+		if (i.UserInputType == Enum.UserInputType.MouseButton1) then
+			V.radarDragging = false;
+		end
+	end);
+end
+initRadarSystem();
+RefreshUI();
+refreshCfgList();
+task.spawn(function()
+	task.wait(0.1);
+	local function reg(obj, t)
+		table.insert(V.accentElements, {[LUAOBFUSACTOR_DECRYPT_STR_0("\188\240\180", "\110\211\146\222\223\59\200")]=obj,[LUAOBFUSACTOR_DECRYPT_STR_0("\71\77\242\10", "\34\51\52\130\111")]=t});
+	end
+	local function scanGui(parent)
+		for _, child in ipairs(parent:GetDescendants()) do
+			pcall(function()
+				if (child:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\232\39\57\206\7", "\55\174\85\88\163\98\92")) or child:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\249\77\30\145\20\216\92\18\138\56", "\86\173\40\102\229")) or child:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\45\169\78\138\1\134\90\153\16\171\65", "\237\100\196\47"))) then
+					local c = child.BackgroundColor3;
+					if ((math.abs(c.R - (70 / 255)) < 0.05) and (math.abs(c.G - (110 / 255)) < 0.1) and (math.abs(c.B - 1) < 0.05)) then
+						reg(child, LUAOBFUSACTOR_DECRYPT_STR_0("\110\77\136\161\48\154\27\89\66\143\137\56\132\27\94\31", "\116\44\44\235\202\87\232"));
+					end
+				end
+				if (child:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\55\210\78\49\46\179\240\6\219", "\146\99\183\54\69\98\210")) or child:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\211\250\173\177\30\162\243\235\186\171", "\215\135\159\213\197\92"))) then
+					local c = child.TextColor3;
+					if ((math.abs(c.R - (70 / 255)) < 0.05) and (math.abs(c.G - (110 / 255)) < 0.1) and (math.abs(c.B - 1) < 0.05)) then
+						reg(child, LUAOBFUSACTOR_DECRYPT_STR_0("\135\160\240\248\144\170\228\227\161\246", "\140\211\197\136"));
+					end
+				end
+				if child:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\5\229\15\96\222\63\199\57", "\172\80\172\92\20")) then
+					local c = child.Color;
+					if ((math.abs(c.R - (70 / 255)) < 0.05) and (math.abs(c.G - (110 / 255)) < 0.1) and (math.abs(c.B - 1) < 0.05)) then
+						reg(child, LUAOBFUSACTOR_DECRYPT_STR_0("\61\117\221\23\98", "\232\126\26\177\120\16\169\163"));
+					end
+				end
+				if (child:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\197\235\176\116\71\227\183\238\227\189", "\214\140\134\209\19\34\175")) or child:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\125\42\169\173\81\5\189\190\64\40\166", "\202\52\71\200"))) then
+					local c = child.ImageColor3;
+					if ((math.abs(c.R - (70 / 255)) < 0.05) and (math.abs(c.G - (110 / 255)) < 0.1) and (math.abs(c.B - 1) < 0.05)) then
+						reg(child, LUAOBFUSACTOR_DECRYPT_STR_0("\199\69\116\128\235\107\122\139\225\90\38", "\231\142\40\21"));
+					end
+				end
+			end);
+		end
+	end
+	scanGui(V.MenuGui);
+	if (V.CONFIG.MenuAccentColor ~= Color3.fromRGB(70, 110, 255)) then
+		applyMenuAccent(V.CONFIG.MenuAccentColor);
+	end
+end);
+task.spawn(function()
+	while true do
+		if (V.isAuthorized and V.timeLbl and V.authSessionDuration) then
+			local elapsed = os.time() - V.authSessionStart;
+			local left = 0;
+			if (V.authSessionDuration == -1) then
+				V.timeLbl.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\68\59\200\15\8\67\248\121\52\192\30\91\14\209", "\180\16\82\165\106\50\99");
+			else
+				left = V.authSessionDuration - elapsed;
+				V.timeLbl.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\11\92\114\251\89\127", "\99\95\53\31\158") .. (((left > 0) and formatTime(left)) or LUAOBFUSACTOR_DECRYPT_STR_0("\215\50\96\88\224\47\116", "\49\146\74\16"));
+			end
+			if ((os.time() - V.lastAuthSync) > 150) then
+				V.lastAuthSync = os.time();
+				task.spawn(function()
+					local ok, newDur = V.checkKeyOnServer(V.lastUsedKey);
+					if ok then
+						V.authSessionDuration = newDur;
+					elseif ((newDur == LUAOBFUSACTOR_DECRYPT_STR_0("\207\84\147\26\140\235\69\202\92\141\241\95\142\20", "\226\132\49\234\58")) or (newDur == LUAOBFUSACTOR_DECRYPT_STR_0("\237\106\191\234\29\185\28\81\217\115\190\229\23\252\82\23\154\109\163\225\8\183", "\56\186\24\208\132\122\153\114"))) then
+						V.expireSession();
+					end
+				end);
+			end
+			if ((V.authSessionDuration ~= -1) and (left <= 0)) then
+				V.expireSession();
+			end
+		end
+		task.wait(1);
+	end
+end);
+task.spawn(function()
+	local authPath = V.folderName .. LUAOBFUSACTOR_DECRYPT_STR_0("\140\23\53\69\138\141\28\51\94\140", "\226\163\118\64\49");
+	if (isfile and isfile(authPath)) then
+		local success, data = pcall(function()
+			return HttpService:JSONDecode(readfile(authPath));
+		end);
+		if (success and data and data.Nick) then
+			V.RegisterPanel.Visible = false;
+			V.LoginPanel.Visible = true;
+			V.regInput.Text = data.Nick;
+			V.userLbl.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\204\223\58\172\71\185", "\125\153\172\95\222") .. data.Nick;
+			if (data.Key and (data.Key ~= "")) then
+				V.keyInput.Text = data.Key;
+				V.statusLbl.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\90\211\247\194\160\214\236\124\193\234\195\234\154\234\117\136\173\131", "\131\27\166\131\173\141\186");
+				V.statusLbl.TextColor3 = Color3.fromRGB(200, 200, 210);
+				task.wait(0.5);
+				verifyKey(data.Key);
+			else
+				V.statusLbl.Text = LUAOBFUSACTOR_DECRYPT_STR_0("\196\118\75\36\252\126\66\103\241\114\68\44\178\51\119\43\246\114\84\34\179\118\73\51\246\97\7\62\252\102\85\103\248\118\94\105", "\71\147\19\39");
+				V.statusLbl.TextColor3 = Color3.fromRGB(200, 200, 210);
+			end
+		end
+	end
+end);
